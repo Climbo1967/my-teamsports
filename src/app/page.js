@@ -141,7 +141,7 @@ export default function Home() {
             Set up your team page in 5 minutes. Free for the 2026 season while we&apos;re in early access.
           </p>
           <Link
-            href="#"
+            href="mailto:support@2bcreations.com?subject=I want to create a team on My-Team Sports!&body=Team Name:%0ASport:%0ACoach Name:%0APhone:%0ANumber of Players:"
             className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35"
           >
             CREATE YOUR TEAM
@@ -158,3 +158,14 @@ export default function Home() {
     </div>
   );
 }
+```
+
+Save it, then push it live in PowerShell:
+```
+git add .
+```
+```
+git commit -m "Add email link to Create Your Team button"
+```
+```
+git push
