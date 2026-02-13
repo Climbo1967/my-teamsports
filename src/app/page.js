@@ -24,7 +24,6 @@ export default function Home() {
 
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-16 overflow-hidden">
-        {/* Background effects */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-navy)] via-[#0d1f3c] to-[var(--color-navy-mid)]" />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.06),transparent_70%)]" />
@@ -32,12 +31,10 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 max-w-[900px] text-center">
-          {/* Badge */}
-          <div className="inline-block bg-blue-500/10 border border-blue-500/25 text-[var(--color-accent-blue)] text-xs font-semibold tracking-widest uppercase px-5 py-2 rounded-full mb-6 animate-fade-in">
+          <div className="inline-block bg-blue-500/10 border border-blue-500/25 text-[var(--color-accent-blue)] text-xs font-semibold tracking-widest uppercase px-5 py-2 rounded-full mb-6">
             Now accepting teams for Spring 2026
           </div>
 
-          {/* Headline */}
           <h1 className="text-6xl md:text-8xl font-bold leading-none tracking-tight mb-2">
             YOUR TEAM.
             <br />
@@ -48,7 +45,6 @@ export default function Home() {
             Give your team a home on the web. Rosters, schedules, photos, and team communication — set up in 5 minutes. No app download. No subscription for parents.
           </p>
 
-          {/* Feature pills */}
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {["📋 Team Roster", "📅 Game Schedule", "📸 Player Photos", "👤 Player Pages", "💬 Message Board", "📝 Coach's Notes"].map((item) => (
               <span key={item} className="flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] px-4 py-2 rounded-full text-sm text-slate-400 font-medium">
@@ -57,7 +53,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Sport selection */}
           <div>
             <h3 className="font-[family-name:var(--font-oswald)] text-sm font-medium text-slate-500 tracking-[0.15em] uppercase mb-5">
               Choose Your Sport
@@ -140,12 +135,12 @@ export default function Home() {
           <p className="text-slate-400 mb-8 text-lg leading-relaxed">
             Set up your team page in 5 minutes. Free for the 2026 season while we&apos;re in early access.
           </p>
-          <Link
+          
             href="mailto:support@2bcreations.com?subject=I want to create a team on My-Team Sports!&body=Team Name:%0ASport:%0ACoach Name:%0APhone:%0ANumber of Players:"
             className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35"
           >
             CREATE YOUR TEAM
-          </Link>
+          </a>
           <p className="mt-4 text-xs text-slate-500">No credit card required. No app to download.</p>
         </div>
       </section>
@@ -159,4 +154,3 @@ export default function Home() {
   );
 }
 ```
-
