@@ -160,12 +160,3 @@ export default function Home() {
 }
 ```
 
-Save it, then push it live in PowerShell:
-```
-git add .
-```
-```
-git commit -m "Add email link to Create Your Team button"
-```
-```
-git push
