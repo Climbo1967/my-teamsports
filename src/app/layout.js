@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { Oswald, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
@@ -19,6 +20,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-NPD6LYL7RF" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-NPD6LYL7RF');
+          `}
+        </Script>
+      </head>
       <body
         className={`${oswald.variable} ${sourceSans.variable} antialiased`}
       >
