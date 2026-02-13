@@ -135,12 +135,7 @@ export default function Home() {
           <p className="text-slate-400 mb-8 text-lg leading-relaxed">
             Set up your team page in 5 minutes. Free for the 2026 season while we&apos;re in early access.
           </p>
-          
-            href="mailto:support@2bcreations.com?subject=I want to create a team on My-Team Sports!&body=Team Name:%0ASport:%0ACoach Name:%0APhone:%0ANumber of Players:"
-            className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35"
-          >
-            CREATE YOUR TEAM
-          </a>
+          <a href="mailto:support@2bcreations.com?subject=I%20want%20to%20create%20a%20team%20on%20My-Team%20Sports!&amp;body=Team%20Name:%0ASport:%0ACoach%20Name:%0APhone:%0ANumber%20of%20Players:" className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35">CREATE YOUR TEAM</a>
           <p className="mt-4 text-xs text-slate-500">No credit card required. No app to download.</p>
         </div>
       </section>
