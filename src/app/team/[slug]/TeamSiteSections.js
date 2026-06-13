@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { STAT_KEYS } from "@/lib/constants";
+import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
 
 const NAV = [
   { id: "announcements", label: "News", icon: "💬" },
@@ -302,8 +302,15 @@ function RosterSection({ players, emoji, onSelect }) {
 
 function PlayerModal({ player, emoji, photos, stats, sport, onClose, onViewPhoto }) {
   const keys = STAT_KEYS[sport] || STAT_KEYS.other;
+  const derived = DERIVED_STATS[sport] || DERIVED_STATS.other;
   const statTotal = (key) => stats.find((s) => s.stat_key === key)?.total;
   const hasStats = stats.length > 0;
+  const totals = {};
+  let gp = 0;
+  for (const s of stats) {
+    totals[s.stat_key] = Number(s.total);
+    gp = Math.max(gp, Number(s.games) || 0);
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" onClick={onClose}>
       <div
@@ -327,7 +334,9 @@ function PlayerModal({ player, emoji, photos, stats, sport, onClose, onViewPhoto
 
         {hasStats && (
           <div className="mb-5">
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">Season stats</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-3">
+              Season stats{gp > 0 ? ` · ${gp} game${gp === 1 ? "" : "s"}` : ""}
+            </h4>
             <div className="flex flex-wrap justify-center gap-3">
               {keys.map((k) => {
                 const total = statTotal(k.key);
@@ -336,6 +345,16 @@ function PlayerModal({ player, emoji, photos, stats, sport, onClose, onViewPhoto
                   <div key={k.key} className="bg-white/[0.05] border border-white/10 rounded-xl px-4 py-2.5 min-w-[64px]" title={k.label}>
                     <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-[var(--color-accent-blue)]">{Number(total)}</p>
                     <p className="text-[10px] uppercase tracking-widest text-slate-500">{k.abbr}</p>
+                  </div>
+                );
+              })}
+              {derived.map((dk) => {
+                const formatted = formatDerived(dk.compute(totals, gp), dk.format);
+                if (formatted === null) return null;
+                return (
+                  <div key={dk.abbr} className="bg-blue-500/10 border border-blue-500/30 rounded-xl px-4 py-2.5 min-w-[64px]" title={dk.label}>
+                    <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-[var(--color-accent-green)]">{formatted}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-slate-500">{dk.abbr}</p>
                   </div>
                 );
               })}
@@ -371,13 +390,25 @@ function PlayerModal({ player, emoji, photos, stats, sport, onClose, onViewPhoto
 }
 
 /* ---------- Stats ---------- */
+function playerTotals(stats, playerId) {
+  const totals = {};
+  let gp = 0;
+  for (const s of stats) {
+    if (s.player_id !== playerId) continue;
+    totals[s.stat_key] = Number(s.total);
+    gp = Math.max(gp, Number(s.games) || 0);
+  }
+  return { totals, gp };
+}
+
 function StatsSection({ players, stats, sport }) {
   if (stats.length === 0) return null;
   const keys = STAT_KEYS[sport] || STAT_KEYS.other;
-  const total = (playerId, key) => stats.find((s) => s.player_id === playerId && s.stat_key === key)?.total;
+  const derived = DERIVED_STATS[sport] || DERIVED_STATS.other;
   const playersWithStats = players.filter((p) => stats.some((s) => s.player_id === p.id));
+  const rows = playersWithStats.map((p) => ({ player: p, ...playerTotals(stats, p.id) }));
   const firstKey = keys[0]?.key;
-  const sorted = [...playersWithStats].sort((a, b) => (Number(total(b.id, firstKey)) || 0) - (Number(total(a.id, firstKey)) || 0));
+  rows.sort((a, b) => (b.totals[firstKey] || 0) - (a.totals[firstKey] || 0));
 
   return (
     <section id="stats" className="scroll-mt-20">
@@ -387,22 +418,35 @@ function StatsSection({ players, stats, sport }) {
           <thead className="bg-white/[0.04]">
             <tr className="text-left">
               <th className="py-3 px-4 text-slate-400 font-medium">Player</th>
+              <th className="py-3 px-3 text-slate-400 font-medium text-center" title="Games Played">GP</th>
               {keys.map((k) => (
                 <th key={k.key} className="py-3 px-3 text-slate-400 font-medium text-center" title={k.label}>{k.abbr}</th>
+              ))}
+              {derived.map((dk) => (
+                <th key={dk.abbr} className="py-3 px-3 text-[var(--color-accent-blue)] font-semibold text-center" title={dk.label}>{dk.abbr}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {sorted.map((p) => (
+            {rows.map(({ player: p, totals, gp }) => (
               <tr key={p.id} className="border-t border-white/[0.05] hover:bg-white/[0.02]">
                 <td className="py-3 px-4 text-white whitespace-nowrap">
                   {p.jersey_number ? <span className="text-[var(--color-accent-blue)] font-bold">#{p.jersey_number} </span> : ""}{p.name}
                 </td>
+                <td className="py-3 px-3 text-center text-slate-400 font-mono">{gp || "—"}</td>
                 {keys.map((k) => {
-                  const v = total(p.id, k.key);
+                  const v = totals[k.key];
                   return (
                     <td key={k.key} className="py-3 px-3 text-center text-slate-300 font-mono">
-                      {v === undefined ? <span className="text-slate-700">—</span> : Number(v)}
+                      {v === undefined ? <span className="text-slate-700">—</span> : v}
+                    </td>
+                  );
+                })}
+                {derived.map((dk) => {
+                  const formatted = formatDerived(dk.compute(totals, gp), dk.format);
+                  return (
+                    <td key={dk.abbr} className="py-3 px-3 text-center text-[var(--color-accent-blue)] font-mono font-semibold">
+                      {formatted === null ? <span className="text-slate-700">—</span> : formatted}
                     </td>
                   );
                 })}

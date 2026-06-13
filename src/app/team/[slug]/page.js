@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
-import { SPORT_EMOJI } from "@/lib/constants";
+import { SPORT_EMOJI, computeRecord, formatRecord } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
 
@@ -31,6 +31,7 @@ export default async function TeamPage({ params }) {
   }
 
   const emoji = SPORT_EMOJI[site.team.sport] || "🏆";
+  const record = computeRecord(site.events);
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
@@ -52,6 +53,14 @@ export default async function TeamPage({ params }) {
           <p className="text-slate-400 mt-2 capitalize">
             {site.team.sport}{site.team.season ? ` · ${site.team.season}` : ""}
           </p>
+          {record.played > 0 && (
+            <div className="inline-flex items-center gap-2 mt-4 bg-white/[0.05] border border-white/10 rounded-full px-5 py-2">
+              <span className="text-xs uppercase tracking-widest text-slate-500">Record</span>
+              <span className="font-[family-name:var(--font-oswald)] text-xl font-bold text-[var(--color-accent-green)]">
+                {formatRecord(record)}
+              </span>
+            </div>
+          )}
         </div>
       </header>
 

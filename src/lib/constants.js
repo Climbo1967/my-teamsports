@@ -91,3 +91,57 @@ export const STAT_KEYS = {
 export function inviteMessage(team) {
   return `Join our team site! https://my-teamsports.com/team/${team.slug} — Passcode: ${team.passcode}`;
 }
+
+// Win/loss record parsed from event result strings ("W 9-4", "L 3-5", "T 2-2")
+export function computeRecord(events) {
+  let w = 0, l = 0, t = 0;
+  for (const e of events || []) {
+    const m = /^\s*([WLT])/i.exec(e.result || "");
+    if (!m) continue;
+    const c = m[1].toUpperCase();
+    if (c === "W") w++;
+    else if (c === "L") l++;
+    else t++;
+  }
+  return { w, l, t, played: w + l + t };
+}
+
+export function formatRecord(r) {
+  return r.t > 0 ? `${r.w}-${r.l}-${r.t}` : `${r.w}-${r.l}`;
+}
+
+// Derived season stats, computed from totals and games played
+export const DERIVED_STATS = {
+  baseball: [
+    { abbr: "AVG", label: "Batting Average", compute: (t) => (t.ab ? (t.h || 0) / t.ab : null), format: "avg" },
+  ],
+  softball: [
+    { abbr: "AVG", label: "Batting Average", compute: (t) => (t.ab ? (t.h || 0) / t.ab : null), format: "avg" },
+  ],
+  basketball: [
+    { abbr: "PPG", label: "Points Per Game", compute: (t, gp) => (gp ? (t.pts || 0) / gp : null), format: "pg" },
+    { abbr: "RPG", label: "Rebounds Per Game", compute: (t, gp) => (gp ? (t.reb || 0) / gp : null), format: "pg" },
+    { abbr: "APG", label: "Assists Per Game", compute: (t, gp) => (gp ? (t.ast || 0) / gp : null), format: "pg" },
+  ],
+  football: [
+    { abbr: "YPG", label: "Yards Per Game", compute: (t, gp) => (gp ? (t.yds || 0) / gp : null), format: "pg" },
+  ],
+  soccer: [
+    { abbr: "G/GM", label: "Goals Per Game", compute: (t, gp) => (gp ? (t.g || 0) / gp : null), format: "pg" },
+  ],
+  hockey: [
+    { abbr: "G/GM", label: "Goals Per Game", compute: (t, gp) => (gp ? (t.g || 0) / gp : null), format: "pg" },
+  ],
+  volleyball: [
+    { abbr: "K/GM", label: "Kills Per Game", compute: (t, gp) => (gp ? (t.k || 0) / gp : null), format: "pg" },
+  ],
+  other: [
+    { abbr: "PPG", label: "Points Per Game", compute: (t, gp) => (gp ? (t.pts || 0) / gp : null), format: "pg" },
+  ],
+};
+
+export function formatDerived(value, format) {
+  if (value === null || value === undefined || Number.isNaN(value)) return null;
+  if (format === "avg") return value.toFixed(3).replace(/^0/, "");
+  return String(Math.round(value * 10) / 10);
+}

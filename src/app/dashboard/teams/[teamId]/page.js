@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { computeRecord, formatRecord } from "@/lib/constants";
 import CopyInviteButton from "./CopyInviteButton";
 
 export default async function TeamOverviewPage({ params }) {
@@ -14,13 +15,22 @@ export default async function TeamOverviewPage({ params }) {
     supabase.from("photos").select("id", { count: "exact", head: true }).eq("team_id", teamId),
   ]);
 
-  const { data: nextEvents } = await supabase
-    .from("events")
-    .select("id, event_type, opponent, title, location, starts_at")
-    .eq("team_id", teamId)
-    .gte("starts_at", new Date().toISOString())
-    .order("starts_at")
-    .limit(3);
+  const [{ data: nextEvents }, { data: resultRows }] = await Promise.all([
+    supabase
+      .from("events")
+      .select("id, event_type, opponent, title, location, starts_at")
+      .eq("team_id", teamId)
+      .gte("starts_at", new Date().toISOString())
+      .order("starts_at")
+      .limit(3),
+    supabase
+      .from("events")
+      .select("result")
+      .eq("team_id", teamId)
+      .not("result", "is", null),
+  ]);
+
+  const record = computeRecord(resultRows || []);
 
   const stats = [
     { label: "Players", count: players.count ?? 0, href: "roster", icon: "📋" },
@@ -54,6 +64,14 @@ export default async function TeamOverviewPage({ params }) {
 
       {/* NEXT UP */}
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-7">
+        {record.played > 0 && (
+          <div className="flex items-center justify-between mb-5 bg-white/[0.04] rounded-xl px-4 py-3">
+            <span className="text-xs uppercase tracking-widest text-slate-500">Season record</span>
+            <span className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-[var(--color-accent-green)]">
+              {formatRecord(record)}
+            </span>
+          </div>
+        )}
         <h2 className="text-lg font-bold mb-4">NEXT UP</h2>
         {!nextEvents || nextEvents.length === 0 ? (
           <p className="text-sm text-slate-500">
