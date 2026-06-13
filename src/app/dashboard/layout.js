@@ -15,6 +15,8 @@ export default async function DashboardLayout({ children }) {
     redirect("/login");
   }
 
+  const { data: isAdmin } = await supabase.rpc("is_admin");
+
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
       <nav className="bg-[var(--color-navy-mid)] border-b border-white/5 px-6 h-[70px] flex items-center justify-between">
@@ -25,6 +27,14 @@ export default async function DashboardLayout({ children }) {
           </span>
         </Link>
         <div className="flex items-center gap-5">
+          {isAdmin && (
+            <Link
+              href="/dashboard/admin"
+              className="text-sm font-semibold text-yellow-400 border border-yellow-500/25 px-4 py-2 rounded-lg hover:bg-yellow-500/10 transition-colors"
+            >
+              🛡️ Admin
+            </Link>
+          )}
           <span className="hidden sm:block text-sm text-slate-400">{user.email}</span>
           <LogoutButton />
         </div>
