@@ -3,12 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
+import { videoEmbedUrl } from "@/lib/video";
 
 const NAV = [
   { id: "announcements", label: "News", icon: "💬" },
   { id: "schedule", label: "Schedule", icon: "📅" },
   { id: "roster", label: "Roster", icon: "📋" },
   { id: "stats", label: "Stats", icon: "📊" },
+  { id: "videos", label: "Game Film", icon: "🎬" },
   { id: "notes", label: "Coach's Notes", icon: "📝" },
   { id: "photos", label: "Photos", icon: "📸" },
 ];
@@ -17,6 +19,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   const { team, players, events, announcements, notes, photos } = site;
   const stats = site.stats || [];
   const rsvps = site.rsvps || [];
+  const videos = site.videos || [];
   const [activePlayer, setActivePlayer] = useState(null);
   const [lightbox, setLightbox] = useState(null);
 
@@ -51,6 +54,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
         <ScheduleSection events={events} players={players} rsvps={rsvps} slug={slug} />
         <RosterSection players={players} emoji={emoji} onSelect={setActivePlayer} />
         <StatsSection players={players} stats={stats} sport={team.sport} />
+        <VideosSection videos={videos} />
         <NotesSection notes={notes} />
         <PhotosSection
           photos={photos}
@@ -545,6 +549,52 @@ function SubscribeButton({ slug }) {
         </div>
       )}
     </>
+  );
+}
+
+/* ---------- Game Film ---------- */
+function VideosSection({ videos }) {
+  if (videos.length === 0) return null;
+  return (
+    <section id="videos" className="scroll-mt-20">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6">🎬 GAME FILM</h2>
+      <div className="grid md:grid-cols-2 gap-6">
+        {videos.map((v) => {
+          const embed = videoEmbedUrl(v.url);
+          return (
+            <div key={v.id} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4">
+              {embed ? (
+                <div className="aspect-video rounded-xl overflow-hidden bg-black mb-3">
+                  <iframe
+                    src={embed}
+                    title={v.title}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              ) : (
+                <a
+                  href={v.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="aspect-video rounded-xl bg-white/[0.04] border border-white/10 mb-3 flex items-center justify-center text-5xl hover:bg-white/[0.07] transition-colors"
+                >
+                  🎬
+                </a>
+              )}
+              <p className="font-semibold text-white">{v.title}</p>
+              {v.game_date && (
+                <p className="text-xs text-slate-500">
+                  {new Date(v.game_date + "T12:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

@@ -10,6 +10,7 @@ const TABS = [
   { slug: "announcements", label: "Message Board", icon: "💬" },
   { slug: "notes", label: "Coach's Notes", icon: "📝" },
   { slug: "photos", label: "Photos", icon: "📸" },
+  { slug: "videos", label: "Game Film", icon: "🎬" },
   { slug: "settings", label: "Settings", icon: "⚙️" },
 ];
 
