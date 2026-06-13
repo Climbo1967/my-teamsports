@@ -1,5 +1,26 @@
 import Link from "next/link";
 
+const FEATURES = [
+  { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
+  { icon: "📅", title: "Schedule + RSVP", desc: "Games, practices, and events — and parents RSVP right on the site. Coaches see exactly who's in before the first pitch." },
+  { icon: "📊", title: "Stats & Standings", desc: "Track game stats in a simple grid. Season totals, batting averages, points per game, and your win-loss record — computed automatically." },
+  { icon: "🎬", title: "Game Film", desc: "Paste a YouTube or Vimeo link and the full game plays right on your team site. Free, unlimited, no subscriptions for anyone." },
+  { icon: "💬", title: "Message Board", desc: "Announcements that stay informational, uplifting, and positive. Pin the important stuff. Email subscribers with one click. No group-text chaos." },
+  { icon: "📝", title: "Coach's Notes", desc: "Practice plans, game prep, and strategy in one place the whole team can find — not buried in a 200-message thread." },
+  { icon: "📸", title: "Team Photos", desc: "A shared gallery for the season. Parents upload their own action shots straight from the bleachers — no account needed." },
+  { icon: "🏆", title: "Win-Loss Record", desc: "Post a result like \"W 9-4\" and your record badge updates everywhere. Let the season tell its story." },
+  { icon: "🤝", title: "Coaching Staff", desc: "Invite assistant coaches by email. They get full team management — you stay in charge of the big stuff." },
+];
+
+const SPORTS = [
+  { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
+  { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
+  { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
+  { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
+  { emoji: "🥎", name: "Softball", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
+  { emoji: "🏐", name: "Volleyball", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
+];
+
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -14,25 +35,36 @@ export default function Home() {
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8">
-          <Link href="#" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Home</Link>
-          <Link href="#" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Team Roster</Link>
-          <Link href="#" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Game Schedule</Link>
-          <Link href="#" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Photos</Link>
-          <Link href="/login" className="bg-[var(--color-accent-blue)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-blue-600 transition-all">Login</Link>
+          <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
+          <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
+          <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
+          <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
+          <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
+            Get Started Free
+          </Link>
         </div>
+        <Link href="/signup" className="md:hidden bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
+          Start Free
+        </Link>
       </nav>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 pt-24 pb-16 overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center px-6 pt-28 pb-16 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-navy)] via-[#0d1f3c] to-[var(--color-navy-mid)]" />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.06),transparent_70%)]" />
-          <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-[rgba(26,92,42,0.1)] to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[60%] bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.08),transparent_70%)]" />
+          <div className="absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-[rgba(26,92,42,0.12)] to-transparent" />
+          {/* floating sport emojis */}
+          <div className="hidden lg:block absolute top-[18%] left-[8%] text-5xl opacity-20 animate-float">⚾</div>
+          <div className="hidden lg:block absolute top-[30%] right-[10%] text-6xl opacity-20 animate-float-delay">🏀</div>
+          <div className="hidden lg:block absolute bottom-[22%] left-[14%] text-5xl opacity-20 animate-float-delay">🏈</div>
+          <div className="hidden lg:block absolute bottom-[30%] right-[16%] text-5xl opacity-20 animate-float">⚽</div>
         </div>
 
-        <div className="relative z-10 max-w-[900px] text-center">
-          <div className="inline-block bg-blue-500/10 border border-blue-500/25 text-[var(--color-accent-blue)] text-xs font-semibold tracking-widest uppercase px-5 py-2 rounded-full mb-6">
-            Now accepting teams for Spring 2026
+        <div className="relative z-10 max-w-[940px] text-center">
+          <div className="inline-flex items-center gap-2.5 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full mb-7">
+            <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent-green)] animate-live" />
+            Live now · Free for the 2026 season
           </div>
 
           <h1 className="text-6xl md:text-8xl font-bold leading-none tracking-tight mb-2">
@@ -41,33 +73,43 @@ export default function Home() {
             <span className="text-[var(--color-accent-blue)]">YOUR WAY.</span>
           </h1>
 
-          <p className="text-lg md:text-xl font-light text-slate-400 max-w-[600px] mx-auto mt-6 mb-10 leading-relaxed">
-            Give your team a home on the web. Rosters, schedules, photos, and team communication — set up in 5 minutes. No app download. No subscription for parents.
+          <p className="text-lg md:text-xl font-light text-slate-400 max-w-[640px] mx-auto mt-6 mb-9 leading-relaxed">
+            A beautiful website for your youth sports team — roster, schedule, stats, photos, and game film.
+            Set up in 5 minutes. <span className="text-white font-normal">Parents never download an app, never create an account, never pay a dime.</span>
           </p>
 
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {["📋 Team Roster", "📅 Game Schedule", "📸 Player Photos", "👤 Player Pages", "💬 Message Board", "📝 Coach's Notes"].map((item) => (
-              <span key={item} className="flex items-center gap-2 bg-white/[0.04] border border-white/[0.08] px-4 py-2 rounded-full text-sm text-slate-400 font-medium">
-                {item}
-              </span>
-            ))}
+          <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
+            <Link
+              href="/signup"
+              className="bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-xl font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/40"
+            >
+              CREATE YOUR TEAM — FREE
+            </Link>
+            <a
+              href="#demo"
+              className="border border-white/15 text-white font-[family-name:var(--font-oswald)] text-xl font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-white/5 transition-all"
+            >
+              👀 SEE A LIVE TEAM
+            </a>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-slate-500 mb-12">
+            <span>⚡ Live in 5 minutes</span>
+            <span>📱 Works on any device</span>
+            <span>🚫 No app downloads</span>
+            <span>💸 $0 for parents — always</span>
           </div>
 
           <div>
             <h3 className="font-[family-name:var(--font-oswald)] text-sm font-medium text-slate-500 tracking-[0.15em] uppercase mb-5">
-              Choose Your Sport
+              Every Sport Welcome
             </h3>
-            <div className="flex flex-wrap justify-center gap-4">
-              {[
-                { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
-                { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
-                { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
-                { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
-              ].map((sport) => (
+            <div className="flex flex-wrap justify-center gap-3">
+              {SPORTS.map((sport) => (
                 <Link
                   key={sport.name}
-                  href="#"
-                  className={`flex items-center gap-3 bg-white/[0.04] border border-white/[0.08] px-7 py-3.5 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${sport.hover}`}
+                  href="/signup"
+                  className={`flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${sport.hover}`}
                 >
                   <span className="text-2xl">{sport.emoji}</span>
                   <span className="font-[family-name:var(--font-oswald)] text-lg font-semibold text-white tracking-wide">{sport.name}</span>
@@ -79,7 +121,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="px-6 py-24 bg-gradient-to-b from-[var(--color-navy-mid)] to-[var(--color-navy)] relative">
+      <section id="how" className="px-6 py-24 bg-gradient-to-b from-[var(--color-navy-mid)] to-[var(--color-navy)] relative scroll-mt-16">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent" />
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">UP AND RUNNING IN MINUTES</h2>
@@ -89,7 +131,7 @@ export default function Home() {
           {[
             { num: "01", icon: "🏟️", title: "Create Your Team", desc: "Pick your sport, name your team, upload your logo. You get a shareable team link and a private passcode instantly." },
             { num: "02", icon: "📱", title: "Share the Passcode", desc: "Text the link and passcode to your parents. They open it in any browser — no app to download, no account to create." },
-            { num: "03", icon: "🎉", title: "You're Live", desc: "Add your roster, post the schedule, and start communicating. Parents upload their own player photos. Done." },
+            { num: "03", icon: "🎉", title: "Run Your Season", desc: "Post the schedule, parents RSVP, you track stats, everyone shares photos and game film. The site does the rest." },
           ].map((step) => (
             <div key={step.num} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 text-center transition-all duration-300 hover:bg-white/[0.05] hover:border-blue-500/20 hover:-translate-y-1">
               <div className="font-[family-name:var(--font-oswald)] text-5xl font-bold text-blue-500/15 mb-3">{step.num}</div>
@@ -102,21 +144,14 @@ export default function Home() {
       </section>
 
       {/* FEATURES */}
-      <section className="px-6 py-24 bg-[var(--color-navy)]">
+      <section id="features" className="px-6 py-24 bg-[var(--color-navy)] scroll-mt-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">EVERYTHING YOUR TEAM NEEDS</h2>
-          <p className="text-slate-400 text-lg">Built for coaches who run teams, not IT departments.</p>
+          <p className="text-slate-400 text-lg">Built for coaches who run teams, not IT departments. All of it live today.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[1100px] mx-auto">
-          {[
-            { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, and positions. Looks sharp on any device. Parents see the whole squad at a glance." },
-            { icon: "📅", title: "Game Schedule", desc: "Games, practices, and events with opponent info, location, and time. Add to calendar with one tap. No more \"when's the next game?\" texts." },
-            { icon: "👤", title: "Player Pages", desc: "Every player gets their own page with photos, stats, and info. Parents upload action shots directly. Share with family and recruiters." },
-            { icon: "💬", title: "Message Board", desc: "Team-wide communication that's informational, uplifting, and positive. Pinned announcements from coaches. No more group text chaos." },
-            { icon: "📝", title: "Coach's Notes", desc: "Practice plans, game prep, and strategy updates. One central place for everything the team needs to know from the coaching staff." },
-            { icon: "📸", title: "Team Photos", desc: "A shared photo gallery for the whole season. Action shots, team photos, tournament memories — all in one place." },
-          ].map((feature) => (
-            <div key={feature.title} className="bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.06] rounded-2xl p-8 transition-all duration-300 hover:border-blue-500/25">
+          {FEATURES.map((feature) => (
+            <div key={feature.title} className="bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/[0.06] rounded-2xl p-8 transition-all duration-300 hover:border-blue-500/25 hover:-translate-y-0.5">
               <div className="text-3xl mb-4">{feature.icon}</div>
               <h3 className="text-lg font-semibold mb-2 text-white">{feature.title}</h3>
               <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
@@ -125,24 +160,74 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="px-6 py-24 text-center relative bg-gradient-to-b from-[var(--color-navy)] to-[var(--color-navy-mid)]">
+      {/* PARENTS CALLOUT */}
+      <section className="px-6 py-20 bg-gradient-to-b from-[var(--color-navy)] to-[var(--color-navy-mid)]">
+        <div className="max-w-[900px] mx-auto bg-gradient-to-br from-blue-500/[0.08] to-green-500/[0.05] border border-blue-500/20 rounded-3xl p-10 md:p-12 text-center">
+          <div className="text-4xl mb-4">👨‍👩‍👧‍👦</div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">PARENTS PAY NOTHING. EVER.</h2>
+          <p className="text-slate-400 text-lg leading-relaxed max-w-[640px] mx-auto">
+            No subscriptions to watch your own kid. No app eating your storage. No paywalled highlights.
+            Grandma opens the link on her tablet, types the passcode once, and she&apos;s at every game.
+            <span className="text-white"> That&apos;s how youth sports should work.</span>
+          </p>
+        </div>
+      </section>
+
+      {/* LIVE DEMO */}
+      <section id="demo" className="px-6 py-24 bg-[var(--color-navy-mid)] scroll-mt-16">
+        <div className="max-w-[700px] mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-3">DON&apos;T TAKE OUR WORD FOR IT</h2>
+          <p className="text-slate-400 text-lg mb-10">
+            Walk through a real, live team site — roster, stats, schedule, the works.
+          </p>
+          <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10">
+            <div className="text-5xl mb-3">⚾</div>
+            <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-6">RIVERSIDE RAPTORS 12U</h3>
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+              <div className="bg-black/20 rounded-xl px-6 py-3">
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
+                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">XK7M2P</p>
+              </div>
+            </div>
+            <Link
+              href="/team/riverside-raptors-12u"
+              className="inline-block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
+            >
+              TOUR THE DEMO TEAM →
+            </Link>
+            <p className="mt-4 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="px-6 py-24 text-center relative bg-gradient-to-b from-[var(--color-navy-mid)] to-[var(--color-navy)]">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
         <div className="max-w-[600px] mx-auto bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] border border-green-500/20 rounded-3xl p-12 md:p-14">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            READY TO BUILD YOUR<br />TEAM&apos;S HOME?
+            YOUR TEAM&apos;S HOME<br />IS WAITING.
           </h2>
           <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-            Set up your team page in 5 minutes. Free for the 2026 season while we&apos;re in early access.
+            It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s free for the 2026 season.
           </p>
-          <Link href="/signup" className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35">CREATE YOUR TEAM</Link>
-          <p className="mt-4 text-xs text-slate-500">No credit card required. No app to download.</p>
+          <Link
+            href="/signup"
+            className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35"
+          >
+            CREATE YOUR TEAM NOW
+          </Link>
+          <p className="mt-4 text-xs text-slate-500">No credit card. No app. No catch.</p>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer className="px-6 py-12 text-center border-t border-white/5 bg-[var(--color-navy-mid)]">
-        <p className="font-[family-name:var(--font-oswald)] text-sm font-semibold text-slate-500 mb-1">MY-TEAM SPORTS.com</p>
+        <p className="font-[family-name:var(--font-oswald)] text-sm font-semibold text-slate-500 mb-3">MY-TEAM SPORTS.com</p>
+        <div className="flex justify-center gap-6 mb-4 text-xs">
+          <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
+          <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
+          <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
+        </div>
         <p className="text-xs text-slate-600">&copy; 2026 My-Team Sports. All rights reserved.</p>
       </footer>
     </div>
