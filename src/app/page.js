@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/marketing";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
@@ -36,8 +37,9 @@ export default function Home() {
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
-          <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
-          <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
+          <Link href="/how-it-works" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</Link>
+          <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
+          <Link href="/faq" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">FAQ</Link>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
             Get Started Free
@@ -221,15 +223,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-6 py-12 text-center border-t border-white/5 bg-[var(--color-navy-mid)]">
-        <p className="font-[family-name:var(--font-oswald)] text-sm font-semibold text-slate-500 mb-3">MY-TEAM SPORTS.com</p>
-        <div className="flex justify-center gap-6 mb-4 text-xs">
-          <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
-          <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
-          <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
-        </div>
-        <p className="text-xs text-slate-600">&copy; 2026 My-Team Sports. All rights reserved.</p>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

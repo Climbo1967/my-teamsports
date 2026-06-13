@@ -12,9 +12,47 @@ const sourceSans = Source_Sans_3({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://my-teamsports.com";
+const SITE_DESCRIPTION =
+  "Give your youth sports team a beautiful website in 5 minutes — roster, schedule, stats, photos, and game film. Parents never download an app, create an account, or pay a dime.";
+
 export const metadata = {
-  title: "My-Team Sports | Your Team. Your Way.",
-  description: "Give your team a home on the web. Rosters, schedules, photos, and team communication for youth sports teams.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "My-Team Sports | Your Team. Your Way.",
+    template: "%s | My-Team Sports",
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: "My-Team Sports",
+  keywords: [
+    "youth sports team website",
+    "free team website",
+    "team roster app",
+    "team schedule maker",
+    "youth baseball team site",
+    "no app team management",
+    "sports team communication",
+    "team stats tracker",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: SITE_URL,
+    siteName: "My-Team Sports",
+    title: "My-Team Sports | Your Team. Your Way.",
+    description: SITE_DESCRIPTION,
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "My-Team Sports | Your Team. Your Way.",
+    description: SITE_DESCRIPTION,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export default function RootLayout({ children }) {
