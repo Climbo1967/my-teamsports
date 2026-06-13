@@ -8,17 +8,21 @@ export default function AnnouncementsPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
   const [posts, setPosts] = useState(null);
+  const [subscribers, setSubscribers] = useState([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
   const load = useCallback(async () => {
-    const { data, error: err } = await supabase
-      .from("announcements").select("*").eq("team_id", teamId)
-      .order("pinned", { ascending: false }).order("created_at", { ascending: false });
+    const [{ data, error: err }, { data: subs }] = await Promise.all([
+      supabase.from("announcements").select("*").eq("team_id", teamId)
+        .order("pinned", { ascending: false }).order("created_at", { ascending: false }),
+      supabase.from("subscribers").select("email").eq("team_id", teamId),
+    ]);
     if (err) setError(err.message);
     setPosts(data || []);
+    setSubscribers(subs || []);
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { load(); }, [load]);
@@ -92,6 +96,14 @@ export default function AnnouncementsPage({ params }) {
                 <button onClick={() => togglePin(p)} className="text-xs text-slate-400 hover:text-white">
                   {p.pinned ? "Unpin" : "📌 Pin to top"}
                 </button>
+                {subscribers.length > 0 && (
+                  <a
+                    href={`mailto:?bcc=${subscribers.map((s) => s.email).join(",")}&subject=${encodeURIComponent(p.title || "Team update")}&body=${encodeURIComponent(p.body + "\n\n— Sent from our team site")}`}
+                    className="text-xs text-[var(--color-accent-green)] hover:underline"
+                  >
+                    ✉️ Email to {subscribers.length} subscriber{subscribers.length === 1 ? "" : "s"}
+                  </a>
+                )}
                 <button onClick={() => remove(p)} className="text-xs text-red-400 hover:underline">Delete</button>
               </div>
             </Card>

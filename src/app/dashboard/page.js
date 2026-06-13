@@ -16,6 +16,9 @@ export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
+  // Pick up any pending assistant-coach invites for this email
+  await supabase.rpc("claim_team_invites");
+
   const { data: teams } = await supabase
     .from("teams")
     .select("id, slug, name, sport, season, passcode, created_at")

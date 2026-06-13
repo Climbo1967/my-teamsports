@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
 import { SPORTS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, ErrorText, Spinner } from "@/components/ui";
+import StaffCard from "../StaffCard";
 
 const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 function generatePasscode() {
@@ -141,6 +142,8 @@ export default function SettingsPage({ params }) {
           </Button>
         </form>
       </Card>
+
+      <StaffCard teamId={teamId} />
 
       <Card>
         <h3 className="font-bold text-lg mb-1">PASSCODE</h3>
