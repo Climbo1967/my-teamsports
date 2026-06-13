@@ -81,10 +81,16 @@ export default async function DashboardPage() {
               </div>
               <div className="flex gap-3">
                 <Link
-                  href={`/team/${team.slug}`}
-                  className="text-sm font-medium text-[var(--color-accent-blue)] hover:underline"
+                  href={`/dashboard/teams/${team.id}`}
+                  className="bg-[var(--color-accent-blue)] text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-600 transition-all"
                 >
-                  View team site →
+                  Manage team
+                </Link>
+                <Link
+                  href={`/team/${team.slug}`}
+                  className="text-sm font-medium text-[var(--color-accent-blue)] hover:underline px-2 py-2"
+                >
+                  View site →
                 </Link>
               </div>
             </div>
