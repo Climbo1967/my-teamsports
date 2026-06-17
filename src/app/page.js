@@ -16,10 +16,12 @@ const FEATURES = [
 const SPORTS = [
   { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
   { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
+  { emoji: "🚩", name: "Flag Football", hover: "hover:border-pink-500/50 hover:bg-pink-500/10" },
   { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
   { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
   { emoji: "🥎", name: "Softball", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
   { emoji: "🏐", name: "Volleyball", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
+  { emoji: "🏒", name: "Hockey", hover: "hover:border-cyan-500/50 hover:bg-cyan-500/10" },
 ];
 
 export default function Home() {
