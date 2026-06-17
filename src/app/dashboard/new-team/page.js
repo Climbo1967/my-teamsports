@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 const SPORTS = [
   { value: "baseball", label: "Baseball", emoji: "⚾" },
   { value: "football", label: "Football", emoji: "🏈" },
+  { value: "flag_football", label: "Flag Football", emoji: "🚩" },
   { value: "basketball", label: "Basketball", emoji: "🏀" },
   { value: "soccer", label: "Soccer", emoji: "⚽" },
   { value: "softball", label: "Softball", emoji: "🥎" },
