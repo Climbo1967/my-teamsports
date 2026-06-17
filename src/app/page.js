@@ -194,7 +194,7 @@ export default function Home() {
                 </div>
                 <div className="px-4">
                   <p className="text-[10px] uppercase tracking-widest text-slate-500">Count</p>
-                  <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-white">1<span className="text-slate-600">-</span>2</r>
+                  <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-white">1<span className="text-slate-600">-</span>2</p>
                 </div>
                 <div className="flex-1 px-2">
                   <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">Eagles</p>
