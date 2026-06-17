@@ -37,6 +37,7 @@ export default function Home() {
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
+          <a href="#scorekeeper" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Scorekeeper</a>
           <Link href="/how-it-works" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</Link>
           <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
           <Link href="/faq" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">FAQ</Link>
@@ -76,7 +77,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg md:text-xl font-light text-slate-400 max-w-[640px] mx-auto mt-6 mb-9 leading-relaxed">
-            A beautiful website for your youth sports team — roster, schedule, stats, photos, and game film.
+            A beautiful website for your youth sports team — roster, schedule, stats, photos, game film, and live scorekeeping.
             Set up in 5 minutes. <span className="text-white font-normal">Parents never download an app, never create an account, never pay a dime.</span>
           </p>
 
@@ -142,6 +143,68 @@ export default function Home() {
               <p className="text-slate-400 text-sm leading-relaxed">{step.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* SCOREKEEPER SPOTLIGHT */}
+      <section id="scorekeeper" className="px-6 py-24 bg-[var(--color-navy)] relative scroll-mt-16">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
+        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          {/* copy */}
+          <div>
+            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
+              ⚾ New for 2026
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">SCORE THE GAME.<br /><span className="text-[var(--color-accent-green)]">LIVE.</span></h2>
+            <p className="text-slate-400 text-lg leading-relaxed mb-8">
+              Keep score right from your phone — balls, strikes, hits, and a tap on the field for where every ball goes.
+              The score updates live on your team page, and your season stats keep themselves.
+            </p>
+            <div className="space-y-4 mb-8">
+              {[
+                { icon: "📲", title: "Live play-by-play", desc: "Tap balls, strikes, and outs. Touch the field to mark each hit. Parents watch the score update in real time." },
+                { icon: "📈", title: "Smart batter tendencies", desc: "Spray charts show where each hitter goes — and where your next three batters are likely to hit." },
+                { icon: "🎯", title: "Pitch counts & lineup help", desc: "Track every pitcher's count and rest, plus batting-order suggestions built from your own stats." },
+              ].map((f) => (
+                <div key={f.title} className="flex gap-4">
+                  <div className="text-2xl shrink-0">{f.icon}</div>
+                  <div>
+                    <h3 className="font-semibold text-white">{f.title}</h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <a href="#demo" className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-3.5 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25">
+              SEE IT LIVE →
+            </a>
+          </div>
+          {/* live scoreboard mock */}
+          <div className="bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/[0.08] rounded-3xl p-8">
+            <div className="rounded-2xl border border-[var(--color-accent-green)]/30 bg-[var(--color-accent-green)]/[0.06] overflow-hidden">
+              <div className="flex items-center gap-2 px-5 py-2.5 border-b border-white/[0.06]">
+                <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent-green)] animate-live" />
+                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-accent-green)]">Live now</span>
+                <span className="text-xs text-slate-400 ml-auto">▼ 5th · 1 out</span>
+              </div>
+              <div className="flex items-center text-center py-5">
+                <div className="flex-1 px-2">
+                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">Raptors</p>
+                  <p className="font-[family-name:var(--font-oswald)] text-5xl font-bold text-white">7</p>
+                </div>
+                <div className="px-4">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-500">Count</p>
+                  <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-white">1<span className="text-slate-600">-</span>2</r>
+                </div>
+                <div className="flex-1 px-2">
+                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">Eagles</p>
+                  <p className="font-[family-name:var(--font-oswald)] text-5xl font-bold text-white">4</p>
+                </div>
+              </div>
+              <p className="text-center text-xs text-slate-400 pb-3">At bat: <span className="text-white font-semibold">#4 Sam Rivera</span></p>
+            </div>
+            <p className="text-center text-xs text-slate-500 mt-4">Exactly what parents see on your team page.</p>
+          </div>
         </div>
       </section>
 
