@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SPORT_EMOJI, computeRecord, formatRecord } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
+import LiveScoreBanner from "./LiveScoreBanner";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -63,6 +64,8 @@ export default async function TeamPage({ params }) {
           )}
         </div>
       </header>
+
+      <LiveScoreBanner slug={normalizedSlug} teamName={site.team.name} />
 
       <TeamSiteSections site={site} slug={normalizedSlug} emoji={emoji} />
 
