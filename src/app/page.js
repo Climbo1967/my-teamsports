@@ -242,28 +242,44 @@ export default function Home() {
 
       {/* LIVE DEMO */}
       <section id="demo" className="px-6 py-24 bg-[var(--color-navy-mid)] scroll-mt-16">
-        <div className="max-w-[700px] mx-auto text-center">
+        <div className="max-w-[920px] mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">DON&apos;T TAKE OUR WORD FOR IT</h2>
           <p className="text-slate-400 text-lg mb-10">
-            Walk through a real, live team site — roster, stats, schedule, the works.
+            Tour real, live team sites — roster, stats, schedule, and live scorekeeping. Two sports, two games in progress right now.
           </p>
-          <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10">
-            <div className="text-5xl mb-3">⚾</div>
-            <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-6">RIVERSIDE RAPTORS 12U</h3>
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
-              <div className="bg-black/20 rounded-xl px-6 py-3">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
+              <div className="text-5xl mb-3">⚾</div>
+              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">RIVERSIDE RAPTORS 12U</h3>
+              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Baseball · Live game in progress</p>
+              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
                 <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
                 <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">XK7M2P</p>
               </div>
+              <Link
+                href="/team/riverside-raptors-12u"
+                className="block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
+              >
+                TOUR THE BASEBALL DEMO →
+              </Link>
             </div>
-            <Link
-              href="/team/riverside-raptors-12u"
-              className="inline-block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
-            >
-              TOUR THE DEMO TEAM →
-            </Link>
-            <p className="mt-4 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
+              <div className="text-5xl mb-3">🏀</div>
+              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">DOWNTOWN DRAGONS 16U</h3>
+              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Basketball · Live game in progress</p>
+              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
+                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">DRGN24</p>
+              </div>
+              <Link
+                href="/team/downtown-dragons-16u"
+                className="block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25"
+              >
+                TOUR THE BASKETBALL DEMO →
+              </Link>
+            </div>
           </div>
+          <p className="mt-6 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
         </div>
       </section>
 
