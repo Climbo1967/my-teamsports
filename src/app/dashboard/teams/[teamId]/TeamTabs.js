@@ -7,6 +7,8 @@ const TABS = [
   { slug: "", label: "Overview", icon: "🏟️" },
   { slug: "roster", label: "Roster", icon: "📋" },
   { slug: "schedule", label: "Schedule", icon: "📅" },
+  { slug: "scorekeeper", label: "Scorekeeper", icon: "⚾" },
+  { slug: "scouting", label: "Scouting", icon: "📈" },
   { slug: "announcements", label: "Message Board", icon: "💬" },
   { slug: "notes", label: "Coach's Notes", icon: "📝" },
   { slug: "photos", label: "Photos", icon: "📸" },
