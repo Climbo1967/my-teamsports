@@ -1,6 +1,7 @@
 export const SPORT_EMOJI = {
   baseball: "⚾",
   football: "🏈",
+  flag_football: "🚩",
   basketball: "🏀",
   soccer: "⚽",
   softball: "🥎",
@@ -12,6 +13,7 @@ export const SPORT_EMOJI = {
 export const SPORTS = [
   { value: "baseball", label: "Baseball", emoji: "⚾" },
   { value: "football", label: "Football", emoji: "🏈" },
+  { value: "flag_football", label: "Flag Football", emoji: "🚩" },
   { value: "basketball", label: "Basketball", emoji: "🏀" },
   { value: "soccer", label: "Soccer", emoji: "⚽" },
   { value: "softball", label: "Softball", emoji: "🥎" },
@@ -24,6 +26,7 @@ export const POSITIONS = {
   baseball: ["Pitcher", "Catcher", "First Base", "Second Base", "Third Base", "Shortstop", "Left Field", "Center Field", "Right Field", "Utility"],
   softball: ["Pitcher", "Catcher", "First Base", "Second Base", "Third Base", "Shortstop", "Left Field", "Center Field", "Right Field", "Utility"],
   football: ["Quarterback", "Running Back", "Wide Receiver", "Tight End", "Offensive Line", "Defensive Line", "Linebacker", "Cornerback", "Safety", "Kicker"],
+  flag_football: ["Quarterback", "Center", "Wide Receiver", "Running Back", "Rusher", "Safety", "Cornerback"],
   basketball: ["Point Guard", "Shooting Guard", "Small Forward", "Power Forward", "Center"],
   soccer: ["Goalkeeper", "Defender", "Midfielder", "Forward", "Striker", "Winger"],
   volleyball: ["Setter", "Outside Hitter", "Opposite Hitter", "Middle Blocker", "Libero", "Defensive Specialist"],
@@ -61,6 +64,13 @@ export const STAT_KEYS = {
     { key: "yds", abbr: "YDS", label: "Yards" },
     { key: "rec", abbr: "REC", label: "Receptions" },
     { key: "tkl", abbr: "TKL", label: "Tackles" },
+    { key: "int", abbr: "INT", label: "Interceptions" },
+  ],
+  flag_football: [
+    { key: "td", abbr: "TD", label: "Touchdowns" },
+    { key: "yds", abbr: "YDS", label: "Yards" },
+    { key: "rec", abbr: "REC", label: "Receptions" },
+    { key: "flg", abbr: "FLG", label: "Flag Pulls" },
     { key: "int", abbr: "INT", label: "Interceptions" },
   ],
   soccer: [
@@ -125,6 +135,10 @@ export const DERIVED_STATS = {
   ],
   football: [
     { abbr: "YPG", label: "Yards Per Game", compute: (t, gp) => (gp ? (t.yds || 0) / gp : null), format: "pg" },
+  ],
+  flag_football: [
+    { abbr: "YPG", label: "Yards Per Game", compute: (t, gp) => (gp ? (t.yds || 0) / gp : null), format: "pg" },
+    { abbr: "TD/GM", label: "Touchdowns Per Game", compute: (t, gp) => (gp ? (t.td || 0) / gp : null), format: "pg" },
   ],
   soccer: [
     { abbr: "G/GM", label: "Goals Per Game", compute: (t, gp) => (gp ? (t.g || 0) / gp : null), format: "pg" },
