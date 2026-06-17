@@ -2,8 +2,9 @@
 
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { AB_RESULTS, HIT_TYPES, SCOREKEEPER_SPORTS, gameResultString } from "@/lib/constants";
+import { AB_RESULTS, HIT_TYPES, SCOREKEEPER_SPORTS, SCOREBOARD_SPORTS, gameResultString } from "@/lib/constants";
 import { Button, Card, EmptyState, ErrorText, Spinner } from "@/components/ui";
+import { ScoreboardScorer } from "@/components/scoreboard";
 import { BaseballField } from "@/components/field";
 import { computeTendencies, tendencySentence, ZONE_LABEL, pctText } from "@/lib/spray";
 import { recommendLineup } from "@/lib/lineup";
@@ -12,6 +13,7 @@ export default function ScorekeeperPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
   const [sport, setSport] = useState(null);
+  const [teamName, setTeamName] = useState("");
   const [games, setGames] = useState(null);
   const [players, setPlayers] = useState([]);
   const [selected, setSelected] = useState(null); // event row
@@ -19,11 +21,12 @@ export default function ScorekeeperPage({ params }) {
 
   const load = useCallback(async () => {
     const [{ data: team }, { data: eventRows }, { data: playerRows }] = await Promise.all([
-      supabase.from("teams").select("sport").eq("id", teamId).single(),
+      supabase.from("teams").select("sport, name").eq("id", teamId).single(),
       supabase.from("events").select("*").eq("team_id", teamId).eq("event_type", "game").order("starts_at"),
       supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
     ]);
     setSport(team?.sport || "other");
+    setTeamName(team?.name || "");
     setGames(eventRows || []);
     setPlayers(playerRows || []);
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -32,19 +35,31 @@ export default function ScorekeeperPage({ params }) {
 
   if (!games || sport === null) return <Spinner />;
 
-  if (!SCOREKEEPER_SPORTS.includes(sport)) {
+  const isBaseball = SCOREKEEPER_SPORTS.includes(sport);
+  const isScoreboard = SCOREBOARD_SPORTS.includes(sport);
+
+  if (!isBaseball && !isScoreboard) {
     return (
       <EmptyState
-        icon="⚾"
-        text="The live Scorekeeper currently supports baseball and softball. Set your team's sport to one of those in Settings to use it."
+        icon="🏆"
+        text="The live Scorekeeper isn't available for this sport yet. Set your team's sport in Settings to use it."
       />
     );
   }
 
   if (selected) {
-    return (
+    return isBaseball ? (
       <GameScorer
         teamId={teamId}
+        event={selected}
+        players={players}
+        onBack={() => { setSelected(null); load(); }}
+      />
+    ) : (
+      <ScoreboardScorer
+        teamId={teamId}
+        sport={sport}
+        teamName={teamName}
         event={selected}
         players={players}
         onBack={() => { setSelected(null); load(); }}
