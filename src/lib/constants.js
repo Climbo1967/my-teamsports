@@ -145,3 +145,39 @@ export function formatDerived(value, format) {
   if (format === "avg") return value.toFixed(3).replace(/^0/, "");
   return String(Math.round(value * 10) / 10);
 }
+
+// ============ THE SCOREKEEPER (live baseball/softball scoring) ============
+// Plate-appearance results. field=true → prompt to tap where the ball went.
+// out=true → records an out. hit=true → counts as a hit in the stat rollup.
+export const AB_RESULTS = [
+  { key: "single", label: "Single", short: "1B", field: true, out: false, hit: true, color: "green" },
+  { key: "double", label: "Double", short: "2B", field: true, out: false, hit: true, color: "green" },
+  { key: "triple", label: "Triple", short: "3B", field: true, out: false, hit: true, color: "green" },
+  { key: "hr", label: "Home Run", short: "HR", field: true, out: false, hit: true, color: "green" },
+  { key: "walk", label: "Walk", short: "BB", field: false, out: false, hit: false, color: "blue" },
+  { key: "hbp", label: "Hit By Pitch", short: "HBP", field: false, out: false, hit: false, color: "blue" },
+  { key: "error", label: "On Error", short: "E", field: true, out: false, hit: false, color: "blue" },
+  { key: "fielders_choice", label: "Fielder's Choice", short: "FC", field: true, out: true, hit: false, color: "slate" },
+  { key: "strikeout", label: "Strikeout", short: "K", field: false, out: true, hit: false, color: "red" },
+  { key: "groundout", label: "Groundout", short: "GO", field: true, out: true, hit: false, color: "slate" },
+  { key: "flyout", label: "Flyout", short: "FO", field: true, out: true, hit: false, color: "slate" },
+  { key: "lineout", label: "Lineout", short: "LO", field: true, out: true, hit: false, color: "slate" },
+  { key: "popout", label: "Popout", short: "PO", field: true, out: true, hit: false, color: "slate" },
+  { key: "sacrifice", label: "Sacrifice", short: "SAC", field: true, out: true, hit: false, color: "slate" },
+];
+
+// Sports that use the baseball-style live Scorekeeper.
+export const SCOREKEEPER_SPORTS = ["baseball", "softball"];
+
+export const HIT_TYPES = [
+  { key: "grounder", label: "Grounder" },
+  { key: "line_drive", label: "Line drive" },
+  { key: "fly", label: "Fly ball" },
+  { key: "popup", label: "Pop up" },
+];
+
+// Build the "W 7-3" style result string from the final live score (our-opp).
+export function gameResultString(our, opp) {
+  const wlt = our > opp ? "W" : our < opp ? "L" : "T";
+  return `${wlt} ${our}-${opp}`;
+}
