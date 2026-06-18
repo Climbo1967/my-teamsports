@@ -13,6 +13,8 @@ export default function AnnouncementsPage({ params }) {
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+  const [sendingId, setSendingId] = useState(null);
+  const [sentIds, setSentIds] = useState([]);
 
   const load = useCallback(async () => {
     const [{ data, error: err }, { data: subs }] = await Promise.all([
@@ -52,6 +54,25 @@ export default function AnnouncementsPage({ params }) {
     if (!confirm("Delete this post?")) return;
     await supabase.from("announcements").delete().eq("id", p.id);
     load();
+  }
+
+  async function emailPost(p) {
+    setSendingId(p.id);
+    setError(null);
+    try {
+      const res = await fetch("/api/send-announcement", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teamId, subject: p.title || "Team update", body: p.body }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not send email.");
+      setSentIds((ids) => [...ids, p.id]);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSendingId(null);
+    }
   }
 
   if (!posts) return <Spinner />;
@@ -97,12 +118,17 @@ export default function AnnouncementsPage({ params }) {
                   {p.pinned ? "Unpin" : "📌 Pin to top"}
                 </button>
                 {subscribers.length > 0 && (
-                  <a
-                    href={`mailto:?bcc=${subscribers.map((s) => s.email).join(",")}&subject=${encodeURIComponent(p.title || "Team update")}&body=${encodeURIComponent(p.body + "\n\n— Sent from our team site")}`}
-                    className="text-xs text-[var(--color-accent-green)] hover:underline"
+                  <button
+                    onClick={() => emailPost(p)}
+                    disabled={sendingId === p.id || sentIds.includes(p.id)}
+                    className="text-xs text-[var(--color-accent-green)] hover:underline disabled:opacity-60 disabled:no-underline"
                   >
-                    ✉️ Email to {subscribers.length} subscriber{subscribers.length === 1 ? "" : "s"}
-                  </a>
+                    {sendingId === p.id
+                      ? "Sending..."
+                      : sentIds.includes(p.id)
+                      ? `✓ Emailed ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`
+                      : `✉️ Email to ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`}
+                  </button>
                 )}
                 <button onClick={() => remove(p)} className="text-xs text-red-400 hover:underline">Delete</button>
               </div>
