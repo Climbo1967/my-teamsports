@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import AdminDirectory from "./AdminDirectory";
+import AdminSupport from "./AdminSupport";
 
 export const metadata = { title: "Admin | My-Team Sports" };
 
@@ -12,5 +13,15 @@ export default async function AdminPage() {
     redirect("/dashboard");
   }
 
-  return <AdminDirectory data={data} />;
+  const { data: support } = await supabase
+    .from("support_requests")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  return (
+    <>
+      <AdminDirectory data={data} />
+      <AdminSupport initial={support || []} />
+    </>
+  );
 }
