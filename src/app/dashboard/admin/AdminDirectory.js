@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { SPORT_EMOJI } from "@/lib/constants";
+import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 
 export default function AdminDirectory({ data }) {
@@ -79,7 +79,7 @@ export default function AdminDirectory({ data }) {
             <Select value={sportFilter} onChange={(e) => setSportFilter(e.target.value)}>
               <option value="all">All sports</option>
               {sports.map((s) => (
-                <option key={s} value={s} className="capitalize">{(SPORT_EMOJI[s] || "🏆") + " " + s[0].toUpperCase() + s.slice(1)}</option>
+                <option key={s} value={s} className="capitalize">{(SPORT_EMOJI[s] || "🏆") + " " + sportLabel(s)}</option>
               ))}
             </Select>
           </div>
@@ -207,7 +207,7 @@ export default function AdminDirectory({ data }) {
                   </a>
                   {t.season && <p className="text-xs text-slate-500">{t.season}</p>}
                 </td>
-                <td className="py-3 px-4 text-slate-300 capitalize">{(SPORT_EMOJI[t.sport] || "🏆") + " " + t.sport}</td>
+                <td className="py-3 px-4 text-slate-300 capitalize">{(SPORT_EMOJI[t.sport] || "🏆") + " " + sportLabel(t.sport)}</td>
                 <td className="py-3 px-4 text-slate-300">{t.players}</td>
                 <td className="py-3 px-4 text-xs text-slate-400">{t.coach_emails.join(", ")}</td>
                 <td className="py-3 px-4 text-slate-400 whitespace-nowrap">
