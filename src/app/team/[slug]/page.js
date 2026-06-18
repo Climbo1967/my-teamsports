@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
-import { SPORT_EMOJI, computeRecord, formatRecord } from "@/lib/constants";
+import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
 import LiveScoreBanner from "./LiveScoreBanner";
@@ -52,7 +52,7 @@ export default async function TeamPage({ params }) {
           )}
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">{site.team.name.toUpperCase()}</h1>
           <p className="text-slate-400 mt-2 capitalize">
-            {site.team.sport}{site.team.season ? ` · ${site.team.season}` : ""}
+            {sportLabel(site.team.sport)}{site.team.season ? ` · ${site.team.season}` : ""}
           </p>
           {record.played > 0 && (
             <div className="inline-flex items-center gap-2 mt-4 bg-white/[0.05] border border-white/10 rounded-full px-5 py-2">
