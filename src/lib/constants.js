@@ -22,6 +22,12 @@ export const SPORTS = [
   { value: "other", label: "Other", emoji: "🏆" },
 ];
 
+export function sportLabel(value) {
+  const s = SPORTS.find((x) => x.value === value);
+  if (s) return s.label;
+  return String(value || "").split("_").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+}
+
 export const POSITIONS = {
   baseball: ["Pitcher", "Catcher", "First Base", "Second Base", "Third Base", "Shortstop", "Left Field", "Center Field", "Right Field", "Utility"],
   softball: ["Pitcher", "Catcher", "First Base", "Second Base", "Third Base", "Shortstop", "Left Field", "Center Field", "Right Field", "Utility"],
