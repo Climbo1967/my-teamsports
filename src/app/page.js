@@ -242,12 +242,12 @@ export default function Home() {
 
       {/* LIVE DEMO */}
       <section id="demo" className="px-6 py-24 bg-[var(--color-navy-mid)] scroll-mt-16">
-        <div className="max-w-[920px] mx-auto text-center">
+        <div className="max-w-[1040px] mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">DON&apos;T TAKE OUR WORD FOR IT</h2>
           <p className="text-slate-400 text-lg mb-10">
-            Tour real, live team sites — roster, stats, schedule, and live scorekeeping. Two sports, two games in progress right now.
+            Tour real, live team sites — roster, stats, schedule, and live scorekeeping. Three sports, three games in progress right now.
           </p>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
               <div className="text-5xl mb-3">⚾</div>
               <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">RIVERSIDE RAPTORS 12U</h3>
@@ -276,6 +276,21 @@ export default function Home() {
                 className="block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25"
               >
                 TOUR THE BASKETBALL DEMO →
+              </Link>
+            </div>
+            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
+              <div className="text-5xl mb-3">🏈</div>
+              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">WESTSIDE WOLVES 12U</h3>
+              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Flag Football · Live game in progress</p>
+              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
+                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">WVS24K</p>
+              </div>
+              <Link
+                href="/team/westside-wolves-12u"
+                className="block bg-orange-500 text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-orange-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-orange-500/25"
+              >
+                TOUR THE FLAG FOOTBALL DEMO →
               </Link>
             </div>
           </div>
