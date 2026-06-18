@@ -14,6 +14,7 @@ const TABS = [
   { slug: "photos", label: "Photos", icon: "📸" },
   { slug: "videos", label: "Game Film", icon: "🎬" },
   { slug: "support", label: "Support", icon: "🛟" },
+  { slug: "manual", label: "Manual", icon: "📖" },
   { slug: "settings", label: "Settings", icon: "⚙️" },
 ];
 
