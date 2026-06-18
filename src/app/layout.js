@@ -24,6 +24,15 @@ export const metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: "My-Team Sports",
+  appleWebApp: {
+    capable: true,
+    title: "My-Team Sports",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/icon-192.png",
+  },
   keywords: [
     "youth sports team website",
     "free team website",
@@ -55,6 +64,10 @@ export const metadata = {
   },
 };
 
+export const viewport = {
+  themeColor: "#0a0e1a",
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -67,6 +80,9 @@ export default function RootLayout({ children }) {
             gtag('js', new Date());
             gtag('config', 'G-NPD6LYL7RF');
           `}
+        </Script>
+        <Script id="sw-register" strategy="afterInteractive">
+          {`if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }`}
         </Script>
       </head>
       <body
