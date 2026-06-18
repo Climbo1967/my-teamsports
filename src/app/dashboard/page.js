@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { sportLabel } from "@/lib/constants";
 
 const SPORT_EMOJI = {
   baseball: "⚾",
@@ -67,7 +68,7 @@ export default async function DashboardPage() {
                   <div>
                     <h2 className="text-xl font-semibold text-white">{team.name}</h2>
                     <p className="text-sm text-slate-500 capitalize">
-                      {team.sport}{team.season ? ` · ${team.season}` : ""}
+                      {sportLabel(team.sport)}{team.season ? ` · ${team.season}` : ""}
                     </p>
                   </div>
                 </div>
