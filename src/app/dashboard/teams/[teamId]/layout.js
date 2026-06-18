@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { SPORT_EMOJI } from "@/lib/constants";
+import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import TeamTabs from "./TeamTabs";
 
 export default async function TeamManageLayout({ children, params }) {
@@ -30,7 +30,7 @@ export default async function TeamManageLayout({ children, params }) {
         <div className="flex-1 min-w-[200px]">
           <h1 className="text-2xl md:text-3xl font-bold">{team.name.toUpperCase()}</h1>
           <p className="text-sm text-slate-500 capitalize">
-            {team.sport}{team.season ? ` · ${team.season}` : ""}
+            {sportLabel(team.sport)}{team.season ? ` · ${team.season}` : ""}
           </p>
         </div>
         <Link
