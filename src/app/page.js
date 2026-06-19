@@ -16,10 +16,18 @@ const FEATURES = [
 const SPORTS = [
   { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
   { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
+  { emoji: "🚩", name: "Flag Football", hover: "hover:border-emerald-500/50 hover:bg-emerald-500/10" },
   { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
   { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
   { emoji: "🥎", name: "Softball", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
   { emoji: "🏐", name: "Volleyball", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
+  { emoji: "🏒", name: "Hockey", hover: "hover:border-cyan-500/50 hover:bg-cyan-500/10" },
+];
+
+const DEMO_TEAMS = [
+  { emoji: "⚾", name: "Riverside Raptors 12U", sport: "Baseball", slug: "riverside-raptors-12u", passcode: "XK7M2P" },
+  { emoji: "🏀", name: "Downtown Dragons 16U", sport: "Basketball", slug: "downtown-dragons-16u", passcode: "DRGN24" },
+  { emoji: "🚩", name: "Westside Wolves 12U", sport: "Flag Football", slug: "westside-wolves-12u", passcode: "WVS24K" },
 ];
 
 export default function Home() {
@@ -95,12 +103,16 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-slate-500 mb-12">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-slate-500 mb-4">
             <span>⚡ Live in 5 minutes</span>
             <span>📱 Works on any device</span>
-            <span>🚫 No app downloads</span>
+            <span>🚫 No app store needed</span>
             <span>💸 $0 for parents — always</span>
           </div>
+
+          <p className="text-center text-sm text-slate-400 mb-12 max-w-xl mx-auto">
+            📲 Want one-tap access? Add it to your home screen on any phone, tablet, or computer and it opens just like an app — still no app store, no account.
+          </p>
 
           <div>
             <h3 className="font-[family-name:var(--font-oswald)] text-sm font-medium text-slate-500 tracking-[0.15em] uppercase mb-5">
@@ -177,28 +189,31 @@ export default function Home() {
 
       {/* LIVE DEMO */}
       <section id="demo" className="px-6 py-24 bg-[var(--color-navy-mid)] scroll-mt-16">
-        <div className="max-w-[700px] mx-auto text-center">
+        <div className="max-w-[1100px] mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">DON&apos;T TAKE OUR WORD FOR IT</h2>
           <p className="text-slate-400 text-lg mb-10">
-            Walk through a real, live team site — roster, stats, schedule, the works.
+            Walk through real, live team sites — roster, stats, schedule, the works. Three sports, three teams.
           </p>
-          <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10">
-            <div className="text-5xl mb-3">⚾</div>
-            <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-6">RIVERSIDE RAPTORS 12U</h3>
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
-              <div className="bg-black/20 rounded-xl px-6 py-3">
-                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
-                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">XK7M2P</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {DEMO_TEAMS.map((team) => (
+              <div key={team.slug} className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8 flex flex-col items-center">
+                <div className="text-5xl mb-3">{team.emoji}</div>
+                <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">{team.name}</h3>
+                <p className="text-xs uppercase tracking-widest text-slate-500 mb-5">{team.sport}</p>
+                <div className="bg-black/20 rounded-xl px-6 py-3 mb-6">
+                  <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
+                  <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">{team.passcode}</p>
+                </div>
+                <Link
+                  href={`/team/${team.slug}`}
+                  className="mt-auto inline-block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
+                >
+                  TOUR THIS TEAM →
+                </Link>
               </div>
-            </div>
-            <Link
-              href="/team/riverside-raptors-12u"
-              className="inline-block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
-            >
-              TOUR THE DEMO TEAM →
-            </Link>
-            <p className="mt-4 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
+            ))}
           </div>
+          <p className="mt-6 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
         </div>
       </section>
 
