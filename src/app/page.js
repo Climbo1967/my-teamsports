@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteFooter } from "@/components/marketing";
+import ViewPing from "@/components/ViewPing";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
@@ -16,17 +16,16 @@ const FEATURES = [
 const SPORTS = [
   { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
   { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
-  { emoji: "🚩", name: "Flag Football", hover: "hover:border-pink-500/50 hover:bg-pink-500/10" },
   { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
   { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
   { emoji: "🥎", name: "Softball", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
   { emoji: "🏐", name: "Volleyball", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
-  { emoji: "🏒", name: "Hockey", hover: "hover:border-cyan-500/50 hover:bg-cyan-500/10" },
 ];
 
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <ViewPing pageKey="homepage" />
       {/* NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-[var(--color-navy)]/95 backdrop-blur-xl border-b border-white/5 px-6 h-[70px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3">
@@ -39,10 +38,8 @@ export default function Home() {
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
-          <a href="#scorekeeper" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Scorekeeper</a>
-          <Link href="/how-it-works" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</Link>
-          <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
-          <Link href="/faq" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">FAQ</Link>
+          <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
+          <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
             Get Started Free
@@ -79,7 +76,7 @@ export default function Home() {
           </h1>
 
           <p className="text-lg md:text-xl font-light text-slate-400 max-w-[640px] mx-auto mt-6 mb-9 leading-relaxed">
-            A beautiful website for your youth sports team — roster, schedule, stats, photos, game film, and live scorekeeping.
+            A beautiful website for your youth sports team — roster, schedule, stats, photos, and game film.
             Set up in 5 minutes. <span className="text-white font-normal">Parents never download an app, never create an account, never pay a dime.</span>
           </p>
 
@@ -148,68 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SCOREKEEPER SPOTLIGHT */}
-      <section id="scorekeeper" className="px-6 py-24 bg-[var(--color-navy)] relative scroll-mt-16">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
-        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          {/* copy */}
-          <div>
-            <div className="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold tracking-widest uppercase px-4 py-2 rounded-full mb-5">
-              ⚾ New for 2026
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">SCORE THE GAME.<br /><span className="text-[var(--color-accent-green)]">LIVE.</span></h2>
-            <p className="text-slate-400 text-lg leading-relaxed mb-8">
-              Keep score right from your phone — balls, strikes, hits, and a tap on the field for where every ball goes.
-              The score updates live on your team page, and your season stats keep themselves.
-            </p>
-            <div className="space-y-4 mb-8">
-              {[
-                { icon: "📲", title: "Live play-by-play", desc: "Tap balls, strikes, and outs. Touch the field to mark each hit. Parents watch the score update in real time." },
-                { icon: "📈", title: "Smart batter tendencies", desc: "Spray charts show where each hitter goes — and where your next three batters are likely to hit." },
-                { icon: "🎯", title: "Pitch counts & lineup help", desc: "Track every pitcher's count and rest, plus batting-order suggestions built from your own stats." },
-              ].map((f) => (
-                <div key={f.title} className="flex gap-4">
-                  <div className="text-2xl shrink-0">{f.icon}</div>
-                  <div>
-                    <h3 className="font-semibold text-white">{f.title}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">{f.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <a href="#demo" className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-3.5 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25">
-              SEE IT LIVE →
-            </a>
-          </div>
-          {/* live scoreboard mock */}
-          <div className="bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/[0.08] rounded-3xl p-8">
-            <div className="rounded-2xl border border-[var(--color-accent-green)]/30 bg-[var(--color-accent-green)]/[0.06] overflow-hidden">
-              <div className="flex items-center gap-2 px-5 py-2.5 border-b border-white/[0.06]">
-                <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent-green)] animate-live" />
-                <span className="text-xs font-bold uppercase tracking-widest text-[var(--color-accent-green)]">Live now</span>
-                <span className="text-xs text-slate-400 ml-auto">▼ 5th · 1 out</span>
-              </div>
-              <div className="flex items-center text-center py-5">
-                <div className="flex-1 px-2">
-                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">Raptors</p>
-                  <p className="font-[family-name:var(--font-oswald)] text-5xl font-bold text-white">7</p>
-                </div>
-                <div className="px-4">
-                  <p className="text-[10px] uppercase tracking-widest text-slate-500">Count</p>
-                  <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-white">1<span className="text-slate-600">-</span>2</p>
-                </div>
-                <div className="flex-1 px-2">
-                  <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">Eagles</p>
-                  <p className="font-[family-name:var(--font-oswald)] text-5xl font-bold text-white">4</p>
-                </div>
-              </div>
-              <p className="text-center text-xs text-slate-400 pb-3">At bat: <span className="text-white font-semibold">#4 Sam Rivera</span></p>
-            </div>
-            <p className="text-center text-xs text-slate-500 mt-4">Exactly what parents see on your team page.</p>
-          </div>
-        </div>
-      </section>
-
       {/* FEATURES */}
       <section id="features" className="px-6 py-24 bg-[var(--color-navy)] scroll-mt-16">
         <div className="text-center mb-16">
@@ -242,59 +177,28 @@ export default function Home() {
 
       {/* LIVE DEMO */}
       <section id="demo" className="px-6 py-24 bg-[var(--color-navy-mid)] scroll-mt-16">
-        <div className="max-w-[1040px] mx-auto text-center">
+        <div className="max-w-[700px] mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-3">DON&apos;T TAKE OUR WORD FOR IT</h2>
           <p className="text-slate-400 text-lg mb-10">
-            Tour real, live team sites — roster, stats, schedule, and live scorekeeping. Three sports, three games in progress right now.
+            Walk through a real, live team site — roster, stats, schedule, the works.
           </p>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
-              <div className="text-5xl mb-3">⚾</div>
-              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">RIVERSIDE RAPTORS 12U</h3>
-              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Baseball · Live game in progress</p>
-              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
+          <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-10">
+            <div className="text-5xl mb-3">⚾</div>
+            <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-6">RIVERSIDE RAPTORS 12U</h3>
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+              <div className="bg-black/20 rounded-xl px-6 py-3">
                 <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
                 <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">XK7M2P</p>
               </div>
-              <Link
-                href="/team/riverside-raptors-12u"
-                className="block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
-              >
-                TOUR THE BASEBALL DEMO →
-              </Link>
             </div>
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
-              <div className="text-5xl mb-3">🏀</div>
-              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">DOWNTOWN DRAGONS 16U</h3>
-              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Basketball · Live game in progress</p>
-              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
-                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
-                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">DRGN24</p>
-              </div>
-              <Link
-                href="/team/downtown-dragons-16u"
-                className="block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25"
-              >
-                TOUR THE BASKETBALL DEMO →
-              </Link>
-            </div>
-            <div className="bg-white/[0.03] border border-white/[0.08] rounded-3xl p-8">
-              <div className="text-5xl mb-3">🏈</div>
-              <h3 className="font-[family-name:var(--font-oswald)] text-2xl font-bold mb-1">WESTSIDE WOLVES 12U</h3>
-              <p className="text-xs uppercase tracking-widest text-slate-500 mb-6">Flag Football · Live game in progress</p>
-              <div className="bg-black/20 rounded-xl px-6 py-3 inline-block mb-6">
-                <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Demo Passcode</p>
-                <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">WVS24K</p>
-              </div>
-              <Link
-                href="/team/westside-wolves-12u"
-                className="block bg-orange-500 text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-8 py-4 rounded-xl hover:bg-orange-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-orange-500/25"
-              >
-                TOUR THE FLAG FOOTBALL DEMO →
-              </Link>
-            </div>
+            <Link
+              href="/team/riverside-raptors-12u"
+              className="inline-block bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-blue-600 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-blue-500/25"
+            >
+              TOUR THE DEMO TEAM →
+            </Link>
+            <p className="mt-4 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
           </div>
-          <p className="mt-6 text-xs text-slate-500">Enter the passcode when asked — just like a real parent would.</p>
         </div>
       </section>
 
@@ -319,7 +223,15 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <SiteFooter />
+      <footer className="px-6 py-12 text-center border-t border-white/5 bg-[var(--color-navy-mid)]">
+        <p className="font-[family-name:var(--font-oswald)] text-sm font-semibold text-slate-500 mb-3">MY-TEAM SPORTS.com</p>
+        <div className="flex justify-center gap-6 mb-4 text-xs">
+          <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
+          <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
+          <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
+        </div>
+        <p className="text-xs text-slate-600">&copy; 2026 My-Team Sports. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
