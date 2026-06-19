@@ -37,6 +37,8 @@ export default function AdminDirectory({ data }) {
     setTimeout(() => setCopied(false), 2000);
   }
 
+  const fmt = (n) => Number(n || 0).toLocaleString();
+
   const summary = [
     { label: "Coaches", value: totals.coaches, icon: "🧢" },
     { label: "Teams", value: totals.teams, icon: "🏟️" },
@@ -44,6 +46,8 @@ export default function AdminDirectory({ data }) {
     { label: "Events", value: totals.events, icon: "📅" },
     { label: "Photos", value: totals.photos, icon: "📸" },
     { label: "Subscribers", value: totals.subscribers, icon: "🔔" },
+    { label: "Homepage views", value: fmt(totals.homepage_views), icon: "🏠" },
+    { label: "Team-site views", value: fmt(totals.team_views), icon: "👁️" },
   ];
 
   return (
@@ -52,7 +56,7 @@ export default function AdminDirectory({ data }) {
       <p className="text-slate-400 mb-8">Who&apos;s using My-Team Sports, and tools to reach them.</p>
 
       {/* SUMMARY */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
         {summary.map((s) => (
           <div key={s.label} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-5 text-center">
             <div className="text-2xl mb-1">{s.icon}</div>
