@@ -4,6 +4,7 @@ import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord } from "@/lib/cons
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
 import LiveScoreBanner from "./LiveScoreBanner";
+import ViewPing from "@/components/ViewPing";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -36,6 +37,7 @@ export default async function TeamPage({ params }) {
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
+      <ViewPing pageKey="team" />
       {/* TEAM HEADER */}
       <header className="relative bg-gradient-to-b from-[#0d1f3c] to-[var(--color-navy)] border-b border-white/5 px-6 py-14 text-center overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_70%)]" />
