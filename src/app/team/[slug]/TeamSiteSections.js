@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
 import { videoEmbedUrl } from "@/lib/video";
+import PlayField from "@/components/PlayField";
 
 const NAV = [
   { id: "announcements", label: "News", icon: "💬" },
@@ -20,6 +21,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   const stats = site.stats || [];
   const rsvps = site.rsvps || [];
   const videos = site.videos || [];
+  const plays = site.plays || [];
   const [activePlayer, setActivePlayer] = useState(null);
   const [lightbox, setLightbox] = useState(null);
 
@@ -31,12 +33,15 @@ export default function TeamSiteSections({ site, slug, emoji }) {
 
   const playerPhotos = (playerId) => photos.filter((ph) => ph.player_id === playerId);
 
+  const playbookNav = plays.length ? [{ id: "playbook", label: "Playbook", icon: "✏️" }] : [];
+  const navItems = [...NAV.slice(0, 4), ...playbookNav, ...NAV.slice(4)];
+
   return (
     <>
       {/* SECTION NAV */}
       <nav className="sticky top-0 z-40 bg-[var(--color-navy)]/95 backdrop-blur-xl border-b border-white/5 px-4 overflow-x-auto">
         <div className="max-w-[1100px] mx-auto flex gap-1">
-          {NAV.map((n) => (
+          {navItems.map((n) => (
             <a
               key={n.id}
               href={`#${n.id}`}
@@ -54,6 +59,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
         <ScheduleSection events={events} players={players} rsvps={rsvps} slug={slug} />
         <RosterSection players={players} emoji={emoji} onSelect={setActivePlayer} />
         <StatsSection players={players} stats={stats} sport={team.sport} />
+        <PlaybookSection plays={plays} />
         <VideosSection videos={videos} />
         <NotesSection notes={notes} />
         <PhotosSection
@@ -553,6 +559,31 @@ function SubscribeButton({ slug }) {
 }
 
 /* ---------- Game Film ---------- */
+function PlaybookSection({ plays }) {
+  if (!plays || plays.length === 0) return null;
+  return (
+    <section id="playbook" className="scroll-mt-20">
+      <h2 className="text-2xl md:text-3xl font-bold mb-2">✏️ PLAYBOOK</h2>
+      <p className="text-slate-400 text-sm mb-6">Study the plays your coach drew up — routes, assignments, and notes.</p>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {plays.map((p) => (
+          <div key={p.id} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4">
+            <div className="rounded-xl overflow-hidden border border-white/10 bg-[#2f8a4a] mb-3">
+              <PlayField diagram={p.diagram} theme="turf" style={{ display: "block", width: "100%" }} />
+            </div>
+            <h3 className="font-bold text-white">{p.name}</h3>
+            <div className="flex flex-wrap gap-1.5 mt-1">
+              <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--color-accent-blue)]/15 text-[var(--color-accent-blue)] border border-blue-500/20">{p.category}</span>
+              {p.formation ? <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/5 text-slate-400 border border-white/10">{p.formation}</span> : null}
+            </div>
+            {p.notes ? <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed mt-2">{p.notes}</p> : null}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function VideosSection({ videos }) {
   if (videos.length === 0) return null;
   return (
