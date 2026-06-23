@@ -7,6 +7,17 @@ import {
   LINE_W, LINE_TOOLS, arrowHead, teeCap, polyStr, px, normalizeDiagram,
 } from "@/lib/playbook";
 
+// On the paper (print) theme, map bright on-turf colors to darker, ink-friendly
+// equivalents so routes and labels stay legible on white (incl. B&W printers).
+const INK = {
+  "#ffe14d": "#a16207", "#ffffff": "#1f2937", "#7cc4ff": "#1d4ed8",
+  "#34d27b": "#15803d", "#ff5d5d": "#dc2626", "#111827": "#111827",
+};
+function inkColor(color, theme) {
+  if (theme !== "paper") return color;
+  return INK[color] || color;
+}
+
 const MX = FIELD_MARGIN * VB.w;
 const MY = FIELD_MARGIN * VB.h;
 const X0 = MX, X1 = VB.w - MX;
@@ -108,9 +119,9 @@ export function TokenMark({ t }) {
   );
 }
 
-export function LineMark({ line }) {
+export function LineMark({ line, theme }) {
   const cfg = LINE_TOOLS[line.tool] || LINE_TOOLS.route;
-  const color = line.color || cfg.color;
+  const color = inkColor(line.color || cfg.color, theme);
   const pts = line.pts || [];
   if (pts.length < 2) return null;
   const prev = pts[pts.length - 2];
@@ -124,12 +135,12 @@ export function LineMark({ line }) {
   );
 }
 
-export function TextMark({ t, halo = "rgba(8,28,16,0.65)" }) {
+export function TextMark({ t, halo = "rgba(8,28,16,0.65)", theme }) {
   const [x, y] = px(t);
   return (
     <text
       x={x} y={y} dy="0.34em" textAnchor="middle"
-      fontSize={t.size || 30} fontWeight="800" fill={t.color || "#ffffff"}
+      fontSize={t.size || 30} fontWeight="800" fill={inkColor(t.color || "#ffffff", theme)}
       stroke={halo} strokeWidth="5" paintOrder="stroke"
       style={{ strokeLinejoin: "round" }}
     >
@@ -144,9 +155,9 @@ export default function PlayField({ diagram, theme = "turf", className = "", sty
   return (
     <svg viewBox={`0 0 ${VB.w} ${VB.h}`} className={className} style={style} preserveAspectRatio="xMidYMid meet">
       <FieldBackdrop theme={theme} los={d.los} />
-      {d.lines.map((l) => <LineMark key={l.id} line={l} />)}
+      {d.lines.map((l) => <LineMark key={l.id} line={l} theme={theme} />)}
       {d.tokens.map((t) => <TokenMark key={t.id} t={t} />)}
-      {d.texts.map((t) => <TextMark key={t.id} t={t} halo={halo} />)}
+      {d.texts.map((t) => <TextMark key={t.id} t={t} halo={halo} theme={theme} />)}
     </svg>
   );
 }
