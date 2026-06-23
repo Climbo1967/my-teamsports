@@ -12,9 +12,16 @@ import { sportLabel } from "@/lib/constants";
 
 const PRINT_CSS = `
   @page { size: portrait; margin: 14mm; }
-  @media print { .no-print { display: none !important; } .sheet { box-shadow: none !important; border: none !important; } }
   .sheet { page-break-after: always; break-after: page; }
   .sheet:last-child { page-break-after: auto; break-after: auto; }
+  @media print {
+    .no-print { display: none !important; }
+    html, body { background: #fff !important; }
+    body * { visibility: hidden !important; }
+    #pb-print, #pb-print * { visibility: visible !important; }
+    #pb-print { position: absolute; left: 0; top: 0; width: 100%; }
+    .sheet { box-shadow: none !important; border: none !important; }
+  }
 `;
 
 export default function PlaybookPrintPage({ params }) {
@@ -37,17 +44,11 @@ export default function PlaybookPrintPage({ params }) {
     })();
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (plays && plays.length > 0) {
-      const t = setTimeout(() => { try { window.print(); } catch {} }, 600);
-      return () => clearTimeout(t);
-    }
-  }, [plays]);
 
   if (plays === null) return <div style={{ padding: 40, fontFamily: "system-ui", color: "#333" }}>Loading playbook…</div>;
 
   return (
-    <div style={{ background: "#fff", color: "#111", minHeight: "100vh" }}>
+    <div id="pb-print" style={{ background: "#fff", color: "#111", minHeight: "100vh" }}>
       <style>{PRINT_CSS}</style>
 
       <div className="no-print" style={{ position: "sticky", top: 0, display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, padding: "12px 20px", background: "#0f1b33", color: "#fff" }}>
