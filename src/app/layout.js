@@ -51,11 +51,20 @@ export const metadata = {
     title: "My-Team Sports | Your Team. Your Way.",
     description: SITE_DESCRIPTION,
     locale: "en_US",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "My-Team Sports — free youth sports team websites, no app needed",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "My-Team Sports | Your Team. Your Way.",
     description: SITE_DESCRIPTION,
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -68,10 +77,44 @@ export const viewport = {
   themeColor: "#0a0e1a",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "My-Team Sports",
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon-512.png`,
+      description: SITE_DESCRIPTION,
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "My-Team Sports",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+    {
+      "@type": "SoftwareApplication",
+      name: "My-Team Sports",
+      applicationCategory: "SportsApplication",
+      operatingSystem: "Web, iOS, Android",
+      url: SITE_URL,
+      description: SITE_DESCRIPTION,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    },
+  ],
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-NPD6LYL7RF" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
