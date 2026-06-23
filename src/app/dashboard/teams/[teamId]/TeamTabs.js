@@ -13,6 +13,7 @@ const TABS = [
   { slug: "notes", label: "Coach's Notes", icon: "📝" },
   { slug: "photos", label: "Photos", icon: "📸" },
   { slug: "videos", label: "Game Film", icon: "🎬" },
+  { slug: "playbook", label: "Playbook", icon: "✏️" },
   { slug: "support", label: "Support", icon: "🛟" },
   { slug: "manual", label: "Manual", icon: "📖" },
   { slug: "settings", label: "Settings", icon: "⚙️" },
