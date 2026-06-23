@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ViewPing from "@/components/ViewPing";
+import PlayField from "@/components/PlayField";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
@@ -30,6 +31,28 @@ const DEMO_TEAMS = [
   { emoji: "🚩", name: "Westside Wolves 12U", sport: "Flag Football", slug: "westside-wolves-12u", passcode: "WVS24K" },
 ];
 
+const DEMO_PLAY = {
+  v: 1, los: 0.5,
+  tokens: [
+    { id: "c", kind: "c", x: 0.50, y: 0.57 },
+    { id: "q", kind: "qb", x: 0.50, y: 0.67 },
+    { id: "r", kind: "rb", x: 0.37, y: 0.66 },
+    { id: "w1", kind: "wr", x: 0.16, y: 0.57 },
+    { id: "w2", kind: "wr", x: 0.84, y: 0.57 },
+    { id: "o1", kind: "o", x: 0.63, y: 0.57 },
+    { id: "x1", kind: "x", x: 0.30, y: 0.40 },
+    { id: "x2", kind: "x", x: 0.62, y: 0.40 },
+    { id: "x3", kind: "x", x: 0.50, y: 0.28 },
+  ],
+  lines: [
+    { id: "l1", tool: "route", color: "#ffe14d", pts: [{ x: 0.16, y: 0.55 }, { x: 0.16, y: 0.30 }, { x: 0.16, y: 0.16 }] },
+    { id: "l2", tool: "route", color: "#ffe14d", pts: [{ x: 0.84, y: 0.55 }, { x: 0.84, y: 0.44 }, { x: 0.66, y: 0.33 }] },
+    { id: "l3", tool: "route", color: "#7cc4ff", pts: [{ x: 0.37, y: 0.64 }, { x: 0.24, y: 0.60 }, { x: 0.12, y: 0.58 }] },
+    { id: "l4", tool: "route", color: "#ffe14d", pts: [{ x: 0.63, y: 0.55 }, { x: 0.63, y: 0.40 }, { x: 0.74, y: 0.30 }] },
+  ],
+  texts: [],
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -46,6 +69,7 @@ export default function Home() {
         </Link>
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
+          <a href="#playbook" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Playbook</a>
           <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
@@ -171,6 +195,34 @@ export default function Home() {
               <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* PLAYBOOK SHOWCASE */}
+      <section id="playbook" className="px-6 py-24 bg-[var(--color-navy)] scroll-mt-16">
+        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <span className="inline-block text-xs uppercase tracking-widest text-[var(--color-accent-green)] mb-3">New · Football &amp; Flag Football</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">THE COACH&apos;S PLAY BOARD</h2>
+            <p className="text-slate-400 text-lg leading-relaxed mb-6">
+              Draw up plays on a real dry-erase board, right from your phone. Drop players, drag routes, blocks, and motion — then save them to your team playbook and print clean sheets for practice or the sideline.
+            </p>
+            <ul className="space-y-2 text-slate-300 mb-8">
+              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Tap to place players, drag to draw routes</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Save your whole playbook in one place</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Players study the plays on the team site</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Print a single play or the full book</li>
+            </ul>
+            <Link href="/signup" className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25">
+              START YOUR PLAYBOOK →
+            </Link>
+          </div>
+          <div className="order-1 lg:order-2 mx-auto w-full max-w-[380px]">
+            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#2f8a4a]">
+              <PlayField diagram={DEMO_PLAY} theme="turf" style={{ display: "block", width: "100%" }} />
+            </div>
+            <p className="text-center text-xs text-slate-500 mt-3">A sample flag-football pass concept</p>
+          </div>
         </div>
       </section>
 
