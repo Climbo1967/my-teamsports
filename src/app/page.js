@@ -297,6 +297,11 @@ export default function Home() {
           <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
           <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
         </div>
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-xs">
+          <Link href="/privacy" className="text-slate-500 hover:text-white transition-colors">Privacy</Link>
+          <Link href="/terms" className="text-slate-500 hover:text-white transition-colors">Terms</Link>
+          <Link href="/child-safety" className="text-slate-500 hover:text-white transition-colors">Child Safety</Link>
+        </div>
         <p className="text-xs text-slate-600">&copy; 2026 My-Team Sports. All rights reserved.</p>
       </footer>
     </div>
