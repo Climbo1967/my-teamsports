@@ -135,7 +135,7 @@ export default function ManualPage() {
           </Section>
 
           <Section id="notes" title="Coach's Notes">
-            <p>A private space for your own notes &mdash; practice plans, reminders, scouting thoughts. Notes are for coaches only and are never shown to parents.</p>
+            <p>Share practice plans, reminders, and game prep with your team. <strong>Coach&apos;s Notes are published on your public team page</strong>, so parents and players see them alongside announcements &mdash; keep anything private (like opponent scouting) out of here.</p>
           </Section>
 
           <Section id="photos" title="Photos">

@@ -73,9 +73,17 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
     setPending(null);
   }
 
-  // "us" score: attribute to a player when the sport tracks individual stats.
+  // "us" score: attribute to a player only when this scoring play actually
+  // credits a season stat. For 'sum' sports (basketball) every point counts; for
+  // 'unit' sports only the increment worth one unit does (a 6-pt TD, not a field
+  // goal / XP / 2pt) -- matching what rollup_scoreboard_stats actually records.
+  function scoreCredits(points) {
+    if (!cfg.statKey) return false;
+    if (cfg.statMode === "sum") return true;
+    return points === cfg.statUnit;
+  }
   function scoreUs(points) {
-    if (cfg.statKey) setPending({ points });
+    if (scoreCredits(points)) setPending({ points });
     else applyScore("us", points, null);
   }
 

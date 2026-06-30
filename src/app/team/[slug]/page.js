@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
-import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord } from "@/lib/constants";
+import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord, hexToRgba, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
 import LiveScoreBanner from "./LiveScoreBanner";
@@ -34,13 +34,15 @@ export default async function TeamPage({ params }) {
 
   const emoji = SPORT_EMOJI[site.team.sport] || "🏆";
   const record = computeRecord(site.events);
+  const teamColor = site.team.primary_color || DEFAULT_TEAM_COLOR;
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
       <ViewPing pageKey="team" />
       {/* TEAM HEADER */}
       <header className="relative bg-gradient-to-b from-[#0d1f3c] to-[var(--color-navy)] border-b border-white/5 px-6 py-14 text-center overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.08),transparent_70%)]" />
+        <div className="absolute inset-x-0 top-0 h-1.5" style={{ backgroundColor: teamColor }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-full" style={{ background: `radial-gradient(ellipse at top, ${hexToRgba(teamColor, 0.12)}, transparent 70%)` }} />
         <div className="relative">
           {site.team.logo_url ? (
             // eslint-disable-next-line @next/next/no-img-element

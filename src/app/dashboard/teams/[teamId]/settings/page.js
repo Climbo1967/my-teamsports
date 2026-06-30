@@ -4,8 +4,8 @@ import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
-import { SPORTS } from "@/lib/constants";
-import { Input, Select, Label, Button, Card, ErrorText, Spinner } from "@/components/ui";
+import { SPORTS, DEFAULT_TEAM_COLOR } from "@/lib/constants";
+import { Input, Select, Label, Button, Card, ColorPicker, ErrorText, Spinner } from "@/components/ui";
 import StaffCard from "../StaffCard";
 
 const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -27,6 +27,7 @@ export default function SettingsPage({ params }) {
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("");
   const [logoUrl, setLogoUrl] = useState(null);
+  const [primaryColor, setPrimaryColor] = useState(DEFAULT_TEAM_COLOR);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState(null);
@@ -39,6 +40,7 @@ export default function SettingsPage({ params }) {
       setSport(data.sport);
       setSeason(data.season || "");
       setLogoUrl(data.logo_url);
+      setPrimaryColor(data.primary_color || DEFAULT_TEAM_COLOR);
     }
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -67,6 +69,7 @@ export default function SettingsPage({ params }) {
       sport,
       season: season.trim() || null,
       logo_url: logoUrl,
+      primary_color: primaryColor,
     }).eq("id", teamId);
     setBusy(false);
     if (err) { setError(err.message); return; }
@@ -135,6 +138,11 @@ export default function SettingsPage({ params }) {
               <Label>Season</Label>
               <Input value={season} onChange={(e) => setSeason(e.target.value)} maxLength={40} placeholder="Spring 2026" />
             </div>
+          </div>
+          <div>
+            <Label>Team color</Label>
+            <ColorPicker value={primaryColor} onChange={setPrimaryColor} />
+            <p className="text-xs text-slate-500 mt-1.5">Tints your public team page header.</p>
           </div>
           <ErrorText>{error}</ErrorText>
           <Button type="submit" variant="green" disabled={busy || !name.trim()}>

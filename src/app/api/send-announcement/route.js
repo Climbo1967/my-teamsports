@@ -28,11 +28,12 @@ export async function POST(request) {
     bcc: emails,
     replyTo: user.email,
     subject: cleanSubject,
-    text: `${cleanBody}\n\n— ${team.name}\nhttps://my-teamsports.com/team/${team.slug}`,
+    text: `${cleanBody}\n\n— ${team.name}\nhttps://my-teamsports.com/team/${team.slug}\n\nUnsubscribe: https://my-teamsports.com/unsubscribe?team=${team.slug}`,
     html: basicHtml({
       heading: cleanSubject,
       body: cleanBody,
       footer: `Sent by ${team.name} via My-Team Sports · my-teamsports.com/team/${team.slug}`,
+      unsubscribeUrl: `https://my-teamsports.com/unsubscribe?team=${team.slug}`,
     }),
   });
 

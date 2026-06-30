@@ -20,7 +20,7 @@ export default function AnnouncementsPage({ params }) {
     const [{ data, error: err }, { data: subs }] = await Promise.all([
       supabase.from("announcements").select("*").eq("team_id", teamId)
         .order("pinned", { ascending: false }).order("created_at", { ascending: false }),
-      supabase.from("subscribers").select("email").eq("team_id", teamId),
+      supabase.from("subscribers").select("id, email, name").eq("team_id", teamId),
     ]);
     if (err) setError(err.message);
     setPosts(data || []);
@@ -75,6 +75,13 @@ export default function AnnouncementsPage({ params }) {
     }
   }
 
+  async function removeSubscriber(id) {
+    if (!confirm("Remove this subscriber? They'll stop getting emailed announcements.")) return;
+    const { error: err } = await supabase.from("subscribers").delete().eq("id", id);
+    if (err) { setError(err.message); return; }
+    setSubscribers((subs) => subs.filter((s) => s.id !== id));
+  }
+
   if (!posts) return <Spinner />;
 
   return (
@@ -96,6 +103,24 @@ export default function AnnouncementsPage({ params }) {
           </Button>
         </form>
       </Card>
+
+      {subscribers.length > 0 && (
+        <Card className="mb-8">
+          <h3 className="font-bold text-lg mb-1">SUBSCRIBERS ({subscribers.length})</h3>
+          <p className="text-sm text-slate-400 mb-4">Parents who opted in to email announcements. Remove anyone who asks to stop.</p>
+          <div className="space-y-2">
+            {subscribers.map((s) => (
+              <div key={s.id} className="flex items-center justify-between gap-3 bg-white/[0.03] rounded-lg px-3 py-2">
+                <div className="min-w-0">
+                  <p className="text-sm text-white truncate">{s.name || s.email}</p>
+                  {s.name && <p className="text-xs text-slate-500 truncate">{s.email}</p>}
+                </div>
+                <button onClick={() => removeSubscriber(s.id)} className="text-xs text-red-400 hover:underline whitespace-nowrap">Remove</button>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
 
       {posts.length === 0 ? (
         <EmptyState icon="💬" text="No announcements yet. Your first post will appear at the top of the team site." />

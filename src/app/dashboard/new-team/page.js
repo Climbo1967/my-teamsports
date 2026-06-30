@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import { ColorPicker } from "@/components/ui";
+import { DEFAULT_TEAM_COLOR } from "@/lib/constants";
 
 const SPORTS = [
   { value: "baseball", label: "Baseball", emoji: "⚾" },
@@ -40,6 +42,7 @@ export default function NewTeamPage() {
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("Spring 2026");
+  const [color, setColor] = useState(DEFAULT_TEAM_COLOR);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(null);
@@ -76,7 +79,7 @@ export default function NewTeamPage() {
           : `${baseSlug}-${Math.floor(1000 + Math.random() * 9000)}`;
       const { data, error: insertError } = await supabase
         .from("teams")
-        .insert({ coach_id: user.id, name: name.trim(), sport, season, slug, passcode })
+        .insert({ coach_id: user.id, name: name.trim(), sport, season, slug, passcode, primary_color: color })
         .select()
         .single();
       if (!insertError) {
@@ -195,6 +198,11 @@ export default function NewTeamPage() {
             placeholder="Spring 2026"
             className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-400 mb-3">Team Color</label>
+          <ColorPicker value={color} onChange={setColor} />
         </div>
 
         {error && <p className="text-red-400 text-sm">{error}</p>}

@@ -270,3 +270,20 @@ export function gameResultString(our, opp) {
   const wlt = our > opp ? "W" : our < opp ? "L" : "T";
   return `${wlt} ${our}-${opp}`;
 }
+
+// ============ TEAM BRAND COLOR ============
+// Themes the public team page header. Stored in teams.primary_color.
+export const DEFAULT_TEAM_COLOR = "#3b82f6";
+
+export const TEAM_COLORS = [
+  "#3b82f6", "#0ea5e9", "#14b8a6", "#22c55e", "#eab308",
+  "#f97316", "#ef4444", "#ec4899", "#a855f7", "#64748b",
+];
+
+// Parse "#rrggbb" into an rgba() string; falls back to the default brand blue.
+export function hexToRgba(hex, alpha = 1) {
+  const m = /^#?([0-9a-fA-F]{6})$/.exec(String(hex || "").trim());
+  const int = m ? parseInt(m[1], 16) : 0x3b82f6;
+  const r = (int >> 16) & 255, g = (int >> 8) & 255, b = int & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}

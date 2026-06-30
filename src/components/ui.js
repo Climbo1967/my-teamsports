@@ -1,5 +1,7 @@
 "use client";
 
+import { TEAM_COLORS } from "@/lib/constants";
+
 export function Input(props) {
   return (
     <input
@@ -72,6 +74,31 @@ export function Spinner() {
   return (
     <div className="flex justify-center py-16">
       <div className="w-8 h-8 border-2 border-white/10 border-t-[var(--color-accent-blue)] rounded-full animate-spin" />
+    </div>
+  );
+}
+
+export function ColorPicker({ value, onChange }) {
+  const current = value || "#3b82f6";
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {TEAM_COLORS.map((c) => {
+        const on = value && value.toLowerCase() === c.toLowerCase();
+        return (
+          <button
+            key={c}
+            type="button"
+            onClick={() => onChange(c)}
+            aria-label={`Use color ${c}`}
+            className={`w-8 h-8 rounded-full border-2 transition-transform ${on ? "border-white scale-110" : "border-white/20 hover:border-white/50"}`}
+            style={{ backgroundColor: c }}
+          />
+        );
+      })}
+      <label className="relative w-8 h-8 rounded-full border-2 border-dashed border-white/30 flex items-center justify-center cursor-pointer text-slate-300 text-sm" title="Custom color">
+        +
+        <input type="color" value={current} onChange={(e) => onChange(e.target.value)} className="absolute inset-0 opacity-0 cursor-pointer" />
+      </label>
     </div>
   );
 }

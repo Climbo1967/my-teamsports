@@ -189,19 +189,24 @@ function StatsEditor({ teamId, event, players, sport, onClose }) {
   const supabase = createClient();
   const keys = STAT_KEYS[sport] || STAT_KEYS.other;
   const [values, setValues] = useState(null); // { playerId: { key: value } }
+  const [liveScored, setLiveScored] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase
-        .from("stats").select("player_id, stat_key, value").eq("event_id", event.id);
+      const [{ data }, { count: abCount }, { count: spCount }] = await Promise.all([
+        supabase.from("stats").select("player_id, stat_key, value").eq("event_id", event.id),
+        supabase.from("at_bats").select("id", { count: "exact", head: true }).eq("event_id", event.id),
+        supabase.from("scoring_plays").select("id", { count: "exact", head: true }).eq("event_id", event.id),
+      ]);
       const map = {};
       for (const row of data || []) {
         map[row.player_id] = map[row.player_id] || {};
         map[row.player_id][row.stat_key] = Number(row.value);
       }
       setValues(map);
+      setLiveScored(((abCount || 0) + (spCount || 0)) > 0);
     })();
   }, [event.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -222,8 +227,9 @@ function StatsEditor({ teamId, event, players, sport, onClose }) {
         }
       }
     }
-    // Replace this game's stats wholesale (handles cleared values)
-    const { error: delErr } = await supabase.from("stats").delete().eq("event_id", event.id);
+    // Replace only the columns this grid manages, so stats in other columns
+    // (e.g. live-scored keys, or a manually-kept column like Runs) are left untouched.
+    const { error: delErr } = await supabase.from("stats").delete().eq("event_id", event.id).in("stat_key", keys.map((k) => k.key));
     if (delErr) { setError(delErr.message); setBusy(false); return; }
     if (rows.length > 0) {
       const { error: insErr } = await supabase.from("stats").insert(rows);
@@ -244,6 +250,12 @@ function StatsEditor({ teamId, event, players, sport, onClose }) {
         <span className="text-xs text-slate-500">{d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
       </div>
       <p className="text-sm text-slate-400 mb-4">Enter what you tracked — blanks are fine. Totals appear on each player&apos;s card on the team site.</p>
+
+      {liveScored && (
+        <div className="mb-4 rounded-lg border border-amber-500/30 bg-amber-500/[0.06] px-3 py-2 text-xs text-amber-200/90">
+          This game was scored live — these numbers come from the live scorer. Manual edits here will be replaced if you reopen and score the live game again.
+        </div>
+      )}
 
       {players.length === 0 ? (
         <p className="text-sm text-slate-500">Add players to the roster first.</p>

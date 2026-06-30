@@ -130,6 +130,7 @@ function GameScorer({ teamId, event, players, onBack }) {
   const [tendencyByPlayer, setTendencyByPlayer] = useState({}); // season tendencies
   const [editingLineup, setEditingLineup] = useState(false);
   const [pending, setPending] = useState(null); // result object awaiting field/RBI input
+  const [undoStack, setUndoStack] = useState([]); // batting actions undoable this session
   const [error, setError] = useState(null);
 
   const load = useCallback(async () => {
@@ -196,15 +197,24 @@ function GameScorer({ teamId, event, players, onBack }) {
     }
   }
 
+  // Snapshot the game fields a batting action mutates, so Undo can restore them exactly.
+  function gameSnapshot() {
+    return {
+      our_score: game.our_score, current_spot: game.current_spot, outs: game.outs,
+      half: game.half, inning: game.inning, balls: game.balls, strikes: game.strikes,
+    };
+  }
+
   // ---- commit a plate-appearance result for our batter ----
   async function commitResult(result, { rbi = 0, hit_x = null, hit_y = null, hit_type = null }) {
     setPending(null);
+    const prev = gameSnapshot();
     const row = {
       team_id: teamId, event_id: event.id, player_id: currentBatter?.player_id || null,
       inning: game.inning, half: game.half, result: result.key,
       rbi, runs: rbi, hit_x, hit_y, hit_type, balls: game.balls, strikes: game.strikes,
     };
-    const { error: e } = await supabase.from("at_bats").insert(row);
+    const { data: inserted, error: e } = await supabase.from("at_bats").insert(row).select("id").single();
     if (e) { setError(e.message); return; }
     const def = AB_RESULTS.find((r) => r.key === result.key);
     const isOut = def?.out;
@@ -216,15 +226,32 @@ function GameScorer({ teamId, event, players, onBack }) {
     };
     await patchGame(patch);
     await rollup();
+    setUndoStack((s) => [...s, { atBatId: inserted?.id, prev, label: def?.short || result.key }]);
   }
 
   async function stolenBase() {
     if (!weBat || !currentBatter) return;
-    const { error: e } = await supabase.from("at_bats").insert({
+    const prev = gameSnapshot();
+    const { data: inserted, error: e } = await supabase.from("at_bats").insert({
       team_id: teamId, event_id: event.id, player_id: currentBatter.player_id,
       inning: game.inning, half: game.half, result: "stolen_base",
-    });
+    }).select("id").single();
     if (e) { setError(e.message); return; }
+    await rollup();
+    setUndoStack((s) => [...s, { atBatId: inserted?.id, prev, label: "SB" }]);
+  }
+
+  // Undo the most recent batting action this session: remove its at-bat row,
+  // restore the exact scoreboard state, and re-roll season stats.
+  async function undoLast() {
+    if (undoStack.length === 0) return;
+    const entry = undoStack[undoStack.length - 1];
+    setUndoStack((s) => s.slice(0, -1));
+    if (entry.atBatId) {
+      const { error: e } = await supabase.from("at_bats").delete().eq("id", entry.atBatId);
+      if (e) { setError(e.message); setUndoStack((s) => [...s, entry]); return; }
+    }
+    if (entry.prev) await patchGame(entry.prev);
     await rollup();
   }
 
@@ -347,6 +374,9 @@ function GameScorer({ teamId, event, players, onBack }) {
               tendencyByPlayer={tendencyByPlayer}
               onPitch={pitch} onResult={(r) => setPending(r)} onSteal={stolenBase}
               onEditLineup={() => setEditingLineup(true)}
+              canUndo={undoStack.length > 0}
+              undoLabel={undoStack.length ? undoStack[undoStack.length - 1].label : null}
+              onUndo={undoLast}
             />
           ) : (
             <PitchingPanel
@@ -528,7 +558,7 @@ function Stepper({ label, value, onChange }) {
 }
 
 // ============================ BATTING PANEL ============================
-function BattingPanel({ batter, game, lineup, tendencyByPlayer, onPitch, onResult, onSteal, onEditLineup }) {
+function BattingPanel({ batter, game, lineup, tendencyByPlayer, onPitch, onResult, onSteal, onEditLineup, canUndo, undoLabel, onUndo }) {
   const len = lineup.length;
   // Next three spots in the order after the current batter.
   const upcoming = len
@@ -541,7 +571,12 @@ function BattingPanel({ batter, game, lineup, tendencyByPlayer, onPitch, onResul
           <p className="text-xs uppercase tracking-widest text-slate-500">Now batting · {ordinal(game.current_spot)}</p>
           <p className="text-2xl font-bold text-white">{batter ? <>{batter.jersey_number ? <span className="text-slate-500">#{batter.jersey_number} </span> : ""}{batter.name}</> : "—"}</p>
         </div>
-        <button onClick={onEditLineup} className="text-xs text-slate-400 hover:text-white">edit lineup</button>
+        <div className="flex items-center gap-3">
+          {canUndo && (
+            <button onClick={onUndo} className="text-xs font-semibold text-amber-300/90 hover:text-amber-200 whitespace-nowrap">↩ Undo {undoLabel || "last"}</button>
+          )}
+          <button onClick={onEditLineup} className="text-xs text-slate-400 hover:text-white whitespace-nowrap">edit lineup</button>
+        </div>
       </div>
 
       {batter && <BatterTendency playerId={batter.player_id} />}

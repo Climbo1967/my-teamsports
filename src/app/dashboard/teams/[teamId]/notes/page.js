@@ -31,7 +31,7 @@ export default function NotesPage({ params }) {
   return (
     <div className="max-w-3xl">
       <div className="flex items-center justify-between mb-6">
-        <p className="text-slate-400 text-sm">Practice plans, game prep, and strategy — one place for everything from the coaching staff.</p>
+        <p className="text-slate-400 text-sm">Practice plans, game prep, and strategy — posted right on your public team page for parents and players to see.</p>
         <Button variant="green" onClick={() => setEditing("new")}>+ New Note</Button>
       </div>
 
@@ -95,6 +95,9 @@ function NoteForm({ teamId, note, onDone, onCancel }) {
   return (
     <Card className="mb-6 border-blue-500/25">
       <h3 className="font-bold text-lg mb-4">{note ? "EDIT NOTE" : "NEW NOTE"}</h3>
+      <p className="text-xs text-amber-300/90 mb-4">
+        <strong>Visible to parents.</strong> Coach&apos;s Notes are published on your public team page &mdash; keep private info (like opponent scouting) out of here.
+      </p>
       <form onSubmit={save} className="space-y-4">
         <div>
           <Label>Title *</Label>

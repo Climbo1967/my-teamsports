@@ -4,8 +4,9 @@ import PlayField from "@/components/PlayField";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
+  { icon: "📡", title: "Live Scores", desc: "Score the game live from your phone: runs, innings, the clock, and the final all update on your team page in real time. Parents who can't make it follow along from anywhere." },
   { icon: "📅", title: "Schedule + RSVP", desc: "Games, practices, and events — and parents RSVP right on the site. Coaches see exactly who's in before the first pitch." },
-  { icon: "📊", title: "Stats & Standings", desc: "Track game stats in a simple grid. Season totals, batting averages, points per game, and your win-loss record — computed automatically." },
+  { icon: "📊", title: "Stats & Records", desc: "Track game stats in a simple grid. Season totals, batting averages, points per game, and your win-loss record — computed automatically." },
   { icon: "🎬", title: "Game Film", desc: "Paste a YouTube or Vimeo link and the full game plays right on your team site. Free, unlimited, no subscriptions for anyone." },
   { icon: "💬", title: "Message Board", desc: "Announcements that stay informational, uplifting, and positive. Pin the important stuff. Email subscribers with one click. No group-text chaos." },
   { icon: "📝", title: "Coach's Notes", desc: "Practice plans, game prep, and strategy in one place the whole team can find — not buried in a 200-message thread." },

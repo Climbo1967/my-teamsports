@@ -35,7 +35,7 @@ export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
 }
 
 // Wrap plain text into a simple branded HTML email.
-export function basicHtml({ heading, body, footer }) {
+export function basicHtml({ heading, body, footer, unsubscribeUrl }) {
   const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const paras = String(body || "")
     .split(/\n{2,}/)
@@ -50,7 +50,7 @@ export function basicHtml({ heading, body, footer }) {
       ${heading ? `<h1 style="margin:0 0 16px;font-size:20px;color:#0f172a;">${esc(heading)}</h1>` : ""}
       ${paras}
     </div>
-    ${footer ? `<div style="padding:16px 28px;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px;">${esc(footer)}</div>` : ""}
+    ${footer || unsubscribeUrl ? `<div style="padding:16px 28px;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px;">${esc(footer || "")}${unsubscribeUrl ? `<div style="margin-top:8px;"><a href="${esc(unsubscribeUrl)}" style="color:#64748b;text-decoration:underline;">Unsubscribe from these emails</a></div>` : ""}</div>` : ""}
   </div>
 </body></html>`;
 }
