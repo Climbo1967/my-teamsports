@@ -41,6 +41,7 @@ export function FieldBackdrop({ theme = "turf", los = 0.52, field = "gridiron" }
   if (field === "pitch") return <SoccerBackdrop theme={theme} />;
   if (field === "court") return <BasketballBackdrop theme={theme} />;
   if (field === "rink") return <RinkBackdrop theme={theme} />;
+  if (field === "vcourt") return <VolleyballBackdrop theme={theme} />;
   const c = THEMES[theme] || THEMES.turf;
   const losY = Y0 + los * INNER_H;
   const bands = [];
@@ -234,6 +235,38 @@ function RinkBackdrop({ theme = "turf" }) {
   );
 }
 
+// Volleyball court backdrop (portrait; net across the middle).
+function VolleyballBackdrop({ theme = "turf" }) {
+  const paper = theme === "paper";
+  const free = paper ? "#ffffff" : "#2f5d8a";
+  const court = paper ? "#f3f7fb" : "#d99a5b";
+  const lineC = paper ? "#475569" : "#ffffff";
+  const net = paper ? "#334155" : "#f8fafc";
+  const vcx = (X0 + X1) / 2;
+  const FW = X1 - X0;
+  const midY = Y0 + INNER_H / 2;
+  const courtW = INNER_H * 0.5;
+  const cx0 = vcx - courtW / 2, cx1 = vcx + courtW / 2;
+  const attackOff = INNER_H / 6;
+  const postOut = FW * 0.04;
+  return (
+    <g>
+      <rect x="0" y="0" width={VB.w} height={VB.h} fill={free} />
+      <rect x={cx0} y={Y0} width={courtW} height={INNER_H} fill={court} stroke={lineC} strokeWidth={5} />
+      <line x1={cx0} y1={midY - attackOff} x2={cx1} y2={midY - attackOff} stroke={lineC} strokeWidth={4} />
+      <line x1={cx0} y1={midY + attackOff} x2={cx1} y2={midY + attackOff} stroke={lineC} strokeWidth={4} />
+      <rect x={cx0} y={midY - 11} width={courtW} height={22} fill="none" stroke={net} strokeWidth={3} />
+      {Array.from({ length: 16 }).map((_, i) => {
+        const x = cx0 + (courtW * (i + 0.5)) / 16;
+        return <line key={i} x1={x} y1={midY - 10} x2={x} y2={midY + 10} stroke={net} strokeWidth={1.5} strokeOpacity={0.85} />;
+      })}
+      <line x1={cx0 - postOut} y1={midY - 22} x2={cx0 - postOut} y2={midY + 22} stroke={net} strokeWidth={5} />
+      <line x1={cx1 + postOut} y1={midY - 22} x2={cx1 + postOut} y2={midY + 22} stroke={net} strokeWidth={5} />
+      <line x1={cx0 - postOut} y1={midY} x2={cx1 + postOut} y2={midY} stroke={net} strokeWidth={2} />
+    </g>
+  );
+}
+
 export function TokenMark({ t }) {
   const s = tokenStyle(t);
   const [cx, cy] = px(t);
@@ -268,6 +301,18 @@ export function TokenMark({ t }) {
         <line x1={cx - rr} y1={cy} x2={cx + rr} y2={cy} stroke="#7c2d12" strokeWidth="2.5" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy - rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy + rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
+      </g>
+    );
+  }
+
+  if (s.shape === "volleyball") {
+    const rr = r * 0.82;
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={rr} fill="#ffffff" stroke="#1f2937" strokeWidth="3" />
+        <path d={`M ${cx} ${cy - rr} Q ${cx - rr * 0.9} ${cy} ${cx - rr * 0.3} ${cy + rr * 0.95}`} fill="none" stroke="#1f2937" strokeWidth="2" />
+        <path d={`M ${cx + rr} ${cy - rr * 0.3} Q ${cx} ${cy} ${cx - rr * 0.6} ${cy + rr * 0.7}`} fill="none" stroke="#1f2937" strokeWidth="2" />
+        <path d={`M ${cx - rr} ${cy - rr * 0.3} Q ${cx} ${cy} ${cx + rr * 0.6} ${cy + rr * 0.7}`} fill="none" stroke="#1f2937" strokeWidth="2" />
       </g>
     );
   }
