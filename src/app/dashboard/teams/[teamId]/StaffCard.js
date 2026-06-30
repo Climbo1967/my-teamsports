@@ -50,6 +50,16 @@ export default function StaffCard({ teamId }) {
     load();
   }
 
+  async function setRole(member, role) {
+    const msg = role === "owner"
+      ? `Make ${member.email} a head coach? They get full control, including deleting the team and managing staff.`
+      : `Change ${member.email} to an assistant coach?`;
+    if (!confirm(msg)) return;
+    const { error: err } = await supabase.from("team_coaches").update({ role }).eq("id", member.id);
+    if (err) { setError(err.message); return; }
+    load();
+  }
+
   if (!staff) return null;
 
   return (
@@ -68,8 +78,17 @@ export default function StaffCard({ teamId }) {
                 {member.role === "owner" ? "Head Coach" : member.user_id ? "Assistant" : "Invited — not signed up yet"}
               </span>
             </div>
-            {isOwner && member.role !== "owner" && (
-              <button onClick={() => remove(member)} className="text-xs text-red-400 hover:underline">Remove</button>
+            {isOwner && member.user_id !== myId && (
+              <div className="flex gap-3 items-center">
+                {member.role === "owner" ? (
+                  <button onClick={() => setRole(member, "coach")} className="text-xs text-slate-400 hover:text-white">Make assistant</button>
+                ) : (
+                  <>
+                    {member.user_id && <button onClick={() => setRole(member, "owner")} className="text-xs text-slate-400 hover:text-white">Make head coach</button>}
+                    <button onClick={() => remove(member)} className="text-xs text-red-400 hover:underline">Remove</button>
+                  </>
+                )}
+              </div>
             )}
           </li>
         ))}

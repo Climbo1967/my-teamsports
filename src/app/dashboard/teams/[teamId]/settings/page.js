@@ -62,8 +62,14 @@ export default function SettingsPage({ params }) {
 
   async function save(e) {
     e.preventDefault();
-    setBusy(true);
     setError(null);
+    if (sport !== team.sport) {
+      const { count } = await supabase.from("stats").select("id", { count: "exact", head: true }).eq("team_id", teamId);
+      if ((count || 0) > 0 && !confirm("Heads up: this team already has recorded stats under its current sport. Changing the sport will leave those stats labeled with the old columns, so they may stop showing on the team site. Change it anyway?")) {
+        return;
+      }
+    }
+    setBusy(true);
     const { error: err } = await supabase.from("teams").update({
       name: name.trim(),
       sport,

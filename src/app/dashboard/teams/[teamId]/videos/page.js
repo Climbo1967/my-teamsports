@@ -12,6 +12,7 @@ export default function VideosPage({ params }) {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [gameDate, setGameDate] = useState("");
+  const [editingId, setEditingId] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
@@ -26,7 +27,21 @@ export default function VideosPage({ params }) {
 
   useEffect(() => { load(); }, [load]);
 
-  async function add(e) {
+  function startEdit(v) {
+    setEditingId(v.id);
+    setTitle(v.title || "");
+    setUrl(v.url || "");
+    setGameDate(v.game_date || "");
+    setError(null);
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function cancelEdit() {
+    setEditingId(null);
+    setTitle(""); setUrl(""); setGameDate(""); setError(null);
+  }
+
+  async function save(e) {
     e.preventDefault();
     setError(null);
     if (!isValidVideoUrl(url)) {
@@ -34,14 +49,13 @@ export default function VideosPage({ params }) {
       return;
     }
     setBusy(true);
-    const { error: err } = await supabase.from("videos").insert({
-      team_id: teamId,
-      title: title.trim(),
-      url: url.trim(),
-      game_date: gameDate || null,
-    });
+    const payload = { title: title.trim(), url: url.trim(), game_date: gameDate || null };
+    const { error: err } = editingId
+      ? await supabase.from("videos").update(payload).eq("id", editingId)
+      : await supabase.from("videos").insert({ team_id: teamId, ...payload });
     setBusy(false);
     if (err) { setError(err.message); return; }
+    setEditingId(null);
     setTitle("");
     setUrl("");
     setGameDate("");
@@ -59,12 +73,12 @@ export default function VideosPage({ params }) {
   return (
     <div>
       <Card className="mb-8 border-blue-500/25 max-w-2xl">
-        <h3 className="font-bold text-lg mb-1">ADD GAME FILM</h3>
+        <h3 className="font-bold text-lg mb-1">{editingId ? "EDIT VIDEO" : "ADD GAME FILM"}</h3>
         <p className="text-sm text-slate-400 mb-4">
           Record to YouTube (set it to <span className="text-white">Unlisted</span>) or Vimeo, then paste the link here.
           It plays right on the team site — only people with the passcode see it.
         </p>
-        <form onSubmit={add} className="space-y-4">
+        <form onSubmit={save} className="space-y-4">
           <div>
             <Label>Title *</Label>
             <Input value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={120} placeholder="vs Eastside Eagles — Full Game" />
@@ -85,9 +99,12 @@ export default function VideosPage({ params }) {
             </p>
           )}
           <ErrorText>{error}</ErrorText>
-          <Button type="submit" variant="green" disabled={busy || !title.trim() || !url.trim()}>
-            {busy ? "Adding..." : "🎬 Add video"}
-          </Button>
+          <div className="flex gap-3">
+            <Button type="submit" variant="green" disabled={busy || !title.trim() || !url.trim()}>
+              {busy ? "Saving..." : editingId ? "Save changes" : "🎬 Add video"}
+            </Button>
+            {editingId && <Button type="button" variant="ghost" onClick={cancelEdit}>Cancel</Button>}
+          </div>
         </form>
       </Card>
 
@@ -124,7 +141,10 @@ export default function VideosPage({ params }) {
                       </p>
                     )}
                   </div>
-                  <button onClick={() => remove(v)} className="text-xs text-red-400 hover:underline shrink-0">Delete</button>
+                  <div className="flex gap-3 shrink-0">
+                    <button onClick={() => startEdit(v)} className="text-xs text-[var(--color-accent-blue)] hover:underline">Edit</button>
+                    <button onClick={() => remove(v)} className="text-xs text-red-400 hover:underline">Delete</button>
+                  </div>
                 </div>
               </Card>
             );

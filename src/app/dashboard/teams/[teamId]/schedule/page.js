@@ -135,6 +135,7 @@ function EventRow({ event, past, players, rsvps, onEdit, onDelete, onStats }) {
             {d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
             {event.location ? ` · ${event.location}` : ""}
           </p>
+          {event.notes && <p className="text-xs text-slate-500 mt-1 whitespace-pre-wrap">{event.notes}</p>}
         </div>
         <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${
           event.event_type === "game"
@@ -305,6 +306,19 @@ function StatsEditor({ teamId, event, players, sport, onClose }) {
   );
 }
 
+function parseResult(str) {
+  const m = /^\s*([WLT])\s+(\d+)\s*-\s*(\d+)/i.exec(str || "");
+  if (!m) return { outcome: "", us: "", them: "" };
+  return { outcome: m[1].toUpperCase(), us: m[2], them: m[3] };
+}
+
+function composeResult(outcome, us, them) {
+  if (!outcome) return null;
+  const u = String(us).trim() === "" ? 0 : Math.max(0, Number(us) || 0);
+  const t = String(them).trim() === "" ? 0 : Math.max(0, Number(them) || 0);
+  return `${outcome} ${u}-${t}`;
+}
+
 function toLocalInputValue(iso) {
   if (!iso) return "";
   const d = new Date(iso);
@@ -319,7 +333,10 @@ function EventForm({ teamId, event, onDone, onCancel }) {
   const [title, setTitle] = useState(event?.title || "");
   const [location, setLocation] = useState(event?.location || "");
   const [startsAt, setStartsAt] = useState(toLocalInputValue(event?.starts_at));
-  const [result, setResult] = useState(event?.result || "");
+  const _pr = parseResult(event?.result);
+  const [outcome, setOutcome] = useState(_pr.outcome);
+  const [usScore, setUsScore] = useState(_pr.us);
+  const [themScore, setThemScore] = useState(_pr.them);
   const [notes, setNotes] = useState(event?.notes || "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
@@ -337,7 +354,7 @@ function EventForm({ teamId, event, onDone, onCancel }) {
       title: title.trim() || null,
       location: location.trim() || null,
       starts_at: new Date(startsAt).toISOString(),
-      result: result.trim() || null,
+      result: composeResult(outcome, usScore, themScore),
       notes: notes.trim() || null,
     };
     const query = event
@@ -386,10 +403,33 @@ function EventForm({ teamId, event, onDone, onCancel }) {
           </div>
         </div>
 
-        {(isPast || result) && type === "game" && (
+        {(isPast || outcome) && type === "game" && (
           <div>
-            <Label>Result (e.g. &quot;W 7-3&quot;)</Label>
-            <Input value={result} onChange={(e) => setResult(e.target.value)} maxLength={20} placeholder="W 7-3" />
+            <Label>Result</Label>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex gap-1.5">
+                {[["W", "Win"], ["L", "Loss"], ["T", "Tie"]].map(([o, lbl]) => (
+                  <button key={o} type="button" onClick={() => setOutcome(outcome === o ? "" : o)}
+                    className={`px-3 py-2 rounded-lg text-sm font-bold border transition-colors ${
+                      outcome === o
+                        ? o === "W" ? "bg-green-500/20 border-green-500/40 text-green-300"
+                          : o === "L" ? "bg-red-500/20 border-red-500/40 text-red-300"
+                          : "bg-slate-500/20 border-slate-400/40 text-slate-200"
+                        : "bg-white/[0.05] border-white/10 text-slate-400 hover:text-white"
+                    }`}>
+                    {lbl}
+                  </button>
+                ))}
+              </div>
+              {outcome && (
+                <div className="flex items-center gap-2">
+                  <div className="w-20"><Input type="number" min="0" value={usScore} onChange={(e) => setUsScore(e.target.value)} placeholder="Us" className="text-center" /></div>
+                  <span className="text-slate-500">-</span>
+                  <div className="w-20"><Input type="number" min="0" value={themScore} onChange={(e) => setThemScore(e.target.value)} placeholder="Them" className="text-center" /></div>
+                </div>
+              )}
+            </div>
+            <p className="text-xs text-slate-500 mt-1.5">Counts toward your win-loss record on the team site.</p>
           </div>
         )}
 

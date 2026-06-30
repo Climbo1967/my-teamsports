@@ -73,6 +73,7 @@ export default function Home() {
           <a href="#playbook" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Playbook</a>
           <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
+          <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
             Get Started Free
@@ -293,9 +294,13 @@ export default function Home() {
       {/* FOOTER */}
       <footer className="px-6 py-12 text-center border-t border-white/5 bg-[var(--color-navy-mid)]">
         <p className="font-[family-name:var(--font-oswald)] text-sm font-semibold text-slate-500 mb-3">MY-TEAM SPORTS.com</p>
-        <div className="flex justify-center gap-6 mb-4 text-xs">
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4 text-xs">
           <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
           <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
+          <Link href="/pricing" className="text-slate-500 hover:text-white transition-colors">Pricing</Link>
+          <Link href="/how-it-works" className="text-slate-500 hover:text-white transition-colors">How It Works</Link>
+          <Link href="/faq" className="text-slate-500 hover:text-white transition-colors">FAQ</Link>
+          <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
           <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
         </div>
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-xs">

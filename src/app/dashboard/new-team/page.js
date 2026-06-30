@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { ColorPicker } from "@/components/ui";
 import { DEFAULT_TEAM_COLOR } from "@/lib/constants";
+import { uploadTeamImage } from "@/lib/upload";
 
 const SPORTS = [
   { value: "baseball", label: "Baseball", emoji: "⚾" },
@@ -43,6 +44,9 @@ export default function NewTeamPage() {
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("Spring 2026");
   const [color, setColor] = useState(DEFAULT_TEAM_COLOR);
+  const [logoUrl, setLogoUrl] = useState(null);
+  const [logoBusy, setLogoBusy] = useState(false);
+  const fileRef = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(null);
@@ -100,6 +104,21 @@ export default function NewTeamPage() {
     setCreated(team);
   }
 
+  async function handleLogo(file) {
+    if (!file || !created) return;
+    setLogoBusy(true);
+    setError(null);
+    try {
+      const supabase = createClient();
+      const u = await uploadTeamImage(supabase, `${created.id}/logo`, file);
+      await supabase.from("teams").update({ logo_url: u }).eq("id", created.id);
+      setLogoUrl(u);
+    } catch (err) {
+      setError(err.message);
+    }
+    setLogoBusy(false);
+  }
+
   if (created) {
     const link = `my-teamsports.com/team/${created.slug}`;
     return (
@@ -125,6 +144,19 @@ export default function NewTeamPage() {
             📋 Copy invite message
           </button>
         </div>
+        <div className="mb-8">
+          {logoUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={logoUrl} alt="Team logo" className="w-20 h-20 rounded-xl object-cover border border-white/10 mx-auto mb-3" />
+          )}
+          <input ref={fileRef} type="file" accept="image/*" onChange={(e) => handleLogo(e.target.files?.[0])} className="hidden" />
+          <button type="button" onClick={() => fileRef.current?.click()} disabled={logoBusy}
+            className="text-sm font-medium text-slate-400 hover:text-white border border-white/10 px-5 py-2.5 rounded-lg transition-colors disabled:opacity-50">
+            {logoBusy ? "Uploading..." : logoUrl ? "Change logo" : "🛡️ Add a team logo (optional)"}
+          </button>
+          {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
+        </div>
+
         <div className="flex justify-center gap-4">
           <Link
             href={`/team/${created.slug}`}

@@ -42,6 +42,15 @@ export default function PlaybookPage({ params }) {
     load();
   }
 
+  async function move(index, dir) {
+    const arr = [...plays];
+    const j = index + dir;
+    if (j < 0 || j >= arr.length) return;
+    [arr[index], arr[j]] = [arr[j], arr[index]];
+    setPlays(arr.map((p, i) => ({ ...p, sort_order: i })));
+    await Promise.all(arr.map((p, i) => supabase.from("plays").update({ sort_order: i }).eq("id", p.id)));
+  }
+
   function openPrint(playId) {
     const base = `/dashboard/teams/${teamId}/playbook/print`;
     window.open(playId ? `${base}?id=${playId}` : base, "_blank");
@@ -91,7 +100,7 @@ export default function PlaybookPage({ params }) {
         <EmptyState icon="📋" text="No plays yet. Tap “New Play” to open the board and draw your first one." />
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
-          {plays.map((p) => (
+          {plays.map((p, i) => (
             <Card key={p.id} className="flex gap-4 items-stretch">
               <button onClick={() => setEditing(p)} className="shrink-0 rounded-lg overflow-hidden border border-white/10 bg-[#2f8a4a]" style={{ width: 104 }} title="Edit play">
                 <PlayField diagram={p.diagram} theme="turf" style={{ display: "block", width: "100%" }} />
@@ -110,6 +119,9 @@ export default function PlaybookPage({ params }) {
                   <button onClick={() => openPrint(p.id)} className="text-slate-300 hover:underline">Print</button>
                   <button onClick={() => duplicate(p)} className="text-slate-300 hover:underline">Duplicate</button>
                   <button onClick={() => remove(p)} className="text-red-400 hover:underline">Delete</button>
+                  <span className="flex-1" />
+                  <button onClick={() => move(i, -1)} disabled={i === 0} title="Move up" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↑</button>
+                  <button onClick={() => move(i, 1)} disabled={i === plays.length - 1} title="Move down" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↓</button>
                 </div>
               </div>
             </Card>
