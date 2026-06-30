@@ -204,13 +204,13 @@ export default function Home() {
       <section id="playbook" className="px-6 py-24 bg-[var(--color-navy)] scroll-mt-16">
         <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <span className="inline-block text-xs uppercase tracking-widest text-[var(--color-accent-green)] mb-3">New · Football, Flag &amp; Soccer</span>
+            <span className="inline-block text-xs uppercase tracking-widest text-[var(--color-accent-green)] mb-3">New · Now for every sport</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">THE COACH&apos;S PLAY BOARD</h2>
             <p className="text-slate-400 text-lg leading-relaxed mb-6">
-              Draw up plays on a real dry-erase board, right from your phone. Drop players, drag routes, blocks, and motion — then save them to your team playbook and print clean sheets for practice or the sideline.
+              Draw up plays on a real dry-erase board, right from your phone — football routes, soccer set pieces, basketball sets, hockey breakouts, volleyball rotations, baseball alignments. Drop players, draw the play, then save it to your team playbook and print clean sheets for practice or the sideline.
             </p>
             <ul className="space-y-2 text-slate-300 mb-8">
-              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Tap to place players, drag to draw routes</li>
+              <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Tap to place players, drag to draw the play</li>
               <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Save your whole playbook in one place</li>
               <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Players study the plays on the team site</li>
               <li className="flex gap-2"><span className="text-[var(--color-accent-green)]">✓</span> Print a single play or the full book</li>
@@ -219,11 +219,25 @@ export default function Home() {
               START YOUR PLAYBOOK →
             </Link>
           </div>
-          <div className="order-1 lg:order-2 mx-auto w-full max-w-[380px]">
-            <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#2f8a4a]">
-              <PlayField diagram={DEMO_PLAY} theme="turf" style={{ display: "block", width: "100%" }} />
+          <div className="order-1 lg:order-2 mx-auto w-full max-w-[420px]">
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { sport: "football", label: "Football", diagram: DEMO_PLAY },
+                { sport: "soccer", label: "Soccer" },
+                { sport: "basketball", label: "Basketball" },
+                { sport: "hockey", label: "Hockey" },
+                { sport: "volleyball", label: "Volleyball" },
+                { sport: "baseball", label: "Baseball" },
+              ].map((f) => (
+                <div key={f.sport} className="text-center">
+                  <div className="rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                    <PlayField diagram={f.diagram || {}} theme="turf" sport={f.sport} style={{ display: "block", width: "100%" }} />
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-1.5">{f.label}</p>
+                </div>
+              ))}
             </div>
-            <p className="text-center text-xs text-slate-500 mt-3">A sample flag-football pass concept</p>
+            <p className="text-center text-xs text-slate-500 mt-4">One board, every sport — football, flag football, soccer, basketball, hockey, volleyball, baseball &amp; softball.</p>
           </div>
         </div>
       </section>

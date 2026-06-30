@@ -42,6 +42,7 @@ export function FieldBackdrop({ theme = "turf", los = 0.52, field = "gridiron" }
   if (field === "court") return <BasketballBackdrop theme={theme} />;
   if (field === "rink") return <RinkBackdrop theme={theme} />;
   if (field === "vcourt") return <VolleyballBackdrop theme={theme} />;
+  if (field === "diamond") return <DiamondBackdrop theme={theme} />;
   const c = THEMES[theme] || THEMES.turf;
   const losY = Y0 + los * INNER_H;
   const bands = [];
@@ -267,6 +268,48 @@ function VolleyballBackdrop({ theme = "turf" }) {
   );
 }
 
+// Baseball / softball diamond backdrop (portrait; home plate at the bottom).
+function DiamondBackdrop({ theme = "turf" }) {
+  const paper = theme === "paper";
+  const grassA = paper ? "#ffffff" : "#2f8a4a";
+  const grassB = paper ? "#f1f7f2" : "#2b8044";
+  const dirt = paper ? "#e7d6c4" : "#c8895a";
+  const lineC = paper ? "#475569" : "#ffffff";
+  const fenceC = paper ? "#94a3b8" : "#fde047";
+  const dcx = (X0 + X1) / 2;
+  const FW = X1 - X0;
+  const homeY = Y1 - INNER_H * 0.10;
+  const D = INNER_H * 0.32;
+  const second = [dcx, homeY - D];
+  const first = [dcx + D / 2, homeY - D / 2];
+  const third = [dcx - D / 2, homeY - D / 2];
+  const Rf = FW * 0.66;
+  const stripes = 10, sH = INNER_H / stripes;
+  const arc = (axx, ayy, r, a0, a1, n = 44) => { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * (i / n); o.push(`${(axx + r * Math.cos(a)).toFixed(1)},${(ayy + r * Math.sin(a)).toFixed(1)}`); } return o.join(" "); };
+  const rp = [dcx + Rf * Math.cos(-Math.PI / 4), homeY + Rf * Math.sin(-Math.PI / 4)];
+  const lpole = [dcx + Rf * Math.cos(-3 * Math.PI / 4), homeY + Rf * Math.sin(-3 * Math.PI / 4)];
+  const diamondPts = `${dcx},${homeY} ${first[0].toFixed(1)},${first[1].toFixed(1)} ${second[0].toFixed(1)},${second[1].toFixed(1)} ${third[0].toFixed(1)},${third[1].toFixed(1)}`;
+  const baseSq = (x, y, s = 11) => `${(x - s).toFixed(1)},${y.toFixed(1)} ${x.toFixed(1)},${(y - s).toFixed(1)} ${(x + s).toFixed(1)},${y.toFixed(1)} ${x.toFixed(1)},${(y + s).toFixed(1)}`;
+  return (
+    <g>
+      <rect x="0" y="0" width={VB.w} height={VB.h} fill={grassA} />
+      {Array.from({ length: stripes }).map((_, i) => (i % 2 === 1 ? <rect key={i} x={X0} y={Y0 + i * sH} width={FW} height={sH} fill={grassB} /> : null))}
+      <rect x={X0} y={Y0} width={FW} height={INNER_H} fill="none" stroke={lineC} strokeOpacity={paper ? 1 : 0.5} strokeWidth={4} />
+      <polyline points={arc(dcx, homeY, Rf, -Math.PI / 4, -3 * Math.PI / 4)} fill="none" stroke={fenceC} strokeWidth={6} />
+      <polygon points={diamondPts} fill={dirt} />
+      <line x1={dcx} y1={homeY} x2={rp[0].toFixed(1)} y2={rp[1].toFixed(1)} stroke={lineC} strokeWidth={4} />
+      <line x1={dcx} y1={homeY} x2={lpole[0].toFixed(1)} y2={lpole[1].toFixed(1)} stroke={lineC} strokeWidth={4} />
+      <polygon points={diamondPts} fill="none" stroke={lineC} strokeWidth={3} />
+      <circle cx={dcx} cy={(homeY - D / 2).toFixed(1)} r={FW * 0.045} fill={dirt} stroke={lineC} strokeWidth={2} />
+      <line x1={dcx - 9} y1={(homeY - D / 2).toFixed(1)} x2={dcx + 9} y2={(homeY - D / 2).toFixed(1)} stroke={lineC} strokeWidth={3} />
+      <polygon points={baseSq(first[0], first[1])} fill={lineC} />
+      <polygon points={baseSq(second[0], second[1])} fill={lineC} />
+      <polygon points={baseSq(third[0], third[1])} fill={lineC} />
+      <polygon points={`${dcx - 11},${(homeY - 5).toFixed(1)} ${dcx + 11},${(homeY - 5).toFixed(1)} ${dcx + 11},${(homeY + 5).toFixed(1)} ${dcx},${(homeY + 14).toFixed(1)} ${dcx - 11},${(homeY + 5).toFixed(1)}`} fill={lineC} />
+    </g>
+  );
+}
+
 export function TokenMark({ t }) {
   const s = tokenStyle(t);
   const [cx, cy] = px(t);
@@ -301,6 +344,17 @@ export function TokenMark({ t }) {
         <line x1={cx - rr} y1={cy} x2={cx + rr} y2={cy} stroke="#7c2d12" strokeWidth="2.5" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy - rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy + rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
+      </g>
+    );
+  }
+
+  if (s.shape === "baseball") {
+    const rr = r * 0.82;
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={rr} fill="#ffffff" stroke="#9ca3af" strokeWidth="2.5" />
+        <path d={`M ${cx - rr * 0.55} ${cy - rr * 0.7} Q ${cx - rr * 0.05} ${cy} ${cx - rr * 0.55} ${cy + rr * 0.7}`} fill="none" stroke="#dc2626" strokeWidth="2" />
+        <path d={`M ${cx + rr * 0.55} ${cy - rr * 0.7} Q ${cx + rr * 0.05} ${cy} ${cx + rr * 0.55} ${cy + rr * 0.7}`} fill="none" stroke="#dc2626" strokeWidth="2" />
       </g>
     );
   }
