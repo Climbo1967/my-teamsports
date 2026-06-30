@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 
@@ -11,6 +12,14 @@ export default function AdminDirectory({ data }) {
   const [statusFilter, setStatusFilter] = useState("all");
   const [copied, setCopied] = useState(false);
   const [subject, setSubject] = useState("");
+  const router = useRouter();
+
+  // Keep the console live: soft-refresh the server data every 30s. Re-runs the
+  // admin_overview fetch and reconciles in place, preserving filters and scroll.
+  useEffect(() => {
+    const id = setInterval(() => router.refresh(), 30000);
+    return () => clearInterval(id);
+  }, [router]);
 
   const sports = useMemo(
     () => [...new Set(teams.map((t) => t.sport))].sort(),
@@ -54,7 +63,7 @@ export default function AdminDirectory({ data }) {
   return (
     <div>
       <h1 className="text-3xl md:text-4xl font-bold mb-1">ADMIN</h1>
-      <p className="text-slate-400 mb-8">Who&apos;s using My-Team Sports, and tools to reach them.</p>
+      <p className="text-slate-400 mb-8">Who&apos;s using My-Team Sports, and tools to reach them. <span className="text-slate-600">· live &mdash; refreshes every 30s</span></p>
 
       {/* SUMMARY */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
