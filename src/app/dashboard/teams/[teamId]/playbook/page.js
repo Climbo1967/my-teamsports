@@ -14,6 +14,7 @@ export default function PlaybookPage({ params }) {
   const [sport, setSport] = useState(null);
   const [plays, setPlays] = useState(null);
   const [editing, setEditing] = useState(null); // play object | "new" | null
+  const [catFilter, setCatFilter] = useState("All");
   const [error, setError] = useState(null);
 
   const load = useCallback(async () => {
@@ -87,6 +88,9 @@ export default function PlaybookPage({ params }) {
     );
   }
 
+  const cats = [...new Set(plays.map((p) => p.category).filter(Boolean))];
+  const shown = catFilter === "All" ? plays : plays.filter((p) => p.category === catFilter);
+
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
@@ -101,11 +105,24 @@ export default function PlaybookPage({ params }) {
 
       <ErrorText>{error}</ErrorText>
 
+      {plays.length > 0 && cats.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-5">
+          {["All", ...cats].map((cf) => (
+            <button key={cf} onClick={() => setCatFilter(cf)}
+              className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${catFilter === cf ? "bg-[var(--color-accent-blue)] border-[var(--color-accent-blue)] text-white" : "bg-white/[0.04] border-white/10 text-slate-300 hover:border-white/30"}`}>
+              {cf}
+            </button>
+          ))}
+        </div>
+      )}
+
       {plays.length === 0 ? (
         <EmptyState icon="📋" text="No plays yet. Tap “New Play” to open the board and draw your first one." />
+      ) : shown.length === 0 ? (
+        <EmptyState icon="📋" text={`No ${catFilter} plays yet.`} />
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
-          {plays.map((p, i) => (
+          {shown.map((p, i) => (
             <Card key={p.id} className="flex gap-4 items-stretch">
               <button onClick={() => setEditing(p)} className="shrink-0 rounded-lg overflow-hidden border border-white/10 bg-[#2f8a4a]" style={{ width: 104 }} title="Edit play">
                 <PlayField diagram={p.diagram} theme="turf" sport={sport} style={{ display: "block", width: "100%" }} />
@@ -128,9 +145,13 @@ export default function PlaybookPage({ params }) {
                   <button onClick={() => openPrint(p.id)} className="text-slate-300 hover:underline">Print</button>
                   <button onClick={() => duplicate(p)} className="text-slate-300 hover:underline">Duplicate</button>
                   <button onClick={() => remove(p)} className="text-red-400 hover:underline">Delete</button>
-                  <span className="flex-1" />
-                  <button onClick={() => move(i, -1)} disabled={i === 0} title="Move up" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↑</button>
-                  <button onClick={() => move(i, 1)} disabled={i === plays.length - 1} title="Move down" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↓</button>
+                  {catFilter === "All" && (
+                    <>
+                      <span className="flex-1" />
+                      <button onClick={() => move(i, -1)} disabled={i === 0} title="Move up" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↑</button>
+                      <button onClick={() => move(i, 1)} disabled={i === plays.length - 1} title="Move down" className="text-slate-300 hover:underline disabled:opacity-30 disabled:no-underline">↓</button>
+                    </>
+                  )}
                 </div>
               </div>
             </Card>

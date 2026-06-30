@@ -21,6 +21,7 @@ export default function AdminDirectory({ data }) {
     return coaches.filter((c) => {
       if (roleFilter === "owner" && !c.roles.includes("owner")) return false;
       if (roleFilter === "coach" && !c.roles.includes("coach")) return false;
+      if (roleFilter === "none" && c.roles.length > 0) return false;
       if (sportFilter !== "all" && !c.sports.includes(sportFilter)) return false;
       if (statusFilter === "signed_up" && !c.signed_up) return false;
       if (statusFilter === "invited" && c.signed_up) return false;
@@ -76,6 +77,7 @@ export default function AdminDirectory({ data }) {
               <option value="all">All coaches</option>
               <option value="owner">Head coaches only</option>
               <option value="coach">Assistant coaches only</option>
+              <option value="none">No team yet</option>
             </Select>
           </div>
           <div>

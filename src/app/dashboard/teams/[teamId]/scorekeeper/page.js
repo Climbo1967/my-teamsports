@@ -381,6 +381,8 @@ function GameScorer({ teamId, event, players, onBack }) {
           teamId={teamId} event={event} lineup={lineup}
           onEditLineup={() => setEditingLineup(true)}
           onStart={async (isHome) => {
+            const { data: liveOther } = await supabase.from("game_scores").select("event_id").eq("team_id", teamId).eq("status", "in_progress").neq("event_id", event.id).limit(1);
+            if (liveOther && liveOther.length && !confirm("Another game is still marked live for this team. Starting this one makes it the live game on your team page (the other stays in progress until you End it). Continue?")) return;
             const { data, error: e } = await supabase.from("game_scores")
               .insert({ team_id: teamId, event_id: event.id, is_home: isHome, status: "in_progress" })
               .select().single();
