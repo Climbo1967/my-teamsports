@@ -39,6 +39,7 @@ export function tokenStyle(t) {
 
 export function FieldBackdrop({ theme = "turf", los = 0.52, field = "gridiron" }) {
   if (field === "pitch") return <SoccerBackdrop theme={theme} />;
+  if (field === "court") return <BasketballBackdrop theme={theme} />;
   const c = THEMES[theme] || THEMES.turf;
   const losY = Y0 + los * INNER_H;
   const bands = [];
@@ -131,6 +132,53 @@ function SoccerBackdrop({ theme = "turf" }) {
   );
 }
 
+// Basketball half-court backdrop (portrait; hoop at the top).
+function BasketballBackdrop({ theme = "turf" }) {
+  const paper = theme === "paper";
+  const woodA = paper ? "#ffffff" : "#c98a4e";
+  const woodB = paper ? "#f1f7f2" : "#c0824a";
+  const line = paper ? "#6b7280" : "#ffffff";
+  const lineOp = paper ? 1 : 0.92;
+  const bcx = (X0 + X1) / 2;
+  const FW = X1 - X0;
+  const hoopY = Y0 + INNER_H * 0.055;
+  const laneW = FW * 0.34, laneH = INNER_H * 0.36;
+  const ftY = Y0 + laneH, ftR = FW * 0.17;
+  const tpX = FW * 0.42, tpR = FW * 0.55;
+  const endY = hoopY + Math.sqrt(Math.max(0, tpR * tpR - tpX * tpX));
+  const ccR = FW * 0.16;
+  const stripes = 10, sH = INNER_H / stripes;
+  const lp = { stroke: line, strokeOpacity: lineOp, strokeWidth: 4, fill: "none" };
+  const arc = (axx, ayy, r, a0, a1, n = 40) => {
+    const o = [];
+    for (let i = 0; i <= n; i++) { const ang = a0 + (a1 - a0) * (i / n); o.push(`${(axx + r * Math.cos(ang)).toFixed(1)},${(ayy + r * Math.sin(ang)).toFixed(1)}`); }
+    return o.join(" ");
+  };
+  const tA = Math.acos(Math.max(-1, Math.min(1, tpX / tpR)));
+  return (
+    <g>
+      <rect x="0" y="0" width={VB.w} height={VB.h} fill={woodA} />
+      {Array.from({ length: stripes }).map((_, i) => (i % 2 === 1 ? <rect key={i} x={X0} y={Y0 + i * sH} width={FW} height={sH} fill={woodB} /> : null))}
+      <rect x={X0} y={Y0} width={FW} height={INNER_H} fill="none" stroke={line} strokeOpacity={lineOp} strokeWidth={5} />
+      {/* backboard + rim */}
+      <line x1={bcx - FW * 0.09} y1={Y0 + INNER_H * 0.022} x2={bcx + FW * 0.09} y2={Y0 + INNER_H * 0.022} stroke={line} strokeOpacity={lineOp} strokeWidth={6} />
+      <circle cx={bcx} cy={hoopY} r={FW * 0.03} {...lp} />
+      {/* lane (key) + free-throw circle */}
+      <rect x={bcx - laneW / 2} y={Y0} width={laneW} height={laneH} {...lp} />
+      <circle cx={bcx} cy={ftY} r={ftR} {...lp} />
+      {/* three-point line: straight sides + arc */}
+      <line x1={bcx - tpX} y1={Y0} x2={bcx - tpX} y2={endY} {...lp} />
+      <line x1={bcx + tpX} y1={Y0} x2={bcx + tpX} y2={endY} {...lp} />
+      <polyline points={arc(bcx, hoopY, tpR, tA, Math.PI - tA)} {...lp} />
+      {/* restricted area under the rim */}
+      <polyline points={arc(bcx, hoopY, FW * 0.09, 0.18, Math.PI - 0.18)} {...lp} />
+      {/* halfcourt line + center half-circle (bottom) */}
+      <line x1={X0} y1={Y1} x2={X1} y2={Y1} {...lp} />
+      <polyline points={arc(bcx, Y1, ccR, Math.PI, 2 * Math.PI)} {...lp} />
+    </g>
+  );
+}
+
 export function TokenMark({ t }) {
   const s = tokenStyle(t);
   const [cx, cy] = px(t);
@@ -152,6 +200,19 @@ export function TokenMark({ t }) {
         <circle cx={cx} cy={cy} r={r * 0.82} fill="#ffffff" stroke="#111827" strokeWidth="3" />
         <polygon points={penta} fill="#111827" />
         {[0, 1, 2, 3, 4].map((kk) => { const ang = -Math.PI / 2 + (kk * 2 * Math.PI) / 5; return <line key={kk} x1={cx + rp * Math.cos(ang)} y1={cy + rp * Math.sin(ang)} x2={cx + r * 0.78 * Math.cos(ang + Math.PI / 5)} y2={cy + r * 0.78 * Math.sin(ang + Math.PI / 5)} stroke="#111827" strokeWidth="2.5" />; })}
+      </g>
+    );
+  }
+
+  if (s.shape === "basketball") {
+    const rr = r * 0.82;
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={rr} fill="#f97316" stroke="#7c2d12" strokeWidth="3" />
+        <line x1={cx} y1={cy - rr} x2={cx} y2={cy + rr} stroke="#7c2d12" strokeWidth="2.5" />
+        <line x1={cx - rr} y1={cy} x2={cx + rr} y2={cy} stroke="#7c2d12" strokeWidth="2.5" />
+        <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy - rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
+        <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy + rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
       </g>
     );
   }

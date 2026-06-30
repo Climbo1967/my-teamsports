@@ -51,6 +51,7 @@ export const TOKENS = {
   gk:   { label: "GK", shape: "circle", color: "#ffe14d", text: "#3a2c00" },
   cone: { label: "",   shape: "cone",   color: "#fb923c", text: "#ffffff" },
   sball:{ label: "",   shape: "soccerball", color: "#ffffff", text: "#111827" },
+  bball:{ label: "",   shape: "basketball", color: "#f97316", text: "#111827" },
 };
 
 // Order shown in the toolbar.
@@ -148,24 +149,32 @@ export function isEmptyDiagram(d) {
 }
 
 // Sports with a play board. Football/flag use the gridiron; soccer uses the pitch.
-export const BOARD_SPORTS = ["football", "flag_football", "soccer"];
+export const BOARD_SPORTS = ["football", "flag_football", "soccer", "basketball"];
 export function hasBoard(sport) {
   return BOARD_SPORTS.includes(sport);
 }
 
 // Which field backdrop a sport draws on.
 export function fieldForSport(sport) {
-  return sport === "soccer" ? "pitch" : "gridiron";
+  if (sport === "soccer") return "pitch";
+  if (sport === "basketball") return "court";
+  return "gridiron";
 }
 
 // Token tools offered in the editor, per sport.
 export const SOCCER_TOKEN_TOOLS = ["o", "x", "gk", "sball", "cone"];
+export const BASKETBALL_TOKEN_TOOLS = ["o", "x", "bball", "cone"];
 export function tokenToolsForSport(sport) {
-  return sport === "soccer" ? SOCCER_TOKEN_TOOLS : TOKEN_TOOLS;
+  if (sport === "soccer") return SOCCER_TOKEN_TOOLS;
+  if (sport === "basketball") return BASKETBALL_TOKEN_TOOLS;
+  return TOKEN_TOOLS;
 }
 
 // Play categories, per sport.
 export const SOCCER_CATEGORIES = ["Attack", "Defense", "Set Piece", "Drill"];
+export const BASKETBALL_CATEGORIES = ["Offense", "Defense", "Inbound", "Drill"];
 export function playCategoriesForSport(sport) {
-  return sport === "soccer" ? SOCCER_CATEGORIES : PLAY_CATEGORIES;
+  if (sport === "soccer") return SOCCER_CATEGORIES;
+  if (sport === "basketball") return BASKETBALL_CATEGORIES;
+  return PLAY_CATEGORIES;
 }
