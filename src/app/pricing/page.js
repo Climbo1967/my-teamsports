@@ -46,6 +46,7 @@ export default function PricingPage() {
             <span className="font-[family-name:var(--font-oswald)] text-7xl font-bold text-white">$0</span>
             <span className="text-slate-400 mb-3 text-lg">/ 2026 season</span>
           </div>
+          <p className="text-sm text-slate-300 mb-1">Then <span className="text-white font-semibold">$10 per team</span> for the 2027 season.</p>
           <p className="text-slate-400 mb-8">Stand up your whole team in about 5 minutes.</p>
           <ul className="text-left space-y-3 mb-9">
             {INCLUDED.map((item) => (
@@ -85,7 +86,7 @@ export default function PricingPage() {
           <div className="space-y-6">
             {[
               { q: "Is it really free?", a: "Yes. Coaches pay nothing for the entire 2026 season, and parents never pay at all. You can build a full team site without entering a credit card." },
-              { q: "What happens after the 2026 season?", a: "We'll always keep a free tier for parent access. If we introduce paid coach features later, you'll get plenty of notice and your existing team data stays yours." },
+              { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan will be $10 per team — you'll get plenty of notice, and your existing team data stays yours." },
               { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind add-ons." },
               { q: "Do I need to install anything?", a: "Nothing. It runs in any web browser for both coaches and parents — no app store, no downloads." },
             ].map((item) => (
