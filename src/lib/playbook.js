@@ -48,6 +48,9 @@ export const TOKENS = {
   te:   { label: "TE", shape: "circle", color: "#ffffff", text: "#12331e" },
   c:    { label: "C",  shape: "square", color: "#ffffff", text: "#12331e" },
   ball: { label: "",   shape: "ball",   color: "#8b4a2b", text: "#ffffff" },
+  gk:   { label: "GK", shape: "circle", color: "#ffe14d", text: "#3a2c00" },
+  cone: { label: "",   shape: "cone",   color: "#fb923c", text: "#ffffff" },
+  sball:{ label: "",   shape: "soccerball", color: "#ffffff", text: "#111827" },
 };
 
 // Order shown in the toolbar.
@@ -144,8 +147,25 @@ export function isEmptyDiagram(d) {
   return n.tokens.length === 0 && n.lines.length === 0 && n.texts.length === 0;
 }
 
-// Football / flag football both use this gridiron board.
-export const BOARD_SPORTS = ["football", "flag_football"];
+// Sports with a play board. Football/flag use the gridiron; soccer uses the pitch.
+export const BOARD_SPORTS = ["football", "flag_football", "soccer"];
 export function hasBoard(sport) {
   return BOARD_SPORTS.includes(sport);
+}
+
+// Which field backdrop a sport draws on.
+export function fieldForSport(sport) {
+  return sport === "soccer" ? "pitch" : "gridiron";
+}
+
+// Token tools offered in the editor, per sport.
+export const SOCCER_TOKEN_TOOLS = ["o", "x", "gk", "sball", "cone"];
+export function tokenToolsForSport(sport) {
+  return sport === "soccer" ? SOCCER_TOKEN_TOOLS : TOKEN_TOOLS;
+}
+
+// Play categories, per sport.
+export const SOCCER_CATEGORIES = ["Attack", "Defense", "Set Piece", "Drill"];
+export function playCategoriesForSport(sport) {
+  return sport === "soccer" ? SOCCER_CATEGORIES : PLAY_CATEGORIES;
 }

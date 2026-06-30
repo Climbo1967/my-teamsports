@@ -80,7 +80,7 @@ export default function PlaybookPrintPage({ params }) {
 
             <div style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
               <div style={{ width: 420, maxWidth: "62%", border: "1px solid #cbd5cf", borderRadius: 8, overflow: "hidden" }}>
-                <PlayField diagram={p.diagram} theme="paper" style={{ display: "block", width: "100%" }} />
+                <PlayField diagram={p.diagram} theme="paper" sport={team?.sport} style={{ display: "block", width: "100%" }} />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontSize: 12, fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, color: "#666", marginBottom: 6 }}>Coaching notes</div>

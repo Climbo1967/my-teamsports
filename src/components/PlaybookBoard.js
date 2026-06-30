@@ -8,8 +8,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  VB, LINE_TOOLS, TOKEN_TOOLS, TOKENS, PALETTE, TOKEN_R, LINE_W,
-  polyStr, normalizeDiagram, uid, clamp01,
+  VB, LINE_TOOLS, TOKENS, PALETTE, TOKEN_R, LINE_W,
+  polyStr, normalizeDiagram, uid, clamp01, tokenToolsForSport, fieldForSport,
 } from "@/lib/playbook";
 import { FieldBackdrop, TokenMark, LineMark, TextMark } from "@/components/PlayField";
 
@@ -18,7 +18,9 @@ const TOOL_LABEL = {
   route: "Route", block: "Block", motion: "Motion", pen: "Pen",
 };
 
-export default function PlaybookBoard({ initial, onChange }) {
+export default function PlaybookBoard({ initial, onChange, sport }) {
+  const tokenTools = tokenToolsForSport(sport);
+  const field = fieldForSport(sport);
   const [dia, setDia] = useState(() => normalizeDiagram(initial));
   const [tool, setTool] = useState("o");
   const [color, setColor] = useState("#ffe14d");
@@ -86,7 +88,7 @@ export default function PlaybookBoard({ initial, onChange }) {
 
     if (tool === "select" || tool === "erase") { setSelected(null); return; }
 
-    if (TOKEN_TOOLS.includes(tool)) {
+    if (tokenTools.includes(tool)) {
       pushHistory();
       const id = uid("t");
       setDia((d) => ({ ...d, tokens: [...d.tokens, { id, kind: tool, x: n.x, y: n.y }] }));
@@ -160,7 +162,7 @@ export default function PlaybookBoard({ initial, onChange }) {
 
   function tokenEdit(e, t) {
     const base = TOKENS[t.kind] || TOKENS.o;
-    if (base.shape === "x" || base.shape === "ball") return;
+    if (["x", "ball", "cone", "soccerball"].includes(base.shape)) return;
     e.stopPropagation();
     const s = window.prompt("Player label:", t.label != null ? t.label : base.label);
     if (s === null) return;
@@ -226,7 +228,7 @@ export default function PlaybookBoard({ initial, onChange }) {
           <ToolBtn active={tool === "select"} onClick={() => pickTool("select")} title="Move / select (drag players)">✋ Move</ToolBtn>
           <ToolBtn active={tool === "erase"} onClick={() => pickTool("erase")} title="Tap an item to delete it">🧽 Erase</ToolBtn>
           <Divider />
-          {TOKEN_TOOLS.map((tk) => (
+          {tokenTools.map((tk) => (
             <ToolBtn key={tk} active={tool === tk} onClick={() => pickTool(tk)} title={`Place ${TOKENS[tk].label || "ball"}`}>
               <TokenChip kind={tk} />
             </ToolBtn>
@@ -273,7 +275,7 @@ export default function PlaybookBoard({ initial, onChange }) {
           onPointerMove={onMove}
           onPointerUp={onUp}
         >
-          <FieldBackdrop theme="turf" los={dia.los} />
+          <FieldBackdrop theme="turf" los={dia.los} field={field} />
 
           {/* lines */}
           {dia.lines.map((l) => (
@@ -315,7 +317,7 @@ export default function PlaybookBoard({ initial, onChange }) {
       <p className="text-center text-xs text-slate-500 mt-2">
         {tool === "select" ? "Drag players to move • double-tap a player or label to rename • Delete key removes the selected item"
           : tool === "erase" ? "Tap any player, line, or label to erase it"
-          : TOKEN_TOOLS.includes(tool) ? `Tap the field to drop a ${TOKENS[tool].label || "ball"} • switch to Move to drag it`
+          : tokenTools.includes(tool) ? `Tap the field to drop a ${TOKENS[tool].label || "marker"} • switch to Move to drag it`
           : tool === "text" ? "Tap the field to add a label"
           : "Drag on the board to draw — release to finish"}
         {count > 0 ? ` • ${count} item${count === 1 ? "" : "s"} on board` : ""}

@@ -204,7 +204,7 @@ export default function Home() {
       <section id="playbook" className="px-6 py-24 bg-[var(--color-navy)] scroll-mt-16">
         <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
-            <span className="inline-block text-xs uppercase tracking-widest text-[var(--color-accent-green)] mb-3">New · Football &amp; Flag Football</span>
+            <span className="inline-block text-xs uppercase tracking-widest text-[var(--color-accent-green)] mb-3">New · Football, Flag &amp; Soccer</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">THE COACH&apos;S PLAY BOARD</h2>
             <p className="text-slate-400 text-lg leading-relaxed mb-6">
               Draw up plays on a real dry-erase board, right from your phone. Drop players, drag routes, blocks, and motion — then save them to your team playbook and print clean sheets for practice or the sideline.

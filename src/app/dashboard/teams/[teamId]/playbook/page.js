@@ -6,7 +6,7 @@ import { Input, Label, Button, Card, EmptyState, ErrorText, Spinner, Select, Tex
 import PlayField from "@/components/PlayField";
 import PlaybookBoard from "@/components/PlaybookBoard";
 import { sportLabel } from "@/lib/constants";
-import { emptyDiagram, normalizeDiagram, hasBoard, PLAY_CATEGORIES } from "@/lib/playbook";
+import { emptyDiagram, normalizeDiagram, hasBoard, playCategoriesForSport } from "@/lib/playbook";
 
 export default function PlaybookPage({ params }) {
   const { teamId } = use(params);
@@ -68,7 +68,7 @@ export default function PlaybookPage({ params }) {
       <div className="max-w-2xl">
         <EmptyState
           icon="🏈"
-          text={`The play board is built for football and flag football right now. Your team's sport is set to ${sportLabel(sport)}. Switch it on the Settings tab to use the playbook — more sports are coming.`}
+          text={`The play board is built for football, flag football, and soccer right now. Your team's sport is set to ${sportLabel(sport)}. Switch it on the Settings tab to use the playbook — more sports are coming.`}
         />
       </div>
     );
@@ -108,7 +108,7 @@ export default function PlaybookPage({ params }) {
           {plays.map((p, i) => (
             <Card key={p.id} className="flex gap-4 items-stretch">
               <button onClick={() => setEditing(p)} className="shrink-0 rounded-lg overflow-hidden border border-white/10 bg-[#2f8a4a]" style={{ width: 104 }} title="Edit play">
-                <PlayField diagram={p.diagram} theme="turf" style={{ display: "block", width: "100%" }} />
+                <PlayField diagram={p.diagram} theme="turf" sport={sport} style={{ display: "block", width: "100%" }} />
               </button>
               <div className="flex-1 min-w-0 flex flex-col">
                 <div className="flex items-start justify-between gap-2">
@@ -143,8 +143,9 @@ export default function PlaybookPage({ params }) {
 
 function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
   const supabase = createClient();
+  const categories = playCategoriesForSport(sport);
   const [name, setName] = useState(play?.name || "");
-  const [category, setCategory] = useState(play?.category || "Offense");
+  const [category, setCategory] = useState(play?.category || categories[0]);
   const [formation, setFormation] = useState(play?.formation || "");
   const [notes, setNotes] = useState(play?.notes || "");
   const [busy, setBusy] = useState(false);
@@ -187,7 +188,7 @@ function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
       </div>
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
-        <PlaybookBoard initial={diagramRef.current} onChange={onBoardChange} />
+        <PlaybookBoard initial={diagramRef.current} onChange={onBoardChange} sport={sport} />
 
         <Card className="border-white/10">
           <h3 className="font-bold mb-4">{play ? "Edit play" : "New play"}</h3>
@@ -199,7 +200,7 @@ function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
             <div>
               <Label>Category</Label>
               <Select value={category} onChange={(e) => setCategory(e.target.value)}>
-                {PLAY_CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+                {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </Select>
             </div>
             <div>

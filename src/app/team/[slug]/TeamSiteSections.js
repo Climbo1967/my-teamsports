@@ -59,7 +59,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
         <ScheduleSection events={events} players={players} rsvps={rsvps} slug={slug} />
         <RosterSection players={players} emoji={emoji} onSelect={setActivePlayer} />
         <StatsSection players={players} stats={stats} sport={team.sport} />
-        <PlaybookSection plays={plays} />
+        <PlaybookSection plays={plays} sport={team.sport} />
         <VideosSection videos={videos} />
         <NotesSection notes={notes} />
         <PhotosSection
@@ -559,7 +559,7 @@ function SubscribeButton({ slug }) {
 }
 
 /* ---------- Game Film ---------- */
-function PlaybookSection({ plays }) {
+function PlaybookSection({ plays, sport }) {
   if (!plays || plays.length === 0) return null;
   return (
     <section id="playbook" className="scroll-mt-20">
@@ -569,7 +569,7 @@ function PlaybookSection({ plays }) {
         {plays.map((p) => (
           <div key={p.id} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-4">
             <div className="rounded-xl overflow-hidden border border-white/10 bg-[#2f8a4a] mb-3">
-              <PlayField diagram={p.diagram} theme="turf" style={{ display: "block", width: "100%" }} />
+              <PlayField diagram={p.diagram} theme="turf" sport={sport} style={{ display: "block", width: "100%" }} />
             </div>
             <h3 className="font-bold text-white">{p.name}</h3>
             <div className="flex flex-wrap gap-1.5 mt-1">

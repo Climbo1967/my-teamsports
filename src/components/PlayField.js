@@ -4,7 +4,7 @@
 
 import {
   VB, FIELD_MARGIN, YARD_BANDS, THEMES, TOKENS, TOKEN_R, TOKEN_FONT,
-  LINE_W, LINE_TOOLS, arrowHead, teeCap, polyStr, px, normalizeDiagram,
+  LINE_W, LINE_TOOLS, arrowHead, teeCap, polyStr, px, normalizeDiagram, fieldForSport,
 } from "@/lib/playbook";
 
 // On the paper (print) theme, map bright on-turf colors to darker, ink-friendly
@@ -37,7 +37,8 @@ export function tokenStyle(t) {
   };
 }
 
-export function FieldBackdrop({ theme = "turf", los = 0.52 }) {
+export function FieldBackdrop({ theme = "turf", los = 0.52, field = "gridiron" }) {
+  if (field === "pitch") return <SoccerBackdrop theme={theme} />;
   const c = THEMES[theme] || THEMES.turf;
   const losY = Y0 + los * INNER_H;
   const bands = [];
@@ -80,10 +81,80 @@ export function FieldBackdrop({ theme = "turf", los = 0.52 }) {
   );
 }
 
+// Soccer pitch backdrop (portrait full pitch). Uses the same turf/paper themes.
+function SoccerBackdrop({ theme = "turf" }) {
+  const c = THEMES[theme] || THEMES.turf;
+  const cx = (X0 + X1) / 2;
+  const FW = X1 - X0;
+  const midY = Y0 + INNER_H / 2;
+  const stripes = 10;
+  const sH = INNER_H / stripes;
+  const paW = FW * 0.62, paH = INNER_H * 0.165;
+  const gaW = FW * 0.34, gaH = INNER_H * 0.07;
+  const spotOff = INNER_H * 0.105;
+  const PR = FW * 0.20, ccR = FW * 0.18;
+  const goalW = FW * 0.20, goalD = INNER_H * 0.022;
+  const a = Math.asin(Math.max(-1, Math.min(1, (paH - spotOff) / PR)));
+  const arc = (axx, ayy, r, a0, a1, n = 30) => {
+    const out = [];
+    for (let i = 0; i <= n; i++) {
+      const ang = a0 + (a1 - a0) * (i / n);
+      out.push(`${(axx + r * Math.cos(ang)).toFixed(1)},${(ayy + r * Math.sin(ang)).toFixed(1)}`);
+    }
+    return out.join(" ");
+  };
+  const lp = { stroke: c.line, strokeOpacity: c.lineOp, strokeWidth: 4, fill: "none" };
+  return (
+    <g>
+      <rect x="0" y="0" width={VB.w} height={VB.h} fill={c.fieldA} />
+      {Array.from({ length: stripes }).map((_, i) =>
+        i % 2 === 1 ? <rect key={i} x={X0} y={Y0 + i * sH} width={FW} height={sH} fill={c.fieldB} /> : null
+      )}
+      <rect x={X0} y={Y0} width={FW} height={INNER_H} fill="none" stroke={c.frame} strokeOpacity={c.frameOp} strokeWidth={5} />
+      <line x1={X0} y1={midY} x2={X1} y2={midY} {...lp} />
+      <circle cx={cx} cy={midY} r={ccR} {...lp} />
+      <circle cx={cx} cy={midY} r={6} fill={c.line} fillOpacity={c.lineOp} />
+      {/* top box */}
+      <rect x={cx - paW / 2} y={Y0} width={paW} height={paH} {...lp} />
+      <rect x={cx - gaW / 2} y={Y0} width={gaW} height={gaH} {...lp} />
+      <circle cx={cx} cy={Y0 + spotOff} r={5} fill={c.line} fillOpacity={c.lineOp} />
+      <polyline points={arc(cx, Y0 + spotOff, PR, a, Math.PI - a)} {...lp} />
+      {/* bottom box */}
+      <rect x={cx - paW / 2} y={Y1 - paH} width={paW} height={paH} {...lp} />
+      <rect x={cx - gaW / 2} y={Y1 - gaH} width={gaW} height={gaH} {...lp} />
+      <circle cx={cx} cy={Y1 - spotOff} r={5} fill={c.line} fillOpacity={c.lineOp} />
+      <polyline points={arc(cx, Y1 - spotOff, PR, Math.PI + a, 2 * Math.PI - a)} {...lp} />
+      {/* goals */}
+      <rect x={cx - goalW / 2} y={Y0 - goalD} width={goalW} height={goalD} fill="none" stroke={c.frame} strokeOpacity={c.frameOp} strokeWidth={4} />
+      <rect x={cx - goalW / 2} y={Y1} width={goalW} height={goalD} fill="none" stroke={c.frame} strokeOpacity={c.frameOp} strokeWidth={4} />
+    </g>
+  );
+}
+
 export function TokenMark({ t }) {
   const s = tokenStyle(t);
   const [cx, cy] = px(t);
   const r = TOKEN_R;
+
+  if (s.shape === "cone") {
+    return (
+      <g>
+        <path d={`M ${cx} ${cy - r} L ${cx + r * 0.92} ${cy + r * 0.82} L ${cx - r * 0.92} ${cy + r * 0.82} Z`} fill={s.color} stroke="#7c2d12" strokeWidth="3" strokeLinejoin="round" />
+        <line x1={cx - r * 0.55} y1={cy + r * 0.18} x2={cx + r * 0.55} y2={cy + r * 0.18} stroke="#ffffff" strokeWidth="4" />
+      </g>
+    );
+  }
+  if (s.shape === "soccerball") {
+    const rp = r * 0.34;
+    const penta = [0, 1, 2, 3, 4].map((kk) => { const ang = -Math.PI / 2 + (kk * 2 * Math.PI) / 5; return `${(cx + rp * Math.cos(ang)).toFixed(1)},${(cy + rp * Math.sin(ang)).toFixed(1)}`; }).join(" ");
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={r * 0.82} fill="#ffffff" stroke="#111827" strokeWidth="3" />
+        <polygon points={penta} fill="#111827" />
+        {[0, 1, 2, 3, 4].map((kk) => { const ang = -Math.PI / 2 + (kk * 2 * Math.PI) / 5; return <line key={kk} x1={cx + rp * Math.cos(ang)} y1={cy + rp * Math.sin(ang)} x2={cx + r * 0.78 * Math.cos(ang + Math.PI / 5)} y2={cy + r * 0.78 * Math.sin(ang + Math.PI / 5)} stroke="#111827" strokeWidth="2.5" />; })}
+      </g>
+    );
+  }
 
   if (s.shape === "ball") {
     return (
@@ -149,12 +220,12 @@ export function TextMark({ t, halo = "rgba(8,28,16,0.65)", theme }) {
   );
 }
 
-export default function PlayField({ diagram, theme = "turf", className = "", style }) {
+export default function PlayField({ diagram, theme = "turf", className = "", style, sport }) {
   const d = normalizeDiagram(diagram);
   const halo = theme === "paper" ? "rgba(255,255,255,0.92)" : "rgba(8,28,16,0.65)";
   return (
     <svg viewBox={`0 0 ${VB.w} ${VB.h}`} className={className} style={style} preserveAspectRatio="xMidYMid meet">
-      <FieldBackdrop theme={theme} los={d.los} />
+      <FieldBackdrop theme={theme} los={d.los} field={fieldForSport(sport)} />
       {d.lines.map((l) => <LineMark key={l.id} line={l} theme={theme} />)}
       {d.tokens.map((t) => <TokenMark key={t.id} t={t} />)}
       {d.texts.map((t) => <TextMark key={t.id} t={t} halo={halo} theme={theme} />)}
