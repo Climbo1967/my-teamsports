@@ -142,16 +142,16 @@ export default function AnnouncementsPage({ params }) {
                   {p.pinned ? "Unpin" : "📌 Pin to top"}
                 </button>
                 {p.emailed_at ? (
-                  <span className="text-xs text-[var(--color-accent-green)]">✓ Emailed {new Date(p.emailed_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
-                ) : subscribers.length > 0 ? (
+                  <span className="text-xs text-[var(--color-accent-green)]">✓ Notified {new Date(p.emailed_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                ) : (
                   <button
                     onClick={() => emailPost(p)}
                     disabled={sendingId === p.id}
                     className="text-xs text-[var(--color-accent-green)] hover:underline disabled:opacity-60 disabled:no-underline"
                   >
-                    {sendingId === p.id ? "Sending..." : `✉️ Email to ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`}
+                    {sendingId === p.id ? "Sending..." : "📣 Notify team (email + app alerts)"}
                   </button>
-                ) : null}
+                )}
                 <button onClick={() => remove(p)} className="text-xs text-red-400 hover:underline">Delete</button>
               </div>
             </Card>

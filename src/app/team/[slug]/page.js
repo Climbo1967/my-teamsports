@@ -4,6 +4,7 @@ import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord, hexToRgba, DEFAUL
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
 import LiveScoreBanner from "./LiveScoreBanner";
+import PushOptIn from "./PushOptIn";
 import ViewPing from "@/components/ViewPing";
 
 export async function generateMetadata({ params }) {
@@ -70,6 +71,8 @@ export default async function TeamPage({ params }) {
       </header>
 
       <LiveScoreBanner slug={normalizedSlug} teamName={site.team.name} />
+
+      <PushOptIn teamId={site.team.id} teamName={site.team.name} />
 
       <TeamSiteSections site={site} slug={normalizedSlug} emoji={emoji} />
 
