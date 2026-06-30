@@ -40,6 +40,7 @@ export function tokenStyle(t) {
 export function FieldBackdrop({ theme = "turf", los = 0.52, field = "gridiron" }) {
   if (field === "pitch") return <SoccerBackdrop theme={theme} />;
   if (field === "court") return <BasketballBackdrop theme={theme} />;
+  if (field === "rink") return <RinkBackdrop theme={theme} />;
   const c = THEMES[theme] || THEMES.turf;
   const losY = Y0 + los * INNER_H;
   const bands = [];
@@ -179,6 +180,60 @@ function BasketballBackdrop({ theme = "turf" }) {
   );
 }
 
+// Hockey rink backdrop (portrait full rink; goals at top & bottom).
+function RinkBackdrop({ theme = "turf" }) {
+  const paper = theme === "paper";
+  const surround = paper ? "#ffffff" : "#1e293b";
+  const ice = paper ? "#ffffff" : "#e9f1fb";
+  const red = paper ? "#475569" : "#dc2626";
+  const blue = paper ? "#64748b" : "#2563eb";
+  const frame = paper ? "#475569" : "#334155";
+  const rcx = (X0 + X1) / 2;
+  const FW = X1 - X0;
+  const midY = Y0 + INNER_H / 2;
+  const cornerR = FW * 0.08;
+  const gyT = Y0 + INNER_H * 0.085, gyB = Y1 - INNER_H * 0.085;
+  const blT = midY - INNER_H * 0.13, blB = midY + INNER_H * 0.13;
+  const foR = FW * 0.13, dotX = FW * 0.26;
+  const foT = gyT + INNER_H * 0.075, foB = gyB - INNER_H * 0.075;
+  const crR = FW * 0.075;
+  const arc = (axx, ayy, r, a0, a1, n = 24) => {
+    const o = [];
+    for (let i = 0; i <= n; i++) { const ang = a0 + (a1 - a0) * (i / n); o.push(`${(axx + r * Math.cos(ang)).toFixed(1)},${(ayy + r * Math.sin(ang)).toFixed(1)}`); }
+    return o.join(" ");
+  };
+  return (
+    <g>
+      <rect x="0" y="0" width={VB.w} height={VB.h} fill={surround} />
+      <rect x={X0} y={Y0} width={FW} height={INNER_H} rx={cornerR} fill={ice} />
+      <line x1={X0} y1={blT} x2={X1} y2={blT} stroke={blue} strokeWidth={10} />
+      <line x1={X0} y1={blB} x2={X1} y2={blB} stroke={blue} strokeWidth={10} />
+      <line x1={X0} y1={midY} x2={X1} y2={midY} stroke={red} strokeWidth={10} />
+      <line x1={X0 + cornerR * 0.5} y1={gyT} x2={X1 - cornerR * 0.5} y2={gyT} stroke={red} strokeWidth={4} />
+      <line x1={X0 + cornerR * 0.5} y1={gyB} x2={X1 - cornerR * 0.5} y2={gyB} stroke={red} strokeWidth={4} />
+      <circle cx={rcx} cy={midY} r={foR} fill="none" stroke={blue} strokeWidth={4} />
+      <circle cx={rcx} cy={midY} r={7} fill={blue} />
+      <circle cx={rcx - dotX} cy={foT} r={foR} fill="none" stroke={red} strokeWidth={4} />
+      <circle cx={rcx + dotX} cy={foT} r={foR} fill="none" stroke={red} strokeWidth={4} />
+      <circle cx={rcx - dotX} cy={foB} r={foR} fill="none" stroke={red} strokeWidth={4} />
+      <circle cx={rcx + dotX} cy={foB} r={foR} fill="none" stroke={red} strokeWidth={4} />
+      <circle cx={rcx - dotX} cy={foT} r={6} fill={red} />
+      <circle cx={rcx + dotX} cy={foT} r={6} fill={red} />
+      <circle cx={rcx - dotX} cy={foB} r={6} fill={red} />
+      <circle cx={rcx + dotX} cy={foB} r={6} fill={red} />
+      <circle cx={rcx - dotX} cy={blT + INNER_H * 0.05} r={6} fill={red} />
+      <circle cx={rcx + dotX} cy={blT + INNER_H * 0.05} r={6} fill={red} />
+      <circle cx={rcx - dotX} cy={blB - INNER_H * 0.05} r={6} fill={red} />
+      <circle cx={rcx + dotX} cy={blB - INNER_H * 0.05} r={6} fill={red} />
+      <rect x={rcx - FW * 0.06} y={gyT - INNER_H * 0.022} width={FW * 0.12} height={INNER_H * 0.022} fill="none" stroke={red} strokeWidth={3} />
+      <rect x={rcx - FW * 0.06} y={gyB} width={FW * 0.12} height={INNER_H * 0.022} fill="none" stroke={red} strokeWidth={3} />
+      <polyline points={arc(rcx, gyT, crR, 0, Math.PI)} fill="none" stroke={blue} strokeWidth={3} />
+      <polyline points={arc(rcx, gyB, crR, Math.PI, 2 * Math.PI)} fill="none" stroke={blue} strokeWidth={3} />
+      <rect x={X0} y={Y0} width={FW} height={INNER_H} rx={cornerR} fill="none" stroke={frame} strokeWidth={6} />
+    </g>
+  );
+}
+
 export function TokenMark({ t }) {
   const s = tokenStyle(t);
   const [cx, cy] = px(t);
@@ -213,6 +268,14 @@ export function TokenMark({ t }) {
         <line x1={cx - rr} y1={cy} x2={cx + rr} y2={cy} stroke="#7c2d12" strokeWidth="2.5" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy - rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
         <path d={`M ${cx - rr} ${cy} Q ${cx} ${cy + rr * 0.62} ${cx + rr} ${cy}`} fill="none" stroke="#7c2d12" strokeWidth="2" />
+      </g>
+    );
+  }
+
+  if (s.shape === "puck") {
+    return (
+      <g>
+        <ellipse cx={cx} cy={cy} rx={r * 0.62} ry={r * 0.46} fill="#0f172a" stroke="#ffffff" strokeWidth="2.5" />
       </g>
     );
   }

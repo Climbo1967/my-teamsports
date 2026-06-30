@@ -68,7 +68,7 @@ export default function PlaybookPage({ params }) {
       <div className="max-w-2xl">
         <EmptyState
           icon="🏈"
-          text={`The play board is built for football, flag football, soccer, and basketball right now. Your team's sport is set to ${sportLabel(sport)}. Switch it on the Settings tab to use the playbook — more sports are coming.`}
+          text={`The play board is built for football, flag football, soccer, basketball, and hockey right now. Your team's sport is set to ${sportLabel(sport)}. Switch it on the Settings tab to use the playbook — more sports are coming.`}
         />
       </div>
     );

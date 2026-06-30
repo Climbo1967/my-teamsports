@@ -351,6 +351,7 @@ function TokenChip({ kind }) {
   if (t.shape === "ball") return <span>🏈</span>;
   if (t.shape === "soccerball") return <span>⚽</span>;
   if (t.shape === "basketball") return <span>🏀</span>;
+  if (t.shape === "puck") return <span>🏒</span>;
   if (t.shape === "cone") return <span>🔶</span>;
   return (
     <span className="inline-flex items-center justify-center align-middle" style={{ width: 16, height: 16, borderRadius: t.shape === "square" ? 3 : "50%", background: t.color, color: t.text, fontSize: 9, fontWeight: 800, lineHeight: "16px" }}>
