@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { scoreboardConfig, periodShort, formatClock, gameResultString } from "@/lib/constants";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
+import { notifyGame } from "@/lib/pushClient";
 
 // Universal live scorer for clock/period sports (basketball, soccer, hockey,
 // football, flag football, volleyball). Reuses game_scores + the live banner.
@@ -62,6 +63,7 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
       .select().single();
     if (e) { setError(e.message); return; }
     setGame(data);
+    notifyGame({ teamId, kind: "start", opponent: event.opponent });
   }
 
   async function applyScore(side, points, playerId) {
@@ -123,6 +125,7 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
     await supabase.from("game_scores").update({ status: "final", clock_running: false }).eq("id", game.id);
     await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
     if (cfg.statKey) await supabase.rpc("rollup_scoreboard_stats", { p_event_id: event.id });
+    notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
     onBack();
   }
 

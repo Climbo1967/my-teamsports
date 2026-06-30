@@ -8,6 +8,7 @@ import { ScoreboardScorer } from "@/components/scoreboard";
 import { BaseballField } from "@/components/field";
 import { computeTendencies, tendencySentence, ZONE_LABEL, pctText } from "@/lib/spray";
 import { recommendLineup } from "@/lib/lineup";
+import { notifyGame } from "@/lib/pushClient";
 
 export default function ScorekeeperPage({ params }) {
   const { teamId } = use(params);
@@ -353,6 +354,7 @@ function GameScorer({ teamId, event, players, onBack }) {
     await supabase.from("game_scores").update({ status: "final" }).eq("id", game.id);
     await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
     await rollup();
+    notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
     onBack();
   }
 
@@ -388,6 +390,7 @@ function GameScorer({ teamId, event, players, onBack }) {
               .select().single();
             if (e) { setError(e.message); return; }
             setGame(data);
+            notifyGame({ teamId, kind: "start", opponent: event.opponent });
           }}
         />
       ) : (
