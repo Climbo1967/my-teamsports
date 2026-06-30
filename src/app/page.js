@@ -71,6 +71,7 @@ export default function Home() {
         <div className="hidden md:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
           <a href="#playbook" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Playbook</a>
+          <a href="#ai-coach" className="text-sm font-medium text-purple-300 hover:text-white transition-colors">AI Coach</a>
           <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
           <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
@@ -238,6 +239,62 @@ export default function Home() {
               ))}
             </div>
             <p className="text-center text-xs text-slate-500 mt-4">One board, every sport — football, flag football, soccer, basketball, hockey, volleyball, baseball &amp; softball.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* AI ASSISTANT COACH */}
+      <section id="ai-coach" className="px-6 py-24 bg-gradient-to-b from-[var(--color-navy)] to-[var(--color-navy-mid)] scroll-mt-16">
+        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          {/* Sample briefing card */}
+          <div className="order-1 mx-auto w-full max-w-[440px]">
+            <div className="rounded-2xl border border-purple-500/25 bg-[var(--color-navy-mid)] shadow-2xl shadow-purple-900/30 overflow-hidden">
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-purple-500/10">
+                <span className="text-2xl">🧠</span>
+                <div>
+                  <p className="text-sm font-semibold text-white leading-tight">Coach&apos;s Briefing</p>
+                  <p className="text-[11px] text-slate-400">Riverside Raptors 12U · 7&ndash;2 this season</p>
+                </div>
+              </div>
+              <div className="px-5 py-4 space-y-3 text-sm">
+                <div>
+                  <p className="text-[11px] uppercase tracking-widest text-purple-300 font-semibold mb-1">What&apos;s working</p>
+                  <p className="text-slate-300 leading-snug">Bats are hot &mdash; 6.4 runs a game over the last three. Maya and Jordan are on base at a .480 clip and setting the table.</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-widest text-purple-300 font-semibold mb-1">Work on</p>
+                  <p className="text-slate-300 leading-snug">5 unearned runs in the last two games &mdash; spend 10 minutes on the routine grounder at practice.</p>
+                </div>
+                <div>
+                  <p className="text-[11px] uppercase tracking-widest text-purple-300 font-semibold mb-1">Player to watch</p>
+                  <p className="text-slate-300 leading-snug">Sam has reached base in 5 straight. Earn him a few more at-bats higher in the order.</p>
+                </div>
+              </div>
+              <div className="px-5 py-3 border-t border-white/10 text-[11px] text-slate-500">
+                Built from your real roster, scores &amp; stats &middot; AI-generated &mdash; use your judgment
+              </div>
+            </div>
+          </div>
+
+          {/* Copy */}
+          <div className="order-2">
+            <span className="inline-block text-xs uppercase tracking-widest text-purple-300 font-semibold bg-purple-500/15 border border-purple-500/30 rounded-full px-3 py-1 mb-4">Premium &middot; Coach Plan</span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">YOUR AI ASSISTANT COACH</h2>
+            <p className="text-slate-400 text-lg leading-relaxed mb-6">
+              An assistant coach that actually knows your team. One tap and it reads your real roster, record, recent results and player stats &mdash; then hands you a straight-talking briefing: what&apos;s working, what to drill, and who&apos;s heating up. Any sport, any level.
+            </p>
+            <ul className="space-y-2 text-slate-300 mb-8">
+              <li className="flex gap-2"><span className="text-purple-400">✓</span> Advice built from your actual game data &mdash; not generic tips off the internet</li>
+              <li className="flex gap-2"><span className="text-purple-400">✓</span> A focus for your next practice, ready in seconds</li>
+              <li className="flex gap-2"><span className="text-purple-400">✓</span> Players to watch, surfaced from who&apos;s trending up</li>
+              <li className="flex gap-2"><span className="text-purple-400">✓</span> Works for baseball, softball, soccer, basketball, football &amp; more</li>
+            </ul>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link href="/signup" className="inline-block bg-purple-600 text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-purple-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-purple-600/25">
+                MEET YOUR AI COACH →
+              </Link>
+              <span className="text-sm text-slate-400">Free to preview for the 2026 season</span>
+            </div>
           </div>
         </div>
       </section>
