@@ -281,13 +281,13 @@ export default function Home() {
             <span className="inline-block text-xs uppercase tracking-widest text-purple-300 font-semibold bg-purple-500/15 border border-purple-500/30 rounded-full px-3 py-1 mb-4">Premium &middot; Coach Plan</span>
             <h2 className="text-4xl md:text-5xl font-bold mb-4">YOUR AI ASSISTANT COACH</h2>
             <p className="text-slate-400 text-lg leading-relaxed mb-6">
-              An assistant coach that actually knows your team. One tap and it reads your real roster, record, recent results and player stats &mdash; then hands you a straight-talking briefing: what&apos;s working, what to drill, and who&apos;s heating up. Any sport, any level.
+              An assistant coach that actually knows your team. It reads your real roster, record, results and player stats &mdash; then gives you three things: a straight-talking briefing, a data-built lineup, and a printable practice plan aimed at where your team needs work. Any sport, any level.
             </p>
             <ul className="space-y-2 text-slate-300 mb-8">
-              <li className="flex gap-2"><span className="text-purple-400">✓</span> Advice built from your actual game data &mdash; not generic tips off the internet</li>
-              <li className="flex gap-2"><span className="text-purple-400">✓</span> A focus for your next practice, ready in seconds</li>
-              <li className="flex gap-2"><span className="text-purple-400">✓</span> Players to watch, surfaced from who&apos;s trending up</li>
-              <li className="flex gap-2"><span className="text-purple-400">✓</span> Works for baseball, softball, soccer, basketball, football &amp; more</li>
+              <li className="flex gap-2"><span className="text-purple-400 shrink-0">✓</span> <span><span className="text-white font-semibold">Coach&apos;s briefing</span> &mdash; what&apos;s working, what to drill, and who to watch, from your real game data</span></li>
+              <li className="flex gap-2"><span className="text-purple-400 shrink-0">✓</span> <span><span className="text-white font-semibold">Lineup advisor</span> &mdash; a batting order built from your on-base and power numbers (baseball &amp; softball)</span></li>
+              <li className="flex gap-2"><span className="text-purple-400 shrink-0">✓</span> <span><span className="text-white font-semibold">Practice planner</span> &mdash; a timed, printable practice aimed at your team&apos;s weak spots</span></li>
+              <li className="flex gap-2"><span className="text-purple-400 shrink-0">✓</span> Works for baseball, softball, soccer, basketball, football &amp; more</li>
             </ul>
             <div className="flex flex-wrap items-center gap-4">
               <Link href="/signup" className="inline-block bg-purple-600 text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-purple-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-purple-600/25">
