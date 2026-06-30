@@ -131,6 +131,7 @@ function GameScorer({ teamId, event, players, onBack }) {
   const [editingLineup, setEditingLineup] = useState(false);
   const [pending, setPending] = useState(null); // result object awaiting field/RBI input
   const [undoStack, setUndoStack] = useState([]); // batting actions undoable this session
+  const [defenseUndo, setDefenseUndo] = useState([]); // pitching/defense actions undoable this session
   const [error, setError] = useState(null);
 
   const load = useCallback(async () => {
@@ -283,39 +284,68 @@ function GameScorer({ teamId, event, players, onBack }) {
     if (e) setError(e.message);
   }
 
+  // Snapshot the pitcher line + game state before a defensive action, for Undo.
+  function snapDefense() {
+    const pid = game.pitcher_id;
+    return { pid, prevLine: pid && pitchMap[pid] ? { ...pitchMap[pid] } : null, prevGame: gameSnapshot() };
+  }
+
+  async function undoDefense() {
+    if (defenseUndo.length === 0) return;
+    const e = defenseUndo[defenseUndo.length - 1];
+    setDefenseUndo((s) => s.slice(0, -1));
+    if (e.pid) {
+      const L = e.prevLine || {};
+      setPitchMap((m) => ({ ...m, [e.pid]: { team_id: teamId, event_id: event.id, player_id: e.pid, ...L } }));
+      await supabase.from("pitching_lines").upsert({
+        team_id: teamId, event_id: event.id, player_id: e.pid,
+        pitches: L.pitches || 0, strikes: L.strikes || 0, outs: L.outs || 0, walks: L.walks || 0,
+        strikeouts: L.strikeouts || 0, hits: L.hits || 0, runs: L.runs || 0, updated_at: new Date().toISOString(),
+      }, { onConflict: "event_id,player_id" });
+    }
+    if (e.prevGame) await patchGame(e.prevGame);
+  }
+
   async function defensePitch(kind) {
     if (!game.pitcher_id) return;
+    const snap = snapDefense();
     if (kind === "ball") {
       const nb = game.balls + 1;
       await bumpPitcher({ pitches: 1 });
-      if (nb >= 4) { await bumpPitcher({ walks: 1 }); return patchGame({ balls: 0, strikes: 0 }); }
-      return patchGame({ balls: nb });
-    }
-    if (kind === "strike") {
+      if (nb >= 4) { await bumpPitcher({ walks: 1 }); await patchGame({ balls: 0, strikes: 0 }); }
+      else { await patchGame({ balls: nb }); }
+    } else if (kind === "strike") {
       const ns = game.strikes + 1;
       await bumpPitcher({ pitches: 1, strikes: 1 });
-      if (ns >= 3) { await bumpPitcher({ strikeouts: 1, outs: 1 }); return patchGame(applyOut(game.outs + 1)); }
-      return patchGame({ strikes: ns });
-    }
-    if (kind === "foul") {
+      if (ns >= 3) { await bumpPitcher({ strikeouts: 1, outs: 1 }); await patchGame(applyOut(game.outs + 1)); }
+      else { await patchGame({ strikes: ns }); }
+    } else if (kind === "foul") {
       await bumpPitcher({ pitches: 1, strikes: 1 });
-      return patchGame({ strikes: Math.min(2, game.strikes + 1) });
+      await patchGame({ strikes: Math.min(2, game.strikes + 1) });
     }
+    setDefenseUndo((s) => [...s, snap]);
   }
 
   async function defenseHit() {
     if (!game.pitcher_id) return;
+    const snap = snapDefense();
     await bumpPitcher({ pitches: 1, strikes: 1, hits: 1 });
     await patchGame({ balls: 0, strikes: 0 });
+    setDefenseUndo((s) => [...s, snap]);
   }
   async function defenseInPlayOut() {
     if (!game.pitcher_id) return;
+    const snap = snapDefense();
     await bumpPitcher({ pitches: 1, strikes: 1, outs: 1 });
     await patchGame(applyOut(game.outs + 1));
+    setDefenseUndo((s) => [...s, snap]);
   }
   async function defenseRun() {
+    if (!game.pitcher_id) return;
+    const snap = snapDefense();
     await patchGame({ opp_score: game.opp_score + 1 });
     await bumpPitcher({ runs: 1 });
+    setDefenseUndo((s) => [...s, snap]);
   }
 
   async function endGame() {
@@ -384,6 +414,7 @@ function GameScorer({ teamId, event, players, onBack }) {
               line={game.pitcher_id ? pitchMap[game.pitcher_id] : null}
               onSetPitcher={setPitcher} onPitch={defensePitch}
               onHit={defenseHit} onInPlayOut={defenseInPlayOut} onRun={defenseRun}
+              canUndo={defenseUndo.length > 0} onUndo={undoDefense}
             />
           )}
 
@@ -616,7 +647,7 @@ function PitchBtn({ label, cls, onClick }) {
   );
 }
 
-function PitchingPanel({ game, event, players, lineup, line, onSetPitcher, onPitch, onHit, onInPlayOut, onRun }) {
+function PitchingPanel({ game, event, players, lineup, line, onSetPitcher, onPitch, onHit, onInPlayOut, onRun, canUndo, onUndo }) {
   // Prefer roster order; fall back to anyone on the team.
   const candidates = (lineup.length ? lineup.map((l) => ({ id: l.player_id, name: l.name, jersey_number: l.jersey_number })) : players);
   const pitcher = players.find((p) => p.id === game.pitcher_id);
@@ -676,6 +707,11 @@ function PitchingPanel({ game, event, players, lineup, line, onSetPitcher, onPit
         <button onClick={onInPlayOut} className="py-3 rounded-xl border text-sm font-semibold bg-white/[0.05] border-white/10 text-slate-200">In-play out</button>
         <button onClick={onRun} className="py-3 rounded-xl border text-sm font-semibold bg-blue-600/15 border-blue-500/30 text-blue-300">+1 Their run</button>
       </div>
+      {canUndo && (
+        <div className="mt-3 text-center">
+          <button onClick={onUndo} className="text-xs font-semibold text-amber-300/90 hover:text-amber-200">↩ Undo last pitch/play</button>
+        </div>
+      )}
     </div>
   );
 }

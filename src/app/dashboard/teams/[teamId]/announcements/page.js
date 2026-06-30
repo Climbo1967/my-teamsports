@@ -14,7 +14,6 @@ export default function AnnouncementsPage({ params }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [sendingId, setSendingId] = useState(null);
-  const [sentIds, setSentIds] = useState([]);
 
   const load = useCallback(async () => {
     const [{ data, error: err }, { data: subs }] = await Promise.all([
@@ -63,11 +62,11 @@ export default function AnnouncementsPage({ params }) {
       const res = await fetch("/api/send-announcement", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamId, subject: p.title || "Team update", body: p.body }),
+        body: JSON.stringify({ teamId, announcementId: p.id, subject: p.title || "Team update", body: p.body }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not send email.");
-      setSentIds((ids) => [...ids, p.id]);
+      await load();
     } catch (e) {
       setError(e.message);
     } finally {
@@ -142,19 +141,17 @@ export default function AnnouncementsPage({ params }) {
                 <button onClick={() => togglePin(p)} className="text-xs text-slate-400 hover:text-white">
                   {p.pinned ? "Unpin" : "📌 Pin to top"}
                 </button>
-                {subscribers.length > 0 && (
+                {p.emailed_at ? (
+                  <span className="text-xs text-[var(--color-accent-green)]">✓ Emailed {new Date(p.emailed_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+                ) : subscribers.length > 0 ? (
                   <button
                     onClick={() => emailPost(p)}
-                    disabled={sendingId === p.id || sentIds.includes(p.id)}
+                    disabled={sendingId === p.id}
                     className="text-xs text-[var(--color-accent-green)] hover:underline disabled:opacity-60 disabled:no-underline"
                   >
-                    {sendingId === p.id
-                      ? "Sending..."
-                      : sentIds.includes(p.id)
-                      ? `✓ Emailed ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`
-                      : `✉️ Email to ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`}
+                    {sendingId === p.id ? "Sending..." : `✉️ Email to ${subscribers.length} subscriber${subscribers.length === 1 ? "" : "s"}`}
                   </button>
-                )}
+                ) : null}
                 <button onClick={() => remove(p)} className="text-xs text-red-400 hover:underline">Delete</button>
               </div>
             </Card>

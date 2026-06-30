@@ -33,6 +33,15 @@ export default function RosterPage({ params }) {
     load();
   }
 
+  async function movePlayer(index, dir) {
+    const arr = [...players];
+    const j = index + dir;
+    if (j < 0 || j >= arr.length) return;
+    [arr[index], arr[j]] = [arr[j], arr[index]];
+    setPlayers(arr.map((p, i) => ({ ...p, sort_order: i })));
+    await Promise.all(arr.map((p, i) => supabase.from("players").update({ sort_order: i }).eq("id", p.id)));
+  }
+
   if (!players) return <Spinner />;
 
   return (
@@ -58,7 +67,7 @@ export default function RosterPage({ params }) {
         <EmptyState icon="📋" text="No players yet. Add your first player — name and number are all you need to start." />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-          {players.map((p) => (
+          {players.map((p, i) => (
             <Card key={p.id} className="flex gap-4 items-center !p-4">
               {p.photo_url ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -73,9 +82,12 @@ export default function RosterPage({ params }) {
                 <p className="text-xs text-slate-500">
                   {p.jersey_number ? `#${p.jersey_number}` : ""}{p.jersey_number && p.position ? " · " : ""}{p.position || ""}
                 </p>
-                <div className="flex gap-3 mt-1.5">
+                <div className="flex gap-3 mt-1.5 items-center">
                   <button onClick={() => setEditing(p)} className="text-xs text-[var(--color-accent-blue)] hover:underline">Edit</button>
                   <button onClick={() => removePlayer(p)} className="text-xs text-red-400 hover:underline">Remove</button>
+                  <span className="flex-1" />
+                  <button onClick={() => movePlayer(i, -1)} disabled={i === 0} title="Move up" className="text-xs text-slate-400 hover:text-white disabled:opacity-30">↑</button>
+                  <button onClick={() => movePlayer(i, 1)} disabled={i === players.length - 1} title="Move down" className="text-xs text-slate-400 hover:text-white disabled:opacity-30">↓</button>
                 </div>
               </div>
             </Card>

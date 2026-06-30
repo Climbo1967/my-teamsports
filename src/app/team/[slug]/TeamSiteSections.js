@@ -84,7 +84,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
       )}
 
       {lightbox && (
-        <Lightbox photo={lightbox} playerById={playerById} onClose={() => setLightbox(null)} />
+        <Lightbox photo={lightbox} playerById={playerById} slug={slug} onClose={() => setLightbox(null)} />
       )}
     </>
   );
@@ -791,19 +791,39 @@ function ParentUpload({ slug, players }) {
   );
 }
 
-function Lightbox({ photo, playerById, onClose }) {
+function Lightbox({ photo, playerById, slug, onClose }) {
+  const router = useRouter();
+  const [removing, setRemoving] = useState(false);
+  async function removePhoto() {
+    if (!confirm("Remove this photo from the gallery?")) return;
+    setRemoving(true);
+    const res = await fetch("/api/team-photos", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ slug, photoId: photo.id }),
+    });
+    setRemoving(false);
+    if (res.ok) { onClose(); router.refresh(); }
+  }
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm" onClick={onClose}>
       <div className="max-w-3xl w-full" onClick={(e) => e.stopPropagation()}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={photo.url} alt={photo.caption || "Team photo"} className="w-full max-h-[75vh] object-contain rounded-xl" />
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center justify-between gap-3 mt-3">
           <p className="text-sm text-slate-300">
             {photo.caption || (photo.player_id ? playerById[photo.player_id]?.name : "")}
           </p>
-          <button onClick={onClose} className="text-sm text-slate-400 hover:text-white border border-white/10 px-4 py-2 rounded-lg">
-            Close
-          </button>
+          <div className="flex items-center gap-2 shrink-0">
+            {photo.uploaded_by === "parent" && (
+              <button onClick={removePhoto} disabled={removing} className="text-sm text-red-400 hover:text-red-300 border border-red-500/30 px-4 py-2 rounded-lg disabled:opacity-50">
+                {removing ? "Removing..." : "Remove"}
+              </button>
+            )}
+            <button onClick={onClose} className="text-sm text-slate-400 hover:text-white border border-white/10 px-4 py-2 rounded-lg">
+              Close
+            </button>
+          </div>
         </div>
       </div>
     </div>

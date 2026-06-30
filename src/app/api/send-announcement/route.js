@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { sendEmail, basicHtml } from "@/lib/email";
 
 export async function POST(request) {
-  const { teamId, subject, body } = await request.json();
+  const { teamId, announcementId, subject, body } = await request.json();
   const cleanSubject = String(subject || "Team update").trim().slice(0, 150);
   const cleanBody = String(body || "").trim();
 
@@ -38,5 +38,8 @@ export async function POST(request) {
   });
 
   if (!result.ok) return NextResponse.json({ error: result.error || "Email failed to send." }, { status: 502 });
+  if (announcementId) {
+    await supabase.from("announcements").update({ emailed_at: new Date().toISOString() }).eq("id", announcementId);
+  }
   return NextResponse.json({ ok: true, count: emails.length });
 }

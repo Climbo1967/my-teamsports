@@ -51,6 +51,11 @@ export default function PlaybookPage({ params }) {
     await Promise.all(arr.map((p, i) => supabase.from("plays").update({ sort_order: i }).eq("id", p.id)));
   }
 
+  async function togglePublic(p) {
+    setPlays((ps) => ps.map((x) => (x.id === p.id ? { ...x, is_public: !x.is_public } : x)));
+    await supabase.from("plays").update({ is_public: !p.is_public }).eq("id", p.id);
+  }
+
   function openPrint(playId) {
     const base = `/dashboard/teams/${teamId}/playbook/print`;
     window.open(playId ? `${base}?id=${playId}` : base, "_blank");
@@ -112,6 +117,10 @@ export default function PlaybookPage({ params }) {
                 <div className="flex flex-wrap gap-1.5 mt-1 mb-2">
                   <span className="text-[11px] px-2 py-0.5 rounded-full bg-[var(--color-accent-blue)]/15 text-[var(--color-accent-blue)] border border-blue-500/20">{p.category}</span>
                   {p.formation ? <span className="text-[11px] px-2 py-0.5 rounded-full bg-white/5 text-slate-400 border border-white/10">{p.formation}</span> : null}
+                  <button onClick={() => togglePublic(p)} title="Toggle whether this play shows on the public team site"
+                    className={`text-[11px] px-2 py-0.5 rounded-full border ${p.is_public ? "bg-green-500/10 text-green-400 border-green-500/20" : "bg-white/5 text-slate-500 border-white/10"}`}>
+                    {p.is_public ? "On team site" : "Hidden"}
+                  </button>
                 </div>
                 {p.notes ? <p className="text-xs text-slate-400 line-clamp-2 mb-2">{p.notes}</p> : <div className="flex-1" />}
                 <div className="flex flex-wrap gap-3 mt-auto pt-1 text-xs">

@@ -66,3 +66,24 @@ export async function POST(request) {
 
   return NextResponse.json({ ok: true, url: pub.publicUrl });
 }
+
+export async function DELETE(request) {
+  const { slug: rawSlug, photoId } = await request.json();
+  const slug = String(rawSlug || "").toLowerCase();
+  if (!slug || !photoId) {
+    return NextResponse.json({ error: "Missing photo." }, { status: 400 });
+  }
+  const cookieStore = await cookies();
+  const passcode = cookieStore.get(`team_access_${slug}`)?.value;
+  if (!passcode) {
+    return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
+  }
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc("delete_team_photo", {
+    p_slug: slug, p_passcode: passcode, p_photo_id: photoId,
+  });
+  if (error || !data?.ok) {
+    return NextResponse.json({ error: "Could not remove the photo." }, { status: 500 });
+  }
+  return NextResponse.json({ ok: true, removed: data.removed });
+}
