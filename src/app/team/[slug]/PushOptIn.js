@@ -13,19 +13,35 @@ function urlBase64ToUint8Array(base64String) {
   return out;
 }
 
-export default function PushOptIn({ teamId, teamName }) {
+export default function PushOptIn({ slug, teamName }) {
   const [state, setState] = useState("hidden"); // hidden|idle|working|done|denied|need-install|error
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    const supported =
-      typeof window !== "undefined" &&
-      "serviceWorker" in navigator &&
-      "PushManager" in window &&
-      "Notification" in window;
-    if (!supported || !VAPID) return; // stay hidden where unsupported
-    if (Notification.permission === "denied") { setState("denied"); return; }
-    setState("idle");
+    let cancelled = false;
+    async function init() {
+      const supported =
+        typeof window !== "undefined" &&
+        "serviceWorker" in navigator &&
+        "PushManager" in window &&
+        "Notification" in window;
+      if (!supported || !VAPID) return; // stay hidden where unsupported
+      if (Notification.permission === "denied") {
+        if (!cancelled) setState("denied");
+        return;
+      }
+      try {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (!cancelled) setState(sub ? "done" : "idle");
+      } catch {
+        if (!cancelled) setState("idle");
+      }
+    }
+    init();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   async function enable() {
@@ -51,7 +67,7 @@ export default function PushOptIn({ teamId, teamName }) {
       const res = await fetch("/api/push/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teamId, subscription: sub.toJSON() }),
+        body: JSON.stringify({ slug, subscription: sub.toJSON() }),
       });
       if (!res.ok) {
         const d = await res.json().catch(() => ({}));
@@ -64,12 +80,39 @@ export default function PushOptIn({ teamId, teamName }) {
     }
   }
 
+  async function disable() {
+    setState("working");
+    setMsg("");
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.getSubscription();
+      const endpoint = sub?.endpoint;
+      if (sub) await sub.unsubscribe();
+      if (endpoint) {
+        await fetch("/api/push/subscribe", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ slug, endpoint }),
+        }).catch(() => {});
+      }
+      setState("idle");
+    } catch (e) {
+      setState("error");
+      setMsg(e?.message || "Something went wrong.");
+    }
+  }
+
   if (state === "hidden") return null;
 
   return (
     <div className="flex flex-col items-center gap-1.5 my-4">
       {state === "done" ? (
-        <p className="text-sm text-green-400 font-medium">🔔 Alerts on for {teamName} on this device</p>
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-sm text-green-400 font-medium">🔔 Alerts on for {teamName} on this device</p>
+          <button onClick={disable} className="text-xs text-slate-400 underline hover:text-slate-200 transition-colors">
+            Turn off alerts
+          </button>
+        </div>
       ) : state === "need-install" ? (
         <p className="text-xs text-slate-400 max-w-xs text-center">
           📱 On iPhone, tap <strong>Share → Add to Home Screen</strong>, open the app from your home screen, then turn on alerts.
@@ -84,7 +127,7 @@ export default function PushOptIn({ teamId, teamName }) {
           disabled={state === "working"}
           className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full border border-white/15 text-white hover:bg-white/10 transition-colors disabled:opacity-50"
         >
-          🔔 {state === "working" ? "Turning on…" : "Get game alerts"}
+          🔔 {state === "working" ? "Working…" : "Get game alerts"}
         </button>
       )}
       {state === "error" && <p className="text-xs text-red-400">{msg}</p>}

@@ -1,12 +1,28 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
  * Parent photo upload. The passcode lives in an httpOnly cookie set by the
- * passcode gate; we validate it server-side, upload to storage, and record
- * the photo through a passcode-checked database function.
+ * passcode gate; we validate it server-side, upload to storage with the
+ * service-role client (so the bucket needs no anonymous INSERT policy), and
+ * record the photo through a passcode-checked database function.
  */
+const ALLOWED = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+};
+const BUCKET = "team-media";
+
+function pathFromPublicUrl(url) {
+  // .../object/public/team-media/<path>
+  const marker = `/object/public/${BUCKET}/`;
+  const i = url.indexOf(marker);
+  return i === -1 ? null : url.slice(i + marker.length);
+}
+
 export async function POST(request) {
   const form = await request.formData();
   const slug = String(form.get("slug") || "").toLowerCase();
@@ -17,8 +33,9 @@ export async function POST(request) {
   if (!slug || !file || typeof file === "string") {
     return NextResponse.json({ error: "Missing photo or team." }, { status: 400 });
   }
-  if (!file.type?.startsWith("image/")) {
-    return NextResponse.json({ error: "Please upload an image file." }, { status: 400 });
+  const ext = ALLOWED[file.type];
+  if (!ext) {
+    return NextResponse.json({ error: "Please upload a JPG, PNG, or WebP image." }, { status: 400 });
   }
   if (file.size > 15 * 1024 * 1024) {
     return NextResponse.json({ error: "Image is too large (max 15MB)." }, { status: 400 });
@@ -39,18 +56,22 @@ export async function POST(request) {
   }
   const teamId = site.team.id;
 
-  // Upload into the parent-uploads area of the bucket
-  const ext = file.type === "image/png" ? "png" : "jpg";
+  const admin = createAdminClient();
+  if (!admin) {
+    return NextResponse.json({ error: "Photo uploads are temporarily unavailable." }, { status: 503 });
+  }
+
+  // Upload into the parent-uploads area of the bucket (service-role bypasses RLS)
   const path = `parent-uploads/${teamId}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
   const bytes = await file.arrayBuffer();
-  const { error: uploadError } = await supabase.storage
-    .from("team-media")
+  const { error: uploadError } = await admin.storage
+    .from(BUCKET)
     .upload(path, bytes, { contentType: file.type });
   if (uploadError) {
     return NextResponse.json({ error: "Upload failed. Try again." }, { status: 500 });
   }
 
-  const { data: pub } = supabase.storage.from("team-media").getPublicUrl(path);
+  const { data: pub } = admin.storage.from(BUCKET).getPublicUrl(path);
 
   // Record it (passcode re-checked inside the function)
   const { error: rpcError } = await supabase.rpc("add_team_photo", {
@@ -61,6 +82,8 @@ export async function POST(request) {
     p_player_id: playerId,
   });
   if (rpcError) {
+    // Roll back the orphaned object so it doesn't linger publicly
+    await admin.storage.from(BUCKET).remove([path]).catch(() => {});
     return NextResponse.json({ error: "Could not save the photo. Try again." }, { status: 500 });
   }
 
@@ -68,8 +91,14 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  const { slug: rawSlug, photoId } = await request.json();
-  const slug = String(rawSlug || "").toLowerCase();
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const slug = String(body?.slug || "").toLowerCase();
+  const photoId = body?.photoId;
   if (!slug || !photoId) {
     return NextResponse.json({ error: "Missing photo." }, { status: 400 });
   }
@@ -85,5 +114,15 @@ export async function DELETE(request) {
   if (error || !data?.ok) {
     return NextResponse.json({ error: "Could not remove the photo." }, { status: 500 });
   }
+
+  // Also remove the underlying storage object (M3) if the RPC returned its URL
+  if (data.url) {
+    const path = pathFromPublicUrl(data.url);
+    const admin = createAdminClient();
+    if (path && admin) {
+      await admin.storage.from(BUCKET).remove([path]).catch(() => {});
+    }
+  }
+
   return NextResponse.json({ ok: true, removed: data.removed });
 }

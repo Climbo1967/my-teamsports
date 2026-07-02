@@ -72,7 +72,7 @@ export default async function TeamPage({ params }) {
 
       <LiveScoreBanner slug={normalizedSlug} teamName={site.team.name} />
 
-      <PushOptIn teamId={site.team.id} teamName={site.team.name} />
+      <PushOptIn slug={normalizedSlug} teamName={site.team.name} />
 
       <TeamSiteSections site={site} slug={normalizedSlug} emoji={emoji} />
 
