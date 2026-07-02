@@ -182,7 +182,9 @@ export default function ManualPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
               <Step>On the public team page, a parent taps <strong>&quot;🔔 Get game alerts&quot;</strong> under the team header to turn on notifications for that team, on that device.</Step>
-              <Step>Once opted in, they get an alert when you send an announcement (via &quot;Notify team&quot;), when a game starts, and when a game ends &mdash; for every sport.</Step>
+              <Step>Once opted in, they get an alert when you send an announcement (via &quot;Notify team&quot;), when a game starts and ends, and when you add, move, or cancel an upcoming event &mdash; for every sport.</Step>
+              <Step><strong>Schedule alerts are automatic.</strong> Adding, changing, or canceling an upcoming event on your Schedule tab notifies opted-in devices about 25 seconds after you stop editing &mdash; several quick edits get bundled into one alert. Recording a result on a past game never sends an alert.</Step>
+              <Step><strong>Parents choose what they get.</strong> Under &quot;Alerts on&quot; on the team page there are checkboxes for Announcements, Game scores, and Schedule changes &mdash; per device, all on by default.</Step>
               <Step><strong>iPhone / iPad note:</strong> Apple only allows push from an installed web app. Parents on iOS need to tap Share → &quot;Add to Home Screen,&quot; open the site from that new icon, and then tap &quot;Get game alerts.&quot; Android, and Chrome / Edge / Firefox on a computer, work straight from the browser. (The button shows this hint automatically on iPhones.)</Step>
             </ul>
           </Section>
@@ -231,7 +233,7 @@ export default function ManualPage() {
             <ul className="list-disc pl-5 space-y-1.5">
               <Step><strong>Getting in:</strong> open the team link your coach shares and enter the 6-character passcode once. Your device remembers it for about six months.</Step>
               <Step><strong>Following games live:</strong> when the coach is scoring a game, a &quot;LIVE NOW&quot; banner shows the current score right on the team page.</Step>
-              <Step><strong>Game-day alerts:</strong> tap &quot;🔔 Get game alerts&quot; under the team name to get a push notification for announcements and when games start and finish. On an iPhone, add the site to your Home Screen first, then turn alerts on from that icon.</Step>
+              <Step><strong>Game-day alerts:</strong> tap &quot;🔔 Get game alerts&quot; under the team name to get a push notification for announcements, live game starts and finals, and schedule changes. Use the checkboxes under &quot;Alerts on&quot; to pick which of those this device gets. On an iPhone, add the site to your Home Screen first, then turn alerts on from that icon.</Step>
               <Step><strong>RSVPs:</strong> pick your player and mark Going / Maybe / Not going for each game so the coach knows the numbers.</Step>
               <Step><strong>Photos:</strong> add your own game-day photos to the team gallery using the passcode &mdash; and you can remove one you added.</Step>
               <Step><strong>Email updates:</strong> subscribe with your email to get the coach&apos;s announcements in your inbox. Addresses stay private, and every email has an unsubscribe link if you ever want to stop.</Step>

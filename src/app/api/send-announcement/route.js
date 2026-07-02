@@ -33,7 +33,7 @@ export async function POST(request) {
 
   const [{ data: subs }, { data: devices }] = await Promise.all([
     supabase.from("subscribers").select("email").eq("team_id", teamId),
-    supabase.from("push_subscriptions").select("endpoint, p256dh, auth").eq("team_id", teamId),
+    supabase.from("push_subscriptions").select("endpoint, p256dh, auth").eq("team_id", teamId).eq("want_announcements", true),
   ]);
   const emails = [...new Set((subs || []).map((s) => s.email).filter(Boolean))];
   const pushSubs = devices || [];

@@ -29,7 +29,7 @@ export async function POST(request) {
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
 
   const { data: devices } = await supabase
-    .from("push_subscriptions").select("endpoint, p256dh, auth").eq("team_id", teamId);
+    .from("push_subscriptions").select("endpoint, p256dh, auth").eq("team_id", teamId).eq("want_games", true);
   const subs = devices || [];
   if (subs.length === 0) return NextResponse.json({ ok: true, sent: 0 });
 

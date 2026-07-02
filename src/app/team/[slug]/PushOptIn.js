@@ -16,6 +16,39 @@ function urlBase64ToUint8Array(base64String) {
 export default function PushOptIn({ slug, teamName }) {
   const [state, setState] = useState("hidden"); // hidden|idle|working|done|denied|need-install|error
   const [msg, setMsg] = useState("");
+  const [endpoint, setEndpoint] = useState(null);
+  const [prefs, setPrefs] = useState(null); // { announcements, games, schedule } | null
+
+  async function loadPrefs(ep) {
+    try {
+      const res = await fetch("/api/push/prefs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, endpoint: ep }),
+      });
+      const d = await res.json().catch(() => ({}));
+      if (res.ok && d.prefs) setPrefs(d.prefs);
+    } catch {
+      /* prefs are optional sugar; ignore */
+    }
+  }
+
+  async function togglePref(key) {
+    if (!prefs || !endpoint) return;
+    const next = { ...prefs, [key]: !prefs[key] };
+    setPrefs(next); // optimistic
+    try {
+      const res = await fetch("/api/push/prefs", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug, endpoint, prefs: next }),
+      });
+      const d = await res.json().catch(() => ({}));
+      if (res.ok && d.prefs) setPrefs(d.prefs);
+    } catch {
+      /* leave optimistic state; next load corrects it */
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -33,7 +66,13 @@ export default function PushOptIn({ slug, teamName }) {
       try {
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.getSubscription();
-        if (!cancelled) setState(sub ? "done" : "idle");
+        if (!cancelled) {
+          setState(sub ? "done" : "idle");
+          if (sub) {
+            setEndpoint(sub.endpoint);
+            loadPrefs(sub.endpoint);
+          }
+        }
       } catch {
         if (!cancelled) setState("idle");
       }
@@ -73,6 +112,8 @@ export default function PushOptIn({ slug, teamName }) {
         const d = await res.json().catch(() => ({}));
         throw new Error(d.error || "Could not turn on alerts.");
       }
+      setEndpoint(sub.endpoint);
+      setPrefs({ announcements: true, games: true, schedule: true });
       setState("done");
     } catch (e) {
       setState("error");
@@ -95,6 +136,8 @@ export default function PushOptIn({ slug, teamName }) {
           body: JSON.stringify({ slug, endpoint }),
         }).catch(() => {});
       }
+      setEndpoint(null);
+      setPrefs(null);
       setState("idle");
     } catch (e) {
       setState("error");
@@ -107,8 +150,18 @@ export default function PushOptIn({ slug, teamName }) {
   return (
     <div className="flex flex-col items-center gap-1.5 my-4">
       {state === "done" ? (
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-1.5">
           <p className="text-sm text-green-400 font-medium">🔔 Alerts on for {teamName} on this device</p>
+          {prefs && (
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-slate-400">
+              {[["announcements", "Announcements"], ["games", "Game scores"], ["schedule", "Schedule changes"]].map(([k, label]) => (
+                <label key={k} className="inline-flex items-center gap-1.5 cursor-pointer select-none hover:text-slate-200 transition-colors">
+                  <input type="checkbox" checked={!!prefs[k]} onChange={() => togglePref(k)} className="accent-green-500" />
+                  {label}
+                </label>
+              ))}
+            </div>
+          )}
           <button onClick={disable} className="text-xs text-slate-400 underline hover:text-slate-200 transition-colors">
             Turn off alerts
           </button>

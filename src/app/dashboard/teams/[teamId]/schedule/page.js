@@ -4,6 +4,20 @@ import { use, useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { STAT_KEYS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { queueScheduleAlert } from "@/lib/pushClient";
+
+// Push slice 3: build the human-readable alert line for a schedule change.
+// Formatted on the client so times render in the coach's local timezone.
+function scheduleAlertPayload(kind, row) {
+  const isGame = row.event_type === "game";
+  const label = isGame
+    ? `Game${row.opponent ? " vs " + row.opponent : ""}`
+    : (row.title || (row.event_type === "practice" ? "Practice" : "Event"));
+  const when = new Date(row.starts_at).toLocaleString("en-US", {
+    weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+  });
+  return { kind, label, when, location: row.location || null };
+}
 
 export default function SchedulePage({ params }) {
   const { teamId } = use(params);
@@ -35,6 +49,10 @@ export default function SchedulePage({ params }) {
   async function remove(event) {
     if (!confirm("Delete this event?")) return;
     await supabase.from("events").delete().eq("id", event.id);
+    // Alert opted-in devices only when an UPCOMING event is canceled.
+    if (new Date(event.starts_at).getTime() > Date.now()) {
+      queueScheduleAlert(teamId, scheduleAlertPayload("canceled", event));
+    }
     load();
   }
 
@@ -363,6 +381,26 @@ function EventForm({ teamId, event, onDone, onCancel }) {
     const { error: err } = await query;
     setBusy(false);
     if (err) { setError(err.message); return; }
+
+    // Push slice 3: alert opted-in devices about upcoming-schedule changes.
+    // Result/notes-only edits and past events never alert; quick consecutive
+    // edits get bundled into one digest notification (~25s debounce).
+    const isFuture = new Date(row.starts_at).getTime() > Date.now();
+    if (!event && isFuture) {
+      queueScheduleAlert(teamId, scheduleAlertPayload("added", row));
+    } else if (event) {
+      const wasFuture = new Date(event.starts_at).getTime() > Date.now();
+      const meaningful =
+        event.event_type !== row.event_type ||
+        (event.opponent || null) !== row.opponent ||
+        (event.title || null) !== row.title ||
+        (event.location || null) !== row.location ||
+        new Date(event.starts_at).toISOString() !== row.starts_at;
+      if (meaningful && (isFuture || wasFuture)) {
+        queueScheduleAlert(teamId, scheduleAlertPayload("changed", row));
+      }
+    }
+
     onDone();
   }
 
