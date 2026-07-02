@@ -2,9 +2,20 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { sendEmail, basicHtml } from "@/lib/email";
 import { sendPush } from "@/lib/push";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  const { teamId, announcementId, subject, body } = await request.json();
+  if (rateLimited(request, "send-announcement", { limit: 10, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { teamId, announcementId, subject, body } = payload || {};
   const cleanSubject = String(subject || "Team update").trim().slice(0, 150);
   const cleanBody = String(body || "").trim();
 

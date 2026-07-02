@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 // Anonymous parents (no account) subscribe/unsubscribe a device to a team's push
 // notifications. Access is gated by the team passcode cookie set by the passcode
 // gate; writes go through passcode-checked SECURITY DEFINER RPCs.
 export async function POST(request) {
+  if (rateLimited(request, "push-subscribe", { limit: 15, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
   let payload;
   try {
     payload = await request.json();
@@ -47,6 +52,10 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
+  if (rateLimited(request, "push-unsubscribe", { limit: 15, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
   let payload;
   try {
     payload = await request.json();

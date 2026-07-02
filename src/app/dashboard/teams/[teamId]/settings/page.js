@@ -64,8 +64,14 @@ export default function SettingsPage({ params }) {
     e.preventDefault();
     setError(null);
     if (sport !== team.sport) {
-      const { count } = await supabase.from("stats").select("id", { count: "exact", head: true }).eq("team_id", teamId);
-      if ((count || 0) > 0 && !confirm("Heads up: this team already has recorded stats under its current sport. Changing the sport will leave those stats labeled with the old columns, so they may stop showing on the team site. Change it anyway?")) {
+      const [{ count: statCount }, { count: playCount }] = await Promise.all([
+        supabase.from("stats").select("id", { count: "exact", head: true }).eq("team_id", teamId),
+        supabase.from("plays").select("id", { count: "exact", head: true }).eq("team_id", teamId),
+      ]);
+      const warnings = [];
+      if ((statCount || 0) > 0) warnings.push("recorded stats stay labeled with the old sport's columns, so they may stop showing on the team site");
+      if ((playCount || 0) > 0) warnings.push("playbook plays keep their old field diagram and categories until you edit and re-file them");
+      if (warnings.length && !confirm(`Heads up: changing this team's sport means ${warnings.join(", and ")}. Change it anyway?`)) {
         return;
       }
     }

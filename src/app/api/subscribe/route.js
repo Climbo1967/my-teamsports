@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  const { slug, email, name } = await request.json();
+  if (rateLimited(request, "subscribe", { limit: 10, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { slug, email, name } = payload || {};
   const normalizedSlug = String(slug || "").toLowerCase();
 
   if (!normalizedSlug || !email) {

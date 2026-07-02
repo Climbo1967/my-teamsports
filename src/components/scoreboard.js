@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { scoreboardConfig, periodShort, formatClock, gameResultString } from "@/lib/constants";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
@@ -18,6 +18,9 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
   const [pending, setPending] = useState(null); // { points } awaiting player pick (us side)
   const [error, setError] = useState(null);
   const [nowTick, setNowTick] = useState(Date.now());
+  // L2: a game that was already final (loaded final, or ended once) must not
+  // push a second "final" alert when it is reopened and ended again.
+  const finalAnnounced = useRef(false);
 
   const load = useCallback(async () => {
     const [{ data: g }, { data: pl }] = await Promise.all([
@@ -25,6 +28,7 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
       supabase.from("scoring_plays").select("*").eq("event_id", event.id).order("created_at", { ascending: false }),
     ]);
     setGame(g || null);
+    if (g?.status === "final") finalAnnounced.current = true;
     setPlays(pl || []);
   }, [event.id]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { load(); }, [load]);
@@ -125,7 +129,10 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
     await supabase.from("game_scores").update({ status: "final", clock_running: false }).eq("id", game.id);
     await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
     if (cfg.statKey) await supabase.rpc("rollup_scoreboard_stats", { p_event_id: event.id });
-    notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
+    if (!finalAnnounced.current) {
+      notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
+      finalAnnounced.current = true;
+    }
     onBack();
   }
 

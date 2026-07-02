@@ -1,8 +1,19 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  const { slug, passcode } = await request.json();
+  if (rateLimited(request, "team-access", { limit: 10, windowMs: 60_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { slug, passcode } = payload || {};
 
   if (!slug || !passcode) {
     return NextResponse.json({ error: "Missing slug or passcode" }, { status: 400 });

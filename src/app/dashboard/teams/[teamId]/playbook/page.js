@@ -165,6 +165,9 @@ export default function PlaybookPage({ params }) {
 function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
   const supabase = createClient();
   const categories = playCategoriesForSport(sport);
+  // L4: after a sport change, existing plays can carry a category the new
+  // sport does not use. Surface it so the coach can keep it or re-file it.
+  const legacyCategory = play?.category && !categories.includes(play.category) ? play.category : null;
   const [name, setName] = useState(play?.name || "");
   const [category, setCategory] = useState(play?.category || categories[0]);
   const [formation, setFormation] = useState(play?.formation || "");
@@ -221,6 +224,7 @@ function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
             <div>
               <Label>Category</Label>
               <Select value={category} onChange={(e) => setCategory(e.target.value)}>
+                {legacyCategory && <option value={legacyCategory}>{legacyCategory} (previous sport)</option>}
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </Select>
             </div>

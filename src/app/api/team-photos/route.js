@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 /**
  * Parent photo upload. The passcode lives in an httpOnly cookie set by the
@@ -24,7 +25,16 @@ function pathFromPublicUrl(url) {
 }
 
 export async function POST(request) {
-  const form = await request.formData();
+  if (rateLimited(request, "team-photos", { limit: 12, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let form;
+  try {
+    form = await request.formData();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
   const slug = String(form.get("slug") || "").toLowerCase();
   const file = form.get("file");
   const caption = String(form.get("caption") || "").slice(0, 200);
@@ -91,6 +101,10 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
+  if (rateLimited(request, "team-photos-delete", { limit: 30, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
   let body;
   try {
     body = await request.json();

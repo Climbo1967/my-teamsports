@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaude } from "@/lib/ai";
@@ -13,7 +14,16 @@ const FOCI = {
 };
 
 export async function POST(request) {
-  const body = await request.json();
+  if (rateLimited(request, "ai-practice", { limit: 10, windowMs: 300_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
   const teamId = body?.teamId;
   if (!teamId) return NextResponse.json({ error: "Missing team." }, { status: 400 });
   const minutes = MINUTES.has(Number(body?.minutes)) ? Number(body.minutes) : 75;

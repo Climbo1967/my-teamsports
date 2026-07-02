@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { createClient } from "@/lib/supabase/server";
 import { sportLabel } from "@/lib/constants";
 import { recommendLineup, fmtAvg, MIN_PA } from "@/lib/lineup";
@@ -7,7 +8,17 @@ import { askClaude } from "@/lib/ai";
 const DIAMOND = new Set(["baseball", "softball"]);
 
 export async function POST(request) {
-  const { teamId } = await request.json();
+    if (rateLimited(request, "ai-lineup", { limit: 10, windowMs: 300_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { teamId } = payload || {};
   if (!teamId) return NextResponse.json({ error: "Missing team." }, { status: 400 });
 
   const supabase = await createClient();

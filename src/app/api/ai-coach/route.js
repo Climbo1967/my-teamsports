@@ -2,9 +2,20 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaude } from "@/lib/ai";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  const { teamId } = await request.json();
+  if (rateLimited(request, "ai-briefing", { limit: 10, windowMs: 300_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { teamId } = payload || {};
   if (!teamId) return NextResponse.json({ error: "Missing team." }, { status: 400 });
 
   const supabase = await createClient();

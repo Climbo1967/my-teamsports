@@ -1,9 +1,20 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { sendEmail, basicHtml, SUPPORT_INBOX } from "@/lib/email";
+import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  const { subject, message, teamId, teamName } = await request.json();
+  if (rateLimited(request, "support", { limit: 5, windowMs: 600_000 })) {
+    return NextResponse.json({ error: RATE_MSG }, { status: 429 });
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Bad request." }, { status: 400 });
+  }
+  const { subject, message, teamId, teamName } = payload || {};
   const cleanSubject = String(subject || "").trim().slice(0, 150);
   const cleanMessage = String(message || "").trim().slice(0, 5000);
 

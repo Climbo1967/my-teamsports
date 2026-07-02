@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback, useEffect, useMemo, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { AB_RESULTS, HIT_TYPES, SCOREKEEPER_SPORTS, SCOREBOARD_SPORTS, gameResultString } from "@/lib/constants";
 import { Button, Card, EmptyState, ErrorText, Spinner } from "@/components/ui";
@@ -134,6 +134,9 @@ function GameScorer({ teamId, event, players, onBack }) {
   const [undoStack, setUndoStack] = useState([]); // batting actions undoable this session
   const [defenseUndo, setDefenseUndo] = useState([]); // pitching/defense actions undoable this session
   const [error, setError] = useState(null);
+  // L2: a game that was already final (loaded final, or ended once) must not
+  // push a second "final" alert when it is reopened and ended again.
+  const finalAnnounced = useRef(false);
 
   const load = useCallback(async () => {
     const [{ data: g }, { data: lu }, { data: pl }, { data: ab }] = await Promise.all([
@@ -143,6 +146,7 @@ function GameScorer({ teamId, event, players, onBack }) {
       supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
     ]);
     setGame(g || null);
+    if (g?.status === "final") finalAnnounced.current = true;
     const pmap = Object.fromEntries(players.map((p) => [p.id, p]));
     setLineup((lu || []).map((r) => ({ ...r, ...pmap[r.player_id] })));
     setPitchMap(Object.fromEntries((pl || []).map((r) => [r.player_id, r])));
@@ -354,7 +358,10 @@ function GameScorer({ teamId, event, players, onBack }) {
     await supabase.from("game_scores").update({ status: "final" }).eq("id", game.id);
     await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
     await rollup();
-    notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
+    if (!finalAnnounced.current) {
+      notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
+      finalAnnounced.current = true;
+    }
     onBack();
   }
 
