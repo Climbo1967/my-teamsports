@@ -1,17 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
-import { sportLabel } from "@/lib/constants";
+import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 
-const SPORT_EMOJI = {
-  baseball: "⚾",
-  football: "🏈",
-  basketball: "🏀",
-  soccer: "⚽",
-  softball: "🥎",
-  volleyball: "🏐",
-  hockey: "🏒",
-  other: "🏆",
-};
 
 export default async function DashboardPage() {
   const supabase = await createClient();

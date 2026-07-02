@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
+import { SPORTS, SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 
 export default function AdminDirectory({ data }) {
@@ -20,11 +20,6 @@ export default function AdminDirectory({ data }) {
     const id = setInterval(() => router.refresh(), 30000);
     return () => clearInterval(id);
   }, [router]);
-
-  const sports = useMemo(
-    () => [...new Set(teams.map((t) => t.sport))].sort(),
-    [teams]
-  );
 
   const filtered = useMemo(() => {
     return coaches.filter((c) => {
@@ -93,8 +88,8 @@ export default function AdminDirectory({ data }) {
             <Label>Sport</Label>
             <Select value={sportFilter} onChange={(e) => setSportFilter(e.target.value)}>
               <option value="all">All sports</option>
-              {sports.map((s) => (
-                <option key={s} value={s} className="capitalize">{(SPORT_EMOJI[s] || "🏆") + " " + sportLabel(s)}</option>
+              {SPORTS.map((s) => (
+                <option key={s.value} value={s.value}>{s.emoji + " " + s.label}</option>
               ))}
             </Select>
           </div>

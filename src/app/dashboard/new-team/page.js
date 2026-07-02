@@ -4,20 +4,8 @@ import { useRef, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { ColorPicker } from "@/components/ui";
-import { DEFAULT_TEAM_COLOR } from "@/lib/constants";
+import { DEFAULT_TEAM_COLOR, SPORTS } from "@/lib/constants";
 import { uploadTeamImage } from "@/lib/upload";
-
-const SPORTS = [
-  { value: "baseball", label: "Baseball", emoji: "⚾" },
-  { value: "football", label: "Football", emoji: "🏈" },
-  { value: "flag_football", label: "Flag Football", emoji: "🚩" },
-  { value: "basketball", label: "Basketball", emoji: "🏀" },
-  { value: "soccer", label: "Soccer", emoji: "⚽" },
-  { value: "softball", label: "Softball", emoji: "🥎" },
-  { value: "volleyball", label: "Volleyball", emoji: "🏐" },
-  { value: "hockey", label: "Hockey", emoji: "🏒" },
-  { value: "other", label: "Other", emoji: "🏆" },
-];
 
 // Unambiguous characters only (no 0/O, 1/I/L)
 const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
