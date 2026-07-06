@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import TeamTabs from "./TeamTabs";
+import BillingGate from "./BillingGate";
+import { teamAccess } from "@/lib/pricing";
 
 export default async function TeamManageLayout({ children, params }) {
   const { teamId } = await params;
@@ -10,11 +12,13 @@ export default async function TeamManageLayout({ children, params }) {
 
   const { data: team } = await supabase
     .from("teams")
-    .select("id, slug, name, sport, season, passcode, logo_url")
+    .select("id, slug, name, sport, season, passcode, logo_url, paid_through, ai_paid_through, trial_ends_at, ai_enabled")
     .eq("id", teamId)
     .single();
 
   if (!team) notFound(); // RLS hides teams the coach doesn't own
+
+  const access = teamAccess(team);
 
   return (
     <div>
@@ -44,7 +48,11 @@ export default async function TeamManageLayout({ children, params }) {
 
       <TeamTabs teamId={team.id} />
 
-      <div className="mt-8">{children}</div>
+      <div className="mt-8">
+        <BillingGate teamId={team.id} expired={!access.active}>
+          {children}
+        </BillingGate>
+      </div>
     </div>
   );
 }

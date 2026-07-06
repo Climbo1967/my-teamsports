@@ -24,9 +24,10 @@ export async function POST(request) {
 
   // RLS only returns the team if this coach is on its staff.
   const { data: team } = await supabase
-    .from("teams").select("id, name, sport, season, ai_enabled").eq("id", teamId).single();
+    .from("teams").select("id, name, sport, season, ai_enabled, ai_paid_through").eq("id", teamId).single();
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
-  if (!team.ai_enabled) {
+  const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10));
+  if (!aiActive) {
     return NextResponse.json({ error: "The AI Assistant Coach isn't enabled for this team yet." }, { status: 403 });
   }
 
