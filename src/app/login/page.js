@@ -14,6 +14,8 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
   const [captchaReset, setCaptchaReset] = useState(0);
+  const [needsConfirm, setNeedsConfirm] = useState(false);
+  const [resendState, setResendState] = useState("idle"); // idle | sending | sent | failed
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -31,12 +33,25 @@ export default function LoginPage() {
 
     if (signInError) {
       setCaptchaReset((n) => n + 1); // tokens are single-use
+      setNeedsConfirm(/email not confirmed/i.test(signInError.message));
       setError(signInError.message);
       return;
     }
 
     router.push("/dashboard");
     router.refresh();
+  }
+
+  async function resendConfirmation() {
+    setResendState("sending");
+    const supabase = createClient();
+    const { error: resendError } = await supabase.auth.resend({
+      type: "signup",
+      email,
+      options: { captchaToken: captchaToken || undefined },
+    });
+    setCaptchaReset((n) => n + 1); // tokens are single-use
+    setResendState(resendError ? "failed" : "sent");
   }
 
   return (
@@ -80,6 +95,32 @@ export default function LoginPage() {
             </div>
             <Turnstile onToken={setCaptchaToken} resetSignal={captchaReset} />
             {error && <p className="text-red-400 text-sm">{error}</p>}
+            {needsConfirm && (
+              <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm">
+                {resendState === "sent" ? (
+                  <p className="text-[var(--color-accent-green)]">
+                    Confirmation email sent to <span className="font-semibold">{email}</span>. Check your inbox (and spam), then log in.
+                  </p>
+                ) : (
+                  <>
+                    <p className="text-slate-400 mb-2">
+                      Your email isn&apos;t confirmed yet. Lost the email?
+                    </p>
+                    <button
+                      type="button"
+                      onClick={resendConfirmation}
+                      disabled={resendState === "sending" || (captchaEnabled && !captchaToken)}
+                      className="text-[var(--color-accent-blue)] font-medium hover:underline disabled:opacity-50"
+                    >
+                      {resendState === "sending" ? "Sending..." : "Resend confirmation email"}
+                    </button>
+                    {resendState === "failed" && (
+                      <p className="text-red-400 mt-1">Could not send. Wait a minute and try again.</p>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
             <button
               type="submit"
               disabled={loading || (captchaEnabled && !captchaToken)}
