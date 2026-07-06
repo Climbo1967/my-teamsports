@@ -3,12 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,10 +21,12 @@ export default function ForgotPasswordPage() {
     const supabase = createClient();
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
+      captchaToken: captchaToken || undefined,
     });
 
     setLoading(false);
     if (err) {
+      setCaptchaReset((n) => n + 1); // tokens are single-use
       setError(err.message);
       return;
     }
@@ -65,10 +70,11 @@ export default function ForgotPasswordPage() {
                     className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
                   />
                 </div>
+                <Turnstile onToken={setCaptchaToken} resetSignal={captchaReset} />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={loading || (captchaEnabled && !captchaToken)}
                   className="w-full bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide py-3.5 rounded-xl hover:bg-blue-600 transition-all disabled:opacity-50"
                 >
                   {loading ? "Sending..." : "SEND RESET LINK"}

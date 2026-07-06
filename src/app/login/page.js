@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,6 +12,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -18,11 +21,16 @@ export default function LoginPage() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+      options: { captchaToken: captchaToken || undefined },
+    });
 
     setLoading(false);
 
     if (signInError) {
+      setCaptchaReset((n) => n + 1); // tokens are single-use
       setError(signInError.message);
       return;
     }
@@ -70,10 +78,11 @@ export default function LoginPage() {
                 className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
               />
             </div>
+            <Turnstile onToken={setCaptchaToken} resetSignal={captchaReset} />
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || (captchaEnabled && !captchaToken)}
               className="w-full bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide py-3.5 rounded-xl hover:bg-blue-600 transition-all disabled:opacity-50"
             >
               {loading ? "Logging in..." : "LOG IN"}

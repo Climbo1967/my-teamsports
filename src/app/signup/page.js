@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -13,6 +14,8 @@ export default function SignupPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [needsConfirm, setNeedsConfirm] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,12 +26,13 @@ export default function SignupPage() {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: { data: { full_name: fullName }, captchaToken: captchaToken || undefined },
     });
 
     setLoading(false);
 
     if (signUpError) {
+      setCaptchaReset((n) => n + 1); // tokens are single-use
       setError(signUpError.message);
       return;
     }
@@ -61,10 +65,11 @@ export default function SignupPage() {
         <Field label="Your Name" type="text" value={fullName} onChange={setFullName} placeholder="Coach Smith" required />
         <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" required />
         <Field label="Password" type="password" value={password} onChange={setPassword} placeholder="At least 6 characters" required minLength={6} />
+        <Turnstile onToken={setCaptchaToken} resetSignal={captchaReset} />
         {error && <p className="text-red-400 text-sm">{error}</p>}
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || (captchaEnabled && !captchaToken)}
           className="w-full bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide py-3.5 rounded-xl hover:bg-green-500 transition-all disabled:opacity-50"
         >
           {loading ? "Creating account..." : "SIGN UP"}
