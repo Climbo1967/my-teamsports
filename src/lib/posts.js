@@ -5,6 +5,41 @@
 
 export const posts = [
   {
+    slug: "football-coaching-app-playbook-ai-coach",
+    title: "Coaching Football This Season? Your Playbook, Practices, and Game Day in One App",
+    description:
+      "From little league to high school, run your football team on My-Team Sports — design plays on a digital gridiron, get AI game briefings and practice plans, track stats and film, and keep families in the loop. No app for parents, free to watch.",
+    excerpt:
+      "Little league to varsity: draw plays on a digital gridiron, get AI briefings and practice plans, and keep every family in the loop — all in one place.",
+    tag: "Football",
+    date: "2026-07-08",
+    updated: "2026-07-08",
+    readingTime: "6 min read",
+    keywords: ["youth football coaching app", "football playbook app", "football practice plan", "high school football team website"],
+    body: [
+      { p: "Football season is almost here. Whether you coach eight-year-olds in rec ball, a middle school squad, or a Friday-night varsity team, the off-field work — the playbook, the practice plan, the schedule, the parent texts — eats the time you would rather spend coaching. My-Team Sports puts all of it in one place, with no app for families to download and no paywall for parents to watch their own kid." },
+      { h2: "Build and share your playbook on a real gridiron" },
+      { p: "The Coach's Playbook is a digital dry-erase board drawn on a football field. Drop your eleven (or seven for flag), draw routes, blocking, and motion, name the play, and save it to your team's playbook. Reorder plays into your install order, and mark each one visible to players or keep it hidden while you are still installing it. When it is time, print clean play sheets for the binder or the sideline." },
+      { ul: [
+        "Little league and rec: a simple set of run and pass plays the kids can actually remember.",
+        "Junior high: install your base offense and defense, and let players study the plays on the team site between practices.",
+        "High school: organize a full playbook by formation and situation, keep your best stuff hidden from public view, and print call sheets for game night.",
+      ]},
+      { h2: "Let the AI Assistant Coach handle the prep" },
+      { p: "The AI Assistant Coach reads your roster, results, and stats and gives you a straight-talking game briefing — what is working, what to drill, and who to watch. Then the practice planner turns a quick note like 'I have 90 minutes and need to fix tackling and tempo' into a timed, station-by-station plan you can print and run. It works for tackle and flag, at every level." },
+      { h2: "One team site your families actually use" },
+      { p: "Every team gets a site with the roster, the schedule with RSVPs so you know who is at practice, game film from a YouTube or Vimeo link, season stats, and your win-loss record. Families open one link with a passcode — no app store, no account, and never a fee to watch their own player." },
+      { h2: "Game day, handled" },
+      { ul: [
+        "Post the score and result, and your record badge updates across the whole site.",
+        "Game-day alerts push kickoff, the final, and any schedule or field change straight to families' phones — no group-text chaos.",
+        "Lightning delay or a field change an hour before kickoff? One tap and everyone knows.",
+      ]},
+      { h2: "Get set up before two-a-days" },
+      { p: "Pick football or flag, name your team, and share the passcode. Five minutes and your staff, players, and parents are on the same page for the season. Create your team on My-Team Sports, turn on the AI Assistant Coach, and start building your playbook today." },
+    ],
+  },
+  {
     slug: "ai-assistant-coach-for-youth-teams",
     title: "Meet the AI Assistant Coach: Briefings, Lineups, and Practice Plans in Seconds",
     description:
