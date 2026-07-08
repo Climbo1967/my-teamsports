@@ -76,6 +76,7 @@ export default function Home() {
           <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
           <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
+          <Link href="/blog" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Blog</Link>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
             Get Started Free
@@ -373,6 +374,7 @@ export default function Home() {
           <Link href="/how-it-works" className="text-slate-500 hover:text-white transition-colors">How It Works</Link>
           <Link href="/faq" className="text-slate-500 hover:text-white transition-colors">FAQ</Link>
           <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
+          <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
           <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
         </div>
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-xs">
