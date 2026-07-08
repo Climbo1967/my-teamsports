@@ -5,6 +5,7 @@ const NAV_LINKS = [
   { href: "/pricing", label: "Pricing" },
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
+  { href: "/blog", label: "Blog" },
 ];
 
 export function SiteNav() {
@@ -45,6 +46,7 @@ export function SiteFooter() {
         <Link href="/pricing" className="text-slate-500 hover:text-white transition-colors">Pricing</Link>
         <Link href="/faq" className="text-slate-500 hover:text-white transition-colors">FAQ</Link>
         <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
+        <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
         <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
         <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
       </div>
