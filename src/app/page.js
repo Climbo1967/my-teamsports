@@ -103,7 +103,7 @@ export default function Home() {
         <div className="relative z-10 max-w-[940px] text-center">
           <div className="inline-flex items-center gap-2.5 bg-green-500/10 border border-green-500/30 text-green-400 text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full mb-7">
             <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent-green)] animate-live" />
-            Live now · Free for the 2026 season
+            Live now · Half off for the 2026 season
           </div>
 
           <h1 className="text-6xl md:text-8xl font-bold leading-none tracking-tight mb-2">
@@ -295,7 +295,7 @@ export default function Home() {
               <Link href="/signup" className="inline-block bg-purple-600 text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-purple-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-purple-600/25">
                 MEET YOUR AI COACH →
               </Link>
-              <span className="text-sm text-slate-400">Free to preview for the 2026 season</span>
+              <span className="text-sm text-slate-400">$20 add-on for the 2026 season</span>
             </div>
           </div>
         </div>
@@ -352,7 +352,7 @@ export default function Home() {
             YOUR TEAM&apos;S HOME<br />IS WAITING.
           </h2>
           <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-            It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s free for the 2026 season.
+            It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s half off for the 2026 season.
           </p>
           <Link
             href="/signup"
