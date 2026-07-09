@@ -39,7 +39,7 @@ export default function PricingPage() {
         badge="Launch pricing — half off for 2026"
         title="SIMPLE PRICING."
         accent="NO SURPRISES."
-        subtitle="One plan. Everything included. Free for coaches all season — and parents never pay a dime, ever."
+        subtitle="One plan. Everything included. Half-off launch pricing for coaches in 2026 — and parents never pay a dime, ever."
       />
 
       {/* PRICING CARD */}
