@@ -67,7 +67,7 @@ export function CTASection() {
       <div className="max-w-[600px] mx-auto bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] border border-green-500/20 rounded-3xl p-12 md:p-14">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">YOUR TEAM&apos;S HOME<br />IS WAITING.</h2>
         <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-          It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s free for the 2026 season.
+          It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s half off for the 2026 season.
         </p>
         <Link
           href="/signup"
