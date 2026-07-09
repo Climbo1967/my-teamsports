@@ -4,14 +4,14 @@
 // The root template appends " | My-Team Sports" to the title automatically.
 
 export const metadata = {
-  title: "Create Your Team — Free for the 2026 Season",
+  title: "Create Your Team — Half Off for the 2026 Season",
   description:
-    "Create your free youth sports team website in about five minutes. Pick your sport, name your team, and share a passcode — no app, no parent accounts, no cost.",
+    "Create your youth sports team website in about five minutes. Pick your sport, name your team, and share a passcode — no app, no parent accounts, parents always free. Start with a 30-day free trial.",
   alternates: { canonical: "/signup" },
   openGraph: {
-    title: "Create Your Team — Free | My-Team Sports",
+    title: "Create Your Team — Half Off for 2026 | My-Team Sports",
     description:
-      "Set up your free team website in five minutes. No app, no parent accounts, no cost.",
+      "Set up your team website in five minutes. Start free for 30 days. No app, no parent accounts.",
     url: "https://my-teamsports.com/signup",
   },
 };
