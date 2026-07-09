@@ -3,12 +3,12 @@ import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketin
 export const metadata = {
   title: "FAQ — Common Questions",
   description:
-    "Answers to common questions about My-Team Sports: do parents need an app, is it really free, how passcodes work, which sports are supported, and how team privacy works.",
+    "Answers to common questions about My-Team Sports: do parents need an app, how much it costs, how passcodes work, which sports are supported, and how team privacy works.",
   alternates: { canonical: "/faq" },
   openGraph: {
     title: "FAQ | My-Team Sports",
     description:
-      "Do parents need an app? Is it free? How do passcodes work? Answers to the most common questions.",
+      "Do parents need an app? What does it cost? How do passcodes work? Answers to the most common questions.",
     url: "https://my-teamsports.com/faq",
   },
 };
@@ -19,8 +19,8 @@ const FAQS = [
     a: "No. My-Team Sports runs entirely in a web browser. Parents open your team link on any phone, tablet, or computer — there is nothing to install from an app store.",
   },
   {
-    q: "Is it really free?",
-    a: "Yes. It is free for coaches for the entire 2026 season, and parents never pay anything at all. You can build a complete team site without entering a credit card.",
+    q: "How much does it cost?",
+    a: "Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is $15 for the 2026 season (half-off launch pricing), then $30 for the 2027 season. Parents never pay anything, ever.",
   },
   {
     q: "Do parents have to create an account?",
