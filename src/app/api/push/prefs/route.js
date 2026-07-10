@@ -7,7 +7,7 @@ import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 // Gated by the team passcode cookie; reads/writes go through passcode-checked
 // SECURITY DEFINER RPCs. POST with {slug, endpoint} reads; include prefs to update.
 export async function POST(request) {
-  if (rateLimited(request, "push-prefs", { limit: 30, windowMs: 600_000 })) {
+  if (await rateLimited(request, "push-prefs", { limit: 30, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

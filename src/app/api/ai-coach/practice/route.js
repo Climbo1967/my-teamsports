@@ -14,7 +14,7 @@ const FOCI = {
 };
 
 export async function POST(request) {
-  if (rateLimited(request, "ai-practice", { limit: 10, windowMs: 300_000 })) {
+  if (await rateLimited(request, "ai-practice", { limit: 10, windowMs: 300_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

@@ -4,7 +4,7 @@ import { sendEmail, basicHtml, SUPPORT_INBOX } from "@/lib/email";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  if (rateLimited(request, "support", { limit: 5, windowMs: 600_000 })) {
+  if (await rateLimited(request, "support", { limit: 5, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

@@ -25,7 +25,7 @@ function pathFromPublicUrl(url) {
 }
 
 export async function POST(request) {
-  if (rateLimited(request, "team-photos", { limit: 12, windowMs: 600_000 })) {
+  if (await rateLimited(request, "team-photos", { limit: 12, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 
@@ -101,7 +101,7 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  if (rateLimited(request, "team-photos-delete", { limit: 30, windowMs: 600_000 })) {
+  if (await rateLimited(request, "team-photos-delete", { limit: 30, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

@@ -19,7 +19,7 @@ function line(c) {
 }
 
 export async function POST(request) {
-  if (rateLimited(request, "push-schedule", { limit: 30, windowMs: 600_000 })) {
+  if (await rateLimited(request, "push-schedule", { limit: 30, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

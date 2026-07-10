@@ -7,7 +7,7 @@ import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 // notifications. Access is gated by the team passcode cookie set by the passcode
 // gate; writes go through passcode-checked SECURITY DEFINER RPCs.
 export async function POST(request) {
-  if (rateLimited(request, "push-subscribe", { limit: 15, windowMs: 600_000 })) {
+  if (await rateLimited(request, "push-subscribe", { limit: 15, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 
@@ -52,7 +52,7 @@ export async function POST(request) {
 }
 
 export async function DELETE(request) {
-  if (rateLimited(request, "push-unsubscribe", { limit: 15, windowMs: 600_000 })) {
+  if (await rateLimited(request, "push-unsubscribe", { limit: 15, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

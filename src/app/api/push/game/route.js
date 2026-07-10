@@ -5,7 +5,7 @@ import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 // Sends a team push on game start / final. Coach-triggered from the scorer.
 export async function POST(request) {
-  if (rateLimited(request, "push-game", { limit: 30, windowMs: 600_000 })) {
+  if (await rateLimited(request, "push-game", { limit: 30, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

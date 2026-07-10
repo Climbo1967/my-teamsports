@@ -9,7 +9,7 @@ import { PRODUCT_NAMES, currentSeasonYear, priceFor, teamAccess } from "@/lib/pr
  * Coach-only (team must be visible through RLS). Products: 'season' | 'ai'.
  */
 export async function POST(request) {
-  if (rateLimited(request, "billing-checkout", { limit: 10, windowMs: 600_000 })) {
+  if (await rateLimited(request, "billing-checkout", { limit: 10, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

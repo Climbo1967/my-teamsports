@@ -1,8 +1,12 @@
-// Minimal in-memory sliding-window rate limiter (security audit M4).
-// Serverless note: state lives per warm instance, so this is best-effort
-// throttling against bursts and abuse, not a hard global cap. Good enough
-// for current traffic; swap in a DB/Redis-backed limiter if that changes.
-const hits = new Map(); // key -> array of timestamps (ms)
+// Shared-store rate limiter (security backlog follow-up to audit M4).
+// Backed by the Postgres check_rate_limit() RPC so a limit holds across every
+// serverless instance, instead of the old per-warm-instance in-memory Map.
+//
+// Fails OPEN on any problem — missing service-role key, DB error, or network
+// blip returns "not limited". A rate limiter must never lock real users out
+// because its backing store hiccuped; blocking abuse is best-effort, keeping
+// the app usable is not.
+import { createAdminClient } from "@/lib/supabase/admin";
 
 function clientIp(request) {
   const fwd = request.headers.get("x-forwarded-for");
@@ -10,20 +14,24 @@ function clientIp(request) {
   return request.headers.get("x-real-ip") || "unknown";
 }
 
-export function rateLimited(request, name, { limit, windowMs }) {
-  const now = Date.now();
+export async function rateLimited(request, name, { limit, windowMs }) {
+  const supabase = createAdminClient();
+  if (!supabase) return false; // no service-role key -> fail open
+
   const key = `${name}:${clientIp(request)}`;
-  let arr = hits.get(key);
-  if (!arr) { arr = []; hits.set(key, arr); }
-  while (arr.length && arr[0] <= now - windowMs) arr.shift();
-  if (arr.length >= limit) return true;
-  arr.push(now);
-  if (hits.size > 5000) {
-    for (const [k, v] of hits) {
-      if (!v.length || v[v.length - 1] <= now - windowMs) hits.delete(k);
-    }
+  const windowSeconds = Math.max(1, Math.round(windowMs / 1000));
+
+  try {
+    const { data, error } = await supabase.rpc("check_rate_limit", {
+      p_key: key,
+      p_limit: limit,
+      p_window_seconds: windowSeconds,
+    });
+    if (error) return false; // DB error -> fail open
+    return data === true;
+  } catch {
+    return false; // unexpected -> fail open
   }
-  return false;
 }
 
 export const RATE_MSG = "Too many attempts. Wait a minute and try again.";

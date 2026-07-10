@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  if (rateLimited(request, "team-access", { limit: 10, windowMs: 60_000 })) {
+  if (await rateLimited(request, "team-access", { limit: 10, windowMs: 60_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 

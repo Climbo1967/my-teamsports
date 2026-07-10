@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
-  if (rateLimited(request, "rsvp", { limit: 60, windowMs: 600_000 })) {
+  if (await rateLimited(request, "rsvp", { limit: 60, windowMs: 600_000 })) {
     return NextResponse.json({ error: RATE_MSG }, { status: 429 });
   }
 
