@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
+import { mediaPath, signMediaUrls } from "@/lib/media";
 import { Select, Label, Button, Card, EmptyState, ErrorText, Spinner } from "@/components/ui";
 
 export default function PhotosPage({ params }) {
@@ -22,7 +23,10 @@ export default function PhotosPage({ params }) {
       supabase.from("players").select("id, name").eq("team_id", teamId).order("name"),
     ]);
     if (err) setError(err.message);
-    setPhotos(photoRows || []);
+    // url stores a private-bucket path; sign for display (display_url).
+    const rows = photoRows || [];
+    const displays = await signMediaUrls(supabase, rows.map((p) => p.url));
+    setPhotos(rows.map((p, i) => ({ ...p, display_url: displays[i] })));
     setPlayers(playerRows || []);
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -37,10 +41,10 @@ export default function PhotosPage({ params }) {
     try {
       for (const file of files) {
         setProgress(`Uploading ${done + 1} of ${files.length}...`);
-        const url = await uploadTeamImage(supabase, `${teamId}/gallery`, file);
+        const { path } = await uploadTeamImage(supabase, `${teamId}/gallery`, file);
         const { error: err } = await supabase.from("photos").insert({
           team_id: teamId,
-          url,
+          url: path,
           player_id: taggedPlayer || null,
           uploaded_by: "coach",
         });
@@ -60,10 +64,10 @@ export default function PhotosPage({ params }) {
     if (!confirm("Delete this photo?")) return;
     await supabase.from("photos").delete().eq("id", photo.id);
     // Also remove the file from storage if it lives in our bucket
-    const marker = "/team-media/";
-    const i = photo.url.indexOf(marker);
-    if (i !== -1) {
-      await supabase.storage.from("team-media").remove([decodeURIComponent(photo.url.slice(i + marker.length))]);
+    // (handles both stored paths and legacy public URLs)
+    const path = mediaPath(photo.url);
+    if (path) {
+      await supabase.storage.from("team-media").remove([path]);
     }
     load();
   }
@@ -102,7 +106,7 @@ export default function PhotosPage({ params }) {
           {photos.map((photo) => (
             <div key={photo.id} className="group relative rounded-xl overflow-hidden border border-white/[0.08] bg-white/[0.02]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo.url} alt={photo.caption || "Team photo"} className="w-full aspect-square object-cover" loading="lazy" />
+              <img src={photo.display_url} alt={photo.caption || "Team photo"} className="w-full aspect-square object-cover" loading="lazy" />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-xs text-slate-300 truncate">

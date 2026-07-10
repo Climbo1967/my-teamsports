@@ -98,9 +98,10 @@ export default function NewTeamPage() {
     setError(null);
     try {
       const supabase = createClient();
-      const u = await uploadTeamImage(supabase, `${created.id}/logo`, file);
-      await supabase.from("teams").update({ logo_url: u }).eq("id", created.id);
-      setLogoUrl(u);
+      // Store the private-bucket path; show the signed URL for preview.
+      const { path, displayUrl } = await uploadTeamImage(supabase, `${created.id}/logo`, file);
+      await supabase.from("teams").update({ logo_url: path }).eq("id", created.id);
+      setLogoUrl(displayUrl);
     } catch (err) {
       setError(err.message);
     }

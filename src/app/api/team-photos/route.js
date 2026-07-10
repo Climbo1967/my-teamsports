@@ -3,12 +3,15 @@ import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
+import { mediaPath } from "@/lib/media";
 
 /**
  * Parent photo upload. The passcode lives in an httpOnly cookie set by the
  * passcode gate; we validate it server-side, upload to storage with the
  * service-role client (so the bucket needs no anonymous INSERT policy), and
  * record the photo through a passcode-checked database function.
+ * The bucket is private: we store the object PATH in photos.url and the
+ * team page signs it at read time (see src/lib/media.js).
  */
 const ALLOWED = {
   "image/jpeg": "jpg",
@@ -16,13 +19,6 @@ const ALLOWED = {
   "image/webp": "webp",
 };
 const BUCKET = "team-media";
-
-function pathFromPublicUrl(url) {
-  // .../object/public/team-media/<path>
-  const marker = `/object/public/${BUCKET}/`;
-  const i = url.indexOf(marker);
-  return i === -1 ? null : url.slice(i + marker.length);
-}
 
 export async function POST(request) {
   if (await rateLimited(request, "team-photos", { limit: 12, windowMs: 600_000 })) {
@@ -81,23 +77,22 @@ export async function POST(request) {
     return NextResponse.json({ error: "Upload failed. Try again." }, { status: 500 });
   }
 
-  const { data: pub } = admin.storage.from(BUCKET).getPublicUrl(path);
-
-  // Record it (passcode re-checked inside the function)
+  // Record the object path (passcode re-checked inside the function);
+  // the team page turns it into a signed URL at render time.
   const { error: rpcError } = await supabase.rpc("add_team_photo", {
     p_slug: slug,
     p_passcode: passcode,
-    p_url: pub.publicUrl,
+    p_url: path,
     p_caption: caption || null,
     p_player_id: playerId,
   });
   if (rpcError) {
-    // Roll back the orphaned object so it doesn't linger publicly
+    // Roll back the orphaned object so it doesn't linger
     await admin.storage.from(BUCKET).remove([path]).catch(() => {});
     return NextResponse.json({ error: "Could not save the photo. Try again." }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true, url: pub.publicUrl });
+  return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(request) {
@@ -129,9 +124,10 @@ export async function DELETE(request) {
     return NextResponse.json({ error: "Could not remove the photo." }, { status: 500 });
   }
 
-  // Also remove the underlying storage object (M3) if the RPC returned its URL
+  // Also remove the underlying storage object (M3) if the RPC returned its
+  // stored value — a bare path now, a full public URL for legacy rows.
   if (data.url) {
-    const path = pathFromPublicUrl(data.url);
+    const path = mediaPath(data.url);
     const admin = createAdminClient();
     if (path && admin) {
       await admin.storage.from(BUCKET).remove([path]).catch(() => {});

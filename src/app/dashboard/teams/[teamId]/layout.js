@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { signMediaUrl } from "@/lib/media";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import TeamTabs from "./TeamTabs";
 import BillingGate from "./BillingGate";
@@ -18,14 +20,17 @@ export default async function TeamManageLayout({ children, params }) {
 
   if (!team) notFound(); // RLS hides teams the coach doesn't own
 
+  // logo_url stores a private-bucket path; sign it for this render.
+  const logoSrc = await signMediaUrl(createAdminClient(), team.logo_url);
+
   const access = teamAccess(team);
 
   return (
     <div>
       <div className="flex flex-wrap items-center gap-4 mb-6">
-        {team.logo_url ? (
+        {logoSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={team.logo_url} alt={team.name} className="w-14 h-14 rounded-xl object-cover border border-white/10" />
+          <img src={logoSrc} alt={team.name} className="w-14 h-14 rounded-xl object-cover border border-white/10" />
         ) : (
           <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-700/20 border border-white/10 flex items-center justify-center text-3xl">
             {SPORT_EMOJI[team.sport] || "🏆"}

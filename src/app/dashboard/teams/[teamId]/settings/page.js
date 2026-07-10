@@ -4,6 +4,7 @@ import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
+import { signMediaUrl } from "@/lib/media";
 import { SPORTS, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, ColorPicker, ErrorText, Spinner } from "@/components/ui";
 import StaffCard from "../StaffCard";
@@ -26,7 +27,8 @@ export default function SettingsPage({ params }) {
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("");
-  const [logoUrl, setLogoUrl] = useState(null);
+  const [logoPath, setLogoPath] = useState(null); // stored in teams.logo_url
+  const [logoUrl, setLogoUrl] = useState(null); // signed URL for display
   const [primaryColor, setPrimaryColor] = useState(DEFAULT_TEAM_COLOR);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -39,7 +41,10 @@ export default function SettingsPage({ params }) {
       setName(data.name);
       setSport(data.sport);
       setSeason(data.season || "");
-      setLogoUrl(data.logo_url);
+      // logo_url stores a private-bucket path; keep the path for saving and
+      // a signed URL for display.
+      setLogoPath(data.logo_url);
+      setLogoUrl(await signMediaUrl(supabase, data.logo_url));
       setPrimaryColor(data.primary_color || DEFAULT_TEAM_COLOR);
     }
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -52,8 +57,9 @@ export default function SettingsPage({ params }) {
     setBusy(true);
     setError(null);
     try {
-      const url = await uploadTeamImage(supabase, `${teamId}/logo`, file);
-      setLogoUrl(url);
+      const { path, displayUrl } = await uploadTeamImage(supabase, `${teamId}/logo`, file);
+      setLogoPath(path);
+      setLogoUrl(displayUrl);
     } catch (err) {
       setError(err.message);
     }
@@ -80,7 +86,7 @@ export default function SettingsPage({ params }) {
       name: name.trim(),
       sport,
       season: season.trim() || null,
-      logo_url: logoUrl,
+      logo_url: logoPath,
       primary_color: primaryColor,
     }).eq("id", teamId);
     setBusy(false);
@@ -127,7 +133,7 @@ export default function SettingsPage({ params }) {
                 {logoUrl ? "Change logo" : "Upload team logo"}
               </Button>
               {logoUrl && (
-                <button type="button" onClick={() => setLogoUrl(null)} className="block text-xs text-red-400 hover:underline mt-1.5">
+                <button type="button" onClick={() => { setLogoPath(null); setLogoUrl(null); }} className="block text-xs text-red-400 hover:underline mt-1.5">
                   Remove logo
                 </button>
               )}

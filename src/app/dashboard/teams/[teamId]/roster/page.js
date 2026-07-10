@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
+import { signMediaUrls } from "@/lib/media";
 import { POSITIONS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
 
@@ -20,7 +21,10 @@ export default function RosterPage({ params }) {
       supabase.from("teams").select("sport").eq("id", teamId).single(),
     ]);
     if (pErr) setError(pErr.message);
-    setPlayers(playerRows || []);
+    // photo_url stores a private-bucket path; sign for display (photo_display).
+    const rows = playerRows || [];
+    const displays = await signMediaUrls(supabase, rows.map((p) => p.photo_url));
+    setPlayers(rows.map((p, i) => ({ ...p, photo_display: displays[i] })));
     if (team) setSport(team.sport);
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -69,9 +73,9 @@ export default function RosterPage({ params }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
           {players.map((p, i) => (
             <Card key={p.id} className="flex gap-4 items-center !p-4">
-              {p.photo_url ? (
+              {p.photo_display ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.photo_url} alt={p.name} className="w-16 h-16 rounded-full object-cover border border-white/10 shrink-0" />
+                <img src={p.photo_display} alt={p.name} className="w-16 h-16 rounded-full object-cover border border-white/10 shrink-0" />
               ) : (
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-700/20 border border-white/10 flex items-center justify-center text-xl font-bold text-slate-500 shrink-0">
                   {p.jersey_number ? `#${p.jersey_number}` : p.name[0]}
@@ -105,7 +109,9 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
   const [jersey, setJersey] = useState(player?.jersey_number || "");
   const [position, setPosition] = useState(player?.position || "");
   const [bio, setBio] = useState(player?.bio || "");
-  const [photoUrl, setPhotoUrl] = useState(player?.photo_url || null);
+  // photoPath is what gets stored; photoUrl is a signed URL for on-screen preview.
+  const [photoPath, setPhotoPath] = useState(player?.photo_url || null);
+  const [photoUrl, setPhotoUrl] = useState(player?.photo_display || null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const positions = POSITIONS[sport] || [];
@@ -116,8 +122,9 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
     setBusy(true);
     setError(null);
     try {
-      const url = await uploadTeamImage(supabase, `${teamId}/players`, file);
-      setPhotoUrl(url);
+      const { path, displayUrl } = await uploadTeamImage(supabase, `${teamId}/players`, file);
+      setPhotoPath(path);
+      setPhotoUrl(displayUrl);
     } catch (err) {
       setError(err.message);
     }
@@ -134,7 +141,7 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
       jersey_number: jersey.trim() || null,
       position: position || null,
       bio: bio.trim() || null,
-      photo_url: photoUrl,
+      photo_url: photoPath,
     };
     const query = player
       ? supabase.from("players").update(row).eq("id", player.id)
@@ -161,7 +168,7 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
               {photoUrl ? "Change photo" : "Upload photo"}
             </Button>
             {photoUrl && (
-              <button type="button" onClick={() => setPhotoUrl(null)} className="block text-xs text-red-400 hover:underline mt-1.5">
+              <button type="button" onClick={() => { setPhotoPath(null); setPhotoUrl(null); }} className="block text-xs text-red-400 hover:underline mt-1.5">
                 Remove photo
               </button>
             )}

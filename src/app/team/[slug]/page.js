@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { signMediaUrls } from "@/lib/media";
 import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord, hexToRgba, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
 import TeamSiteSections from "./TeamSiteSections";
@@ -32,6 +34,21 @@ export default async function TeamPage({ params }) {
   if (!site) {
     return <PasscodeGate slug={normalizedSlug} />;
   }
+
+  // The bucket is private and the RPC returns stored object paths — turn the
+  // logo, player headshots, and gallery photos into signed URLs in one batch
+  // before anything renders.
+  const admin = createAdminClient();
+  const players = site.players || [];
+  const photos = site.photos || [];
+  const values = [site.team.logo_url, ...players.map((p) => p.photo_url), ...photos.map((ph) => ph.url)];
+  const signed = await signMediaUrls(admin, values);
+  site = {
+    ...site,
+    team: { ...site.team, logo_url: signed[0] },
+    players: players.map((p, i) => ({ ...p, photo_url: signed[1 + i] })),
+    photos: photos.map((ph, i) => ({ ...ph, url: signed[1 + players.length + i] })),
+  };
 
   const emoji = SPORT_EMOJI[site.team.sport] || "🏆";
   const record = computeRecord(site.events);

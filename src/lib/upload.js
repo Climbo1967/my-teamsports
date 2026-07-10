@@ -21,7 +21,9 @@ export async function resizeImage(file, maxSize = 1600, quality = 0.85) {
 }
 
 /**
- * Upload an image to the team-media bucket. Returns the public URL.
+ * Upload an image to the (private) team-media bucket.
+ * Returns { path, displayUrl }: store `path` in the database; use
+ * `displayUrl` (a signed URL) for immediate on-screen preview.
  * folder example: `${teamId}/players` or `${teamId}/gallery`
  */
 export async function uploadTeamImage(supabase, folder, file) {
@@ -40,6 +42,8 @@ export async function uploadTeamImage(supabase, folder, file) {
     .upload(name, blob, { contentType: "image/jpeg" });
   if (error) throw error;
 
-  const { data } = supabase.storage.from("team-media").getPublicUrl(name);
-  return data.publicUrl;
+  const { data: signed } = await supabase.storage
+    .from("team-media")
+    .createSignedUrl(name, 3600);
+  return { path: name, displayUrl: signed?.signedUrl || null };
 }
