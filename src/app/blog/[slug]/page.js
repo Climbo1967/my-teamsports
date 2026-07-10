@@ -40,6 +40,7 @@ function formatDate(iso) {
 
 function Block({ block }) {
   if (block.h2) return <h2 className="text-2xl md:text-3xl font-bold text-white mt-10 mb-4">{block.h2}</h2>;
+  if (block.h3) return <h3 className="text-xl font-bold text-white mt-8 mb-3">{block.h3}</h3>;
   if (block.p) return <p className="mb-5">{block.p}</p>;
   if (block.ul)
     return (
@@ -57,7 +58,86 @@ function Block({ block }) {
         ))}
       </ol>
     );
+  if (block.download)
+    return (
+      <a
+        href={block.download.href}
+        download
+        className="flex flex-wrap items-center gap-4 my-8 p-5 rounded-2xl no-underline bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] border border-green-500/20 transition-all hover:border-green-500/40"
+      >
+        <div className="flex-1 min-w-[200px]">
+          <div className="text-lg font-bold text-white">{block.download.label}</div>
+          {block.download.note ? (
+            <div className="mt-0.5 text-sm text-slate-400">{block.download.note}</div>
+          ) : null}
+        </div>
+        <span className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-6 py-3 rounded-xl">
+          Download PDF
+        </span>
+      </a>
+    );
+  if (block.table)
+    return (
+      <div className="my-6 overflow-x-auto rounded-xl border border-white/10">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-white/[0.04] text-slate-200">
+            <tr>
+              {block.table.headers.map((h, i) => (
+                <th key={i} className="px-4 py-3 font-semibold whitespace-nowrap">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {block.table.rows.map((row, ri) => (
+              <tr key={ri} className="border-t border-white/5">
+                {row.map((cell, ci) => (
+                  <td key={ci} className="px-4 py-3 align-top text-slate-300">{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
   return null;
+}
+
+function RelatedLinks({ items }) {
+  if (!items || !items.length) return null;
+  return (
+    <div className="mt-14">
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Related football coaching tools</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {items.map((it, i) => (
+          <Link
+            key={i}
+            href={it.href}
+            className="block rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 no-underline transition-all hover:border-blue-500/30"
+          >
+            <div className="font-semibold text-white">{it.label}</div>
+            {it.note ? <div className="text-sm text-slate-400 mt-0.5">{it.note}</div> : null}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function FaqSection({ faqs }) {
+  if (!faqs || !faqs.length) return null;
+  return (
+    <div className="mt-14">
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Frequently asked questions</h2>
+      <div className="space-y-3">
+        {faqs.map((f, i) => (
+          <details key={i} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-5">
+            <summary className="cursor-pointer font-semibold text-white list-none">{f.q}</summary>
+            <p className="mt-3 text-slate-300">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default async function BlogPost({ params }) {
@@ -77,6 +157,19 @@ export default async function BlogPost({ params }) {
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },
     keywords: post.keywords.join(", "),
   };
+
+  const faqLd =
+    post.faqs && post.faqs.length
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: post.faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }
+      : null;
 
   return (
     <div className="min-h-screen">
@@ -98,6 +191,8 @@ export default async function BlogPost({ params }) {
               <Block key={i} block={b} />
             ))}
           </div>
+          <RelatedLinks items={post.related} />
+          <FaqSection faqs={post.faqs} />
         </div>
       </article>
       <CTASection />
@@ -106,6 +201,12 @@ export default async function BlogPost({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {faqLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      ) : null}
     </div>
   );
 }

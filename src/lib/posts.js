@@ -1,9 +1,197 @@
 // Blog posts for My-Team Sports.
 // To add a post: copy an object below and edit it. `body` is an array of blocks:
-//   { h2: "Heading" } | { p: "Paragraph text" } | { ul: ["item", ...] } | { ol: ["step", ...] }
+//   { h2: "Heading" } | { h3: "Subheading" } | { p: "Paragraph text" }
+//   { ul: ["item", ...] } | { ol: ["step", ...] }
+//   { table: { headers: ["A","B"], rows: [["1","2"], ...] } }
+//   { download: { href: "/downloads/file.pdf", label: "...", note: "..." } }
+// Optional post fields: `related` (array of { href, label, note }) and
+// `faqs` (array of { q, a }) — faqs also emit FAQ rich-result schema automatically.
 // Newest posts show first automatically (sorted by `date`).
 
 export const posts = [
+  {
+    slug: "football-practice-plan-template",
+    title: "Football Practice Plan Template: A 90-Minute Youth Practice (Free Printable)",
+    description:
+      "A free football practice plan template for youth coaches — a printable PDF plus a proven 90-minute structure with warm-up, tackling, unit work, and team install.",
+    excerpt:
+      "Grab the free printable and a proven 90-minute structure — warm-up, tackling, unit work, and team install — that keeps twenty-plus kids moving.",
+    tag: "Coaching",
+    date: "2026-07-10",
+    updated: "2026-07-10",
+    readingTime: "6 min read",
+    keywords: ["football practice plan template", "youth football practice plan", "football practice schedule", "youth football drills"],
+    body: [
+      { p: "A good football practice is not about doing more — it is about a plan that keeps twenty-plus kids moving, teaches contact safely, and gets your plays installed before Saturday. This free template breaks a 90-minute session into time-boxed blocks you can print, hand to your assistants, and run without standing around wondering what is next." },
+      { download: { href: "/downloads/football-practice-plan.pdf", label: "Football Practice Plan Template (printable PDF)", note: "Free. No email required. Print it or edit it for your team." } },
+      { h2: "What is in the plan" },
+      { p: "The template scripts a full session from warm-up to team talk. Here is the structure it follows for a typical youth team:" },
+      { table: { headers: ["Time", "Block", "Focus"], rows: [
+        ["0:00–0:10", "Dynamic warm-up", "Form running and movement prep — no static stretching before contact"],
+        ["0:10–0:25", "Individual / position", "Stances, starts, and footwork, split by position group"],
+        ["0:25–0:35", "Tackling circuit", "Heads-up shoulder tackling: fit, drive, wrap — bags before live"],
+        ["0:35–0:55", "Unit work", "OL vs DL run fits; QB, RB, and WR routes and handoffs; DB backpedal"],
+        ["0:55–1:15", "Team offense", "Walk-through, then live reps of four to six installed plays"],
+        ["1:15–1:25", "Team defense / ST", "Alignment, gap responsibility, one special-teams look"],
+        ["1:25–1:30", "Team talk", "One coaching takeaway plus the next-game reminder"],
+      ] } },
+      { h2: "Adjust the plan to your point in the season" },
+      { p: "Early season, spend more of your unit and team blocks installing your base offense and teaching fits — keep the playbook small and get it clean. Midseason, shift that time to situational reps: third-and-short, goal line, and two-minute. Late season and playoffs, trim installation almost entirely and polish the handful of plays you run best plus special teams, which decides more youth games than people expect." },
+      { h2: "How to run it well" },
+      { ul: [
+        "Keep everyone moving — small groups and stations so nobody waits in line more than a minute.",
+        "Script your reps before you arrive. This sheet is your script.",
+        "Teach tackling every practice, always starting on bags or fit-and-freeze before any live contact.",
+        "End on a high note with something competitive, then one clear takeaway.",
+      ] },
+      { h2: "Safety first" },
+      { p: "Youth football is safe when contact is taught properly. Use a heads-up, shoulder-tackling progression, enforce water breaks roughly every 20 minutes, and check helmet and pad fit before every contact period. If you run your team on My-Team Sports, the AI practice planner can turn a quick note like ninety minutes to fix tackling and tempo into a fresh station-by-station plan in seconds." },
+    ],
+    related: [
+      { href: "/blog/football-positions-explained", label: "Football Positions Explained", note: "Every position, plain English" },
+      { href: "/blog/football-depth-chart-template", label: "Football Depth Chart Template", note: "Offense, defense, special teams" },
+      { href: "/blog/how-to-coach-youth-football", label: "How to Coach Youth Football", note: "A first-timer's guide" },
+    ],
+    faqs: [
+      { q: "How long should a youth football practice be?", a: "For most youth ages, 90 minutes is the sweet spot — long enough to warm up, teach tackling, work units, and run team offense without losing focus or risking heat fatigue. Younger or early-season teams can run 75 minutes." },
+      { q: "How many plays should I install for a youth team?", a: "Fewer than you think. A handful of running plays and two or three pass plays, executed cleanly from a base formation, beats a thick playbook run sloppily. Add plays only once the current ones are automatic." },
+      { q: "How do I keep every player involved during practice?", a: "Run position groups and stations with small numbers instead of whole-team lines. Posting the plan ahead of time in the free My-Team Sports app lets your assistants run their station without extra explaining." },
+      { q: "When can we start live tackling?", a: "Start every tackling teach on bags and with fit-and-freeze reps to groove technique, then progress to controlled live work once players show safe, heads-up form. Never open a practice cold with full live tackling." },
+    ],
+  },
+  {
+    slug: "football-positions-explained",
+    title: "Football Positions Explained: Offense, Defense & Special Teams",
+    description:
+      "Every football position on offense, defense, and special teams explained in plain language — plus youth coaching tips on which players to put where.",
+    excerpt:
+      "QB to nose tackle, in plain English — what every position does, and a coach's guide to which kids tend to fit where.",
+    tag: "Coaching",
+    date: "2026-07-10",
+    updated: "2026-07-10",
+    readingTime: "6 min read",
+    keywords: ["football positions explained", "football positions chart", "youth football positions", "football positions for beginners"],
+    body: [
+      { p: "Whether you are a new coach setting a lineup or a parent trying to follow the game, football's positions can look like alphabet soup. Here is every position on offense, defense, and special teams in plain language — plus, for coaches, a quick guide to which kids tend to fit where." },
+      { download: { href: "/downloads/football-depth-chart.pdf", label: "Football Depth Chart Template (printable PDF)", note: "A blank chart to assign your own players by position." } },
+      { h2: "Offense" },
+      { p: "The offense's job is to move the ball and score. The quarterback (QB) takes the snap and runs the play — put your smartest, most composed player here, not necessarily your best athlete. The running back (RB) carries the ball and blocks, so this wants a strong, decisive runner. A fullback (FB), when used, is a lead blocker and short-yardage runner. Wide receivers (WR) catch passes and need speed and reliable hands. The tight end (TE) is a hybrid who both blocks and catches. Up front, the offensive line — the center (C) who snaps the ball, two guards, and two tackles — protects the quarterback and opens running lanes. Linemen should be your bigger, tougher kids who do not mind contact; footwork matters more than size at the youth level." },
+      { h2: "Defense" },
+      { p: "The defense's job is to stop the offense and get the ball back. The defensive line — ends on the edges and tackles or a nose tackle inside — attacks the line of scrimmage. Behind them, linebackers are the defense's engine: they tackle, cover, and blitz, so put active, instinctive kids here. In the back, the secondary — cornerbacks on the outside and safeties in the middle — covers receivers and is your last line of defense, so speed and open-field tackling matter most." },
+      { h2: "Special teams" },
+      { p: "Special teams cover kicks and punts and win more youth games than most coaches expect. Key roles are the kicker, punter, long snapper, and kick or punt returners. Do not treat these as afterthoughts — a reliable snapper and a returner who catches cleanly are quietly some of your most valuable players." },
+      { h2: "How to assign youth players" },
+      { p: "Start with body type and temperament, then refine by skill. Bigger, physical kids go to the lines; quick, coordinated kids go to skill positions and linebacker; your most composed decision-maker goes to quarterback. Give everyone a real position and rotate early in the season so you discover fits you did not expect — plenty of standout linebackers started the year at guard." },
+    ],
+    related: [
+      { href: "/blog/football-practice-plan-template", label: "Football Practice Plan Template", note: "Free printable 90-minute plan" },
+      { href: "/blog/football-depth-chart-template", label: "Football Depth Chart Template", note: "Set your starters and backups" },
+      { href: "/blog/how-to-coach-youth-football", label: "How to Coach Youth Football", note: "A first-timer's guide" },
+    ],
+    faqs: [
+      { q: "What are the football positions by number?", a: "Unlike baseball, football positions are not numbered one through nine. Jersey numbers loosely follow ranges — linemen wear 50 to 79, receivers and backs wear lower numbers — but positions are known by name and abbreviation, not a fixed number." },
+      { q: "What is the easiest position for a beginner?", a: "Many new players start at running back, tight end, or on the defensive line, where responsibilities are more contained. Quarterback and cornerback ask the most of a beginner because of decision-making and open-field coverage." },
+      { q: "How many players are on the field in youth football?", a: "It varies by league. Many youth programs play 11-on-11, but plenty use 9-on-9 or smaller to fit roster sizes and development goals — check your league's rules." },
+    ],
+  },
+  {
+    slug: "football-depth-chart-template",
+    title: "Football Depth Chart Template (Free Printable PDF)",
+    description:
+      "A free printable football depth chart template for offense, defense, and special teams, with first, second, and third string — editable and ready for game day.",
+    excerpt:
+      "Your game-day map: who starts, who backs them up, and where players go when someone is out. Free printable for all three units.",
+    tag: "Coaching",
+    date: "2026-07-10",
+    updated: "2026-07-10",
+    readingTime: "4 min read",
+    keywords: ["football depth chart template", "football depth chart printable", "youth football depth chart", "football lineup template"],
+    body: [
+      { p: "A depth chart is your game-day map: who starts, who backs them up, and where players go when someone is out. This free template lays out offense, defense, and special teams with first, second, and third string so you are never scrambling on the sideline." },
+      { download: { href: "/downloads/football-depth-chart.pdf", label: "Football Depth Chart Template (printable PDF)", note: "Offense, defense, and special teams on one page." } },
+      { h2: "What is in it" },
+      { p: "Three sections — offense, defense, and special teams — each with every standard position and columns for first, second, and third string. Print it for your clipboard, or build and update it online so your assistants always see the current version." },
+      { h2: "How to fill it out" },
+      { p: "Set your starters first, then assign backups by the positions you are most likely to need mid-game. Cross-train intentionally: your best athletes should know two spots so an injury or a hot day does not leave a hole. Revisit the chart weekly — youth rosters change fast as kids develop, and the Week 1 depth chart rarely survives to Week 6." },
+    ],
+    related: [
+      { href: "/blog/football-positions-explained", label: "Football Positions Explained", note: "Every position, plain English" },
+      { href: "/blog/football-practice-plan-template", label: "Football Practice Plan Template", note: "Free printable 90-minute plan" },
+      { href: "/blog/football-roster-template", label: "Football Roster Template", note: "Free printable roster" },
+    ],
+    faqs: [
+      { q: "What is a football depth chart?", a: "It is a chart listing each position and the players ranked behind it — starter, then backups. Coaches use it to plan substitutions, manage playing time, and adjust quickly when someone is unavailable." },
+      { q: "How is a depth chart different from a lineup?", a: "A lineup is who is on the field for a given play; a depth chart is the full ranked roster by position, including backups. The lineup comes off the depth chart." },
+    ],
+  },
+  {
+    slug: "football-roster-template",
+    title: "Football Roster Template (Free Printable)",
+    description:
+      "A free printable football roster template with jersey numbers, positions, and parent contacts — download the PDF or build a live roster online in minutes.",
+    excerpt:
+      "Players, numbers, positions, and emergency contacts on one page you can keep in your bag. Free printable, plus a live option.",
+    tag: "Coaching",
+    date: "2026-07-10",
+    updated: "2026-07-10",
+    readingTime: "4 min read",
+    keywords: ["football roster template", "football team roster printable", "youth football roster", "football roster sheet"],
+    body: [
+      { p: "Before the first practice you need one thing organized above all else: who is on your team and how to reach their parents. This free football roster template keeps players, jersey numbers, positions, and emergency contacts on a single page you can keep in your bag." },
+      { download: { href: "/downloads/football-roster.pdf", label: "Football Roster Template (printable PDF)", note: "Numbers, positions, and parent contacts on one page." } },
+      { h2: "What is on it" },
+      { p: "Columns for jersey number, player name, position, grade or age, parent or guardian, phone, and an emergency contact — everything you need on the sideline in a pinch. Print a copy for your clipboard and one for each assistant." },
+      { h2: "Why a live roster beats paper" },
+      { p: "Paper is great for game day, but contact info changes and kids get added or moved. A live roster in the free My-Team Sports app keeps everyone's info current, lets parents update their own details, and ties into your schedule and availability so you always know who is coming." },
+    ],
+    related: [
+      { href: "/blog/football-depth-chart-template", label: "Football Depth Chart Template", note: "Set your starters and backups" },
+      { href: "/blog/football-practice-plan-template", label: "Football Practice Plan Template", note: "Free printable 90-minute plan" },
+      { href: "/blog/how-to-coach-youth-football", label: "How to Coach Youth Football", note: "A first-timer's guide" },
+    ],
+    faqs: [
+      { q: "What information should a football roster include?", a: "At minimum: player name, jersey number, position, and a parent contact plus an emergency number. Grade or age helps with league eligibility and grouping." },
+      { q: "How many players do you need for a youth football team?", a: "It depends on your league's format, such as 9-on-9 or 11-on-11. Most programs carry several substitutes beyond the starters, so many youth teams roster around 16 to 25." },
+    ],
+  },
+  {
+    slug: "how-to-coach-youth-football",
+    title: "How to Coach Youth Football: A First-Timer's Guide",
+    description:
+      "New to coaching football? A step-by-step first-season guide to safety, practice planning, positions, installing plays, playing time, and managing parents.",
+    excerpt:
+      "You do not need to have played in the NFL. Keep kids safe, teach a few things well, and make it fun enough that they come back next year.",
+    tag: "Coaching",
+    date: "2026-07-10",
+    updated: "2026-07-10",
+    readingTime: "6 min read",
+    keywords: ["how to coach youth football", "coaching youth football", "first time football coach", "youth football coaching tips"],
+    body: [
+      { p: "Coaching youth football for the first time is equal parts exciting and overwhelming. The good news: you do not need to have played in the NFL. You need to keep kids safe, teach a few things well, and make it fun enough that they come back next year. Here is how to run a first season you will both be proud of." },
+      { h2: "Start with safety and certification" },
+      { p: "Before you teach a single play, get comfortable with contact safety. USA Football's Heads Up program teaches proper tackling and is required by many leagues — it is the single best afternoon you will spend. Learn to teach shoulder tackling on bags, manage heat and hydration, and check equipment fit." },
+      { h2: "Keep it simple" },
+      { p: "The most common rookie-coach mistake is installing too much. Pick a base offensive formation, a handful of running plays, and two or three pass plays — then run them until they are automatic. On defense, teach alignment and gap responsibility before anything fancy. Simple and clean beats complex and sloppy every Saturday." },
+      { h2: "Teach fundamentals every practice" },
+      { p: "Stance, starts, footwork, and tackling technique should appear in every single practice, not just week one. Use a practice plan template to time-box these so they do not get squeezed out by scrimmage time." },
+      { h2: "Give everyone a role and manage playing time" },
+      { p: "Assign every kid a real position, cross-train your athletes, and be deliberate about playing time — few things sour a season faster than a parent who feels their kid never plays. Tracking minutes and positions keeps it fair and keeps the sideline drama down." },
+      { h2: "Communicate with parents early and often" },
+      { p: "Set expectations before the season: the schedule, what to bring, and your philosophy on playing time and development. Most parent friction comes from a lack of information, not real disagreement. A team app that pushes schedules and reminders automatically saves you a hundred text messages." },
+      { h2: "Run your first practice" },
+      { p: "Show up with a written plan. Start with names and a fun movement warm-up, teach one tackling progression, install one or two plays, and end with a competitive game. Then hand out the schedule and you are off." },
+    ],
+    related: [
+      { href: "/blog/football-practice-plan-template", label: "Football Practice Plan Template", note: "Free printable 90-minute plan" },
+      { href: "/blog/football-positions-explained", label: "Football Positions Explained", note: "Every position, plain English" },
+      { href: "/blog/football-depth-chart-template", label: "Football Depth Chart Template", note: "Offense, defense, special teams" },
+    ],
+    faqs: [
+      { q: "Do I need experience to coach youth football?", a: "No. Most youth coaches are parents or volunteers. What matters is a willingness to learn contact safety, a simple plan, and patience. Complete a Heads Up or your league's certification and lean on templates for structure." },
+      { q: "What is the most important thing to teach first?", a: "Safe tackling and blocking fundamentals. Technique keeps kids safe and is the foundation everything else is built on — teach it before scheme." },
+      { q: "How do I handle playing-time complaints?", a: "Set expectations up front and track playing time so it is demonstrably fair. When a parent has a concern, having actual data on positions and minutes turns an argument into a conversation." },
+    ],
+  },
   {
     slug: "football-coaching-app-playbook-ai-coach",
     title: "Coaching Football This Season? Your Playbook, Practices, and Game Day in One App",
