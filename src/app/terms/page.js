@@ -13,7 +13,7 @@ export const metadata = {
   },
 };
 
-const UPDATED = "June 29, 2026";
+const UPDATED = "July 9, 2026";
 
 const SECTIONS = [
   {
@@ -29,9 +29,9 @@ const SECTIONS = [
     ],
   },
   {
-    h: "3. Free during the 2026 season",
+    h: "3. Pricing and billing",
     body: [
-      "The service is currently free for the 2026 season. We may add, change, or discontinue features, and we will give reasonable notice before introducing any paid plan.",
+      "The Coach Plan is offered at half-off launch pricing for the 2026 season ($15 per team), with an optional AI Coach add-on ($20). Regular pricing of $30 per team (plus any add-ons) applies from the 2027 season. Coach accounts begin with a 30-day free trial, and parents never pay. We may add, change, or discontinue features, and we will give reasonable notice of any pricing changes.",
     ],
   },
   {
@@ -102,7 +102,7 @@ const SECTIONS = [
   {
     h: "13. Limitation of liability",
     body: [
-      "To the fullest extent permitted by law, we will not be liable for any indirect, incidental, special, or consequential damages, or for any loss of data, arising from your use of the service. Because the service is currently free, our total liability to you for any claim is limited to the greater of the amount you paid us in the prior 12 months (which may be zero) or US$100.",
+      "To the fullest extent permitted by law, we will not be liable for any indirect, incidental, special, or consequential damages, or for any loss of data, arising from your use of the service. Our total liability to you for any claim is limited to the greater of the amount you paid us in the prior 12 months (which may be zero) or US$100.",
     ],
   },
   {

@@ -60,7 +60,7 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthShell title="CREATE YOUR COACH ACCOUNT" subtitle="Free for the 2026 season. Set up your team in minutes.">
+    <AuthShell title="CREATE YOUR COACH ACCOUNT" subtitle="Half off for the 2026 season. Set up your team in minutes.">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Field label="Your Name" type="text" value={fullName} onChange={setFullName} placeholder="Coach Smith" required />
         <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" required />

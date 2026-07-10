@@ -2,14 +2,14 @@ import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 
 export const metadata = {
-  title: "Pricing — Free for the 2026 Season",
+  title: "Pricing — Half Off for the 2026 Season",
   description:
-    "My-Team Sports is free for the entire 2026 season, and parents never pay a cent. One simple plan with rosters, schedules, stats, photos, and game film included.",
+    "My-Team Sports is half off for the 2026 launch season — $15 for your whole team, and parents never pay a cent. One simple plan with rosters, schedules, stats, photos, and game film included.",
   alternates: { canonical: "/pricing" },
   openGraph: {
-    title: "Pricing — Free for the 2026 Season | My-Team Sports",
+    title: "Pricing — Half Off for the 2026 Season | My-Team Sports",
     description:
-      "Free for coaches all 2026 season. Parents never pay. Rosters, schedules, stats, photos, and game film — all included.",
+      "Half-off launch pricing for the 2026 season — $15 per team. Parents never pay. Rosters, schedules, stats, photos, and game film — all included.",
     url: "https://my-teamsports.com/pricing",
   },
 };
@@ -21,7 +21,7 @@ const INCLUDED = [
   "Live scoreboard & scorekeeper for every sport",
   "Game-day push alerts on parents' phones",
   "Coach's play board & printable playbook",
-  "AI Assistant Coach — briefings, lineups & practice plans (free to preview)",
+  "AI Assistant Coach — briefings, lineups & practice plans ($20 add-on)",
   "Win-loss record that updates everywhere",
   "Team photo gallery with parent uploads",
   "Game film via YouTube & Vimeo links",
@@ -36,10 +36,10 @@ export default function PricingPage() {
     <div className="min-h-screen">
       <SiteNav />
       <PageHero
-        badge="Free for the 2026 season"
+        badge="Launch pricing — half off for 2026"
         title="SIMPLE PRICING."
         accent="NO SURPRISES."
-        subtitle="One plan. Everything included. Free for coaches all season — and parents never pay a dime, ever."
+        subtitle="One plan. Everything included. Half-off launch pricing for coaches in 2026 — and parents never pay a dime, ever."
       />
 
       {/* PRICING CARD */}
@@ -47,10 +47,10 @@ export default function PricingPage() {
         <div className="max-w-[520px] mx-auto bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.05] border border-green-500/25 rounded-3xl p-10 text-center">
           <p className="text-xs uppercase tracking-widest text-green-400 font-bold mb-4">Coach Plan</p>
           <div className="flex items-end justify-center gap-2 mb-2">
-            <span className="font-[family-name:var(--font-oswald)] text-7xl font-bold text-white">$0</span>
+            <span className="font-[family-name:var(--font-oswald)] text-7xl font-bold text-white">$15</span>
             <span className="text-slate-400 mb-3 text-lg">/ 2026 season</span>
           </div>
-          <p className="text-sm text-slate-300 mb-1">Then <span className="text-white font-semibold">$10 per team</span> for the 2027 season.</p>
+          <p className="text-sm text-slate-300 mb-1">Half-off launch price. Then <span className="text-white font-semibold">$30 per team</span> for the 2027 season.</p>
           <p className="text-slate-400 mb-8">Stand up your whole team in about 5 minutes.</p>
           <ul className="text-left space-y-3 mb-9">
             {INCLUDED.map((item) => (
@@ -64,7 +64,7 @@ export default function PricingPage() {
             href="/signup"
             className="block w-full bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-xl font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25"
           >
-            CREATE YOUR TEAM — FREE
+            START YOUR FREE TRIAL
           </Link>
           <p className="mt-4 text-xs text-slate-500">No credit card required.</p>
         </div>
@@ -89,9 +89,9 @@ export default function PricingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">PRICING QUESTIONS</h2>
           <div className="space-y-6">
             {[
-              { q: "Is it really free?", a: "Yes. Coaches pay nothing for the entire 2026 season, and parents never pay at all. You can build a full team site without entering a credit card." },
-              { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan will be $10 per team — you'll get plenty of notice, and your existing team data stays yours." },
-              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind add-ons." },
+              { q: "How much does it cost?", a: "Your first 30 days are free — no credit card to start. After that, the Coach Plan is $15 for the entire 2026 season (half-off launch pricing), and parents never pay a cent." },
+              { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan is $30 per team — you'll get plenty of notice, and your existing team data stays yours." },
+              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind paywalls. The only optional extra is the AI Assistant Coach add-on ($20 for the 2026 season)." },
               { q: "Do I need to install anything?", a: "Nothing. It runs in any web browser for both coaches and parents — no app store, no downloads." },
             ].map((item) => (
               <div key={item.q} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
