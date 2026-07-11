@@ -105,6 +105,7 @@ export default function RosterPage({ params }) {
 function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
   const supabase = createClient();
   const fileRef = useRef(null);
+  const cameraRef = useRef(null);
   const [name, setName] = useState(player?.name || "");
   const [jersey, setJersey] = useState(player?.jersey_number || "");
   const [position, setPosition] = useState(player?.position || "");
@@ -164,15 +165,21 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
             <div className="w-20 h-20 rounded-full bg-white/[0.05] border border-dashed border-white/20 flex items-center justify-center text-2xl">📷</div>
           )}
           <div>
-            <Button type="button" variant="ghost" onClick={() => fileRef.current?.click()} disabled={busy}>
-              {photoUrl ? "Change photo" : "Upload photo"}
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" variant="ghost" onClick={() => cameraRef.current?.click()} disabled={busy}>
+                📷 Take Photo
+              </Button>
+              <Button type="button" variant="ghost" onClick={() => fileRef.current?.click()} disabled={busy}>
+                {photoUrl ? "Change photo" : "Upload photo"}
+              </Button>
+            </div>
             {photoUrl && (
               <button type="button" onClick={() => { setPhotoPath(null); setPhotoUrl(null); }} className="block text-xs text-red-400 hover:underline mt-1.5">
                 Remove photo
               </button>
             )}
             <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} className="hidden" />
+            <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handlePhoto} className="hidden" />
           </div>
         </div>
 

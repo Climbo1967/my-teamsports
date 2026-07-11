@@ -10,6 +10,7 @@ export default function PhotosPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
   const fileRef = useRef(null);
+  const cameraRef = useRef(null);
   const [photos, setPhotos] = useState(null);
   const [players, setPlayers] = useState([]);
   const [taggedPlayer, setTaggedPlayer] = useState("");
@@ -57,6 +58,7 @@ export default function PhotosPage({ params }) {
     setBusy(false);
     setProgress("");
     if (fileRef.current) fileRef.current.value = "";
+    if (cameraRef.current) cameraRef.current.value = "";
     load();
   }
 
@@ -91,10 +93,14 @@ export default function PhotosPage({ params }) {
               {players.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
             </Select>
           </div>
+          <Button variant="green" onClick={() => cameraRef.current?.click()} disabled={busy}>
+            📷 Take Photo
+          </Button>
           <Button variant="green" onClick={() => fileRef.current?.click()} disabled={busy}>
             {busy ? progress || "Uploading..." : "📸 Choose photos"}
           </Button>
           <input ref={fileRef} type="file" accept="image/*" multiple onChange={handleFiles} className="hidden" />
+          <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handleFiles} className="hidden" />
         </div>
         <div className="mt-3"><ErrorText>{error}</ErrorText></div>
       </Card>

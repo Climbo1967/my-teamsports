@@ -690,6 +690,7 @@ function PhotosSection({ photos, players, slug, playerById, onView }) {
 function ParentUpload({ slug, players }) {
   const router = useRouter();
   const fileRef = useRef(null);
+  const cameraRef = useRef(null);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState("");
@@ -737,18 +738,25 @@ function ParentUpload({ slug, players }) {
             <h3 className="text-xl font-bold mb-1">SHARE A PHOTO</h3>
             <p className="text-sm text-slate-400 mb-5">Action shots, team moments — they go straight into the gallery.</p>
             <form onSubmit={submit} className="space-y-4">
-              <button
-                type="button"
-                onClick={() => fileRef.current?.click()}
-                className="w-full border border-dashed border-white/20 rounded-xl p-6 text-center hover:border-blue-500/40 transition-colors"
-              >
-                {file ? (
-                  <span className="text-sm text-white">✓ {file.name}</span>
-                ) : (
-                  <span className="text-sm text-slate-400">Tap to choose a photo</span>
-                )}
-              </button>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => cameraRef.current?.click()}
+                  className="border border-dashed border-white/20 rounded-xl p-5 text-center hover:border-blue-500/40 transition-colors"
+                >
+                  <span className="text-sm text-slate-400">📷 Take Photo</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  className="border border-dashed border-white/20 rounded-xl p-5 text-center hover:border-blue-500/40 transition-colors"
+                >
+                  <span className="text-sm text-slate-400">🖼️ Choose from Gallery</span>
+                </button>
+              </div>
+              {file && <p className="text-sm text-white text-center">✓ {file.name}</p>}
               <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
+              <input ref={cameraRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
 
               <input
                 value={caption}

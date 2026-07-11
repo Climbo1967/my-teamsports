@@ -23,6 +23,7 @@ export default function SettingsPage({ params }) {
   const router = useRouter();
   const supabase = createClient();
   const fileRef = useRef(null);
+  const cameraRef = useRef(null);
   const [team, setTeam] = useState(null);
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
@@ -129,15 +130,21 @@ export default function SettingsPage({ params }) {
               <div className="w-20 h-20 rounded-xl bg-white/[0.05] border border-dashed border-white/20 flex items-center justify-center text-2xl">🛡️</div>
             )}
             <div>
-              <Button type="button" variant="ghost" onClick={() => fileRef.current?.click()} disabled={busy}>
-                {logoUrl ? "Change logo" : "Upload team logo"}
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button type="button" variant="ghost" onClick={() => cameraRef.current?.click()} disabled={busy}>
+                  📷 Take Photo
+                </Button>
+                <Button type="button" variant="ghost" onClick={() => fileRef.current?.click()} disabled={busy}>
+                  {logoUrl ? "Change logo" : "Upload team logo"}
+                </Button>
+              </div>
               {logoUrl && (
                 <button type="button" onClick={() => { setLogoPath(null); setLogoUrl(null); }} className="block text-xs text-red-400 hover:underline mt-1.5">
                   Remove logo
                 </button>
               )}
               <input ref={fileRef} type="file" accept="image/*" onChange={handleLogo} className="hidden" />
+              <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handleLogo} className="hidden" />
             </div>
           </div>
 

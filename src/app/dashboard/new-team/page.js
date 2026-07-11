@@ -35,6 +35,7 @@ export default function NewTeamPage() {
   const [logoUrl, setLogoUrl] = useState(null);
   const [logoBusy, setLogoBusy] = useState(false);
   const fileRef = useRef(null);
+  const cameraRef = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(null);
@@ -139,10 +140,17 @@ export default function NewTeamPage() {
             <img src={logoUrl} alt="Team logo" className="w-20 h-20 rounded-xl object-cover border border-white/10 mx-auto mb-3" />
           )}
           <input ref={fileRef} type="file" accept="image/*" onChange={(e) => handleLogo(e.target.files?.[0])} className="hidden" />
-          <button type="button" onClick={() => fileRef.current?.click()} disabled={logoBusy}
-            className="text-sm font-medium text-slate-400 hover:text-white border border-white/10 px-5 py-2.5 rounded-lg transition-colors disabled:opacity-50">
-            {logoBusy ? "Uploading..." : logoUrl ? "Change logo" : "🛡️ Add a team logo (optional)"}
-          </button>
+          <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={(e) => handleLogo(e.target.files?.[0])} className="hidden" />
+          <div className="flex flex-wrap justify-center gap-3">
+            <button type="button" onClick={() => cameraRef.current?.click()} disabled={logoBusy}
+              className="text-sm font-medium text-slate-400 hover:text-white border border-white/10 px-5 py-2.5 rounded-lg transition-colors disabled:opacity-50">
+              📷 Take Photo
+            </button>
+            <button type="button" onClick={() => fileRef.current?.click()} disabled={logoBusy}
+              className="text-sm font-medium text-slate-400 hover:text-white border border-white/10 px-5 py-2.5 rounded-lg transition-colors disabled:opacity-50">
+              {logoBusy ? "Uploading..." : logoUrl ? "Change logo" : "🛡️ Add a team logo (optional)"}
+            </button>
+          </div>
           {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
         </div>
 
