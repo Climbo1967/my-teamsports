@@ -21,13 +21,18 @@ const TABS = [
   { slug: "settings", label: "Settings", icon: "⚙️" },
 ];
 
-export default function TeamTabs({ teamId }) {
+export default function TeamTabs({ teamId, showBoard = false }) {
   const pathname = usePathname();
   const base = `/dashboard/teams/${teamId}`;
 
+  // Ships dark: the board tab only exists once the team's flag is flipped.
+  const tabs = showBoard
+    ? TABS.flatMap((t) => (t.slug === "announcements" ? [t, { slug: "board", label: "Team Board", icon: "🗣️" }] : [t]))
+    : TABS;
+
   return (
     <nav className="flex gap-1 overflow-x-auto border-b border-white/[0.08] -mx-2 px-2">
-      {TABS.map((tab) => {
+      {tabs.map((tab) => {
         const href = tab.slug ? `${base}/${tab.slug}` : base;
         const active = tab.slug
           ? pathname.startsWith(href)

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
 import { videoEmbedUrl } from "@/lib/video";
 import PlayField from "@/components/PlayField";
+import BoardSection from "./BoardSection";
 
 const NAV = [
   { id: "announcements", label: "News", icon: "💬" },
@@ -34,7 +35,9 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   const playerPhotos = (playerId) => photos.filter((ph) => ph.player_id === playerId);
 
   const playbookNav = plays.length ? [{ id: "playbook", label: "Playbook", icon: "✏️" }] : [];
-  const navItems = [...NAV.slice(0, 4), ...playbookNav, ...NAV.slice(4)];
+  // Board rides the ships-dark flag: no nav item, no section unless enabled.
+  const boardNav = team.board_enabled ? [{ id: "board", label: "Board", icon: "🗣️" }] : [];
+  const navItems = [...NAV.slice(0, 1), ...boardNav, ...NAV.slice(1, 4), ...playbookNav, ...NAV.slice(4)];
 
   return (
     <>
@@ -56,6 +59,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
 
       <main className="max-w-[1100px] mx-auto px-6 py-12 space-y-16">
         <AnnouncementsSection announcements={announcements} slug={slug} />
+        {team.board_enabled && <BoardSection slug={slug} />}
         <ScheduleSection events={events} players={players} rsvps={rsvps} slug={slug} />
         <RosterSection players={players} emoji={emoji} onSelect={setActivePlayer} />
         <StatsSection players={players} stats={stats} sport={team.sport} />

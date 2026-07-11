@@ -14,7 +14,7 @@ export default async function TeamManageLayout({ children, params }) {
 
   const { data: team } = await supabase
     .from("teams")
-    .select("id, slug, name, sport, season, passcode, logo_url, paid_through, ai_paid_through, trial_ends_at, ai_enabled")
+    .select("id, slug, name, sport, season, passcode, logo_url, paid_through, ai_paid_through, trial_ends_at, ai_enabled, board_enabled")
     .eq("id", teamId)
     .single();
 
@@ -51,7 +51,7 @@ export default async function TeamManageLayout({ children, params }) {
         </Link>
       </div>
 
-      <TeamTabs teamId={team.id} />
+      <TeamTabs teamId={team.id} showBoard={team.board_enabled} />
 
       <div className="mt-8">
         <BillingGate teamId={team.id} expired={!access.active}>

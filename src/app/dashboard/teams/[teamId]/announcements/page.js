@@ -14,16 +14,19 @@ export default function AnnouncementsPage({ params }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [sendingId, setSendingId] = useState(null);
+  const [boardEnabled, setBoardEnabled] = useState(false);
 
   const load = useCallback(async () => {
-    const [{ data, error: err }, { data: subs }] = await Promise.all([
+    const [{ data, error: err }, { data: subs }, { data: team }] = await Promise.all([
       supabase.from("announcements").select("*").eq("team_id", teamId)
         .order("pinned", { ascending: false }).order("created_at", { ascending: false }),
       supabase.from("subscribers").select("id, email, name").eq("team_id", teamId),
+      supabase.from("teams").select("board_enabled").eq("id", teamId).single(),
     ]);
     if (err) setError(err.message);
     setPosts(data || []);
     setSubscribers(subs || []);
+    setBoardEnabled(Boolean(team?.board_enabled));
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { load(); }, [load]);
@@ -32,13 +35,24 @@ export default function AnnouncementsPage({ params }) {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const { error: err } = await supabase.from("announcements").insert({
+    const { data: created, error: err } = await supabase.from("announcements").insert({
       team_id: teamId,
       title: title.trim() || null,
       body: body.trim(),
-    });
+    }).select().single();
     setBusy(false);
     if (err) { setError(err.message); return; }
+    // When the team board is on, an announcement opens a matching thread so
+    // parents have a place to reply (announcements themselves stay one-way).
+    if (boardEnabled && created) {
+      const { data: { user } } = await supabase.auth.getUser();
+      await supabase.from("team_board_threads").insert({
+        team_id: teamId,
+        title: (created.title || created.body).slice(0, 150),
+        announcement_id: created.id,
+        created_by_coach: user?.id || null,
+      });
+    }
     setTitle("");
     setBody("");
     load();
