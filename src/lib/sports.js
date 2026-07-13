@@ -67,8 +67,8 @@ export const SPORTS = [
       },
     ],
     related: [
-      { slug: "baseball-team-website", title: "A Baseball Team Website with the Schedule, Stats, and Live Scores" },
       { slug: "youth-baseball-practice-plan", title: "A Youth Baseball Practice Plan That Actually Runs on Time" },
+      { slug: "ai-baseball-practice-plan-generator", title: "An AI Baseball Practice Plan Generator" },
       { slug: "how-to-keep-a-baseball-scorebook", title: "How to Keep a Baseball Scorebook" },
       { slug: "baseball-scorekeeping-app", title: "The Baseball Scorekeeping App Parents Can Follow Live" },
       { slug: "baseball-rainout-notifications", title: "Baseball Rainout Notifications the Whole Team Gets" },
@@ -209,8 +209,8 @@ export const SPORTS = [
       },
     ],
     related: [
-      { slug: "basketball-team-website", title: "A Basketball Team Website Every Family Can Open" },
       { slug: "basketball-rotation-chart", title: "A Basketball Rotation Chart That Keeps Minutes Fair" },
+      { slug: "how-to-coach-youth-basketball", title: "How to Coach Youth Basketball" },
       { slug: "basketball-positions-explained", title: "Basketball Positions Explained for Youth Coaches" },
       { slug: "basketball-live-scoreboard-app", title: "The Basketball Live Scoreboard App Parents Can Follow" },
       { slug: "basketball-play-designer", title: "A Basketball Play Designer You Can Print" },
@@ -280,8 +280,8 @@ export const SPORTS = [
       },
     ],
     related: [
-      { slug: "soccer-team-website", title: "Give Your Soccer Team a Website Parents Actually Use" },
       { slug: "soccer-lineup-formation-sheet", title: "A Soccer Lineup and Formation Sheet You Can Print" },
+      { slug: "soccer-drills-for-beginners", title: "Soccer Drills for Beginners" },
       { slug: "soccer-positions-explained", title: "Soccer Positions Explained for Youth Coaches" },
       { slug: "how-to-coach-youth-soccer", title: "How to Coach Youth Soccer" },
       { slug: "ai-soccer-practice-planner", title: "An AI Soccer Practice Planner" },
