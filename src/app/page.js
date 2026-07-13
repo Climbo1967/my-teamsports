@@ -107,9 +107,9 @@ export default function Home() {
           </div>
 
           <h1 className="text-6xl md:text-8xl font-bold leading-none tracking-tight mb-2">
-            YOUR TEAM.
+            YOUR YOUTH SPORTS
             <br />
-            <span className="text-[var(--color-accent-blue)]">YOUR WAY.</span>
+            <span className="text-[var(--color-accent-blue)]">TEAM WEBSITE.</span>
           </h1>
 
           <p className="text-lg md:text-xl font-light text-slate-400 max-w-[640px] mx-auto mt-6 mb-9 leading-relaxed">
