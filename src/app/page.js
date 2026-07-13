@@ -17,14 +17,14 @@ const FEATURES = [
 ];
 
 const SPORTS = [
-  { emoji: "⚾", name: "Baseball", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
-  { emoji: "🏈", name: "Football", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
-  { emoji: "🚩", name: "Flag Football", hover: "hover:border-emerald-500/50 hover:bg-emerald-500/10" },
-  { emoji: "🏀", name: "Basketball", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
-  { emoji: "⚽", name: "Soccer", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
-  { emoji: "🥎", name: "Softball", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
-  { emoji: "🏐", name: "Volleyball", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
-  { emoji: "🏒", name: "Hockey", hover: "hover:border-cyan-500/50 hover:bg-cyan-500/10" },
+  { emoji: "⚾", name: "Baseball", slug: "baseball-team-website", hover: "hover:border-red-500/50 hover:bg-red-500/10" },
+  { emoji: "🏈", name: "Football", slug: "football-team-website", hover: "hover:border-green-500/50 hover:bg-green-500/10" },
+  { emoji: "🚩", name: "Flag Football", slug: "flag-football-team-website", hover: "hover:border-emerald-500/50 hover:bg-emerald-500/10" },
+  { emoji: "🏀", name: "Basketball", slug: "basketball-team-website", hover: "hover:border-orange-500/50 hover:bg-orange-500/10" },
+  { emoji: "⚽", name: "Soccer", slug: "soccer-team-website", hover: "hover:border-blue-500/50 hover:bg-blue-500/10" },
+  { emoji: "🥎", name: "Softball", slug: "softball-team-website", hover: "hover:border-yellow-500/50 hover:bg-yellow-500/10" },
+  { emoji: "🏐", name: "Volleyball", slug: "volleyball-team-website", hover: "hover:border-purple-500/50 hover:bg-purple-500/10" },
+  { emoji: "🏒", name: "Hockey", slug: "hockey-team-website", hover: "hover:border-cyan-500/50 hover:bg-cyan-500/10" },
 ];
 
 const DEMO_TEAMS = [
@@ -151,7 +151,7 @@ export default function Home() {
               {SPORTS.map((sport) => (
                 <Link
                   key={sport.name}
-                  href="/signup"
+                  href={`/sports/${sport.slug}`}
                   className={`flex items-center gap-2.5 bg-white/[0.04] border border-white/[0.08] px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${sport.hover}`}
                 >
                   <span className="text-2xl">{sport.emoji}</span>
