@@ -18,7 +18,6 @@ export default function sitemap() {
       changeFrequency: "monthly",
       priority: 0.6,
     })),
-    { url: `${BASE}/signup`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
     { url: `${BASE}/child-safety`, lastModified: now, changeFrequency: "yearly", priority: 0.6 },
     { url: `${BASE}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
     { url: `${BASE}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
