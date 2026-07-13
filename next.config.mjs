@@ -39,6 +39,16 @@ const nextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
+  // The three commercial sport landing pages at /sports/*-team-website
+  // supersede the earlier same-named blog posts. Permanently redirect the old
+  // blog URLs to consolidate ranking signals onto the stronger pages.
+  async redirects() {
+    return [
+      { source: "/blog/soccer-team-website", destination: "/sports/soccer-team-website", permanent: true },
+      { source: "/blog/baseball-team-website", destination: "/sports/baseball-team-website", permanent: true },
+      { source: "/blog/basketball-team-website", destination: "/sports/basketball-team-website", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;
