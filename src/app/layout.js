@@ -19,7 +19,7 @@ const SITE_DESCRIPTION =
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "My-Team Sports | Your Team. Your Way.",
+    default: "Youth Sports Team Website - No App Required | My-Team Sports",
     template: "%s | My-Team Sports",
   },
   description: SITE_DESCRIPTION,
@@ -48,7 +48,7 @@ export const metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "My-Team Sports",
-    title: "My-Team Sports | Your Team. Your Way.",
+    title: "Youth Sports Team Website - No App Required | My-Team Sports",
     description: SITE_DESCRIPTION,
     locale: "en_US",
     images: [
@@ -62,7 +62,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "My-Team Sports | Your Team. Your Way.",
+    title: "Youth Sports Team Website - No App Required | My-Team Sports",
     description: SITE_DESCRIPTION,
     images: ["/og-image.png"],
   },
@@ -99,10 +99,10 @@ const jsonLd = {
       "@type": "SoftwareApplication",
       name: "My-Team Sports",
       applicationCategory: "SportsApplication",
-      operatingSystem: "Web, iOS, Android",
+      operatingSystem: "Web",
       url: SITE_URL,
       description: SITE_DESCRIPTION,
-      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      offers: { "@type": "Offer", price: "15", priceCurrency: "USD", priceValidUntil: "2026-12-31" },
     },
   ],
 };
