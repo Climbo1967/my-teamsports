@@ -106,7 +106,7 @@ function RelatedLinks({ items }) {
   if (!items || !items.length) return null;
   return (
     <div className="mt-14">
-      <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Related football coaching tools</h2>
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Related coaching tools</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {items.map((it, i) => (
           <Link
