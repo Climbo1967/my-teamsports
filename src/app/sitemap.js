@@ -3,7 +3,7 @@ import { getAllPosts } from "@/lib/posts";
 const BASE = "https://my-teamsports.com";
 
 export default function sitemap() {
-  const now = new Date();
+  const now = new Date("2026-07-13");
   const posts = getAllPosts();
   return [
     { url: `${BASE}/`, lastModified: now, changeFrequency: "weekly", priority: 1.0 },
