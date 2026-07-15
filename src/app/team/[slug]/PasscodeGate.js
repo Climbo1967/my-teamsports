@@ -53,8 +53,8 @@ export default function PasscodeGate({ slug }) {
               value={passcode}
               onChange={(e) => setPasscode(e.target.value.toUpperCase())}
               required
-              maxLength={6}
-              placeholder="ABC123"
+              maxLength={8}
+              placeholder="PASSCODE"
               autoComplete="off"
               className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3.5 text-center text-2xl font-mono font-bold tracking-[0.4em] text-white placeholder:text-slate-700 placeholder:tracking-[0.4em] focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors uppercase"
             />
