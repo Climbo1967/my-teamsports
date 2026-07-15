@@ -30,9 +30,14 @@ export function SiteNav() {
           Get Started Free
         </Link>
       </div>
-      <Link href="/signup" className="md:hidden bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
-        Start Free
-      </Link>
+      <div className="md:hidden flex items-center gap-4">
+        <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+          Login
+        </Link>
+        <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
+          Start Free
+        </Link>
+      </div>
     </nav>
   );
 }
