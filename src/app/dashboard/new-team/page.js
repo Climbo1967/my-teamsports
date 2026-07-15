@@ -12,7 +12,7 @@ const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 
 function generatePasscode() {
   let code = "";
-  const bytes = new Uint8Array(6);
+  const bytes = new Uint8Array(8);
   crypto.getRandomValues(bytes);
   for (const b of bytes) code += PASSCODE_CHARS[b % PASSCODE_CHARS.length];
   return code;
