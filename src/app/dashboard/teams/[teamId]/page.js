@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord } from "@/lib/constants";
 import CopyInviteButton from "./CopyInviteButton";
+import PasscodeManager from "@/components/PasscodeManager";
 
 export default async function TeamOverviewPage({ params }) {
   const { teamId } = await params;
@@ -56,7 +57,7 @@ export default async function TeamOverviewPage({ params }) {
           </div>
           <div className="bg-black/20 rounded-xl px-5 py-4">
             <p className="text-xs uppercase tracking-widest text-slate-500 mb-1">Passcode</p>
-            <p className="text-2xl font-mono font-bold tracking-[0.3em] text-white">{team.passcode}</p>
+            <PasscodeManager teamId={team.id} passcode={team.passcode} />
           </div>
         </div>
         <CopyInviteButton team={{ slug: team.slug, passcode: team.passcode }} />
