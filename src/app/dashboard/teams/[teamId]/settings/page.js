@@ -8,15 +8,7 @@ import { signMediaUrl } from "@/lib/media";
 import { SPORTS, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, ColorPicker, ErrorText, Spinner } from "@/components/ui";
 import StaffCard from "../StaffCard";
-
-const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
-function generatePasscode() {
-  let code = "";
-  const bytes = new Uint8Array(6);
-  crypto.getRandomValues(bytes);
-  for (const b of bytes) code += PASSCODE_CHARS[b % PASSCODE_CHARS.length];
-  return code;
-}
+import PasscodeManager from "@/components/PasscodeManager";
 
 export default function SettingsPage({ params }) {
   const { teamId } = use(params);
@@ -97,15 +89,6 @@ export default function SettingsPage({ params }) {
     router.refresh();
   }
 
-  async function regeneratePasscode() {
-    if (!confirm("Generate a new passcode? The old one stops working immediately — you'll need to re-share with parents.")) return;
-    const passcode = generatePasscode();
-    const { error: err } = await supabase.from("teams").update({ passcode }).eq("id", teamId);
-    if (err) { setError(err.message); return; }
-    load();
-    router.refresh();
-  }
-
   async function deleteTeam() {
     const phrase = prompt(`This permanently deletes ${team.name} — roster, schedule, posts, and photos. Type the team name to confirm:`);
     if (phrase !== team.name) return;
@@ -181,9 +164,9 @@ export default function SettingsPage({ params }) {
       <Card>
         <h3 className="font-bold text-lg mb-1">PASSCODE</h3>
         <p className="text-sm text-slate-400 mb-4">
-          Current passcode: <span className="font-mono font-bold text-white tracking-widest">{team.passcode}</span>
+          Parents use this with your team link. Generate a random code or make your own — 8 letters/numbers.
         </p>
-        <Button variant="ghost" onClick={regeneratePasscode}>🔄 Generate new passcode</Button>
+        <PasscodeManager teamId={teamId} passcode={team.passcode} onChanged={load} />
       </Card>
 
       <Card className="border-red-500/20">
