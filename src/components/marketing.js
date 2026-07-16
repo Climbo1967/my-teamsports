@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MobileMenu from "@/components/MobileMenu";
 
 const NAV_LINKS = [
   { href: "/how-it-works", label: "How It Works" },
@@ -37,6 +38,7 @@ export function SiteNav() {
         <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
           Start Free
         </Link>
+        <MobileMenu links={NAV_LINKS} />
       </div>
     </nav>
   );
