@@ -11,6 +11,7 @@ export default function StaffCard({ teamId }) {
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+  const [notice, setNotice] = useState(null);
 
   const load = useCallback(async () => {
     const [{ data: rows }, { data: { user } }] = await Promise.all([
@@ -29,16 +30,34 @@ export default function StaffCard({ teamId }) {
     e.preventDefault();
     setBusy(true);
     setError(null);
+    setNotice(null);
+    const cleanEmail = email.trim().toLowerCase();
     const { error: err } = await supabase.from("team_coaches").insert({
       team_id: teamId,
-      email: email.trim().toLowerCase(),
+      email: cleanEmail,
       role: "coach",
     });
-    setBusy(false);
     if (err) {
+      setBusy(false);
       setError(err.code === "23505" ? "That email is already on the staff." : err.message);
       return;
     }
+    // Email them instructions for getting into the team.
+    try {
+      const res = await fetch("/api/staff/invite", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teamId, email: cleanEmail }),
+      });
+      if (res.ok) {
+        setNotice(`Invite email sent to ${cleanEmail}.`);
+      } else {
+        setNotice(`${cleanEmail} was added, but the invite email couldn't be sent — ask them to sign up at my-teamsports.com/signup with that email.`);
+      }
+    } catch {
+      setNotice(`${cleanEmail} was added, but the invite email couldn't be sent — ask them to sign up at my-teamsports.com/signup with that email.`);
+    }
+    setBusy(false);
     setEmail("");
     load();
   }
@@ -111,9 +130,10 @@ export default function StaffCard({ teamId }) {
       )}
       {isOwner && (
         <p className="text-xs text-slate-500 mt-2">
-          They sign up at my-teamsports.com/signup with this exact email — the team appears on their dashboard automatically.
+          We email them instructions — they sign up with this exact email and the team appears on their dashboard automatically.
         </p>
       )}
+      {notice && <p className="text-xs text-green-400 mt-2">{notice}</p>}
       <div className="mt-3"><ErrorText>{error}</ErrorText></div>
     </Card>
   );
