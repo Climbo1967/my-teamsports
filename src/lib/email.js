@@ -1,8 +1,9 @@
 // Server-side email via Resend's REST API (no SDK dependency needed).
-// All My-Team Sports mail goes out through the verified 2bcreations.com domain.
+// All My-Team Sports mail goes out through the verified my-teamsports.com domain
+// (matches the site — mismatched senders were landing in spam).
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
-export const MAIL_FROM = "My-Team Sports <noreply@2bcreations.com>";
+export const MAIL_FROM = "My-Team Sports <noreply@my-teamsports.com>";
 export const SUPPORT_INBOX = "support@2bcreations.com";
 
 export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
