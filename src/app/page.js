@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ViewPing from "@/components/ViewPing";
 import PlayField from "@/components/PlayField";
+import MobileMenu from "@/components/MobileMenu";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
@@ -89,6 +90,7 @@ export default function Home() {
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
             Start Free
           </Link>
+          <MobileMenu />
         </div>
       </nav>
 
