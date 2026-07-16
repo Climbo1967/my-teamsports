@@ -49,7 +49,7 @@ export async function POST(request) {
   // Email channel (unchanged behavior, now optional).
   if (emails.length > 0) {
     const result = await sendEmail({
-      to: "noreply@2bcreations.com",
+      to: "noreply@my-teamsports.com",
       bcc: emails,
       replyTo: user.email,
       subject: cleanSubject,
