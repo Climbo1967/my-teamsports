@@ -25,6 +25,7 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   const plays = site.plays || [];
   const [activePlayer, setActivePlayer] = useState(null);
   const [lightbox, setLightbox] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const playerById = useMemo(() => {
     const map = {};
@@ -42,19 +43,47 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   return (
     <>
       {/* SECTION NAV */}
-      <nav className="sticky top-0 z-40 bg-[var(--color-navy)]/95 backdrop-blur-xl border-b border-white/5 px-4 overflow-x-auto">
-        <div className="max-w-[1100px] mx-auto flex gap-1">
-          {navItems.map((n) => (
-            <a
-              key={n.id}
-              href={`#${n.id}`}
-              className="whitespace-nowrap px-4 py-3.5 text-sm font-medium text-slate-400 hover:text-white transition-colors"
-            >
-              <span className="mr-1.5">{n.icon}</span>
-              {n.label}
-            </a>
-          ))}
+      <nav className="sticky top-0 z-40 bg-[var(--color-navy)]/95 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-[1100px] mx-auto flex items-center">
+          <div className="flex-1 overflow-x-auto px-4">
+            <div className="flex gap-1">
+              {navItems.map((n) => (
+                <a
+                  key={n.id}
+                  href={`#${n.id}`}
+                  className="whitespace-nowrap px-4 py-3.5 text-sm font-medium text-slate-400 hover:text-white transition-colors"
+                >
+                  <span className="mr-1.5">{n.icon}</span>
+                  {n.label}
+                </a>
+              ))}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="md:hidden flex items-center justify-center w-11 self-stretch shrink-0 text-xl text-slate-300 hover:text-white transition-colors border-l border-white/5"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
+        {menuOpen ? (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-[var(--color-navy)]/95 backdrop-blur-xl border-b border-white/5 px-6 py-3 flex flex-col">
+            {navItems.map((n) => (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                onClick={() => setMenuOpen(false)}
+                className="py-3 text-sm font-medium text-slate-300 hover:text-white transition-colors border-b border-white/5 last:border-b-0"
+              >
+                <span className="mr-1.5">{n.icon}</span>
+                {n.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
       </nav>
 
       <main className="max-w-[1100px] mx-auto px-6 py-12 space-y-16">
