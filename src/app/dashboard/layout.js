@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "./LogoutButton";
+import DashMenu from "./DashMenu";
 
 export const metadata = {
   title: "Coach Dashboard | My-Team Sports",
@@ -19,14 +20,14 @@ export default async function DashboardLayout({ children }) {
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
-      <nav className="bg-[var(--color-navy-mid)] border-b border-white/5 px-6 h-[70px] flex items-center justify-between">
+      <nav className="relative bg-[var(--color-navy-mid)] border-b border-white/5 px-6 h-[70px] flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-accent-blue)] to-blue-700 rounded-xl flex items-center justify-center">⚾</div>
           <span className="font-[family-name:var(--font-oswald)] font-bold text-lg tracking-wide text-white">
             MY-TEAM <span className="text-[var(--color-accent-blue)]">SPORTS</span>
           </span>
         </Link>
-        <div className="flex items-center gap-5">
+        <div className="hidden md:flex items-center gap-5">
           {isAdmin && (
             <Link
               href="/dashboard/admin"
@@ -38,6 +39,7 @@ export default async function DashboardLayout({ children }) {
           <span className="hidden sm:block text-sm text-slate-400">{user.email}</span>
           <LogoutButton />
         </div>
+        <DashMenu isAdmin={!!isAdmin} email={user.email} />
       </nav>
       <main className="max-w-[1100px] mx-auto px-6 py-10">{children}</main>
     </div>
