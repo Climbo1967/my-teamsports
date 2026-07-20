@@ -1,13 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
+  );
+}
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const message = searchParams.get("message");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -65,6 +75,38 @@ export default function LoginPage() {
         </Link>
         <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8">
           <h1 className="text-2xl font-bold text-center mb-6">COACH LOGIN</h1>
+          {message === "email_confirmed_login" && !error && (
+            <div className="bg-green-500/10 border border-green-500/30 rounded-lg px-4 py-3 text-sm text-[var(--color-accent-green)] mb-4">
+              ✓ Your email is confirmed — just log in below.
+            </div>
+          )}
+          {message === "confirm_expired" && !error && (
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-3 text-sm mb-4">
+              <p className="text-amber-400 mb-2">
+                That confirmation link expired or was already used. If you confirmed before, just log in.
+              </p>
+              {resendState === "sent" ? (
+                <p className="text-[var(--color-accent-green)]">
+                  New confirmation email sent{email ? <> to <span className="font-semibold">{email}</span></> : null}. Check your inbox (and spam).
+                </p>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    onClick={resendConfirmation}
+                    disabled={!email || resendState === "sending" || (captchaEnabled && !captchaToken)}
+                    className="text-[var(--color-accent-blue)] font-medium hover:underline disabled:opacity-50"
+                  >
+                    {resendState === "sending" ? "Sending..." : "Resend the confirmation email"}
+                  </button>
+                  {!email && <p className="text-slate-500 text-xs mt-1">Enter your email below first, then tap resend.</p>}
+                  {resendState === "failed" && (
+                    <p className="text-red-400 mt-1">Could not send. Wait a minute and try again.</p>
+                  )}
+                </>
+              )}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-1.5">Email</label>

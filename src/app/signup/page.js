@@ -52,8 +52,15 @@ export default function SignupPage() {
       <AuthShell title="CHECK YOUR EMAIL">
         <p className="text-slate-400 text-center leading-relaxed">
           We sent a confirmation link to <span className="text-white font-semibold">{email}</span>.
-          Click it to activate your coach account, then{" "}
-          <Link href="/login" className="text-[var(--color-accent-blue)] hover:underline">log in</Link>.
+          Click it to activate your coach account — it signs you in automatically.
+        </p>
+        <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 mt-5 text-sm text-slate-400 text-left space-y-1.5">
+          <p>📬 Don&apos;t see it? <span className="text-white">Check your spam folder.</span></p>
+          <p>📱 The link works from <span className="text-white">any device</span> — phone or computer.</p>
+        </div>
+        <p className="text-slate-500 text-sm text-center mt-5">
+          Already confirmed?{" "}
+          <Link href="/login" className="text-[var(--color-accent-blue)] hover:underline">Log in</Link>
         </p>
       </AuthShell>
     );
