@@ -87,7 +87,7 @@ function LoginForm() {
               </p>
               {resendState === "sent" ? (
                 <p className="text-[var(--color-accent-green)]">
-                  New confirmation email sent{email ? <> to <span className="font-semibold">{email}</span></> : null}. Check your inbox (and spam).
+                  New confirmation email sent{email ? <> to <span className="font-semibold">{email}</span></> : null} from <span className="font-semibold">My-Team Sports (noreply@my-teamsports.com)</span>. Check your inbox (and spam).
                 </p>
               ) : (
                 <>
@@ -141,12 +141,12 @@ function LoginForm() {
               <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-sm">
                 {resendState === "sent" ? (
                   <p className="text-[var(--color-accent-green)]">
-                    Confirmation email sent to <span className="font-semibold">{email}</span>. Check your inbox (and spam), then log in.
+                    Confirmation email sent to <span className="font-semibold">{email}</span> from <span className="font-semibold">My-Team Sports (noreply@my-teamsports.com)</span>. Check your inbox (and spam/Promotions), then log in.
                   </p>
                 ) : (
                   <>
                     <p className="text-slate-400 mb-2">
-                      Your email isn&apos;t confirmed yet. Lost the email?
+                      Your email isn&apos;t confirmed yet. We&apos;ve sent a confirmation link to <span className="text-white font-semibold">{email}</span> from <span className="text-white font-semibold">My-Team Sports (noreply@my-teamsports.com)</span> — check your inbox, and your spam/Promotions folder if it&apos;s not there within a minute or two. Lost the email?
                     </p>
                     <button
                       type="button"
