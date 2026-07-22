@@ -6,6 +6,16 @@ import DashMenu from "./DashMenu";
 
 export const metadata = {
   title: "Coach Dashboard | My-Team Sports",
+  robots: {
+    index: false,
+    follow: false,
+    noarchive: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
 };
 
 export default async function DashboardLayout({ children }) {
