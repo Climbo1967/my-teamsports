@@ -51,11 +51,12 @@ export default function SignupPage() {
     return (
       <AuthShell title="CHECK YOUR EMAIL">
         <p className="text-slate-400 text-center leading-relaxed">
-          We sent a confirmation link to <span className="text-white font-semibold">{email}</span>.
+          We just sent a confirmation link to <span className="text-white font-semibold">{email}</span>.
           Click it to activate your coach account — it signs you in automatically.
         </p>
         <div className="bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 mt-5 text-sm text-slate-400 text-left space-y-1.5">
-          <p>📬 Don&apos;t see it? <span className="text-white">Check your spam folder.</span></p>
+          <p>📨 It comes from <span className="text-white">My-Team Sports (noreply@my-teamsports.com)</span> — usually within a minute or two.</p>
+          <p>📬 Don&apos;t see it? <span className="text-white">Check your spam or Promotions folder.</span></p>
           <p>📱 The link works from <span className="text-white">any device</span> — phone or computer.</p>
         </div>
         <p className="text-slate-500 text-sm text-center mt-5">
