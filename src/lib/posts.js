@@ -204,7 +204,7 @@ export const posts = [
   },
   {
     slug: "basketball-rotation-chart",
-    title: "Basketball Rotation Chart: Equal Playing Time (Printable)",
+    title: "Basketball Rotation Chart (Free Printable PDF)",
     description:
       "A free printable basketball rotation chart that makes equal playing time simple — split each quarter into two segments, mark who plays, and end minutes arguments.",
     excerpt:
@@ -400,7 +400,7 @@ export const posts = [
   },
   {
     slug: "flag-football-play-sheet-template",
-    title: "Flag Football Play Sheet & Wristband Template (Printable)",
+    title: "Flag Football Play Sheet Template (Free Printable PDF)",
     description:
       "A free printable flag football play sheet with 8 play-diagram boxes plus cut-out wristband play cards sized for a QB wristband. Works for 5v5 and 7v7.",
     excerpt:
