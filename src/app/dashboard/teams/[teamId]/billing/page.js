@@ -17,6 +17,7 @@ export default function BillingPage({ params }) {
   const search = useSearchParams();
   const justPaid = search.get("status") === "success";
   const canceled = search.get("status") === "canceled";
+  const processing = search.get("status") === "processing";
 
   const [team, setTeam] = useState(null);
   const [payments, setPayments] = useState([]);
@@ -41,11 +42,11 @@ export default function BillingPage({ params }) {
 
   // After Stripe redirects back, the webhook may land a few seconds later.
   useEffect(() => {
-    if (!justPaid) return;
+    if (!justPaid && !processing) return;
     const timer = setInterval(load, 4000);
     const stop = setTimeout(() => clearInterval(timer), 40000);
     return () => { clearInterval(timer); clearTimeout(stop); };
-  }, [justPaid, load]);
+  }, [justPaid, processing, load]);
 
   async function buy(product) {
     setBusy(product);
@@ -86,6 +87,14 @@ export default function BillingPage({ params }) {
       {canceled && (
         <Card className="border-yellow-500/30">
           <p className="text-sm text-slate-300">Checkout canceled — no charge was made.</p>
+        </Card>
+      )}
+      {processing && (
+        <Card className="border-yellow-500/30">
+          <p className="text-sm text-slate-300">
+            Payment is processing — your access unlocks automatically as soon as it completes.
+            This page refreshes itself.
+          </p>
         </Card>
       )}
 
