@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import { createAdminClient } from "@/lib/supabase/admin";
-import { seasonEndDate } from "@/lib/pricing";
+import { fulfillCheckoutSession, sessionIsOurs } from "@/lib/billing/fulfill";
 
 export const runtime = "nodejs";
 
 /**
- * Stripe webhook. Handles checkout.session.completed:
- * records the payment and extends the team's paid_through /
- * ai_paid_through to the end of the purchased season.
+ * Stripe webhook. Provisions access on checkout.session.completed and
+ * checkout.session.async_payment_succeeded (delayed payment methods).
+ *
+ * Shared-account rule: the 2B Creations Stripe account serves several apps,
+ * so this endpoint also receives sibling apps' events. Anything that isn't
+ * ours returns 200 quietly — never an error — otherwise Stripe retries
+ * hopeless events forever and the endpoint's error rate goes to 100%.
  */
+const HANDLED = new Set([
+  "checkout.session.completed",
+  "checkout.session.async_payment_succeeded",
+]);
+
 export async function POST(request) {
   const secretKey = process.env.STRIPE_SECRET_KEY;
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -29,69 +37,28 @@ export async function POST(request) {
     return NextResponse.json({ error: "Bad signature." }, { status: 400 });
   }
 
-  if (event.type !== "checkout.session.completed") {
+  if (event.type === "checkout.session.async_payment_failed") {
+    const s = event.data.object;
+    if (sessionIsOurs(s)) {
+      console.error("stripe async payment failed", s.id, s.metadata?.team_id);
+    }
+    return NextResponse.json({ received: true });
+  }
+
+  if (!HANDLED.has(event.type)) {
     return NextResponse.json({ received: true });
   }
 
   const session = event.data.object;
-  if (session.payment_status !== "paid") {
-    return NextResponse.json({ received: true });
+  const result = await fulfillCheckoutSession(session);
+
+  if (result.status === "retry") {
+    console.error("stripe webhook fulfillment failed", session.id, result.reason);
+    return NextResponse.json({ error: "Temporary failure." }, { status: 500 }); // Stripe retries
   }
-
-  const teamId = session.metadata?.team_id;
-  const product = session.metadata?.product;
-  const seasonYear = parseInt(session.metadata?.season_year, 10);
-  if (!teamId || !["season", "ai"].includes(product) || !seasonYear) {
-    console.error("stripe webhook missing metadata", session.id);
-    return NextResponse.json({ received: true });
+  if (result.status === "ignored" && sessionIsOurs(session) && result.reason !== "not paid") {
+    // Ours but unprovisionable (e.g. team deleted) — log it, still 200.
+    console.error("stripe webhook ignored own session", session.id, result.reason);
   }
-
-  const admin = createAdminClient();
-  if (!admin) {
-    console.error("stripe webhook: no service role key");
-    return NextResponse.json({ error: "Server not configured." }, { status: 500 });
-  }
-
-  // Idempotent payment record (webhooks can be delivered more than once).
-  const { error: payError } = await admin.from("payments").upsert(
-    {
-      team_id: teamId,
-      coach_id: session.metadata?.coach_id || null,
-      product,
-      season_year: seasonYear,
-      amount_cents: session.amount_total ?? 0,
-      currency: session.currency || "usd",
-      stripe_session_id: session.id,
-      stripe_payment_intent:
-        typeof session.payment_intent === "string" ? session.payment_intent : null,
-      status: "paid",
-    },
-    { onConflict: "stripe_session_id", ignoreDuplicates: true }
-  );
-  if (payError) {
-    console.error("stripe webhook payments upsert failed", payError.message);
-    return NextResponse.json({ error: "Storage failed." }, { status: 500 }); // Stripe retries
-  }
-
-  const paidThrough = seasonEndDate(seasonYear);
-  const column = product === "season" ? "paid_through" : "ai_paid_through";
-
-  const { data: team, error: teamError } = await admin
-    .from("teams").select(`id, ${column}`).eq("id", teamId).single();
-  if (teamError || !team) {
-    console.error("stripe webhook team fetch failed", teamError?.message);
-    return NextResponse.json({ error: "Team missing." }, { status: 500 });
-  }
-
-  // Never shorten existing coverage.
-  if (!team[column] || team[column] < paidThrough) {
-    const { error: updError } = await admin
-      .from("teams").update({ [column]: paidThrough }).eq("id", teamId);
-    if (updError) {
-      console.error("stripe webhook team update failed", updError.message);
-      return NextResponse.json({ error: "Update failed." }, { status: 500 });
-    }
-  }
-
   return NextResponse.json({ received: true });
 }
