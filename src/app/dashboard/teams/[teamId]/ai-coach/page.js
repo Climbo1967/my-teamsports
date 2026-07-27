@@ -100,7 +100,7 @@ export default function AiCoachPage({ params }) {
           <div className="text-5xl mb-3">🧠</div>
           <h3 className="font-bold text-lg mb-2">AI Assistant Coach</h3>
           <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto">
-            Your own assistant coach that reads this team&apos;s data &mdash; record, stats, and schedule &mdash; and hands you a specific game plan: who&apos;s hot, what to work on, and a focus for the next practice. Free to preview for the 2026 season.
+            Your own assistant coach that reads this team&apos;s data &mdash; record, stats, and schedule &mdash; and hands you a specific game plan: who&apos;s hot, what to work on, and a focus for the next practice. Available as a paid add-on on your team&apos;s Billing page.
           </p>
           <a href="/pricing" target="_blank" className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all">
             Learn more

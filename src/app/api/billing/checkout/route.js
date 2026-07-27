@@ -102,10 +102,34 @@ export async function POST(request) {
     coach_id: user.id,
   };
 
+  // Every sale gets a Stripe Customer (find-or-create, tagged to this app) so
+  // charges are never orphaned guest payments. Fail open: a customer hiccup
+  // must never block a sale - fall back to plain customer_email below.
+  let customerId = null;
+  try {
+    const safeEmail = user.email.replace(/'/g, "\\'");
+    const found = await stripe.customers.search({
+      query: `email:'${safeEmail}' AND metadata['app']:'${APP_TAG}'`,
+      limit: 1,
+    });
+    customerId = found.data[0]?.id || null;
+    if (!customerId) {
+      const created = await stripe.customers.create({
+        email: user.email,
+        metadata: { app: APP_TAG, coach_id: user.id },
+      });
+      customerId = created.id;
+    }
+  } catch (e) {
+    console.error("stripe customer attach failed", e?.message);
+  }
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      customer_email: user.email,
+      ...(customerId
+        ? { customer: customerId, customer_update: { address: "auto" } }
+        : { customer_email: user.email }),
       client_reference_id: user.id,
       line_items: [
         {

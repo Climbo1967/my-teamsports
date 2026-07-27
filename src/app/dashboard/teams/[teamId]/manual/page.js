@@ -149,7 +149,7 @@ export default function ManualPage() {
               <Step><strong>Practice Planner</strong> (any sport) &mdash; pick a length (45 / 60 / 75 / 90 minutes) and a focus, and it lays out a timed practice from warm-up to cool-down that you can print or save as a PDF.</Step>
             </ul>
             <p className="text-slate-400">
-              The AI Coach is a premium feature that&apos;s free to preview for the 2026 season. If it&apos;s turned off for your team you&apos;ll see a preview card; if you have access, the quality of its advice grows as you log more games and stats.
+              The AI Coach is a paid add-on to the Season Pass. If it&apos;s not active for your team you&apos;ll see a preview card; if you have access, the quality of its advice grows as you log more games and stats.
             </p>
           </Section>
 
