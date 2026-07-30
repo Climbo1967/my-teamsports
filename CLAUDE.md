@@ -55,8 +55,10 @@ explain it in plain English.
 - **AI features:** Anthropic API (`ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`).
 - **Push notifications:** Web Push via VAPID keys (`VAPID_*`).
 - **Email:** Resend. **Bot check:** Turnstile.
-- **Known gaps (as of 2026-07-28):** no Sentry, no Vercel Web Analytics —
-  unlike Ron's other apps. Surface this when relevant; don't add unprompted.
+- **Known gaps (as of 2026-07-30):** no Sentry — unlike Ron's other apps.
+  Surface this when relevant; don't add unprompted. (Vercel Web Analytics
+  was added 2026-07-30: `<Analytics />` in `src/app/layout.js` + dependency
+  in package.json, commits `915bfcb`/`a4d4ada` — tracking verified live.)
 
 ## Repo conventions
 
