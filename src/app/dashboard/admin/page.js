@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import AdminDirectory from "./AdminDirectory";
+import AdminActivation from "./AdminActivation";
 import AdminSupport from "./AdminSupport";
 
 export const metadata = { title: "Admin | My-Team Sports" };
@@ -21,6 +22,7 @@ export default async function AdminPage() {
   return (
     <>
       <AdminDirectory data={data} />
+      <AdminActivation data={data} />
       <AdminSupport initial={support || []} />
     </>
   );

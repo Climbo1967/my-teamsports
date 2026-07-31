@@ -125,6 +125,13 @@ export default function RootLayout({ children }) {
             gtag('config', 'G-NPD6LYL7RF');
           `}
         </Script>
+        {/* First-touch signup attribution. UTM tags land on whatever page the
+            cold-email link points at — usually the homepage, not /signup — so
+            we stash them once per session and read them back at sign-up.
+            First touch wins; later pageviews never overwrite it. */}
+        <Script id="attr-capture" strategy="afterInteractive">
+          {`try{if(!sessionStorage.getItem('mts_attr')){var q=new URLSearchParams(location.search),a={},k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term'];for(var i=0;i<k.length;i++){var v=q.get(k[i]);if(v)a[k[i]]=v.slice(0,200);}if(!a.utm_source&&q.get('src'))a.utm_source=q.get('src').slice(0,200);if(document.referrer&&document.referrer.indexOf(location.origin)!==0)a.referrer=document.referrer.slice(0,400);a.landing_path=(location.pathname+location.search).slice(0,400);sessionStorage.setItem('mts_attr',JSON.stringify(a));}}catch(e){}`}
+        </Script>
         <Script id="sw-register" strategy="afterInteractive">
           {`if ('serviceWorker' in navigator) { window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }`}
         </Script>

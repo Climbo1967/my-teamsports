@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
+import GettingStarted from "@/components/GettingStarted";
 
 
 export default async function DashboardPage() {
@@ -18,8 +19,14 @@ export default async function DashboardPage() {
   const firstName =
     user?.user_metadata?.full_name?.split(" ")[0] || "Coach";
 
+  // Brand-new coach with nothing yet: the wizard replaces the dashboard.
+  if (!teams || teams.length === 0) {
+    return <GettingStarted standalone />;
+  }
+
   return (
     <div>
+      <GettingStarted />
       <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold">WELCOME, {firstName.toUpperCase()}</h1>
@@ -33,20 +40,7 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      {!teams || teams.length === 0 ? (
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-12 text-center">
-          <div className="text-5xl mb-4">🏟️</div>
-          <h2 className="text-xl font-semibold mb-2">No teams yet</h2>
-          <p className="text-slate-400 mb-6">Create your first team — it takes about a minute.</p>
-          <Link
-            href="/dashboard/new-team"
-            className="inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] font-semibold tracking-wide px-8 py-3.5 rounded-xl hover:bg-green-500 transition-all"
-          >
-            CREATE YOUR TEAM
-          </Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {teams.map((team) => (
             <div
               key={team.id}
@@ -88,9 +82,8 @@ export default async function DashboardPage() {
                 </Link>
               </div>
             </div>
-          ))}
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }

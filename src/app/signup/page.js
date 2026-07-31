@@ -6,6 +6,32 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
+/**
+ * Signup attribution. Captured into auth metadata at sign-up; the
+ * handle_new_user trigger copies it onto profiles. It has to ride along in
+ * options.data because with email confirmation on there is no session (and so
+ * no way to write to profiles) at this moment. Impossible to reconstruct
+ * retroactively, which is why it is captured here rather than later.
+ */
+function signupAttribution() {
+  if (typeof window === "undefined") return {};
+  try {
+    // First touch, stashed by the attr-capture script in the root layout.
+    const stored = JSON.parse(sessionStorage.getItem("mts_attr") || "{}");
+    // Anything on the /signup URL itself wins over the stashed first touch.
+    const p = new URLSearchParams(window.location.search);
+    const here = {};
+    for (const k of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]) {
+      const v = p.get(k);
+      if (v) here[k] = v.slice(0, 200);
+    }
+    if (!here.utm_source && p.get("src")) here.utm_source = p.get("src").slice(0, 200);
+    return { ...stored, ...here };
+  } catch {
+    return {};
+  }
+}
+
 export default function SignupPage() {
   const router = useRouter();
   const [fullName, setFullName] = useState("");
@@ -26,7 +52,10 @@ export default function SignupPage() {
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName }, captchaToken: captchaToken || undefined },
+      options: {
+        data: { full_name: fullName, ...signupAttribution() },
+        captchaToken: captchaToken || undefined,
+      },
     });
 
     setLoading(false);
