@@ -27,9 +27,28 @@ function slugify(name) {
     .replace(/^-|-$/g, "");
 }
 
+/**
+ * Analytics-only stamp: record that this coach reached onboarding step 1
+ * (team created). Guarded so it can never downgrade a profile that already
+ * finished or skipped onboarding, and non-fatal — a failure here must never
+ * break team creation. Mirrors stampProfile() in GettingStartedForms.js.
+ */
+async function stampStepOne(supabase, userId) {
+  try {
+    await supabase
+      .from("profiles")
+      .update({ onboarding_step: 1 })
+      .eq("id", userId)
+      .eq("onboarding_completed", false);
+  } catch {
+    /* non-fatal */
+  }
+}
+
 export default function NewTeamPage() {
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
+  const [ageGroup, setAgeGroup] = useState("");
   const [season, setSeason] = useState("Spring 2026");
   const [color, setColor] = useState(DEFAULT_TEAM_COLOR);
   const [logoUrl, setLogoUrl] = useState(null);
@@ -72,7 +91,7 @@ export default function NewTeamPage() {
           : `${baseSlug}-${Math.floor(1000 + Math.random() * 9000)}`;
       const { data, error: insertError } = await supabase
         .from("teams")
-        .insert({ coach_id: user.id, name: name.trim(), sport, season, slug, passcode, primary_color: color })
+        .insert({ coach_id: user.id, name: name.trim(), sport, age_group: ageGroup.trim() || null, season, slug, passcode, primary_color: color })
         .select()
         .single();
       if (!insertError) {
@@ -90,6 +109,7 @@ export default function NewTeamPage() {
       return;
     }
 
+    await stampStepOne(supabase, user.id);
     setCreated(team);
   }
 
@@ -215,6 +235,20 @@ export default function NewTeamPage() {
               Your link: my-teamsports.com/team/<span className="text-[var(--color-accent-blue)]">{slugify(name) || "..."}</span>
             </p>
           )}
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-400 mb-1.5">
+            Age Group / Division <span className="text-slate-600 font-normal">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={ageGroup}
+            onChange={(e) => setAgeGroup(e.target.value)}
+            maxLength={40}
+            placeholder="10U, Division 2, JV..."
+            className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
+          />
         </div>
 
         <div>
