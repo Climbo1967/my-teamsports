@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, EmptyState, ErrorText, Select, Spinner } from "@/components/ui";
 
@@ -117,6 +118,17 @@ export default function AiCoachPage({ params }) {
   return (
     <div className="max-w-3xl space-y-10">
       <style>{PRINT_CSS}</style>
+
+      {/* COACH CHAT */}
+      <Card className="border-green-500/20 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 className="font-bold">💬 Coach Chat <span className="ml-2 text-[10px] uppercase tracking-wide bg-green-500/15 text-green-400 rounded px-1.5 py-0.5">New</span></h3>
+          <p className="text-slate-400 text-sm">Ask anything — lineups, practice ideas, a message to parents. It knows this team&apos;s data.</p>
+        </div>
+        <Link href={`/dashboard/teams/${teamId}/ai-coach/chat`} className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all no-underline">
+          Open chat
+        </Link>
+      </Card>
 
       {/* COACH'S BRIEFING */}
       <section>

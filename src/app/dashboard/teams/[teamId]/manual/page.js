@@ -146,6 +146,7 @@ export default function ManualPage() {
             <ul className="list-disc pl-5 space-y-1.5">
               <Step><strong>Coach&apos;s Briefing</strong> (any sport) &mdash; one tap gives you a snapshot of the season, what&apos;s working, what to work on, players to watch, and a focus for your next practice.</Step>
               <Step><strong>Lineup Advisor</strong> (baseball &amp; softball) &mdash; builds a batting order from your real at-bats, with each player&apos;s AVG / OBP / SLG / OPS and the reasoning behind the order.</Step>
+              <Step><strong>Coach Chat</strong> (any sport) &mdash; a conversation, not a one-shot: ask follow-ups (&quot;who needs more touches?&quot;, &quot;draft a message to parents&quot;) and it answers from this team&apos;s real data. Private to you, and you can clear it anytime.</Step>
               <Step><strong>Practice Planner</strong> (any sport) &mdash; pick a length (45 / 60 / 75 / 90 minutes) and a focus, and it lays out a timed practice from warm-up to cool-down that you can print or save as a PDF.</Step>
             </ul>
             <p className="text-slate-400">
@@ -172,6 +173,7 @@ export default function ManualPage() {
               <Step>Write an announcement (optional title plus a message). It appears at the top of your public team page.</Step>
               <Step>Pin important posts to keep them at the top.</Step>
               <Step><strong>Posting and notifying are separate.</strong> After you post, tap <strong>&quot;📣 Notify team (email + app alerts)&quot;</strong> to send that post to subscribed families&apos; inboxes and push it to any device that opted in. The button then shows &quot;Notified&quot; with the date, so you can see at a glance what&apos;s already gone out and never double-send.</Step>
+              <Step><strong>Team Board</strong> (next tab over) adds two-way discussion: you start a thread &mdash; or one is created automatically when you post an announcement &mdash; and parents can reply with just their name, no account. Only coaches create threads, only coach posts send push alerts, and you can lock any thread or remove any reply.</Step>
               <Step>The <strong>Subscribers</strong> card shows everyone who&apos;s opted in to email, and you can remove any subscriber. Emails go out from My-Team Sports and replies come back to you.</Step>
             </ul>
           </Section>

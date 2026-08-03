@@ -32,3 +32,35 @@ export async function askClaude({ system, prompt, maxTokens = 1100 }) {
     return { ok: false, error: String(e?.message || e) };
   }
 }
+
+// Multi-turn variant for the AI Coach Chat: takes prior conversation turns
+// instead of a single prompt. Same key, model, and error behavior as askClaude.
+export async function askClaudeChat({ system, messages, maxTokens = 700 }) {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) return { ok: false, error: "The AI coach isn't configured yet." };
+  try {
+    const res = await fetch(ANTHROPIC_URL, {
+      method: "POST",
+      headers: {
+        "x-api-key": key,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        model: AI_MODEL,
+        max_tokens: maxTokens,
+        system,
+        messages,
+      }),
+    });
+    if (!res.ok) {
+      const detail = await res.text();
+      return { ok: false, error: `Anthropic ${res.status}: ${detail.slice(0, 300)}` };
+    }
+    const data = await res.json();
+    const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("\n").trim();
+    return { ok: true, text };
+  } catch (e) {
+    return { ok: false, error: String(e?.message || e) };
+  }
+}
