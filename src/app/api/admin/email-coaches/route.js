@@ -54,11 +54,17 @@ export async function POST(request) {
     return NextResponse.json({ error: "None of those addresses are in the coach directory." }, { status: 400 });
   }
 
+  // Sender shows as "Ron at My-Team Sports" (the admin's first name from their
+  // account) instead of the bare app name — same verified noreply address.
+  const adminFirst = String(user.user_metadata?.full_name || "").trim().split(/\s+/)[0];
+  const from = adminFirst ? `${adminFirst} at My-Team Sports <noreply@my-teamsports.com>` : undefined;
+
   const messages = recipients.map((email) => {
     const first = (directory.get(email) || "").trim().split(/\s+/)[0];
     const body = `Hi ${first || "Coach"},\n\n${message}`;
     return {
       to: email,
+      from,
       replyTo: user.email,
       subject,
       text: `${body}\n\n— My-Team Sports · my-teamsports.com`,

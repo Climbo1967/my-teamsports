@@ -38,7 +38,9 @@ export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
 // Send up to 100 individual emails in ONE Resend API call (the /emails/batch
 // endpoint). Used when each recipient needs their own personalized copy —
 // looping sendEmail() would trip Resend's 2-requests/second limit and risk
-// serverless timeouts. Each message: { to, subject, html, text, replyTo }.
+// serverless timeouts. Each message: { to, subject, html, text, replyTo },
+// plus optional `from` to override the default sender display name (must
+// still be an address on the verified my-teamsports.com domain).
 export async function sendEmailBatch(messages) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return { ok: false, error: "Email is not configured yet." };
@@ -50,7 +52,7 @@ export async function sendEmailBatch(messages) {
   }
 
   const payload = messages.map((m) => {
-    const item = { from: MAIL_FROM, to: Array.isArray(m.to) ? m.to : [m.to], subject: m.subject };
+    const item = { from: m.from || MAIL_FROM, to: Array.isArray(m.to) ? m.to : [m.to], subject: m.subject };
     if (m.html) item.html = m.html;
     if (m.text) item.text = m.text;
     if (m.replyTo) item.reply_to = m.replyTo;
