@@ -24,7 +24,7 @@ export async function POST(request) {
 
   // RLS only returns the team if this coach is on its staff.
   const { data: team } = await supabase
-    .from("teams").select("id, name, sport, season, ai_enabled, ai_paid_through").eq("id", teamId).single();
+    .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through").eq("id", teamId).single();
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
   const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10));
   if (!aiActive) {
@@ -63,14 +63,15 @@ export async function POST(request) {
   const legend = keys.map((k) => `${k.abbr}=${k.label}`).join(", ");
   const dataBlock = [
     `Team: ${team.name} (${sportLabel(team.sport)}${team.season ? ", " + team.season : ""})`,
+    team.age_group ? `Age group: ${team.age_group}` : null,
     `Roster size: ${roster.length}`,
     `Record: ${rec.played ? `${formatRecord(rec)} (${rec.played} games)` : "no games recorded yet"}`,
     past.length ? `Recent results:\n${past.join("\n")}` : "Recent results: none yet",
     upcoming.length ? `Upcoming:\n${upcoming.join("\n")}` : "Upcoming: none scheduled",
     statLines.length ? `Season stats (${legend}):\n${statLines.join("\n")}` : "Season stats: none recorded yet",
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
 
-  const system = `You are an experienced, encouraging assistant coach for a youth ${sportLabel(team.sport)} team. Give specific, practical, age-appropriate guidance grounded ONLY in the data provided. Be concrete — name players and cite their numbers — but stay positive and development-focused; these are kids. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. If the data is thin, focus on early-season fundamentals and what to start tracking. Never invent stats. Output plain text (no markdown symbols or bullets), about 250-350 words, organized under these short headers, each on its own line: Snapshot, What's working, What to work on, Players to watch, Focus for next practice.`;
+  const system = `You are an experienced, encouraging assistant coach for a youth ${sportLabel(team.sport)} team. Give specific, practical, age-appropriate guidance grounded ONLY in the data provided. Be concrete — name players and cite their numbers — but stay positive and development-focused; these are kids. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. If an age group is provided, match drill complexity, terminology, and expectations to it. If the data is thin, focus on early-season fundamentals and what to start tracking. Never invent stats. Output plain text (no markdown symbols or bullets), about 250-350 words, organized under these short headers, each on its own line: Snapshot, What's working, What to work on, Players to watch, Focus for next practice.`;
   const prompt = `Here is the team's data. Write the coach's briefing.\n\n${dataBlock}`;
 
   const result = await askClaude({ system, prompt, maxTokens: 1100 });

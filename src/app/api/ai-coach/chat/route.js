@@ -13,7 +13,7 @@ async function requireTeam(supabase, teamId) {
   if (!user) return { error: NextResponse.json({ error: "Please sign in again." }, { status: 401 }) };
   // RLS only returns the team if this coach is on its staff.
   const { data: team } = await supabase
-    .from("teams").select("id, name, sport, season, ai_enabled, ai_paid_through").eq("id", teamId).single();
+    .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through").eq("id", teamId).single();
   if (!team) return { error: NextResponse.json({ error: "Team not found." }, { status: 404 }) };
   const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10));
   if (!aiActive) {
@@ -119,14 +119,15 @@ export async function POST(request) {
   const rosterLines = roster.map((p) => `- ${nameById[p.id]}${p.position ? ` (${p.position})` : ""}`);
   const dataBlock = [
     `Team: ${team.name} (${sportLabel(team.sport)}${team.season ? ", " + team.season : ""})`,
+    team.age_group ? `Age group: ${team.age_group}` : null,
     `Record: ${rec.played ? `${formatRecord(rec)} (${rec.played} games)` : "no games recorded yet"}`,
     rosterLines.length ? `Roster:\n${rosterLines.join("\n")}` : "Roster: empty",
     past.length ? `Recent results:\n${past.join("\n")}` : "Recent results: none yet",
     upcoming.length ? `Upcoming:\n${upcoming.join("\n")}` : "Upcoming: none scheduled",
     statLines.length ? `Season stats (${legend}):\n${statLines.join("\n")}` : "Season stats: none recorded yet",
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
 
-  const system = `You are the AI assistant coach for a youth ${sportLabel(team.sport)} team, chatting with one of its coaches. Ground every answer ONLY in the team data below; never invent stats, players, or results. Be specific — name players, cite numbers — but stay positive and development-focused: these are kids. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. Keep answers conversational and under ~200 words unless the coach asks for something longer (like a full plan or a draft message to parents). You only discuss this team, youth coaching, and closely related topics; politely decline anything else. Plain text only, no markdown symbols.\n\nTEAM DATA (current as of this message):\n${dataBlock}`;
+  const system = `You are the AI assistant coach for a youth ${sportLabel(team.sport)} team, chatting with one of its coaches. Ground every answer ONLY in the team data below; never invent stats, players, or results. Be specific — name players, cite numbers — but stay positive and development-focused: these are kids. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. If an age group is provided, match drill complexity, terminology, and expectations to it. Keep answers conversational and under ~200 words unless the coach asks for something longer (like a full plan or a draft message to parents). You only discuss this team, youth coaching, and closely related topics; politely decline anything else. Plain text only, no markdown symbols.\n\nTEAM DATA (current as of this message):\n${dataBlock}`;
 
   const turns = (history || []).reverse().map((m) => ({ role: m.role, content: m.content }));
   turns.push({ role: "user", content: message });

@@ -35,7 +35,7 @@ export async function POST(request) {
 
   // RLS only returns the team if this coach is on its staff.
   const { data: team } = await supabase
-    .from("teams").select("id, name, sport, season, ai_enabled, ai_paid_through").eq("id", teamId).single();
+    .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through").eq("id", teamId).single();
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
   const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10));
   if (!aiActive) {
@@ -76,14 +76,15 @@ export async function POST(request) {
   const legend = keys.map((k) => `${k.abbr}=${k.label}`).join(", ");
   const dataBlock = [
     `Team: ${team.name} (${sportLabel(team.sport)}${team.season ? ", " + team.season : ""})`,
+    team.age_group ? `Age group: ${team.age_group}` : null,
     `Roster size: ${roster.length}`,
     `Record: ${rec.played ? `${formatRecord(rec)} (${rec.played} games)` : "no games recorded yet"}`,
     past.length ? `Recent results:\n${past.join("\n")}` : "Recent results: none yet",
     `Next game: ${nextStr}`,
     statLines.length ? `Season stats (${legend}):\n${statLines.join("\n")}` : "Season stats: none recorded yet",
-  ].join("\n\n");
+  ].filter(Boolean).join("\n\n");
 
-  const system = `You are an experienced, encouraging youth ${sportLabel(team.sport)} coach. Build ONE practice plan totaling about ${minutes} minutes for this team, grounded ONLY in the data provided. ${FOCI[focus]} Target the team's real weak spots, prep a bit for the next opponent if one is scheduled, keep kids moving and engaged, and make it age-appropriate and positive. Never invent stats. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. Output plain text only (no markdown symbols, asterisks, or bullets). Start with a one-line "Focus:" summary. Then list the practice as time-blocked segments, each on its own line beginning with the minutes, like "10 min - Dynamic warm-up: ...". Include a warm-up, 3 to 5 skill/drill blocks tied to the data, a short fun/competitive segment, and a brief cool-down and team talk. Make the segment minutes add up to about ${minutes}. End with one line "Coach's reminder:" giving an encouraging point of emphasis.`;
+  const system = `You are an experienced, encouraging youth ${sportLabel(team.sport)} coach. Build ONE practice plan totaling about ${minutes} minutes for this team, grounded ONLY in the data provided. ${FOCI[focus]} Target the team's real weak spots, prep a bit for the next opponent if one is scheduled, keep kids moving and engaged, and make it age-appropriate and positive. Never invent stats. The team's sport and format are the coach's settled decision, sanctioned by their league — if this is tackle football, coach tackle football. Never suggest switching formats or sports (for example flag instead of tackle), and never question whether the sport suits the age group; channel safety into correct, sport-appropriate technique and smart practice design instead. If an age group is provided, match drill complexity, terminology, and expectations to it. Output plain text only (no markdown symbols, asterisks, or bullets). Start with a one-line "Focus:" summary. Then list the practice as time-blocked segments, each on its own line beginning with the minutes, like "10 min - Dynamic warm-up: ...". Include a warm-up, 3 to 5 skill/drill blocks tied to the data, a short fun/competitive segment, and a brief cool-down and team talk. Make the segment minutes add up to about ${minutes}. End with one line "Coach's reminder:" giving an encouraging point of emphasis.`;
   const prompt = `Here is the team's data. Build the ${minutes}-minute practice plan.\n\n${dataBlock}`;
 
   const result = await askClaude({ system, prompt, maxTokens: 1100 });

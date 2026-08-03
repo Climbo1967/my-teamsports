@@ -20,6 +20,7 @@ export default function SettingsPage({ params }) {
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("");
+  const [ageGroup, setAgeGroup] = useState("");
   const [logoPath, setLogoPath] = useState(null); // stored in teams.logo_url
   const [logoUrl, setLogoUrl] = useState(null); // signed URL for display
   const [primaryColor, setPrimaryColor] = useState(DEFAULT_TEAM_COLOR);
@@ -34,6 +35,7 @@ export default function SettingsPage({ params }) {
       setName(data.name);
       setSport(data.sport);
       setSeason(data.season || "");
+      setAgeGroup(data.age_group || "");
       // logo_url stores a private-bucket path; keep the path for saving and
       // a signed URL for display.
       setLogoPath(data.logo_url);
@@ -79,6 +81,7 @@ export default function SettingsPage({ params }) {
       name: name.trim(),
       sport,
       season: season.trim() || null,
+      age_group: ageGroup.trim() || null,
       logo_url: logoPath,
       primary_color: primaryColor,
     }).eq("id", teamId);
@@ -145,6 +148,10 @@ export default function SettingsPage({ params }) {
             <div>
               <Label>Season</Label>
               <Input value={season} onChange={(e) => setSeason(e.target.value)} maxLength={40} placeholder="Spring 2026" />
+            </div>
+            <div>
+              <Label>Age Group / Division</Label>
+              <Input value={ageGroup} onChange={(e) => setAgeGroup(e.target.value)} maxLength={40} placeholder="10U, 3rd Grade, Division 2..." />
             </div>
           </div>
           <div>
