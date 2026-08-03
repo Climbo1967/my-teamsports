@@ -9,6 +9,7 @@ import { SPORTS, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, ColorPicker, ErrorText, Spinner } from "@/components/ui";
 import StaffCard from "../StaffCard";
 import PasscodeManager from "@/components/PasscodeManager";
+import { confirmDialog } from "@/components/confirm";
 
 export default function SettingsPage({ params }) {
   const { teamId } = use(params);
@@ -72,7 +73,7 @@ export default function SettingsPage({ params }) {
       const warnings = [];
       if ((statCount || 0) > 0) warnings.push("recorded stats stay labeled with the old sport's columns, so they may stop showing on the team site");
       if ((playCount || 0) > 0) warnings.push("playbook plays keep their old field diagram and categories until you edit and re-file them");
-      if (warnings.length && !confirm(`Heads up: changing this team's sport means ${warnings.join(", and ")}. Change it anyway?`)) {
+      if (warnings.length && !(await confirmDialog({ title: "Change sport?", message: `Heads up: changing this team's sport means ${warnings.join(", and ")}.`, confirmLabel: "Change it" }))) {
         return;
       }
     }
@@ -93,8 +94,14 @@ export default function SettingsPage({ params }) {
   }
 
   async function deleteTeam() {
-    const phrase = prompt(`This permanently deletes ${team.name} — roster, schedule, posts, and photos. Type the team name to confirm:`);
-    if (phrase !== team.name) return;
+    const ok = await confirmDialog({
+      title: "Delete this team?",
+      message: `This permanently deletes ${team.name} — roster, schedule, posts, and photos.`,
+      confirmLabel: "Delete team",
+      danger: true,
+      requireText: team.name,
+    });
+    if (!ok) return;
     const { error: err } = await supabase.from("teams").delete().eq("id", teamId);
     if (err) { setError(err.message); return; }
     router.push("/dashboard");

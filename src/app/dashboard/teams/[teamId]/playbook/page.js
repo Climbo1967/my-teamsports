@@ -7,6 +7,7 @@ import PlayField from "@/components/PlayField";
 import PlaybookBoard from "@/components/PlaybookBoard";
 import { sportLabel } from "@/lib/constants";
 import { emptyDiagram, normalizeDiagram, hasBoard, playCategoriesForSport } from "@/lib/playbook";
+import { confirmDialog } from "@/components/confirm";
 
 export default function PlaybookPage({ params }) {
   const { teamId } = use(params);
@@ -30,7 +31,7 @@ export default function PlaybookPage({ params }) {
   useEffect(() => { load(); }, [load]);
 
   async function remove(p) {
-    if (!confirm(`Delete the play "${p.name}"? This can't be undone.`)) return;
+    if (!(await confirmDialog({ title: "Delete play?", message: `Delete the play "${p.name}"? This can't be undone.`, confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("plays").delete().eq("id", p.id);
     load();
   }

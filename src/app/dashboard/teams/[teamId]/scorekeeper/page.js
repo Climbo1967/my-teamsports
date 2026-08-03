@@ -9,6 +9,7 @@ import { BaseballField } from "@/components/field";
 import { computeTendencies, tendencySentence, ZONE_LABEL, pctText } from "@/lib/spray";
 import { recommendLineup } from "@/lib/lineup";
 import { notifyGame } from "@/lib/pushClient";
+import { confirmDialog } from "@/components/confirm";
 
 export default function ScorekeeperPage({ params }) {
   const { teamId } = use(params);
@@ -354,7 +355,7 @@ function GameScorer({ teamId, event, players, onBack }) {
   }
 
   async function endGame() {
-    if (!confirm("End and finalize this game? The score will be saved as the game result.")) return;
+    if (!(await confirmDialog({ title: "End this game?", message: "The score will be saved as the game result.", confirmLabel: "End & finalize" }))) return;
     await supabase.from("game_scores").update({ status: "final" }).eq("id", game.id);
     await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
     await rollup();
@@ -391,7 +392,7 @@ function GameScorer({ teamId, event, players, onBack }) {
           onEditLineup={() => setEditingLineup(true)}
           onStart={async (isHome) => {
             const { data: liveOther } = await supabase.from("game_scores").select("event_id").eq("team_id", teamId).eq("status", "in_progress").neq("event_id", event.id).limit(1);
-            if (liveOther && liveOther.length && !confirm("Another game is still marked live for this team. Starting this one makes it the live game on your team page (the other stays in progress until you End it). Continue?")) return;
+            if (liveOther && liveOther.length && !(await confirmDialog({ title: "Another game is live", message: "Starting this one makes it the live game on your team page (the other stays in progress until you End it).", confirmLabel: "Start anyway" }))) return;
             const { data, error: e } = await supabase.from("game_scores")
               .insert({ team_id: teamId, event_id: event.id, is_home: isHome, status: "in_progress" })
               .select().single();

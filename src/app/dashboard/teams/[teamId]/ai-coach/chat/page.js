@@ -4,6 +4,7 @@ import { use, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 const SUGGESTIONS = [
   "What should we focus on at the next practice?",
@@ -63,7 +64,7 @@ export default function AiChatPage({ params }) {
   }
 
   async function clearChat() {
-    if (!confirm("Clear this conversation? The assistant coach will forget it.")) return;
+    if (!(await confirmDialog({ title: "Clear this conversation?", message: "The assistant coach will forget it.", confirmLabel: "Clear chat", danger: true }))) return;
     await fetch(`/api/ai-coach/chat?teamId=${teamId}`, { method: "DELETE" });
     setMessages([]); setError(null);
   }

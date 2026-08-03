@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Input, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function NotesPage({ params }) {
   const { teamId } = use(params);
@@ -21,7 +22,7 @@ export default function NotesPage({ params }) {
   useEffect(() => { load(); }, [load]);
 
   async function remove(n) {
-    if (!confirm("Delete this note?")) return;
+    if (!(await confirmDialog({ title: "Delete note?", confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("notes").delete().eq("id", n.id);
     load();
   }

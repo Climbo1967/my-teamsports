@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { uploadTeamImage } from "@/lib/upload";
 import { mediaPath, signMediaUrls } from "@/lib/media";
 import { Select, Label, Button, Card, EmptyState, ErrorText, Spinner } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function PhotosPage({ params }) {
   const { teamId } = use(params);
@@ -63,7 +64,7 @@ export default function PhotosPage({ params }) {
   }
 
   async function remove(photo) {
-    if (!confirm("Delete this photo?")) return;
+    if (!(await confirmDialog({ title: "Delete photo?", message: "This removes it from the team site too.", confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("photos").delete().eq("id", photo.id);
     // Also remove the file from storage if it lives in our bucket
     // (handles both stored paths and legacy public URLs)

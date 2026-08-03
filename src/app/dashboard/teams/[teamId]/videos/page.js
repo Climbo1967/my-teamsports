@@ -4,6 +4,7 @@ import { use, useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { videoEmbedUrl, isValidVideoUrl } from "@/lib/video";
 import { Input, Label, Button, Card, EmptyState, ErrorText, Spinner } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function VideosPage({ params }) {
   const { teamId } = use(params);
@@ -63,7 +64,7 @@ export default function VideosPage({ params }) {
   }
 
   async function remove(video) {
-    if (!confirm(`Remove "${video.title}"?`)) return;
+    if (!(await confirmDialog({ title: "Remove video?", message: `Remove "${video.title}"?`, confirmLabel: "Remove", danger: true }))) return;
     await supabase.from("videos").delete().eq("id", video.id);
     load();
   }

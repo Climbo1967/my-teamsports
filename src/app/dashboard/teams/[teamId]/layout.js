@@ -14,7 +14,7 @@ export default async function TeamManageLayout({ children, params }) {
 
   const { data: team } = await supabase
     .from("teams")
-    .select("id, slug, name, sport, season, passcode, logo_url, paid_through, ai_paid_through, trial_ends_at, ai_enabled, board_enabled")
+    .select("id, slug, name, sport, season, age_group, passcode, logo_url, paid_through, ai_paid_through, trial_ends_at, ai_enabled, board_enabled")
     .eq("id", teamId)
     .single();
 
@@ -39,7 +39,7 @@ export default async function TeamManageLayout({ children, params }) {
         <div className="flex-1 min-w-[200px]">
           <h1 className="text-2xl md:text-3xl font-bold">{team.name.toUpperCase()}</h1>
           <p className="text-sm text-slate-500 capitalize">
-            {sportLabel(team.sport)}{team.season ? ` · ${team.season}` : ""}
+            {sportLabel(team.sport)}{team.season ? ` · ${team.season}` : ""}{team.age_group ? ` · ${team.age_group}` : ""}
           </p>
         </div>
         <Link

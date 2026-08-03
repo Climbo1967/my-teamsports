@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Input, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function AnnouncementsPage({ params }) {
   const { teamId } = use(params);
@@ -64,7 +65,7 @@ export default function AnnouncementsPage({ params }) {
   }
 
   async function remove(p) {
-    if (!confirm("Delete this post?")) return;
+    if (!(await confirmDialog({ title: "Delete post?", message: "It disappears from the team site immediately.", confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("announcements").delete().eq("id", p.id);
     load();
   }
@@ -89,7 +90,7 @@ export default function AnnouncementsPage({ params }) {
   }
 
   async function removeSubscriber(id) {
-    if (!confirm("Remove this subscriber? They'll stop getting emailed announcements.")) return;
+    if (!(await confirmDialog({ title: "Remove subscriber?", message: "They'll stop getting emailed announcements.", confirmLabel: "Remove", danger: true }))) return;
     const { error: err } = await supabase.from("subscribers").delete().eq("id", id);
     if (err) { setError(err.message); return; }
     setSubscribers((subs) => subs.filter((s) => s.id !== id));

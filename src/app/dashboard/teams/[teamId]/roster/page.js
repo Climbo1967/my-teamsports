@@ -6,6 +6,7 @@ import { uploadTeamImage } from "@/lib/upload";
 import { signMediaUrls } from "@/lib/media";
 import { POSITIONS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function RosterPage({ params }) {
   const { teamId } = use(params);
@@ -31,7 +32,7 @@ export default function RosterPage({ params }) {
   useEffect(() => { load(); }, [load]);
 
   async function removePlayer(player) {
-    if (!confirm(`Remove ${player.name} from the roster?`)) return;
+    if (!(await confirmDialog({ title: "Remove player?", message: `Remove ${player.name} from the roster?`, confirmLabel: "Remove", danger: true }))) return;
     const { error: err } = await supabase.from("players").delete().eq("id", player.id);
     if (err) setError(err.message);
     load();

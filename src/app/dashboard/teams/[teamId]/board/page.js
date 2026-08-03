@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Input, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 // Coach-side board: thread creation, lock, and post soft-delete. Parents are
 // reply-only and come in through the passcode RPCs — coaches work directly
@@ -78,7 +79,7 @@ export default function BoardPage({ params }) {
   }
 
   async function removeThread(t) {
-    if (!confirm("Delete this thread and all its replies? This can't be undone.")) return;
+    if (!(await confirmDialog({ title: "Delete thread?", message: "This deletes the thread and all its replies. It can't be undone.", confirmLabel: "Delete", danger: true }))) return;
     const { error: err } = await supabase.from("team_board_threads").delete().eq("id", t.id);
     if (err) { setError(err.message); return; }
     load();

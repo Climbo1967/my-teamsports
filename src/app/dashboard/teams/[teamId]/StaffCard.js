@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Input, Button, Card, ErrorText } from "@/components/ui";
+import { confirmDialog } from "@/components/confirm";
 
 export default function StaffCard({ teamId }) {
   const supabase = createClient();
@@ -63,7 +64,7 @@ export default function StaffCard({ teamId }) {
   }
 
   async function remove(member) {
-    if (!confirm(`Remove ${member.email} from the coaching staff?`)) return;
+    if (!(await confirmDialog({ title: "Remove coach?", message: `Remove ${member.email} from the coaching staff?`, confirmLabel: "Remove", danger: true }))) return;
     const { error: err } = await supabase.from("team_coaches").delete().eq("id", member.id);
     if (err) setError(err.message);
     load();
@@ -73,7 +74,7 @@ export default function StaffCard({ teamId }) {
     const msg = role === "owner"
       ? `Make ${member.email} a head coach? They get full control, including deleting the team and managing staff.`
       : `Change ${member.email} to an assistant coach?`;
-    if (!confirm(msg)) return;
+    if (!(await confirmDialog({ title: "Change role?", message: msg, confirmLabel: "Change role" }))) return;
     const { error: err } = await supabase.from("team_coaches").update({ role }).eq("id", member.id);
     if (err) { setError(err.message); return; }
     load();

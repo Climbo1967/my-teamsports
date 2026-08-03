@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { STAT_KEYS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
 import { queueScheduleAlert } from "@/lib/pushClient";
+import { confirmDialog } from "@/components/confirm";
 
 // Push slice 3: build the human-readable alert line for a schedule change.
 // Formatted on the client so times render in the coach's local timezone.
@@ -47,7 +48,7 @@ export default function SchedulePage({ params }) {
   useEffect(() => { load(); }, [load]);
 
   async function remove(event) {
-    if (!confirm("Delete this event?")) return;
+    if (!(await confirmDialog({ title: "Delete event?", message: "Parents will no longer see it on the team site.", confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("events").delete().eq("id", event.id);
     // Alert opted-in devices only when an UPCOMING event is canceled.
     if (new Date(event.starts_at).getTime() > Date.now()) {
