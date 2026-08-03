@@ -35,6 +35,45 @@ export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
   }
 }
 
+// Send up to 100 individual emails in ONE Resend API call (the /emails/batch
+// endpoint). Used when each recipient needs their own personalized copy —
+// looping sendEmail() would trip Resend's 2-requests/second limit and risk
+// serverless timeouts. Each message: { to, subject, html, text, replyTo }.
+export async function sendEmailBatch(messages) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return { ok: false, error: "Email is not configured yet." };
+  if (!Array.isArray(messages) || messages.length === 0) {
+    return { ok: false, error: "Nothing to send." };
+  }
+  if (messages.length > 100) {
+    return { ok: false, error: "Batch too large — 100 emails max per call." };
+  }
+
+  const payload = messages.map((m) => {
+    const item = { from: MAIL_FROM, to: Array.isArray(m.to) ? m.to : [m.to], subject: m.subject };
+    if (m.html) item.html = m.html;
+    if (m.text) item.text = m.text;
+    if (m.replyTo) item.reply_to = m.replyTo;
+    return item;
+  });
+
+  try {
+    const res = await fetch(`${RESEND_ENDPOINT}/batch`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const detail = await res.text();
+      return { ok: false, error: `Resend ${res.status}: ${detail.slice(0, 300)}` };
+    }
+    const data = await res.json();
+    return { ok: true, ids: (data?.data || []).map((d) => d.id) };
+  } catch (e) {
+    return { ok: false, error: String(e?.message || e) };
+  }
+}
+
 // Wrap plain text into a simple branded HTML email.
 export function basicHtml({ heading, body, footer, unsubscribeUrl }) {
   const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

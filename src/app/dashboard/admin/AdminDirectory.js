@@ -11,7 +11,11 @@ export default function AdminDirectory({ data }) {
   const [sportFilter, setSportFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
   const [copied, setCopied] = useState(false);
+  const [selected, setSelected] = useState(() => new Set());
   const [subject, setSubject] = useState("");
+  const [messageBody, setMessageBody] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sendNotice, setSendNotice] = useState(null);
   const router = useRouter();
 
   // Keep the console live: soft-refresh the server data every 30s. Re-runs the
@@ -33,8 +37,65 @@ export default function AdminDirectory({ data }) {
     });
   }, [coaches, roleFilter, sportFilter, statusFilter]);
 
-  const emails = filtered.map((c) => c.email);
+  // Recipients: the coaches you've checked in the table — or, with nothing
+  // checked, everyone matching the filters.
+  const recipients = useMemo(() => {
+    const inView = selected.size > 0 ? filtered.filter((c) => selected.has(c.email)) : filtered;
+    return inView;
+  }, [filtered, selected]);
+
+  const emails = recipients.map((c) => c.email);
   const mailto = `mailto:?bcc=${emails.join(",")}${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`;
+
+  function toggleCoach(email) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(email)) next.delete(email);
+      else next.add(email);
+      return next;
+    });
+  }
+
+  const allFilteredSelected = filtered.length > 0 && filtered.every((c) => selected.has(c.email));
+
+  function toggleAllFiltered() {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (allFilteredSelected) filtered.forEach((c) => next.delete(c.email));
+      else filtered.forEach((c) => next.add(c.email));
+      return next;
+    });
+  }
+
+  // Send through the app (Resend, noreply@my-teamsports.com) — one personalized
+  // email per coach, replies come back to the signed-in admin.
+  async function sendFromApp() {
+    if (sending || emails.length === 0 || !subject.trim() || !messageBody.trim()) return;
+    const n = emails.length;
+    if (!window.confirm(`Send this to ${n} coach${n === 1 ? "" : "es"} from noreply@my-teamsports.com?`)) return;
+    setSending(true);
+    setSendNotice(null);
+    try {
+      const res = await fetch("/api/admin/email-coaches", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ emails, subject: subject.trim(), message: messageBody.trim() }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setSendNotice({ ok: false, text: data.error || "Sending failed — nothing went out." });
+      } else {
+        setSendNotice({
+          ok: true,
+          text: `✓ Sent to ${data.sent} coach${data.sent === 1 ? "" : "es"} from noreply@my-teamsports.com — replies come straight to your inbox.`,
+        });
+        setMessageBody("");
+      }
+    } catch {
+      setSendNotice({ ok: false, text: "Network error — try again." });
+    }
+    setSending(false);
+  }
 
   async function copyEmails() {
     await navigator.clipboard.writeText(emails.join(", "));
@@ -103,7 +164,7 @@ export default function AdminDirectory({ data }) {
           </div>
         </div>
         <div className="mb-4">
-          <Label>Subject (optional)</Label>
+          <Label>Subject</Label>
           <input
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
@@ -112,16 +173,48 @@ export default function AdminDirectory({ data }) {
             className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-2.5 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)]"
           />
         </div>
+        <div className="mb-4">
+          <Label>Message</Label>
+          <textarea
+            value={messageBody}
+            onChange={(e) => setMessageBody(e.target.value)}
+            maxLength={5000}
+            rows={6}
+            placeholder='Write your message once — each coach gets their own email starting "Hi <first name>,"'
+            className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-2.5 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)]"
+          />
+        </div>
+        <p className="text-sm text-slate-400 mb-3">
+          {selected.size > 0 ? (
+            <>
+              Sending to the <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} checked in the table below ·{" "}
+              <button onClick={() => setSelected(new Set())} className="underline hover:text-white">
+                clear selection
+              </button>
+            </>
+          ) : (
+            <>
+              Sending to all <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} matching the filters — or check boxes in the table below to pick individual coaches.
+            </>
+          )}
+        </p>
         <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={sendFromApp}
+            disabled={sending || emails.length === 0 || !subject.trim() || !messageBody.trim()}
+            className="bg-[var(--color-accent-green)] hover:bg-green-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            {sending ? "Sending…" : `📨 Send to ${emails.length} coach${emails.length === 1 ? "" : "es"}`}
+          </button>
           <a
             href={emails.length > 0 ? mailto : undefined}
-            className={`font-semibold text-sm px-5 py-2.5 rounded-lg transition-all ${
+            className={`border border-white/10 font-semibold text-sm px-5 py-2.5 rounded-lg transition-all ${
               emails.length > 0
-                ? "bg-[var(--color-accent-green)] hover:bg-green-500 text-white"
-                : "bg-white/5 text-slate-600 cursor-not-allowed"
+                ? "text-slate-300 hover:bg-white/5"
+                : "text-slate-600 cursor-not-allowed"
             }`}
           >
-            ✉️ Email {emails.length} coach{emails.length === 1 ? "" : "es"}
+            ✉️ Open in my email app
           </a>
           <button
             onClick={copyEmails}
@@ -130,8 +223,13 @@ export default function AdminDirectory({ data }) {
           >
             {copied ? "✓ Copied!" : "📋 Copy email list"}
           </button>
-          <span className="text-xs text-slate-500">Opens your email app with everyone BCC&apos;d — addresses stay private.</span>
         </div>
+        <p className="text-xs text-slate-500 mt-3">
+          Send delivers one email per coach from noreply@my-teamsports.com with a personal greeting — replies go to your address. The other two buttons are the old way (your own email app, everyone BCC&apos;d).
+        </p>
+        {sendNotice && (
+          <p className={`text-sm mt-2 ${sendNotice.ok ? "text-green-400" : "text-red-400"}`}>{sendNotice.text}</p>
+        )}
       </Card>
 
       {/* COACHES TABLE */}
@@ -140,6 +238,15 @@ export default function AdminDirectory({ data }) {
         <table className="w-full text-sm">
           <thead className="bg-white/[0.04] text-left">
             <tr>
+              <th className="py-3 pl-4 pr-1 w-8">
+                <input
+                  type="checkbox"
+                  checked={allFilteredSelected}
+                  onChange={toggleAllFiltered}
+                  title="Select all shown"
+                  className="h-4 w-4 accent-[var(--color-accent-blue)] cursor-pointer"
+                />
+              </th>
               <th className="py-3 px-4 text-slate-400 font-medium">Coach</th>
               <th className="py-3 px-4 text-slate-400 font-medium">Role</th>
               <th className="py-3 px-4 text-slate-400 font-medium">Teams</th>
@@ -150,6 +257,14 @@ export default function AdminDirectory({ data }) {
           <tbody>
             {filtered.map((c) => (
               <tr key={c.email} className="border-t border-white/[0.05] hover:bg-white/[0.02]">
+                <td className="py-3 pl-4 pr-1">
+                  <input
+                    type="checkbox"
+                    checked={selected.has(c.email)}
+                    onChange={() => toggleCoach(c.email)}
+                    className="h-4 w-4 accent-[var(--color-accent-blue)] cursor-pointer"
+                  />
+                </td>
                 <td className="py-3 px-4">
                   <p className="text-white font-medium">{c.full_name || "—"}</p>
                   <p className="text-xs text-slate-500">{c.email}</p>
