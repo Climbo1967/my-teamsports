@@ -10,6 +10,607 @@
 
 export const posts = [
   {
+    "slug": "flag-football-positions-5v5",
+    "title": "5v5 Flag Football Positions Explained (With Printable Cheat Sheet)",
+    "description": "Every 5v5 flag football position explained — offense and defense roles, who should play where, and a free printable cheat sheet with a lineup card for game day.",
+    "excerpt": "Who plays where in 5v5, what each spot actually does, and a printable lineup card so every kid knows their job before the snap.",
+    "tag": "Flag Football",
+    "date": "2026-08-03",
+    "updated": "2026-08-03",
+    "readingTime": "5 min read",
+    "keywords": [
+      "flag football positions 5v5",
+      "5v5 flag football positions",
+      "positions in flag football",
+      "what are the 5 positions in flag football",
+      "youth flag football positions",
+      "flag football positions chart"
+    ],
+    "body": [
+      {
+        "p": "5v5 is the format most rec leagues actually play, and it doesn't work like 7-on-7 or tackle — there are no linemen, no tight ends, and every player is an eligible receiver. That changes what \"positions\" even means: they're roles for one play, not identities for a season. Here's what each spot does on both sides of the ball, and who to put where."
+      },
+      {
+        "download": {
+          "href": "/downloads/flag-football-5v5-positions.pdf",
+          "label": "5v5 Flag Football Positions Cheat Sheet (printable PDF)",
+          "note": "Offense and defense roles on one page, plus a blank lineup card for game day. Free, no email required."
+        }
+      },
+      {
+        "h2": "The five on offense"
+      },
+      {
+        "table": {
+          "headers": [
+            "Position",
+            "The job",
+            "Put here"
+          ],
+          "rows": [
+            [
+              "Quarterback",
+              "Takes the snap, reads the rush count, throws on time. Can't run past the line in most leagues until the ball is handed off.",
+              "Your calmest decision-maker — not always your best athlete"
+            ],
+            [
+              "Center",
+              "Snaps, then releases into a short route. The most underused weapon in 5v5 — the checkdown is almost always open.",
+              "A kid who wants touches but isn't fast yet"
+            ],
+            [
+              "Receiver (x2)",
+              "Runs the called route full speed even when the ball isn't coming. Decoys win flag games.",
+              "Your fastest players"
+            ],
+            [
+              "Running back / slot",
+              "Motion, handoffs, swing passes — and picks up the rusher when you keep the QB throwing.",
+              "Shifty over fast; good hands"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The five on defense"
+      },
+      {
+        "p": "Most 5v5 defenses come down to one rusher and four in coverage. The rusher starts seven yards off the ball (check your league) and comes hard every snap — pick a kid who loves the chase. Behind them, play two short defenders over the receivers and two deep safeties in a simple 2-2 shell. Man coverage teaches more but zone survives youth pick plays better; run zone until your team can call switches out loud. The one rule that saves touchdowns: nobody stands behind the deepest defender. Ever."
+      },
+      {
+        "h2": "Rotate roles, not just kids"
+      },
+      {
+        "p": "In tackle football, kids own a position. In 5v5, positions are cheap to rotate — and rotating them is how you find your actual quarterback by week four instead of guessing at practice one. Rotate by halves, not plays: a half at receiver, a half at rusher, and everyone learns why the other jobs matter. The cheat sheet's lineup card has slots for both halves so the rotation is decided before warmups, not argued during them."
+      },
+      {
+        "h2": "Put the plan where parents can see it"
+      },
+      {
+        "p": "Most sideline chaos is really a communication problem — who starts where, who subs when. If you run your team on My-Team Sports, your roster and schedule already live on one site parents open like an app, and the Coach's Playbook draws your flag plays on a proper field. Print the play sheet, clip the lineup card to it, and game day runs itself."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/flag-football-play-sheet-template",
+        "label": "Flag Football Play Sheet",
+        "note": "Ready-made 5v5 plays, printable"
+      },
+      {
+        "href": "/blog/flag-football-drills-for-beginners",
+        "label": "Flag Football Drills for Beginners",
+        "note": "First-practice ready"
+      },
+      {
+        "href": "/blog/how-to-coach-youth-flag-football",
+        "label": "How to Coach Youth Flag Football",
+        "note": "The season, start to finish"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What are the 5 positions in 5v5 flag football?",
+        "a": "On offense: quarterback, center, two receivers, and a running back or slot. On defense most teams play one rusher and four coverage players — two short, two deep. Every player is an eligible receiver in 5v5; there are no linemen."
+      },
+      {
+        "q": "Does 5v5 flag football have linemen?",
+        "a": "No. There are no offensive or defensive linemen in 5v5. The center snaps the ball and immediately becomes a receiver, and the defense rushes from a set-off distance (usually seven yards) instead of lining up on the ball."
+      },
+      {
+        "q": "What position should my fastest player play?",
+        "a": "Receiver on offense — speed stresses a youth defense more at receiver than anywhere else. On defense, put your fastest kid at deep safety, where recovery speed erases other mistakes."
+      }
+    ]
+  },
+  {
+    "slug": "soccer-formations-by-age",
+    "title": "Youth Soccer Formations by Age: 7v7, 9v9, and 11v11 (Printable)",
+    "description": "The right soccer formation for every age group — 2-3-1 for 7v7, 3-2-3 for 9v9, 4-3-3 for 11v11 — with printable diagrams and why each shape teaches the game.",
+    "excerpt": "One reliable shape per format — 7v7, 9v9, 11v11 — plus a printable diagram sheet, and why chasing adult formations backfires with young teams.",
+    "tag": "Soccer",
+    "date": "2026-08-03",
+    "updated": "2026-08-03",
+    "readingTime": "6 min read",
+    "keywords": [
+      "soccer formations",
+      "youth soccer formations by age",
+      "7v7 soccer formations",
+      "9v9 soccer formations",
+      "u8 soccer positions",
+      "u10 soccer positions",
+      "u12 soccer positions"
+    ],
+    "body": [
+      {
+        "p": "Youth soccer changes formats as kids grow — 7v7 around U8-U10, 9v9 at U11-U12, full 11v11 from U13 — and every format change resets the question of where everyone should play. The honest answer: at these ages the formation is a teaching tool, not a tactic. Pick one reliable shape per format, keep it all season, and spend your energy rotating kids through it."
+      },
+      {
+        "download": {
+          "href": "/downloads/soccer-formations-by-age.pdf",
+          "label": "Soccer Formations by Age (printable PDF)",
+          "note": "Diagrams for 2-3-1, 3-2-3, and 4-3-3 with each position's job in one line, plus a blank field for your own shape. Free, no email required."
+        }
+      },
+      {
+        "h2": "7v7 (U8–U10): play a 2-3-1"
+      },
+      {
+        "p": "Two defenders, three across the middle, one striker. The 2-3-1 gives young players the two concepts that matter at this age — a teammate behind the ball and a teammate ahead of it — without asking anyone to understand offside traps. The wide midfielders do most of the running, so that's where restless legs go. Resist the 3-2-1 with a sweeper: it wins a few more games and teaches a lot less."
+      },
+      {
+        "h2": "9v9 (U11–U12): play a 3-2-3"
+      },
+      {
+        "p": "Three defenders, two central midfielders, three forwards. This is the bridge format — the 3-2-3 introduces real width in attack and asks the two central mids to make actual decisions: who presses, who covers. If your team gets overrun in midfield, a 3-3-2 is the safer version of the same idea. Either way, keep the back three flat and coach your defenders to step, not just drop."
+      },
+      {
+        "h2": "11v11 (U13+): start from a 4-3-3"
+      },
+      {
+        "p": "Four defenders, three midfielders, three forwards. The 4-3-3 is the easiest full-field shape to teach because every lane on the field belongs to someone, and it converts cleanly to the 4-4-2 or 4-2-3-1 they'll meet on older teams. Number the roles before you name kids: it's easier to say \"we need a 6 who wins the ball\" than to reshuffle personalities in midseason."
+      },
+      {
+        "h2": "The age-to-format cheat table"
+      },
+      {
+        "table": {
+          "headers": [
+            "Age group",
+            "Format",
+            "Formation",
+            "Field players per kid concept"
+          ],
+          "rows": [
+            [
+              "U8–U10",
+              "7v7",
+              "2-3-1",
+              "Behind the ball / ahead of the ball"
+            ],
+            [
+              "U11–U12",
+              "9v9",
+              "3-2-3 (or 3-3-2)",
+              "Width in attack, decisions in midfield"
+            ],
+            [
+              "U13+",
+              "11v11",
+              "4-3-3",
+              "Every lane owned, numbered roles"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Put the lineup where everyone sees it"
+      },
+      {
+        "p": "A formation only helps if the kids know where they're standing before the whistle. Pair the diagram sheet with a lineup that parents can see: on My-Team Sports your roster, schedule, and game-day lineup live on one team site parents open like an app — no group-text archaeology at 8am Saturday. Set the shape once, post the lineup, and coach the game instead of the sideline."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/soccer-lineup-formation-sheet",
+        "label": "Soccer Lineup & Formation Sheet",
+        "note": "Printable game-day sheet"
+      },
+      {
+        "href": "/blog/soccer-positions-explained",
+        "label": "Soccer Positions Explained",
+        "note": "Every role in plain English"
+      },
+      {
+        "href": "/blog/soccer-substitution-rotation-planner",
+        "label": "Substitution Rotation Planner",
+        "note": "Equal minutes, planned before kickoff"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the best formation for 7v7 youth soccer?",
+        "a": "A 2-3-1 — two defenders, three midfielders, one striker. It guarantees support behind the ball and a target ahead of it, which are the only two positional ideas most U8-U10 players are ready to use."
+      },
+      {
+        "q": "What formation should a 9v9 team play?",
+        "a": "Start with a 3-2-3. It adds real attacking width and asks the central midfielders to make genuine decisions. If you're getting overrun in the middle, a 3-3-2 trades a forward for another midfielder without changing the ideas underneath."
+      },
+      {
+        "q": "Should young players have fixed positions?",
+        "a": "No — fix the formation, rotate the kids. Keeping one shape all season gives the team stability while every player learns two or three roles inside it. Fixed positions before U13 mostly optimize for this Saturday at the cost of development."
+      }
+    ]
+  },
+  {
+    "slug": "special-teams-depth-chart-template",
+    "title": "Special Teams Depth Chart Template (Free Printable PDF)",
+    "description": "Free printable special teams depth chart — kickoff, kick return, punt, punt return, and FG units on one sheet, with a starter and backup for every spot.",
+    "excerpt": "All five kicking units on one printable sheet, a backup for every spot, and the five-minute Friday routine that prevents Saturday scrambles.",
+    "tag": "Football",
+    "date": "2026-08-03",
+    "updated": "2026-08-03",
+    "readingTime": "5 min read",
+    "keywords": [
+      "special teams depth chart template",
+      "special teams football positions",
+      "special teams depth chart",
+      "kickoff return depth chart",
+      "punt team depth chart",
+      "football depth chart template"
+    ],
+    "body": [
+      {
+        "p": "Every coach has a depth chart for offense and defense. Almost nobody has one for special teams — which is why the punt team huddle is eleven kids looking at each other while you burn a timeout. Special teams is a third of the game and the phase where one missing kid does the most damage. This free template puts all five units on one printable sheet, with a starter and a backup for every spot."
+      },
+      {
+        "download": {
+          "href": "/downloads/special-teams-depth-chart.pdf",
+          "label": "Special Teams Depth Chart Template (printable PDF)",
+          "note": "Kickoff, kick return, punt, punt return, and FG/PAT units with starter + backup columns. Free, no email required."
+        }
+      },
+      {
+        "h2": "The five units, and the spot that breaks each one"
+      },
+      {
+        "table": {
+          "headers": [
+            "Unit",
+            "The spot that breaks it",
+            "Coach it by"
+          ],
+          "rows": [
+            [
+              "Kickoff",
+              "Contain — the widest lane runner",
+              "\"Never let the ball outside you\""
+            ],
+            [
+              "Kick return",
+              "Front-line blockers who turn and chase the ball",
+              "Block first, watch second"
+            ],
+            [
+              "Punt",
+              "The personal protector (last man before the punter)",
+              "Count the rush out loud"
+            ],
+            [
+              "Punt return",
+              "The returner's fair-catch judgment",
+              "Rep the fair catch signal every week"
+            ],
+            [
+              "FG / PAT",
+              "The wings — edge rushers come from there",
+              "Inside foot back, never chase"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Backups matter more here than anywhere"
+      },
+      {
+        "p": "On offense, if your right guard is out you notice at practice. On special teams you notice when the punt snap sails past a kid who's never stood there. Fill the backup column for every single spot — even if the backup is \"same kid as kickoff L3\" — because the sheet's real job is answering \"who goes in?\" in the four seconds you actually have. Youth wrinkle: league minimum-play rules are easiest to satisfy on kicking units, so your backup column is also your playing-time ledger."
+      },
+      {
+        "h2": "The five-minute Friday routine"
+      },
+      {
+        "p": "Once a week, read each unit off the sheet out loud while the kids stand in their spots. That's it. Ten minutes of standing in the right place on Friday saves three timeouts on Saturday, and the sheet turns the drill from memory into roll call. Pair it with your offensive depth chart and roster sheet and the whole game-day binder is three pages."
+      },
+      {
+        "h2": "Keep the chart with the roster"
+      },
+      {
+        "p": "A depth chart drifts the moment a kid misses a week. If your roster lives on My-Team Sports, attendance and roster changes are already tracked on your team site — update the chart from real availability instead of memory, and post the week's units where parents can see who's starting where."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/football-depth-chart-template",
+        "label": "Football Depth Chart Template",
+        "note": "Offense and defense, printable"
+      },
+      {
+        "href": "/blog/football-roster-template",
+        "label": "Football Roster Template",
+        "note": "The other page of the binder"
+      },
+      {
+        "href": "/blog/football-positions-explained",
+        "label": "Football Positions Explained",
+        "note": "Every role in plain English"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What positions are on special teams?",
+        "a": "Across the five units: kicker, punter, long snapper, holder, returners, a personal protector on punt, wings and a shield on the block units, lane runners with contain responsibility on kickoff, and front-line blockers on returns. Most kids play a different role on each unit, which is exactly why a written chart matters."
+      },
+      {
+        "q": "How do I build a special teams depth chart?",
+        "a": "List all five units — kickoff, kick return, punt, punt return, FG/PAT — and assign a starter and backup to every spot before the season. Anchor the specialists first (snapper, kicker, punter, returner), fill lanes with your most reliable tacklers, and read the units out loud once a week so kids know their spots by feel."
+      },
+      {
+        "q": "Do youth teams really need special teams depth charts?",
+        "a": "More than varsity teams do. Youth rosters change week to week with absences, and minimum-play rules are easiest to satisfy on kicking units — the chart is how you handle both without burning game-day timeouts."
+      }
+    ]
+  },
+  {
+    "slug": "football-practice-script-90-minutes",
+    "title": "90-Minute Football Practice Script (Free Printable Template)",
+    "description": "A complete 90-minute youth football practice script — every period timed and scripted, with a free printable template so practice runs on the clock, not on vibes.",
+    "excerpt": "The difference between a plan and a script is the clock. Here's a full 90 minutes, period by period, plus a blank scripted template.",
+    "tag": "Football",
+    "date": "2026-08-03",
+    "updated": "2026-08-03",
+    "readingTime": "6 min read",
+    "keywords": [
+      "90 minute football practice plan",
+      "football practice script",
+      "football practice schedule template",
+      "football practice script template",
+      "youth football practice schedule",
+      "middle school football practice plan"
+    ],
+    "body": [
+      {
+        "p": "A practice plan says what you want to teach. A practice script says what happens at minute 37. That difference is why college staffs script practice to the minute — and why youth practice, which has less time and shorter attention spans, needs a script even more. Here's a full 90 minutes, period by period, and a printable template to script your own."
+      },
+      {
+        "download": {
+          "href": "/downloads/football-practice-script-90.pdf",
+          "label": "90-Minute Football Practice Script (printable PDF)",
+          "note": "The scripted 90 on one page plus a blank period sheet for your own script. Free, no email required."
+        }
+      },
+      {
+        "h2": "The scripted 90"
+      },
+      {
+        "table": {
+          "headers": [
+            "Clock",
+            "Period",
+            "What's happening"
+          ],
+          "rows": [
+            [
+              "0:00–0:10",
+              "Dynamic warmup + ball",
+              "Jog, skips, form starts — ball in hands by minute 4"
+            ],
+            [
+              "0:10–0:25",
+              "Individual (position) period",
+              "Split by position group; one skill per group, not three"
+            ],
+            [
+              "0:25–0:35",
+              "Group period 1",
+              "Blocking fits / route timing — halves of the offense together"
+            ],
+            [
+              "0:35–0:50",
+              "Team offense (scripted)",
+              "10–12 plays written before practice, run in order"
+            ],
+            [
+              "0:50–1:00",
+              "Water + special teams",
+              "One unit per practice off the depth chart, standing in spots"
+            ],
+            [
+              "1:00–1:15",
+              "Team defense",
+              "Pursuit and alignment vs. scout looks, thud tempo"
+            ],
+            [
+              "1:15–1:25",
+              "Competitive period",
+              "Best-on-best rep the kids look forward to all week"
+            ],
+            [
+              "1:25–1:30",
+              "Conditioning + break it down",
+              "Short, sprint-based, always ends on time"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Script the plays, not just the periods"
+      },
+      {
+        "p": "The team-offense period is where scripting earns its keep: write the 10–12 plays before practice — in the order you'll run them, with the down-and-distance you're pretending — and run the script even when a play fails. Rep the fix tomorrow. Chasing a busted play with six unscripted do-overs is how a 15-minute period becomes 30 and steals your defensive time."
+      },
+      {
+        "h2": "Tempo is the whole trick"
+      },
+      {
+        "p": "Youth practices don't fail from bad drills; they fail from standing around. Three script rules fix most of it: no line deeper than four kids, every period ends on the horn even mid-drill, and water rides along with special teams instead of being its own dead period. If a drill needs long explanations, it's a film-night topic, not a practice period."
+      },
+      {
+        "h2": "Plan the season, script the week"
+      },
+      {
+        "p": "This pairs with our football practice plan template — the plan is your season-level menu of drills and teaching points; the script is this week's 90 minutes on a clock. Write the plan once, script each week from it. If you run your team on My-Team Sports, the AI practice planner drafts the plan side from your roster and sport, and practice times land on the team schedule parents already check."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/football-practice-plan-template",
+        "label": "Football Practice Plan Template",
+        "note": "The season-level menu this script draws from"
+      },
+      {
+        "href": "/blog/football-play-wristband-template",
+        "label": "Play Wristband Template",
+        "note": "Call the scripted plays faster"
+      },
+      {
+        "href": "/blog/how-to-coach-youth-football",
+        "label": "How to Coach Youth Football",
+        "note": "The season, start to finish"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How long should a youth football practice be?",
+        "a": "90 minutes is the sweet spot for most youth teams — long enough for individual, group, and team periods, short enough that tempo stays high. Under 10 years old, 75 minutes with the same structure works better than a slow 90."
+      },
+      {
+        "q": "What's the difference between a practice plan and a practice script?",
+        "a": "A plan lists what you want to teach — drills, emphases, install order. A script assigns it all to the clock: which period, which minute, which 12 offensive plays in which order. Plans set direction; scripts make practice actually end on time."
+      },
+      {
+        "q": "How many plays should we run in a team period?",
+        "a": "Script 10–12 plays for a 15-minute team period and run them in order. If a play breaks, note it and move on — the fix becomes tomorrow's script, not five unscripted repeats today."
+      }
+    ]
+  },
+  {
+    "slug": "how-to-manage-a-youth-sports-team",
+    "title": "How to Manage a Youth Sports Team (Without Losing Your Weeknights)",
+    "description": "Sports team management, simplified: one home for schedule, roster, and updates — plus a free season checklist that gets a youth team organized in one evening.",
+    "excerpt": "The job is really five jobs — schedule, roster, communication, playing time, game day. Here's the system, and a checklist to set it up in one evening.",
+    "tag": "Team Management",
+    "date": "2026-08-03",
+    "updated": "2026-08-03",
+    "readingTime": "6 min read",
+    "keywords": [
+      "sports team management",
+      "how to manage a youth sports team",
+      "sports team management website",
+      "manage sports team online",
+      "youth sports team management",
+      "team sports app"
+    ],
+    "body": [
+      {
+        "p": "Nobody volunteers to manage a youth sports team. You volunteer to coach — and then discover the actual job is five jobs: keeper of the schedule, keeper of the roster, answerer of the same six questions, accountant of playing time, and game-day operations. The coaches who look effortlessly organized aren't working harder; they've stopped doing those five jobs by text message. Here's the system."
+      },
+      {
+        "download": {
+          "href": "/downloads/team-season-checklist.pdf",
+          "label": "Season Setup Checklist (printable PDF)",
+          "note": "Every setup task for a new season on one page — do it in one evening before the first practice. Free, no email required."
+        }
+      },
+      {
+        "h2": "Rule one: one home for everything"
+      },
+      {
+        "p": "The failure mode of team management is fragmentation: schedule in one app, photos in a group text, roster in a spreadsheet, directions in last Tuesday's email. Every parent question you answer by text is a symptom of information having no home. Pick one place — a team site parents can open like an app — and enforce a one-line policy all season: \"it's on the team site.\" The first week feels repetitive. By week three the questions stop."
+      },
+      {
+        "h2": "The five jobs, systemized"
+      },
+      {
+        "table": {
+          "headers": [
+            "The job",
+            "By text message",
+            "With a system"
+          ],
+          "rows": [
+            [
+              "Schedule",
+              "\"Wait, is practice moved?\" x 14 parents",
+              "One schedule, updates push to everyone"
+            ],
+            [
+              "Roster",
+              "A spreadsheet only you can see",
+              "Roster on the team site, always current"
+            ],
+            [
+              "Communication",
+              "Group text with 212 unread messages",
+              "Announcements parents actually see"
+            ],
+            [
+              "Playing time",
+              "Mental math mid-game, complaints after",
+              "Rotation planned and visible before kickoff"
+            ],
+            [
+              "Game day",
+              "\"What field? Who's scoring? Where's the lineup?\"",
+              "Alerts, live score, lineup — all posted"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "What parents actually want"
+      },
+      {
+        "p": "Parents don't want more messages — they want fewer surprises. Where and when, with changes pushed to their phone. Proof their kid is part of it: photos and fair minutes. And no homework: no app to install, no account to create, no thread to scroll. Meet those three and the sideline gets remarkably quiet."
+      },
+      {
+        "h2": "What this looks like on My-Team Sports"
+      },
+      {
+        "p": "This is exactly what My-Team Sports was built for: a coach account creates the team, and parents get a passcode-protected team site with the schedule, roster, photos, live scores, and game-day alerts — no app store, no parent accounts. The AI assistant coach drafts practice plans and pre-game briefings from your actual roster. Setup takes five minutes; the checklist above walks the rest of the season."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/share-team-schedule-and-photos-without-an-app",
+        "label": "Schedule & Photos Without an App",
+        "note": "How the parent side works"
+      },
+      {
+        "href": "/blog/game-day-alerts-team-notifications",
+        "label": "Game-Day Alerts",
+        "note": "Rainouts and score updates, pushed"
+      },
+      {
+        "href": "/blog/ai-assistant-coach-for-youth-teams",
+        "label": "AI Assistant Coach",
+        "note": "Briefings and practice plans from your roster"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What's the best way to manage a youth sports team?",
+        "a": "Put everything in one place parents can reach without installing anything — schedule, roster, announcements, photos, lineups — and enforce \"it's on the team site\" all season. Fragmentation across texts, emails, and spreadsheets is what makes the job feel like three jobs."
+      },
+      {
+        "q": "Do parents need to download an app?",
+        "a": "Not on My-Team Sports. Parents open the team site in their browser and can add it to their home screen like an app — no app store, no accounts. They enter the team passcode once and they're in for the season."
+      },
+      {
+        "q": "How much does a team management site cost?",
+        "a": "My-Team Sports is $15 for the 2026 season per team, or $20 with the AI assistant coach included. Parents always free, unlimited."
+      }
+    ]
+  },
+  {
     slug: "football-play-wristband-template",
     title: "Football Play Wristband Template (Free Printable Wrist Coach Inserts)",
     description:
