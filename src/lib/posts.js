@@ -1299,16 +1299,16 @@ export const posts = [
   },
   {
     slug: "basketball-play-designer",
-    title: "Basketball Play Designer: Diagram Plays on a Digital Court",
+    title: "Free Basketball Play Designer: Draw & Print Plays Online",
     description:
-      "Draw basketball plays on a digital court — set your five, sketch cuts and screens, save sets to your team, and print clean sheets for the bench.",
+      "Draw basketball plays free in your browser — no download. Sketch cuts, screens and drives on a real half-court, save your sets, and print clean bench sheets.",
     excerpt:
       "Sketch the give-and-go on a real court diagram, save it, and let the kids study it before practice. No whiteboard required.",
     tag: "Basketball",
     date: "2026-07-11",
-    updated: "2026-07-11",
+    updated: "2026-08-03",
     readingTime: "4 min read",
-    keywords: ["basketball play designer", "basketball play diagram maker", "youth basketball plays app", "basketball playbook app"],
+    keywords: ["free basketball play designer","basketball play designer","draw basketball plays online","basketball playbook creator","basketball play maker","basketball play diagram","online basketball play creator","digital playbook basketball"],
     body: [
       { p: "Every youth basketball coach has drawn a beautiful play on a whiteboard, watched ten kids nod, and then watched the play evaporate the moment the ball went live. Kids remember plays they can look at more than plays they were shown once. That is the point of a play designer: draw it once, keep it, and let them see it again." },
       { h2: "Diagram on a real court" },
