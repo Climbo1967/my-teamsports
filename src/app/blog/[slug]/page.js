@@ -102,6 +102,29 @@ function Block({ block }) {
   return null;
 }
 
+const SPORT_TAGS = new Set(["Soccer", "Basketball", "Flag Football", "Football", "Baseball", "Softball", "Volleyball"]);
+
+function ArticleCTA({ tag }) {
+  const noun = SPORT_TAGS.has(tag) ? `a ${tag.toLowerCase()} team` : "a youth sports team";
+  return (
+    <aside className="mt-12 rounded-2xl border border-green-500/20 bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] p-6 md:p-8">
+      <h2 className="text-xl md:text-2xl font-bold text-white mb-2">Coaching {noun} this season?</h2>
+      <p className="text-slate-300 mb-5">
+        Give it a real home — schedule, roster, live scoring, photo sharing, game-day alerts, and an AI
+        assistant coach on one site parents open like an app. No app store, no group-text chaos. Setup
+        takes five minutes, and it&apos;s half off for the 2026 season.
+      </p>
+      <Link
+        href="/signup?src=blog"
+        className="inline-block bg-[var(--color-accent-green)] text-white font-semibold px-7 py-3 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 no-underline"
+      >
+        Create your team now
+      </Link>
+      <p className="mt-3 text-xs text-slate-500">No credit card to start &middot; Parents never need accounts or apps</p>
+    </aside>
+  );
+}
+
 function RelatedLinks({ items }) {
   if (!items || !items.length) return null;
   return (
@@ -191,6 +214,7 @@ export default async function BlogPost({ params }) {
               <Block key={i} block={b} />
             ))}
           </div>
+          <ArticleCTA tag={post.tag} />
           <RelatedLinks items={post.related} />
           <FaqSection faqs={post.faqs} />
         </div>
