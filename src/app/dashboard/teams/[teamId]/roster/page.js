@@ -52,12 +52,22 @@ export default function RosterPage({ params }) {
     <div>
       <div className="flex items-center justify-between mb-6">
         <p className="text-slate-400 text-sm">{players.length} player{players.length === 1 ? "" : "s"} on the roster</p>
-        <Button variant="green" onClick={() => setEditing("new")}>+ Add Player</Button>
+        <div className="flex gap-2">
+          <Button variant="ghost" onClick={() => setEditing("bulk")}>📋 Paste a list</Button>
+          <Button variant="green" onClick={() => setEditing("new")}>+ Add Player</Button>
+        </div>
       </div>
 
       <ErrorText>{error}</ErrorText>
 
-      {editing && (
+      {editing === "bulk" ? (
+        <BulkAddForm
+          teamId={teamId}
+          startOrder={players.length}
+          onDone={() => { setEditing(null); load(); }}
+          onCancel={() => setEditing(null)}
+        />
+      ) : editing ? (
         <PlayerForm
           teamId={teamId}
           sport={sport}
@@ -65,7 +75,7 @@ export default function RosterPage({ params }) {
           onDone={() => { setEditing(null); load(); }}
           onCancel={() => setEditing(null)}
         />
-      )}
+      ) : null}
 
       {players.length === 0 && !editing ? (
         <EmptyState icon="📋" text="No players yet. Add your first player — name and number are all you need to start." />
@@ -220,6 +230,93 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
           <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>
         </div>
       </form>
+    </Card>
+  );
+}
+
+
+// One player per line. Forgiving parser: a leading or trailing number becomes
+// the jersey, anything after a comma becomes the position, the rest is the name.
+//   "#7 Cody Sharp, QB"  ->  Cody Sharp / 7 / QB
+//   "Maya Torres 12"     ->  Maya Torres / 12
+//   "Owen Blake"         ->  Owen Blake
+function parsePlayerLine(line) {
+  let rest = line.trim();
+  if (!rest) return null;
+  let position = null;
+  const comma = rest.indexOf(",");
+  if (comma !== -1) {
+    position = rest.slice(comma + 1).trim() || null;
+    rest = rest.slice(0, comma).trim();
+  }
+  let jersey = null;
+  let m = rest.match(/^#?(\d{1,3})[\s.\-]+(.+)$/);
+  if (m) { jersey = m[1]; rest = m[2].trim(); }
+  else {
+    m = rest.match(/^(.+?)[\s]+#?(\d{1,3})$/);
+    if (m) { rest = m[1].trim(); jersey = m[2]; }
+  }
+  if (!rest) return null;
+  return { name: rest.slice(0, 60), jersey_number: jersey, position: position ? position.slice(0, 30) : null };
+}
+
+function BulkAddForm({ teamId, startOrder, onDone, onCancel }) {
+  const supabase = createClient();
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(null);
+
+  const parsed = text.split("\n").map(parsePlayerLine).filter(Boolean);
+
+  async function save() {
+    if (!parsed.length) return;
+    setBusy(true);
+    setError(null);
+    const rows = parsed.map((p, i) => ({
+      team_id: teamId,
+      name: p.name,
+      jersey_number: p.jersey_number,
+      position: p.position,
+      sort_order: startOrder + i,
+    }));
+    const { error: err } = await supabase.from("players").insert(rows);
+    setBusy(false);
+    if (err) { setError(err.message); return; }
+    onDone();
+  }
+
+  return (
+    <Card className="mb-6 border-green-500/25">
+      <h3 className="font-bold text-lg mb-1">📋 PASTE YOUR ROSTER</h3>
+      <p className="text-sm text-slate-400 mb-4">
+        One player per line — number and position are optional. Examples: <span className="text-slate-300">#7 Cody Sharp, QB</span> &middot; <span className="text-slate-300">Maya Torres 12</span> &middot; <span className="text-slate-300">Owen Blake</span>
+      </p>
+      <TextArea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={8}
+        placeholder={"#7 Cody Sharp, QB\n#9 Marcus Reed, WR\nMaya Torres 12\nOwen Blake"}
+        autoFocus
+      />
+      {parsed.length > 0 && (
+        <div className="mt-4 max-h-44 overflow-y-auto rounded-lg border border-white/[0.06] bg-white/[0.02] p-3">
+          {parsed.map((p, i) => (
+            <p key={i} className="text-sm text-slate-300">
+              {p.jersey_number ? <span className="text-slate-500">#{p.jersey_number} </span> : null}
+              {p.name}
+              {p.position ? <span className="text-slate-500"> &middot; {p.position}</span> : null}
+            </p>
+          ))}
+        </div>
+      )}
+      <ErrorText>{error}</ErrorText>
+      <div className="flex gap-3 mt-4">
+        <Button variant="green" onClick={save} disabled={busy || parsed.length === 0}>
+          {busy ? "Adding..." : `Add ${parsed.length || ""} player${parsed.length === 1 ? "" : "s"}`}
+        </Button>
+        <Button variant="ghost" onClick={onCancel} disabled={busy}>Cancel</Button>
+      </div>
+      <p className="text-xs text-slate-600 mt-3">You can edit any player, add photos, or reorder after they&apos;re in.</p>
     </Card>
   );
 }

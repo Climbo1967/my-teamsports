@@ -358,6 +358,8 @@ function EventForm({ teamId, event, onDone, onCancel }) {
   const [notes, setNotes] = useState(event?.notes || "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+  const [repeat, setRepeat] = useState(false);
+  const [repeatUntil, setRepeatUntil] = useState("");
 
   const isPast = event && new Date(event.starts_at) < Date.now();
 
@@ -375,9 +377,23 @@ function EventForm({ teamId, event, onDone, onCancel }) {
       result: composeResult(outcome, usScore, themScore),
       notes: notes.trim() || null,
     };
+    // Repeat weekly: expand one entry into a row per week through the end date.
+    // Capped at 26 weeks; results/notes only ever apply to the first occurrence.
+    let rows = [row];
+    if (!event && repeat && repeatUntil) {
+      const until = new Date(repeatUntil + "T23:59:59");
+      rows = [];
+      const cursor = new Date(startsAt);
+      while (cursor <= until && rows.length < 26) {
+        rows.push({ ...row, starts_at: cursor.toISOString(), result: rows.length === 0 ? row.result : null, notes: rows.length === 0 ? row.notes : null });
+        cursor.setDate(cursor.getDate() + 7);
+      }
+      if (rows.length === 0) rows = [row];
+    }
+
     const query = event
       ? supabase.from("events").update(row).eq("id", event.id)
-      : supabase.from("events").insert(row);
+      : supabase.from("events").insert(rows);
     const { error: err } = await query;
     setBusy(false);
     if (err) { setError(err.message); return; }
@@ -385,9 +401,10 @@ function EventForm({ teamId, event, onDone, onCancel }) {
     // Push slice 3: alert opted-in devices about upcoming-schedule changes.
     // Result/notes-only edits and past events never alert; quick consecutive
     // edits get bundled into one digest notification (~25s debounce).
+    // A repeating series sends ONE alert (for the first occurrence), not 12.
     const isFuture = new Date(row.starts_at).getTime() > Date.now();
     if (!event && isFuture) {
-      queueScheduleAlert(teamId, scheduleAlertPayload("added", row));
+      queueScheduleAlert(teamId, scheduleAlertPayload("added", rows[0]));
     } else if (event) {
       const wasFuture = new Date(event.starts_at).getTime() > Date.now();
       const meaningful =
@@ -440,6 +457,31 @@ function EventForm({ teamId, event, onDone, onCancel }) {
             <Input value={location} onChange={(e) => setLocation(e.target.value)} maxLength={120} placeholder="City Park Field 3" />
           </div>
         </div>
+
+        {!event && (
+          <div className="flex flex-wrap items-end gap-4">
+            <label className="flex items-center gap-2 text-sm text-slate-300 cursor-pointer select-none pb-2.5">
+              <input
+                type="checkbox"
+                checked={repeat}
+                onChange={(e) => setRepeat(e.target.checked)}
+                className="w-4 h-4 accent-[var(--color-accent-green)]"
+              />
+              Repeat weekly
+            </label>
+            {repeat && (
+              <div>
+                <Label>Until</Label>
+                <Input type="date" value={repeatUntil} onChange={(e) => setRepeatUntil(e.target.value)} required />
+              </div>
+            )}
+            {repeat && repeatUntil && startsAt && (
+              <p className="text-xs text-slate-500 pb-3">
+                {Math.min(26, Math.max(1, Math.floor((new Date(repeatUntil + "T23:59:59") - new Date(startsAt)) / 604800000) + 1))} events, same time every week
+              </p>
+            )}
+          </div>
+        )}
 
         {(isPast || outcome) && type === "game" && (
           <div>

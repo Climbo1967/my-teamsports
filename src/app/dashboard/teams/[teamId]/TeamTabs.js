@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
 const TABS = [
   { slug: "", label: "Overview", icon: "🏟️" },
@@ -24,6 +25,13 @@ const TABS = [
 export default function TeamTabs({ teamId, showBoard = false }) {
   const pathname = usePathname();
   const base = `/dashboard/teams/${teamId}`;
+  const activeRef = useRef(null);
+
+  // Keep the active tab visible — without this, deep tabs (Manual, Settings)
+  // render with the highlight scrolled off-screen, especially on phones.
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [pathname]);
 
   // Ships dark: the board tab only exists once the team's flag is flipped.
   const tabs = showBoard
@@ -31,7 +39,7 @@ export default function TeamTabs({ teamId, showBoard = false }) {
     : TABS;
 
   return (
-    <nav className="flex gap-1 overflow-x-auto border-b border-white/[0.08] -mx-2 px-2">
+    <nav className="flex gap-1 overflow-x-auto border-b border-white/[0.08] -mx-2 px-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
       {tabs.map((tab) => {
         const href = tab.slug ? `${base}/${tab.slug}` : base;
         const active = tab.slug
@@ -41,6 +49,7 @@ export default function TeamTabs({ teamId, showBoard = false }) {
           <Link
             key={tab.label}
             href={href}
+            ref={active ? activeRef : null}
             className={`whitespace-nowrap px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
               active
                 ? "border-[var(--color-accent-blue)] text-white"
