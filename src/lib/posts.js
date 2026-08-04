@@ -10,6 +10,111 @@
 
 export const posts = [
   {
+    slug: "baseball-lineup-card-template",
+    title: "Baseball Lineup Card Template (Free Printable PDF)",
+    description:
+      "A free printable baseball lineup card template with batting order, defensive positions by inning, and a substitutes section — sized for youth and Little League game day.",
+    excerpt:
+      "Batting order, positions by inning, and subs on one card — set your lineup in the kitchen, not at the fence.",
+    tag: "Baseball",
+    date: "2026-08-04",
+    updated: "2026-08-04",
+    readingTime: "4 min read",
+    keywords: ["baseball lineup card template", "printable baseball lineup card", "baseball batting order template", "youth baseball lineup card", "little league lineup card pdf"],
+    body: [
+      { p: "The lineup card is the one piece of paper every baseball coach touches every single game. This free printable gives you the batting order, each player's defensive position inning by inning, and a substitutes section on a single card — so the dugout question is never \"who's up?\" or \"where am I playing?\" again." },
+      { download: { href: "/downloads/baseball-lineup-card.pdf", label: "Baseball Lineup Card Template (printable PDF)", note: "Batting order 1–12, positions for six innings, and a subs section. Free, no email required." } },
+      { h2: "What is on the card" },
+      { p: "Twelve batting slots (enough for a continuous order), a position box for each of six innings, and space for substitutes and notes. Print two copies — one for your dugout, one for the opposing coach or scorekeeper — and the pre-game exchange takes ten seconds." },
+      { h2: "Setting a youth batting order" },
+      { p: "Most youth and Little League programs bat a continuous order — every kid on the roster hits, and defense rotates separately. If your league uses a traditional nine-player order instead, the classic shape still works: contact hitters who get on base at the top, your best all-around hitter third, power in the fourth and fifth spots. At younger ages, resist over-engineering it; rotating the order across the season teaches more than optimizing it ever will." },
+      { h2: "Plan the defense by inning, not by game" },
+      { p: "The inning columns are the real coaching tool. Fill every inning before the game starts and you have already answered the hard questions: who sits when, who gets an infield inning, and whether your minimum-play rules are met — before a parent asks. A good rule of thumb is no player sits two innings in a row, and every player sees the infield at least once every couple of games." },
+      { h2: "When the paper card meets a live one" },
+      { p: "Paper is perfect for the dugout fence, but it can't tell you whether Saturday's lineup keeps everyone inside your league's playing-time rules. If you run your team on My-Team Sports, you can build the lineup online, keep score play by play from your phone, and let the AI lineup advisor suggest a batting order and defensive rotation from your roster — then print this card as the dugout copy." },
+    ],
+    related: [
+      { href: "/blog/how-to-keep-a-baseball-scorebook", label: "How to Keep a Baseball Scorebook", note: "Score the game your lineup plays" },
+      { href: "/blog/youth-baseball-practice-plan", label: "90-Minute Baseball Practice Plan", note: "Free reusable template" },
+      { href: "/blog/baseball-scorekeeping-app", label: "Baseball Scorekeeping App", note: "Play-by-play scoring from your phone" },
+    ],
+    faqs: [
+      { q: "How do you fill out a baseball lineup card?", a: "List the batting order top to bottom, add each player's starting defensive position, then fill the position boxes for later innings so substitutions are planned before the game. Note eligible substitutes at the bottom and give a copy to the opposing coach or scorekeeper." },
+      { q: "What is a continuous batting order?", a: "Every player on the roster is in the batting order all game, even while sitting out on defense. Most youth and Little League divisions use it because it guarantees every kid hits and removes pinch-hitting complexity." },
+      { q: "How many players should be in a youth baseball lineup?", a: "With a continuous order, everyone on the roster bats — commonly 10 to 12 players. Nine play defense at a time, so the inning-by-inning position boxes are where you plan fair rotation for the rest." },
+    ],
+  },
+  {
+    slug: "basketball-depth-chart-template",
+    title: "Basketball Depth Chart Template (Free Printable PDF)",
+    description:
+      "A free printable basketball depth chart template with starters and backups for all five positions, plus a quarter-by-quarter rotation plan for managing playing time.",
+    excerpt:
+      "All five positions with starters and backups, plus a quarter-by-quarter rotation grid — your bench decisions made before tip-off.",
+    tag: "Basketball",
+    date: "2026-08-04",
+    updated: "2026-08-04",
+    readingTime: "4 min read",
+    keywords: ["basketball depth chart template", "basketball depth chart printable", "basketball position chart", "youth basketball rotation plan", "basketball lineup template"],
+    body: [
+      { p: "A depth chart answers the question that decides close youth games: who comes in when a starter is tired, in foul trouble, or having a rough night. This free printable lays out starters, second string, and third string for all five positions, plus a quarter-by-quarter rotation grid — so your substitutions are decisions you already made, not sideline improvisation." },
+      { download: { href: "/downloads/basketball-depth-chart.pdf", label: "Basketball Depth Chart Template (printable PDF)", note: "All five positions with three strings, a quarter-by-quarter rotation plan, and a notes section. Free, no email required." } },
+      { h2: "What is in it" },
+      { p: "The top grid ranks your roster by position — point guard through center, starter to third string. The bottom grid plans who is on the floor each quarter. Together they turn playing-time management from mental math into a piece of paper on your clipboard." },
+      { h2: "How to build the chart" },
+      { p: "Start with your point guards: at youth level, ball-handling is the scarcest skill, so know your second and third options before you need them. Then slot the rest by role rather than height alone — your best rebounder backs up the center spot even if she plays forward when both are in. Cross-train on purpose: every player should know two positions, because foul trouble never respects your chart." },
+      { h2: "The rotation grid is the fairness tool" },
+      { p: "Youth basketball's constant complaint is playing time, and the fix is planning it in ink. Fill the quarter grid before the game so every kid can see when they play. A simple pattern like equal halves — each player sits one full quarter, no one sits two — is easy to run from this sheet and easy to defend to a parent, because it's written down." },
+      { h2: "Keep it current" },
+      { p: "Rosters shift fast during a season; re-rank the chart every couple of weeks, not once in November. If you run your team on My-Team Sports, your roster and schedule already live online, the free live scoreboard keeps parents updated during games, and the printable rotation chart pairs with this one for equal-minutes tracking." },
+    ],
+    related: [
+      { href: "/blog/basketball-rotation-chart", label: "Basketball Rotation Chart", note: "Equal playing time, printable" },
+      { href: "/blog/basketball-positions-explained", label: "Basketball Positions Explained", note: "All five spots, plain English" },
+      { href: "/blog/basketball-practice-plan-template", label: "Basketball Practice Plan Template", note: "Free printable template" },
+    ],
+    faqs: [
+      { q: "What is a depth chart in basketball?", a: "It is a chart listing all five positions with the players ranked behind each spot — starter, second string, third string. Coaches use it to plan substitutions, cover foul trouble, and manage playing time before the game starts." },
+      { q: "How is a depth chart different from a rotation chart?", a: "The depth chart ranks who backs up whom at each position; the rotation chart schedules who is on the floor minute by minute or quarter by quarter. This template includes both — the ranking on top, a quarter-by-quarter plan below." },
+      { q: "How do you manage playing time in youth basketball?", a: "Decide it before the game. Fill in the quarter-by-quarter grid so every player knows when they play, use a simple rule like no one sits two quarters in a row, and adjust the written plan — not your memory — when foul trouble forces a change." },
+    ],
+  },
+  {
+    slug: "softball-lineup-card-template",
+    title: "Softball Lineup Card Template (Free Printable PDF)",
+    description:
+      "A free printable softball lineup card template with batting order, positions by inning, and DP/FLEX rows — ready for fastpitch and youth softball game day.",
+    excerpt:
+      "Batting order, positions by inning, and DP/FLEX rows on one printable card — built for fastpitch game day.",
+    tag: "Softball",
+    date: "2026-08-04",
+    updated: "2026-08-04",
+    readingTime: "4 min read",
+    keywords: ["softball lineup card template", "printable softball lineup card", "fastpitch lineup card", "softball batting order template", "dp flex softball lineup"],
+    body: [
+      { p: "Softball lineup cards have one wrinkle baseball's don't: the DP/FLEX rule. This free printable handles it — batting order, defensive positions inning by inning, a substitutes section, and dedicated DP and FLEX rows so the one rule that confuses every new fastpitch coach is right there on the card instead of argued at the plate meeting." },
+      { download: { href: "/downloads/softball-lineup-card.pdf", label: "Softball Lineup Card Template (printable PDF)", note: "Batting order 1–12, positions for six innings, subs section, and DP/FLEX rows. Free, no email required." } },
+      { h2: "What is on the card" },
+      { p: "Twelve batting slots for a continuous or traditional order, position boxes for six innings, DP and FLEX rows, and space for subs and notes. Print two copies and the pre-game card exchange is done in seconds." },
+      { h2: "DP/FLEX in one paragraph" },
+      { p: "The DP (designated player) bats but doesn't have to play defense; the FLEX plays defense but doesn't bat. They are linked: the FLEX can only enter the batting order in the DP's spot. Most coaches use it to get a big bat in the order for a defensive specialist — often the pitcher or catcher. Write both names on the card at the start; you can't add a DP/FLEX pair mid-game." },
+      { h2: "Setting the order and the rotation" },
+      { p: "In youth rec ball, a continuous order where everyone bats is the norm — fill all twelve slots and rotate defense separately. For tournament fastpitch, the classic shape holds: on-base speed at the top, your best hitter third, power behind her. Use the inning columns to plan defense before the game: no one sits twice in a row, everyone touches the infield across a couple of games, and your playing-time answers are already in ink when a parent asks." },
+      { h2: "From paper card to live lineup" },
+      { p: "The paper card runs the dugout; the season runs better online. With My-Team Sports you can build the lineup from your roster, score the game play by play from your phone, and let the AI lineup advisor suggest a batting order and rotation — then print this card as the copy that lives on the fence." },
+    ],
+    related: [
+      { href: "/blog/baseball-lineup-card-template", label: "Baseball Lineup Card Template", note: "The baseball version of this card" },
+      { href: "/blog/softball-scorekeeping-app", label: "Softball Scorekeeping App", note: "Play-by-play scoring from your phone" },
+      { href: "/blog/live-scorekeeping-every-sport", label: "Live Scorekeeping", note: "Every sport, one scoreboard" },
+    ],
+    faqs: [
+      { q: "What is the DP/FLEX rule in softball?", a: "The DP (designated player) hits but is not required to play defense, and the FLEX plays defense but does not bat. They are linked positions: the FLEX may only bat by taking the DP's spot in the order. You must declare both on the lineup card before the game — you cannot add the pair later." },
+      { q: "How do you fill out a softball lineup card?", a: "List the batting order, each player's starting position, and your DP and FLEX if you use them. Fill the position boxes for later innings so rotation and playing-time rules are planned in advance, and note eligible substitutes at the bottom." },
+      { q: "Does everyone bat in youth softball?", a: "Most youth rec leagues use a continuous batting order where the whole roster hits and defense rotates separately. Tournament fastpitch typically uses a nine-player order (ten with a DP), with listed substitutes — check your league or sanctioning body's rules." },
+    ],
+  },
+  {
     "slug": "flag-football-positions-5v5",
     "title": "5v5 Flag Football Positions Explained (With Printable Cheat Sheet)",
     "description": "Every 5v5 flag football position explained — offense and defense roles, who should play where, and a free printable cheat sheet with a lineup card for game day.",
