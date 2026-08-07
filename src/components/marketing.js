@@ -1,5 +1,6 @@
 import Link from "next/link";
 import MobileMenu from "@/components/MobileMenu";
+import { getAllSports } from "@/lib/sports";
 
 const NAV_LINKS = [
   { href: "/how-it-works", label: "How It Works" },
@@ -56,6 +57,13 @@ export function SiteFooter() {
         <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
         <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
         <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
+      </div>
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-4 text-xs">
+        {getAllSports().map((s) => (
+          <Link key={s.slug} href={`/sports/${s.slug}`} className="text-slate-500 hover:text-white transition-colors">
+            {s.sport}
+          </Link>
+        ))}
       </div>
       <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-xs">
         <Link href="/privacy" className="text-slate-500 hover:text-white transition-colors">Privacy</Link>

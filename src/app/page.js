@@ -2,6 +2,7 @@ import Link from "next/link";
 import ViewPing from "@/components/ViewPing";
 import PlayField from "@/components/PlayField";
 import MobileMenu from "@/components/MobileMenu";
+import { getAllSports } from "@/lib/sports";
 
 const FEATURES = [
   { icon: "📋", title: "Team Roster", desc: "Player cards with photos, jersey numbers, positions, and bios. Tap any player for their own page with action shots and season stats." },
@@ -383,6 +384,13 @@ export default function Home() {
           <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
           <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
           <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
+        </div>
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-4 text-xs">
+          {getAllSports().map((s) => (
+            <Link key={s.slug} href={`/sports/${s.slug}`} className="text-slate-500 hover:text-white transition-colors">
+              {s.sport}
+            </Link>
+          ))}
         </div>
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-4 text-xs">
           <Link href="/privacy" className="text-slate-500 hover:text-white transition-colors">Privacy</Link>
