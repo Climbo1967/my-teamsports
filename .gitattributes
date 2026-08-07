@@ -1,0 +1,23 @@
+# Keep Git's line-ending conversion away from binary files.
+#
+# core.autocrlf is true on the Windows dev machine, so without these rules Git
+# treats every file as text and rewrites CRLF/LF byte pairs on add and checkout.
+# In a PDF or an image those bytes are content, not line endings, and rewriting
+# them corrupts the file. Marking a type `binary` also stops Git diffing it as
+# text (commits read "Bin 3421 -> 3563 bytes" instead of bogus line counts).
+#
+# Tracked today: 24 PDFs in public/downloads, 1 PNG, 1 ICO.
+# The jpg/woff2 lines are pre-emptive — the failure mode is silent, so the rule
+# should already exist the first time one is added.
+
+# Default: treat files as text and normalise line endings in the repo.
+# This MUST come first — later rules win, so the binary rules below override it.
+* text=auto
+
+# Binary types: never convert bytes, never diff as text.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.ico   binary
+*.woff2 binary
