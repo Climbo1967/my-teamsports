@@ -1,99 +1,983 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
+%âãÏÓ
 1 0 obj
 <<
-/F1 2 0 R /F2 3 0 R /F3 4 0 R
+/Type /Pages
+/Count 2
+/Kids [ 4 0 R 11 0 R ]
 >>
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+/Producer (pypdf)
 >>
 endobj
 3 0 obj
 <<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+/Type /Catalog
+/Pages 1 0 R
 >>
 endobj
 4 0 obj
 <<
-/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
+/Contents 5 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+/F2-0 9 0 R
+/F3 10 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 1 0 R
 >>
 endobj
 5 0 obj
 <<
-/Contents 10 0 R /MediaBox [ 0 0 612 792 ] /Parent 9 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
+/Length 10503
 >>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.043137 .145098 .270588 rg
+n 0 723.6 612 68.4 re f*
+1 1 1 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 43.2 756 Tm (Flag Football Play Sheet) Tj T* ET
+BT /F1 10.5 Tf 12.6 TL ET
+.788235 .862745 .937255 rg
+BT 1 0 0 1 43.2 740.16 Tm (Draw 8 plays \267 5v5 or 7v7 \267 line of scrimmage marked) Tj T* ET
+.956863 .635294 .380392 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 483.231 756 Tm (My-Team Sports) Tj T* ET
+.788235 .862745 .937255 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 494.1785 743.04 Tm (my-teamsports.com) Tj T* ET
+.043137 .145098 .270588 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 43.2 710.64 Tm (Team:) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 75.705 709.2 m 259.2 709.2 l S
+.043137 .145098 .270588 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 288 710.64 Tm (Vs / Week:) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 339.018 709.2 m 511.2 709.2 l S
+.788235 .831373 .87451 RG
+1 w
+n
+49.2 547.38 m
+291 547.38 l
+294.3168 547.38 297 550.0632 297 553.38 c
+297 685.2 l
+297 688.5168 294.3168 691.2 291 691.2 c
+49.2 691.2 l
+45.8832 691.2 43.2 688.5168 43.2 685.2 c
+43.2 553.38 l
+43.2 550.0632 45.8832 547.38 49.2 547.38 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 51.2 569.38 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 51.2 598.726 m 289 598.726 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 53.2 600.726 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+174.1 591.726 m
+174.1 593.9351 172.3091 595.726 170.1 595.726 c
+167.8909 595.726 166.1 593.9351 166.1 591.726 c
+166.1 589.5169 167.8909 587.726 170.1 587.726 c
+172.3091 587.726 174.1 589.5169 174.1 591.726 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 51.2 675.2 Tm (#1) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 73.2 673.2 m 289 673.2 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 73.2 680.2 Tm (play name) Tj T* ET
+n 51.2 559.38 m 289 559.38 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 51.2 551.38 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+321 547.38 m
+562.8 547.38 l
+566.1168 547.38 568.8 550.0632 568.8 553.38 c
+568.8 685.2 l
+568.8 688.5168 566.1168 691.2 562.8 691.2 c
+321 691.2 l
+317.6832 691.2 315 688.5168 315 685.2 c
+315 553.38 l
+315 550.0632 317.6832 547.38 321 547.38 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 323 569.38 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 323 598.726 m 560.8 598.726 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 325 600.726 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+445.9 591.726 m
+445.9 593.9351 444.1091 595.726 441.9 595.726 c
+439.6909 595.726 437.9 593.9351 437.9 591.726 c
+437.9 589.5169 439.6909 587.726 441.9 587.726 c
+444.1091 587.726 445.9 589.5169 445.9 591.726 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 323 675.2 Tm (#2) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 345 673.2 m 560.8 673.2 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 345 680.2 Tm (play name) Tj T* ET
+n 323 559.38 m 560.8 559.38 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 323 551.38 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+49.2 387.72 m
+291 387.72 l
+294.3168 387.72 297 390.4032 297 393.72 c
+297 525.54 l
+297 528.8568 294.3168 531.54 291 531.54 c
+49.2 531.54 l
+45.8832 531.54 43.2 528.8568 43.2 525.54 c
+43.2 393.72 l
+43.2 390.4032 45.8832 387.72 49.2 387.72 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 51.2 409.72 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 51.2 439.066 m 289 439.066 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 53.2 441.066 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+174.1 432.066 m
+174.1 434.2751 172.3091 436.066 170.1 436.066 c
+167.8909 436.066 166.1 434.2751 166.1 432.066 c
+166.1 429.8569 167.8909 428.066 170.1 428.066 c
+172.3091 428.066 174.1 429.8569 174.1 432.066 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 51.2 515.54 Tm (#3) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 73.2 513.54 m 289 513.54 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 73.2 520.54 Tm (play name) Tj T* ET
+n 51.2 399.72 m 289 399.72 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 51.2 391.72 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+321 387.72 m
+562.8 387.72 l
+566.1168 387.72 568.8 390.4032 568.8 393.72 c
+568.8 525.54 l
+568.8 528.8568 566.1168 531.54 562.8 531.54 c
+321 531.54 l
+317.6832 531.54 315 528.8568 315 525.54 c
+315 393.72 l
+315 390.4032 317.6832 387.72 321 387.72 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 323 409.72 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 323 439.066 m 560.8 439.066 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 325 441.066 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+445.9 432.066 m
+445.9 434.2751 444.1091 436.066 441.9 436.066 c
+439.6909 436.066 437.9 434.2751 437.9 432.066 c
+437.9 429.8569 439.6909 428.066 441.9 428.066 c
+444.1091 428.066 445.9 429.8569 445.9 432.066 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 323 515.54 Tm (#4) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 345 513.54 m 560.8 513.54 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 345 520.54 Tm (play name) Tj T* ET
+n 323 399.72 m 560.8 399.72 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 323 391.72 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+49.2 228.06 m
+291 228.06 l
+294.3168 228.06 297 230.7432 297 234.06 c
+297 365.88 l
+297 369.1968 294.3168 371.88 291 371.88 c
+49.2 371.88 l
+45.8832 371.88 43.2 369.1968 43.2 365.88 c
+43.2 234.06 l
+43.2 230.7432 45.8832 228.06 49.2 228.06 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 51.2 250.06 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 51.2 279.406 m 289 279.406 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 53.2 281.406 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+174.1 272.406 m
+174.1 274.6151 172.3091 276.406 170.1 276.406 c
+167.8909 276.406 166.1 274.6151 166.1 272.406 c
+166.1 270.1969 167.8909 268.406 170.1 268.406 c
+172.3091 268.406 174.1 270.1969 174.1 272.406 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 51.2 355.88 Tm (#5) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 73.2 353.88 m 289 353.88 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 73.2 360.88 Tm (play name) Tj T* ET
+n 51.2 240.06 m 289 240.06 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 51.2 232.06 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+321 228.06 m
+562.8 228.06 l
+566.1168 228.06 568.8 230.7432 568.8 234.06 c
+568.8 365.88 l
+568.8 369.1968 566.1168 371.88 562.8 371.88 c
+321 371.88 l
+317.6832 371.88 315 369.1968 315 365.88 c
+315 234.06 l
+315 230.7432 317.6832 228.06 321 228.06 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 323 250.06 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 323 279.406 m 560.8 279.406 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 325 281.406 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+445.9 272.406 m
+445.9 274.6151 444.1091 276.406 441.9 276.406 c
+439.6909 276.406 437.9 274.6151 437.9 272.406 c
+437.9 270.1969 439.6909 268.406 441.9 268.406 c
+444.1091 268.406 445.9 270.1969 445.9 272.406 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 323 355.88 Tm (#6) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 345 353.88 m 560.8 353.88 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 345 360.88 Tm (play name) Tj T* ET
+n 323 240.06 m 560.8 240.06 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 323 232.06 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+49.2 68.4 m
+291 68.4 l
+294.3168 68.4 297 71.0832 297 74.4 c
+297 206.22 l
+297 209.5368 294.3168 212.22 291 212.22 c
+49.2 212.22 l
+45.8832 212.22 43.2 209.5368 43.2 206.22 c
+43.2 74.4 l
+43.2 71.0832 45.8832 68.4 49.2 68.4 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 51.2 90.4 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 51.2 119.746 m 289 119.746 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 53.2 121.746 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+174.1 112.746 m
+174.1 114.9551 172.3091 116.746 170.1 116.746 c
+167.8909 116.746 166.1 114.9551 166.1 112.746 c
+166.1 110.5369 167.8909 108.746 170.1 108.746 c
+172.3091 108.746 174.1 110.5369 174.1 112.746 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 51.2 196.22 Tm (#7) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 73.2 194.22 m 289 194.22 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 73.2 201.22 Tm (play name) Tj T* ET
+n 51.2 80.4 m 289 80.4 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 51.2 72.4 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+1 w
+n
+321 68.4 m
+562.8 68.4 l
+566.1168 68.4 568.8 71.0832 568.8 74.4 c
+568.8 206.22 l
+568.8 209.5368 566.1168 212.22 562.8 212.22 c
+321 212.22 l
+317.6832 212.22 315 209.5368 315 206.22 c
+315 74.4 l
+315 71.0832 317.6832 68.4 321 68.4 c
+h
+S
+.862745 .901961 .937255 RG
+.7 w
+n 323 90.4 237.8 97.82 re S
+.105882 .423529 .658824 RG
+1.1 w
+n 323 119.746 m 560.8 119.746 l S
+.105882 .423529 .658824 rg
+BT /F1 6 Tf 7.2 TL ET
+BT 1 0 0 1 325 121.746 Tm (LOS) Tj T* ET
+.541176 .592157 .647059 RG
+n
+445.9 112.746 m
+445.9 114.9551 444.1091 116.746 441.9 116.746 c
+439.6909 116.746 437.9 114.9551 437.9 112.746 c
+437.9 110.5369 439.6909 108.746 441.9 108.746 c
+444.1091 108.746 445.9 110.5369 445.9 112.746 c
+S
+.043137 .145098 .270588 rg
+BT /F2 10 Tf 12 TL ET
+BT 1 0 0 1 323 196.22 Tm (#8) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 345 194.22 m 560.8 194.22 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 345 201.22 Tm (play name) Tj T* ET
+n 323 80.4 m 560.8 80.4 l S
+.541176 .592157 .647059 rg
+BT /F1 6.5 Tf 7.8 TL ET
+BT 1 0 0 1 323 72.4 Tm (snap count / notes) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 51.84 m 568.8 51.84 l S
+.541176 .592157 .647059 rg
+BT /F3 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 43.2 39.6 Tm (Tip: run each play from the same formation so the defense can't read you.) Tj T* ET
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 350.112 39.6 Tm (Free printable from My-Team Sports \267 my-teamsports.com) Tj T* ET
+ 
+Q
+
+q
+0.0 0.0 612 792 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+1 1 1 rg
+n
+348.112 34.8405 222.688 14.5 re
+f*
+BT
+/F1-0 8.5 Tf
+10.2 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 363.876 37.8 Tm
+(\04415\057season\040\267\040parents\040never\040pay\040\267\040) Tj
+T*
+ET
+BT
+/F2-0 8.5 Tf
+10.2 TL
+ET
+0.086 0.639 0.29 rg
+BT
+1 0 0 1 490.033 37.8 Tm
+(my\055teamsports\056com) Tj
+T*
+ET
+Q
+
+
+endstream
 endobj
 6 0 obj
 <<
-/Contents 11 0 R /MediaBox [ 0 0 612 792 ] /Parent 9 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 7 0 obj
 <<
-/PageMode /UseNone /Pages 9 0 R /Type /Catalog
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 8 0 obj
 <<
-/Author (anonymous) /CreationDate (D:20260710132326+00'00') /Creator (anonymous) /Keywords () /ModDate (D:20260710132326+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (unspecified) /Title (untitled) /Trapped /False
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 9 0 obj
 <<
-/Count 2 /Kids [ 5 0 R 6 0 R ] /Type /Pages
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 10 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 2654
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
 >>
-stream
-Gatn)9on&;(5DS_'a3s!]`l91T9?c:g>#D\(,n^pl,Ij&agD$afM7A&qjoG^;WqX<p':[GH8XdB+aNkJn]9!tnB]M.mG=4KfB2DNc8]anGK*&jc2%\:rH`%e(gQ9aFYS%!@'&h/1^rO=DKUK4]am#j%,LISI86!:qe?:Ci#f>!T\d0jK6hG@#n$EtN$!]FVGGmHpZBZN]?NG/qKT[N^=hntcb%FloB-!.?2eWjJ!fn1dZsCiCnaTd$nn%B_r*m;G0%CYnGa>OT9A7i+"qfgnW;Y!2Lh444MY'3o:+(>8Ui%-4IQ2PT(VON0U^sl3H%^fqu,[5AG2MAT@;OA.6FChjBud6acFj%0Q^aqm1MD$('jm6&e&_@3*h4[5JC;sS%X+=E'.FOm4_>]&=6si<TtPFB8kF76\=P-fN&o+s7+VC`]DRFG'i#R_gQjsAQGQ7p;q`:hdmi7BCsHDF29S=km!N;1]RL4$DRJ.[FHW4_jS4X+jf*@K`AC4R5Zclc9oJr[pRGCC\-jKrHVCp+cNjNK4^L@RqMN<!"Sn0+uW-"LLN"8Poj9D3tTdDQ\TV%O&2.AZX"&I7)8]S'oG+!*)`r5"L+eYa<RR9iV@63"1-X^@^<l_MPa\.(nqZ;66YCWMNX2r&4s@%flm%;"`'eHgUT%#X^#,USlRZ+n0sDTh9a%XO7:&^UHj$YHg?ZN*Y0*X1R+$Qd^l=U38!)#/=0dE[<j)a4ZXJ(V17je,[,r*UL71W5Q(/N/X-s?la*j1oI`Eujp7eC@WI6hlf$&R-B@[q*FK&D(gQNHk]#k.6nM[$frDJ2QXLWKDQF:fSco\iZp!Y^`#Tglm6:/ZHr86s'@6r'(1<I.G4dj#cZSTuO/sUE;XUf_E#nu=Xtg.6#5ZI=bLa,5T@ea-GM*i1a4u1I&"R6bNrjCTm&)2@;I>:G;p($;bK#sr%\mG6kJQGuCl]YJ(U0aRnM39,%!^Q-Jp5aE;T<@Pg.K6ABP[hn>57E(MMi0a@9LgN.'Wsc`P0.j'na=BMSB;GgKY17\5\*b@!f_*FVbgVQ:?t;Ri-[X\HF!\i[rYcXX.P+VCZ:2_5CMN-%bNENOKTReds&Gh:>e>FEVK5-,Ka8\)%a+D;"t6S[KnOXJ'eRl]Co,/N!QGOCeN*q7kE`E0D2UnQ.lrTmDU&nFeKr/JS!uCSC;Kc6CfHPdbVuAZUS,l[eb-J42j./91tm,`J:R>ppoTI0Q"u'?j()-$_21e.PC]%Y%2@`0\=lU+3Ok%>KuX7oYY3W+>O+;3G#f,>#B9]*_ad0HX'd<c#U9eE)9674j*CGU>/t:"U)2kIaba30>f$`/pr%@ms6([V,d&Or?T]fCl$=Lg/M>98$#VieqQUV)F.9!42S>_3X/\U<$TVe_H>GUEB+DEaZ-`\Kp't`1B5\0N*mN![8CHQTu%p%(`CN0N"db-u[0I`XtAU7>f1maV:3n;@K:/&DMt:;R%/"MrHQ.555VM8I<=%N!>"4$k#X%@n?%44KedQ(Uslr=-MT5bYg?O!-=pY0E>(=.9]D3q4X/]"%IDN,nOoYKMho.o\,mY0o=Ui9LRm@bL?[%6(.tEjhCr6ZmHHi,oH:l@>LabL13A[175b$$n&9HbAcfZ9SOVZT(Z)*7RR>5EX1jI#=.l/&EBIg\h"C+1=Ce?9RmWiE-*%T$,+5`'.*1F5`DWK0lhooUr3k1Ua%?,I92XY<l.DUmJO,=(f-d5DMK(dO'm/8@Z"=l@f5.4fM)q;!>R"9e^8!\6B(@h[:%'(Wdu"(5a5.KM"KDmFba2R5`E`JNS!s")Mk@%i[hkrs$\%W,cW9`QZP+'"PA^-r:r^u64agW0o"j6`^d%+.5;SG6&[0-?Nsuh?C3:n?kb`a%WdJuj<DQRKP?=g'Ia5`JV`\\Gc=dS0h-/O$6X_OkbJ>j+\%)NI>3G$V_KIkAtIU>bR7[1\uWsB,A&Bo6&<)!AJbKKb7lNTTaXdlKH[,%N)GHi+A/U67!`^r>"kZ6(DDr+l7t3tD3/?1B)+(\0s/RYCEZ/17MoS`Q_E'XR1,?_nJJ70V-Jaa04Zj9"p\MF1;_CL"#-O59AmI,K@!8P06N[gI$^rgYDbSkY"56t([jKcRc&uTKj@)HG**_;,UJJL/04P?.jZSs"Z[rYo7Y6:)-mCtp^uh8A8r(Z24!Ds;2ZQTo8\FYKIdU6Q1@fnm?h'f!U$?rN"e]<aJ'-"8SS6f?JDgSE9A-MES]!](Y'X$D%L=\B)+*3/?o(T8E;,re]?aCVLA9HLPUYG`HSI1p&qZ0=J7i>>qUd\B\1GCMV*`t_-nRfDg,#6H'DehMTnPNV:\A%@K_s?fHp`VMPUkN'M#-M_06/K8g"mY-n*#0kYguO0:FS-S_5l>EjM6Ck@u@Ai)n,s&5@%a'7R;i2^qqS5fo[d"f"G-'4hPg5jV>MM"KDm[?s8I/nQ9seP0c[g*"WAbjo*B9j0=jY!j#s'%u3>g]V+OCF5F^GR4nqOIKY5Q^S56a#2im0CT:#PGGt(P5:\"__^1UiYOP>cbTDVi>Zk7E%oaQqjtO6AaW=6]t(eJbSaI,g`92fc/nqL0]s\:I667ZL\#&bS&6$Y37jY/k2YuarV%,OT$/CoV\^c%R`OgD1ms-JrSb'XI5c-Yo<3*&GK?BPR[%%S"5h0R63~>endstream
 endobj
 11 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1606
+/Contents 12 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 13 0 R
+/F2 8 0 R
+/F2-0 14 0 R
+/F3 10 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 1 0 R
+>>
+endobj
+12 0 obj
+<<
+/Length 10093
 >>
 stream
-Gau11gMYb8&;KZH'SBYe6*fSn\\(Vk\1!FSDChFddU#bu.T2sm6.0b;Vsit<'\,1'=!#2./Wo&:^Yd?94#3*hJNl9pSur+NN8`qm%U?eo%U:^lj*1!94CX#->aE18dR@_uM6bLZ6M"ou_+.-AR/qr$)2lft%d#E6(^>KZ'-X:S?MU6\0Um[RFe8.SaTRj^^j$=7s([j:2lS_l\6@EE\>Yl7r3g<Fe$VEVpg4lQ85BJi"k,c=5Qs_qBs!I8Qo1U;ppZE_coO`Y:8nT?A(JibC'Df*9:4RZYeBF16G$FH*+%p=:rAoDi3(\^Y+5CU#%C]2NAV?9O]k]kR'_RK`,P?2W:WZr*PKG8P4ns*hn9r?H4AIbgZ("Q4>Mu8-5sk:Gq-dXBf-B)if&UsleSTOF1!/+Rr6iqFPi_`PcdXCG[DoW&2$AlF58!!5Ee0>],7cb>Ae'-4'8pf:[f,j%/C&0',o7o(Tq?=[[o*Zl5uV-<W$[Fr9@mE1G`B]%0!bB:L""X_AsH6OV2.S<^sk`=BDVSH<k_3)C79!Y<fd>cHlF>?c/+1'$n(4#$r]IpJoSMHIg)3A%cgDo5Gq5LCMpN`Asf*\e86m6_b3!"n-p]i<$M.I8h?h6#e\c5g&-93$CUuTbu`)d.QU4]R?/g58RF2(2'4o3#^h]$>0PbAQ?lS).+A'AVRui(Fa<,Qp7$?!S1%]eM!j%8ZiaXN5_HpI'2>>rW!b<hu@_8Q2Y.\?4lpqb_6(3n3n0Gj'I?<VM&;CaNM=uNtS:r%k=WQLd+cD2rtpQn<+<hL`@nU/BO:o_Cn_b,."5p8kD^&/Ll[9.d1Y:S*0r8Ns`.VaCVQoA5U/X:X):,Bn"2e.\orTP?s/1d8D:")#bMH)C(H7WY1hY-^\Y36u6F4pm*D]<Y]K`oNIKb""fSAePl[IAsTB+)f+M$m.$31[]q/3`-)p<jB??Y6LF>p9WkcE9S8j-[^d_;Zp#S24P<uW(*pH,)e\D;PnAFX_OaaFYP@1]<=-Pgora3%P,>n+Q!-l:G7SGo3`h0qX=Q@LY&T-j]dpLX7&F%Le\+R,l"`bS2U,-+s%4jiOu]J_l<pB8:m4a#bu.jY9._KQl.%nuM`m-M`n841]C09+\(W*cf\YU?S8YiU(FFA*YRfodD(5d"K1g$dm5D6np\r5\gMRZD@Z-.\ndRO_Tm$IO-Jrct2F>\9gN!rHCB'?2SntrGF5k("3(n0?9&57Llto0/DP,Y;$<])Y]c.?SP,>nKQ<Hu;N=Td0H<X8A.]4U</<2F!\"sk(aRj5QH<ZDV4F,3@MR-7\2bP_LOu]J_l><;E:m99fbu.kd9._KQl.%nu[lof$`n841]C0T4\(W*cf\YUOS8YiU+!u42YRfodD.5kKE/@;th'P&0hB1E]gML+D`"j0Bj;VuI6gjr)9toQrD1nER[cJhoeG^QCgi'_6gZ0]QIILT$'s'\?s4nj4>Bs6+1$lS'q1Abq5.98$iPfX=okM,7'M_'?l?;,uYZbrB&WWo(\`pnXl'f3Va",qXfBiET$@f?j](H:j(3lasf/L>#3JtkICQZ29S.Cih2U9-u:K^IoB`-+u%EF6=i,<$rGj+W)N;`pj0A*f~>endstream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.043137 .145098 .270588 rg
+n 0 723.6 612 68.4 re f*
+1 1 1 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 43.2 756 Tm (Wristband Play Card Inserts) Tj T* ET
+BT /F1 10.5 Tf 12.6 TL ET
+.788235 .862745 .937255 rg
+BT 1 0 0 1 43.2 740.16 Tm (Fill in, cut out, slide into a QB wristband sleeve) Tj T* ET
+.956863 .635294 .380392 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 483.231 756 Tm (My-Team Sports) Tj T* ET
+.788235 .862745 .937255 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 494.1785 743.04 Tm (my-teamsports.com) Tj T* ET
+.043137 .145098 .270588 rg
+BT /F1 9.5 Tf 11.4 TL ET
+BT 1 0 0 1 43.2 702 Tm (Standard youth wristband window is about 3.5 x 2.25 inches. Each card below is sized to fit. Number the) Tj T* ET
+BT 1 0 0 1 43.2 689.76 Tm (plays to match your play sheet, so you call "12" and the QB reads play 12 off the wrist.) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 41.4 504 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 41.4 650 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 144.068 654 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 613.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 639 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 613.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 639 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 577 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 602.5 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 577 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 602.5 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 540.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 566 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 540.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 566 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 504 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 529.5 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 504 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 529.5 Tm (8) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 318.6 504 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 318.6 650 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 421.268 654 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 613.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 639 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 613.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 639 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 577 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 602.5 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 577 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 602.5 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 540.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 566 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 540.5 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 566 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 504 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 529.5 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 504 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 529.5 Tm (8) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 41.4 316.8 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 41.4 462.8 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 144.068 466.8 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 426.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 451.8 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 426.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 451.8 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 389.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 415.3 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 389.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 415.3 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 353.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 378.8 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 353.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 378.8 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 316.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 342.3 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 316.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 342.3 Tm (8) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 318.6 316.8 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 318.6 462.8 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 421.268 466.8 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 426.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 451.8 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 426.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 451.8 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 389.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 415.3 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 389.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 415.3 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 353.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 378.8 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 353.3 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 378.8 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 316.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 342.3 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 316.8 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 342.3 Tm (8) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 41.4 129.6 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 41.4 275.6 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 144.068 279.6 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 239.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 264.6 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 239.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 264.6 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 202.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 228.1 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 202.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 228.1 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 166.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 191.6 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 166.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 191.6 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 41.4 129.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 45.4 155.1 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 167.4 129.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 171.4 155.1 Tm (8) Tj T* ET
+.541176 .592157 .647059 RG
+.8 w
+[4 3] 0 d
+n 318.6 129.6 252 162 re S
+[] 0 d
+.788235 .831373 .87451 RG
+.5 w
+.909804 .941176 .968627 rg
+n 318.6 275.6 252 16 re f*
+.043137 .145098 .270588 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 421.268 279.6 Tm (PLAY CARD) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 239.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 264.6 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 239.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 264.6 Tm (2) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 202.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 228.1 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 202.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 228.1 Tm (4) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 166.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 191.6 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 166.1 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 191.6 Tm (6) Tj T* ET
+.788235 .831373 .87451 RG
+n 318.6 129.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 322.6 155.1 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+n 444.6 129.6 126 36.5 re S
+.105882 .423529 .658824 rg
+BT /F2 8 Tf 9.6 TL ET
+BT 1 0 0 1 448.6 155.1 Tm (8) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 51.84 m 568.8 51.84 l S
+.541176 .592157 .647059 rg
+BT /F3 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 43.2 39.6 Tm (Cut along the dashed lines. Print extras so every QB and coach has a copy.) Tj T* ET
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 350.112 39.6 Tm (Free printable from My-Team Sports \267 my-teamsports.com) Tj T* ET
+ 
+Q
+
+q
+0.0 0.0 612 792 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+1 1 1 rg
+n
+348.112 34.8405 222.688 14.5 re
+f*
+BT
+/F2-0 9.5 Tf
+11.4 TL
+ET
+0.043 0.145 0.271 rg
+BT
+1 0 0 1 43.2 82 Tm
+(Tired\040of\040rewriting\040this\040every\040week\077) Tj
+T*
+ET
+BT
+/F1-0 7.8 Tf
+9.36 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 43.2 71 Tm
+(Keep\040this\040current\040automatically\040on\040your\040team\047s\040own\040site\040\227\040\04415\040a\040season\054\040parents\040never\040pay\056) Tj
+T*
+ET
+BT
+/F2-0 8.8 Tf
+10.56 TL
+ET
+0.086 0.639 0.29 rg
+BT
+1 0 0 1 43.2 60 Tm
+(my\055teamsports\056com) Tj
+T*
+ET
+Q
+
+
+endstream
+endobj
+13 0 obj
+<<
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+14 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
 endobj
 xref
-0 12
+0 15
 0000000000 65535 f 
-0000000061 00000 n 
-0000000112 00000 n 
-0000000219 00000 n 
-0000000331 00000 n 
-0000000446 00000 n 
-0000000640 00000 n 
-0000000834 00000 n 
-0000000902 00000 n 
-0000001163 00000 n 
-0000001228 00000 n 
-0000003974 00000 n 
+0000000015 00000 n 
+0000000081 00000 n 
+0000000120 00000 n 
+0000000169 00000 n 
+0000000425 00000 n 
+0000010981 00000 n 
+0000011088 00000 n 
+0000011195 00000 n 
+0000011307 00000 n 
+0000011419 00000 n 
+0000011535 00000 n 
+0000011795 00000 n 
+0000021942 00000 n 
+0000022050 00000 n 
 trailer
 <<
-/ID 
-[<bd62d2bc4a9187bd0c8c2deb8f1e1715><bd62d2bc4a9187bd0c8c2deb8f1e1715>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 8 0 R
-/Root 7 0 R
-/Size 12
+/Size 15
+/Root 3 0 R
+/Info 2 0 R
 >>
 startxref
-5672
+22163
 %%EOF

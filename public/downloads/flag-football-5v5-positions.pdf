@@ -1,74 +1,439 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
+%âãÏÓ
 1 0 obj
 <<
-/F1 2 0 R /F2 3 0 R
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
 >>
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+/Producer (pypdf)
 >>
 endobj
 3 0 obj
 <<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+/Type /Catalog
+/Pages 1 0 R
 >>
 endobj
 4 0 obj
 <<
-/Contents 8 0 R /MediaBox [ 0 0 612 792 ] /Parent 7 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
+/Contents 5 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+/F2-0 9 0 R
+>>
+/XObject <<
+/FormXob.728165f34d415e2204939bdd87b35b6a 10 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 1 0 R
 >>
 endobj
 5 0 obj
 <<
-/PageMode /UseNone /Pages 7 0 R /Type /Catalog
+/Length 8432
 >>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.058824 .090196 .164706 rg
+BT /F2 20 Tf 24 TL ET
+BT 1 0 0 1 54 723.6 Tm (5v5 Flag Football Positions) Tj T* ET
+.392157 .454902 .545098 rg
+BT /F1 10 Tf 12 TL ET
+BT 1 0 0 1 54 707.04 Tm (Cheat sheet \267 every player is an eligible receiver \267 no linemen) Tj T* ET
+.058824 .090196 .164706 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 464.652 723.6 Tm (My-Team Sports) Tj T* ET
+.086275 .639216 .290196 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 478.989 711.36 Tm (my-teamsports.com) Tj T* ET
+.086275 .639216 .290196 RG
+2 w
+n 54 696.96 m 558 696.96 l S
+.058824 .090196 .164706 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 54 675.36 Tm (OFFENSE) Tj T* ET
+.058824 .090196 .164706 rg
+n 54 637.92 504 21.6 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 645.92 Tm (Position) Tj T* ET
+BT 1 0 0 1 151.6 645.92 Tm (The job) Tj T* ET
+BT 1 0 0 1 410.8 645.92 Tm (Put here) Tj T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 616.32 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 624.32 Tm (Quarterback) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 624.32 Tm (Takes the snap, reads the rush, throws on time) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 624.32 Tm (Calmest decision-maker) Tj T* ET
+.945098 .960784 .976471 rg
+n 54 594.72 504 21.6 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 594.72 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 602.72 Tm (Center) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 602.72 Tm (Snaps, releases short - the checkdown is open) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 602.72 Tm (Wants touches, not fast yet) Tj T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 573.12 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 581.12 Tm (Receiver x2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 581.12 Tm (Full-speed routes even as a decoy) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 581.12 Tm (Your fastest players) Tj T* ET
+.945098 .960784 .976471 rg
+n 54 551.52 504 21.6 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 551.52 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 559.52 Tm (RB / Slot) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 559.52 Tm (Motion, handoffs, swings, picks up the rusher) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 559.52 Tm (Shifty, good hands) Tj T* ET
+.058824 .090196 .164706 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 54 533.52 Tm (DEFENSE \(1 rusher + 2-2 shell\)) Tj T* ET
+.058824 .090196 .164706 rg
+n 54 496.08 504 21.6 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 504.08 Tm (Position) Tj T* ET
+BT 1 0 0 1 151.6 504.08 Tm (The job) Tj T* ET
+BT 1 0 0 1 410.8 504.08 Tm (Put here) Tj T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 474.48 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 482.48 Tm (Rusher) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 482.48 Tm (Starts 7 yds off, comes every snap) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 482.48 Tm (The kid who loves the chase) Tj T* ET
+.945098 .960784 .976471 rg
+n 54 452.88 504 21.6 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 452.88 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 460.88 Tm (Short defender x2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 460.88 Tm (Cover the receivers underneath) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 460.88 Tm (Quick feet, listens well) Tj T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 431.28 504 21.6 re S
+.058824 .090196 .164706 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 439.28 Tm (Deep safety x2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 439.28 Tm (Nobody gets behind you - ever) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 410.8 439.28 Tm (Fastest kid + best judge) Tj T* ET
+.058824 .090196 .164706 rg
+BT /F2 12 Tf 14.4 TL ET
+BT 1 0 0 1 54 409.68 Tm (GAME-DAY LINEUP CARD \(rotate by halves\)) Tj T* ET
+.058824 .090196 .164706 rg
+n 54 374.4 504 19.44 re f*
+1 1 1 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 382.4 Tm (Spot) Tj T* ET
+BT 1 0 0 1 151.6 382.4 Tm (1st half) Tj T* ET
+BT 1 0 0 1 356.8 382.4 Tm (2nd half) Tj T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 354.96 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 362.96 Tm (QB) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 362.96 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 362.96 Tm  T* ET
+.945098 .960784 .976471 rg
+n 54 335.52 504 19.44 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 335.52 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 343.52 Tm (Center) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 343.52 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 343.52 Tm  T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 316.08 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 324.08 Tm (Receiver 1) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 324.08 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 324.08 Tm  T* ET
+.945098 .960784 .976471 rg
+n 54 296.64 504 19.44 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 296.64 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 304.64 Tm (Receiver 2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 304.64 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 304.64 Tm  T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 277.2 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 285.2 Tm (RB / Slot) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 285.2 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 285.2 Tm  T* ET
+.945098 .960784 .976471 rg
+n 54 257.76 504 19.44 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 257.76 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 265.76 Tm (Rusher) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 265.76 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 265.76 Tm  T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 238.32 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 246.32 Tm (Short D 1) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 246.32 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 246.32 Tm  T* ET
+.945098 .960784 .976471 rg
+n 54 218.88 504 19.44 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 218.88 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 226.88 Tm (Short D 2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 226.88 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 226.88 Tm  T* ET
+.796078 .835294 .882353 RG
+.5 w
+n 54 199.44 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 207.44 Tm (Deep S 1) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 207.44 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 207.44 Tm  T* ET
+.945098 .960784 .976471 rg
+n 54 180 504 19.44 re f*
+.796078 .835294 .882353 RG
+.5 w
+n 54 180 504 19.44 re S
+.058824 .090196 .164706 rg
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 58 188 Tm (Deep S 2) Tj T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 151.6 188 Tm  T* ET
+BT /F1 9 Tf 10.8 TL ET
+BT 1 0 0 1 356.8 188 Tm  T* ET
+.392157 .454902 .545098 rg
+BT /F1 8 Tf 9.6 TL ET
+BT 1 0 0 1 54 39.6 Tm (Rotate roles by halves, not plays. Rule that saves touchdowns: nobody stands behind the deepest defender.) Tj T* ET
+ 
+Q
+
+q
+0.0 0.0 612 792 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+0.945 0.961 0.976 rg
+0.796 0.835 0.882 RG
+0.75 w
+n
+47 58 m
+565 58 l
+567.2112 58 569 59.7888 569 62 c
+569 134 l
+569 136.2112 567.2112 138 565 138 c
+47 138 l
+44.7888 138 43 136.2112 43 134 c
+43 62 l
+43 59.7888 44.7888 58 47 58 c
+h
+B*
+q
+64 0 0 64 55 68 cm
+/FormXob.728165f34d415e2204939bdd87b35b6a Do
+Q
+BT
+/F1-0 6.2 Tf
+7.44 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 70.1143 61 Tm
+(scan\040to\040start) Tj
+T*
+ET
+BT
+/F2-0 11 Tf
+13.2 TL
+ET
+0.058824 0.090196 0.164706 rg
+BT
+1 0 0 1 133 116 Tm
+(There\040is\040a\040faster\040way\040to\040run\040your\040season\056) Tj
+T*
+ET
+BT
+/F1-0 8.4 Tf
+10.08 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 133 101 Tm
+(Put\040your\040roster\054\040schedule\040and\040lineups\040on\040your\040team\047s\040own\040site\040\227\040always\040current\054\040shared\040with\040one\040link\056) Tj
+T*
+ET
+BT
+1 0 0 1 133 88 Tm
+(Free\04030\055day\040trial\040\040\267\040\040\04415\040a\040season\040for\040the\040whole\040team\040\040\267\040\040Parents\040never\040pay\054\040never\040install\040an\040app\056) Tj
+T*
+ET
+BT
+/F2-0 10 Tf
+12 TL
+ET
+0.086 0.639 0.29 rg
+BT
+1 0 0 1 133 72 Tm
+(my\055teamsports\056com) Tj
+T*
+ET
+Q
+
+
+endstream
 endobj
 6 0 obj
 <<
-/Author (anonymous) /CreationDate (D:20260803092856-05'00') /Creator (anonymous) /Keywords () /ModDate (D:20260803092856-05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (unspecified) /Title (untitled) /Trapped /False
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 7 0 obj
 <<
-/Count 1 /Kids [ 4 0 R ] /Type /Pages
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 8 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1774
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+9 0 obj
+<<
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+10 0 obj
+<<
+/BitsPerComponent 8
+/ColorSpace /DeviceRGB
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Height 350
+/Subtype /Image
+/Type /XObject
+/Width 350
+/Length 7285
 >>
 stream
-Gatm=>ArL^&:X)OR)clSDsZ,eS@;g4Femibh87Re8pq#aOL-0#E@B#F5N;l;TP-pF#`/WUHt.ZtH"QD>Yjb)>pXp2;Fol#?'I\UU*%30S-Jr2j\K[@/4N;qS^.!GT#^*Xm3KPhq$53Wf1+$gUJA9MQ[c$(!RlE*)_?]T\@$Cd%(b(_GK-Z!i9#l4Y;Z.1ScS5/o\?gTQKaWPAmTU*Ui55&uK0,T3iQf[=S3+n?(,,UA75DqM7oJL=`#KTSX3A#V8qO1h+P%+"+Hq$^:D4&&SB2WJ?]Iep,]P<#19Jmh+q\b'X3HVcS2c,Nq"VQD9OtA\nOdBg&I"K`0NS6o$lA,`Pn#;Or5+L`]JG"AO8,:W/u?K=*A+aQ*$+:\&"0D."(.*rY8D)Y;T#Ko3s:%:Je6f<9*4-t&n6AsZ(L&@UXAR>4D[K23@ii14p-A`AeZ]=,g8JYTfhgEc/9++RDj,R0['[n>-,uA2O4^1U,IB38U+:bo:pTiYR\Cm+d/7p0@0;3bOpC1[U;9O',PElgCR0!JU-Mlqfn)pBYUcb`XSl7f?\T$jYE;0Z^9^;>S,SKNXBG4]LWJlP+pE5Fc@%D_X`&^f$Q@(b1&n58g07^ZB_U6R?atf+B_=-6RZTP`eY(ikWGnEl^'&Q'FZ3`^5EEIK5uXkM>Kb&N<4.?["j06b^^IEPA,KQQH$2.0ZFq1D*j?*5\!c8K_lep75SV=S@sSjPFDEI<\j%TMTXJ!6(2;NeJ`GTAZBd<#8io3bhG`q\2L%/1FkS&5g<7MpBggXlTf@tBXCNtJR1nc6Di<o&r^rZK`LFqOeg]STX4q'9<GOP6mM6-<p;Nr`p&A@g4!hk6Ni'\5`5p'_A=%:.dt6("nQ#f1jog1OG7L68(m-$S1a=".\==e=K`3[Vr^\-`M.B1NoG>u]nV5=@Gt#Ved`P2D0ta8ITTQ6Gks[L'8OoL#0_0B8b2MY79S\RT.TM[AJ'n27anYF)r@5=f"jG67ID@t?I)7**]'IC;VPubA>4f5cEX`kE++ZY&9W:.fQ`\'!h3"b,s,eHL2WH.M*oo`fW2%(?1jaWR.=IW$SE8OgaQO!1$p+iNb(K!c"G1".-E>p];Fs6gmp4B^W6hq8q<nX+K'HVLq:O!_Z%*cbQDoKBO'T.!E43B@=oN.[B=@==RVL.^&]h6N0Gj>_-H-WNdOl0%r/,]/M&0)Hn(mN%:Q<gfObtOGG2?p*pou"OnWJka,eR4E$>*P^>/:9;nDjPo6iU.^\J&jrdG^`qZH8(*q(fsB.=F4$.CJ<rWMssX"8(V$rmFnqLnH8=kGX%^"`sqe"V+-Q>.[6Y&LuDo:p0]O?,!e_pd"mFD;2$c@AF.].DGrMSQ=F@0X-l:q%I`=kP_lg_"RAGU[F^[b,drp$am"mYkunh!m`bdJ4&F@C5.be?Bf&o['Q/8H_+s(Pe$CFs5mre!>qk_b4HJfW[ASF%%;`ce8$-+a.N/5N]1C[A\&uEd2?ON"";a]l,Ia$1e)Ub5nFc&Z9dg[3T#:3ZYVM`jQ-O*+;\$eQ#ZfD<X,>Cds*Fm4[;l,_A,T$`pY?^$h2P.[[YLS/P_`'(ttsI=!Q:Z0d*/jr>HQmQ78A$DoD/VhU2@TRO^Bhcs9d_)c]2j)/TmTX:QTeF8WiW+U7:dMp*uF%8Bs:0\SEd7sa([^uC4b;4[_H!GIR"Cq>@k=CZq5p]HdeCAQ8]T"cbLml->3g"[\235Y,ii9fLfU?S`r>,qo%WXThpKRNiS2hsP85FNW?66pSN@274+0%J/Vu~>endstream
+Gb"/a0t'Lu%)fIO9df>330+@$Z,,^BCBje:G8Q'C(kuH9L1(pR@2O`-(kuH9L1(pR@2O`-(l%!-rje&XD32@e'+sEWCsB+FVN&@?CkLNFR><i#AnuSO0l?ibAfKfKbs]K12-[C;O(mW-2;96tCF17NWS*_GGt]0,WS%Kd>;Hk2:<hAVb%'0#9?fB9h3s1VF)&-q=!#i1?Y[#8mab'"S5ZaO]CM=Ir_g'3EjoX)igcI>fp0UbnX#\]OLm@`&a.Y[c)s1+NPEtZKA<SsLcD;ECNegu[6Z]tgt0R&HgflQP=-k#2<4VZArliC=PkELc6Q90C<\_fZe=BQ2V*'YShis&Z<B'0he`"rYDr3\K',f?V6&7,o/E.%mV?<\Qf'lf6n,/oj8@/6O8IX5h^*Nm,Z2^!brC3Zg#Ke)eoqFl1J*h:=u4I]D"bBBNV-S/k=cMbXO`@%2k)tuCL_dZi&Quh.B>>dr68i7qq>00-$[]\;9EXu31np;SgB>:II:mg9189>ViC,i27]n"0+l$ASi4/AfAsY(]L2nKH.qKM>a,'=n.H<qk@p^'F%u(<_b3DeS>VA7c8E/9%5/=0F.P;$44iQ-2S;E\c["7.mTbtQg@,^e4QgFR]5p^7CVre5n=6D9m`m]#Y73,s_/l2+.ce:H8WQgpDjK<A:E(&>hUePn.ZlY_n=6D9$@2)UdNb$uRjE=)dmf&(pGM2t9'"504QgFR6JhU.oLL;!AdP(#Zr&"8I8,$`&p^edc["6COS?I94]7-L=b>g!D,eT'?]uP17,BK2F.P9>jLq`gO&R<AQJac!)\qr#f;(ndOZ,r&S>V>RZNST7eOF:3AOVtE:>N$49CSHMD5:cB<eP2IeD6S""OB*Y7VXhm7@5u.h5r\1n=3EoUh3P+KPBJrh3tYQcT0NFC,TWlQo7^qXZ9&DS5X:#AlD``C#d_!R^3.C3RpT62J#=E2GW)13D8k3;f/=B;c\Qcj4)nRZNST7eOF:3AOVtE:>N$49CSHMD5:cB<eQKMV!siFka6&P<R+`mGJ2ZD24I:u]tR"W7!l+XcH<cbc).GmA.%eu4ZXqDH^/YQhHb%X7Em/XGd$S`1""jYS?qeSHF#&82OVF/I?0DFp0QjNQ$:iL9i87=']//&FA0(9.d*nG]A@@]RSB[K?JhMfU:jVgBB@tBAlI2q155K!*ZYp]]ui>cn#eU=U1TT<][uoAQtYqgc<5F:^"F)WRnVeS^.643H`qJ8b.HuaVFWSt&[0<EI<i7Glb(]d2a:qen"/pf3q'HGc-Mg2]4X42c9#ljo5eO;mb*W%o1g7^r1'1gHaY0b][OkZ5A+TsT'aT[n$MW0c^EIuB03EE4)KB:F(Y.6foE0*:)i*gS=.';[Nk+Ne&F=2B4gV(mDq?Wn/&9@mu:4GhCN*=]4(IDmn\903G%<s')&mUL>VM"V"^K[<o,B9YIe6<%I[)=s#FZPbnB`])i!8>rhT:\;c_a+@B[:Op^Q[fHN-!:jinG3\f6C]nG]6XT2SeI/7G`o@JC<#:O<%$A`_/Lp:;2thsgW@pRbAbhCN*=]4(IDmn\903G%<s')&mUr\$-9TA[,>]),[*R^4I:H9VY>qPKZd]J`Z3?V=@>2T9"kk9*g_1p`+l7dBDWM/(>5f^&JU`9Nh(G4F9Wh0gkPc.NeX]q9pZIFHCm?5olUY9g2/RprSqEtGBjRb>Yq,B`ag6oAUUm.Gf;@eEGO]6J1gm_5!ck%opghTnKh^1h0qYDq&ff+QW(9sN=I3Jc3Ec0XGtOh1EnU7/D;p3Jq.Z21>c?+`'nG@+!BF#M!Dn)kfo?J_,V&Q3IjZQ<Es05o+[?5rY#9p'2.S+Z7`H$O1Cp=d#0Di.L5hQ2L!aNIe/Ze*3FGuLNmn7Fhr6se`=S%U`JbF9^+L,\GW-1^WXh!DFg?euKr2S<0'09MU1k%:fVqspUT[GfAVG_s)G2)fl!gm9rgWXWmt_b9(PXh!,#j1`/T;JgZb*aU$DDp?O5)u&GgO_Ve'p$`T>H#%:ED0U<N*Lg<kob)P>]f*OJ2%ugV;fmBj@R]^2M7h)>)rB_GM,MVJ3kb[#,'U^ghI`r#Dfa/k.H_Bc?\)=A]3Z\"Ze'r@\RqS#F,H!]5ci%409N`sCW"n31Ju:T7E8IP<ogEMaP6'hiGG`c.-6tnj!tZkEn<tFD>)]Q2V1WeE_b$P'o3U8lQu*[HYn"sCF2Y6Vs*m_`/<@C&p]t[2S@9l';_3tFF47$7IGJY]Zjb%hWC8`;U1jKEV;;gg.5As]M"^cnp5LUV;&]LO\4\O::64iWd0pfl/hU+Sk?J=f-?R%gRN"'AQA=SC!t2jh*%$@pT@"9Ogd@$7`qan?.,O8f=QAZh<nR0<$H7%Wf<6Cc+BcC0<]To<4^nt*iVQak#<9KX."6(P?qSam\t<?G<Ji\]ZmE6;H>[DOs[lThVD,pG40aQ&p]sFD5=7JhBbmBH+ghfdd>oa81!gbVqO[Ee\"PDo^[<P:SlgZl]Fg#D,.L$ZDr2:2!O,pm[d%[HT+ACDo]J#oA6O<g\dKT@;SFUGJD86CR&Y0k$>9<mo@YMIa*bS[N^gFhdkWP9!qOf0%mo3.d&_)Ajog+&]idHZL:tng8K:`Cu0N(F.6OC,-7mPjR+t[GHFb[e@\F4n%HlSc*(7^elDoopRCN]<iIulhBeZc?KKu)f;o6n.g!9Y:%hkn<#[^`P0J?WEc1Ja<eRjqJ_^2NqlWr!NLG(5k.OhV\+qm3_V0l4mXC@Jf.,<?c+@NXhQ*1$r0e@/D+,Rk^WF3*Q"m)V?*\bE<R,H1c&/a6,*9FoADafcGV/A&09OijEV:$qh!@=s?V=?Smi!jAf*66g'%Pe(6(D:T<&<t]09OijEV:$qh!@=s?V=?Smi!jAf*66g'%Pe(6(D:T<&<t]09OijEV:$qh!@=s?V=?Smi!jAf*66g'%Pe(6(D:T<&<t]09OijEV:$qh!@=s?V=?Smi!jAf*66g'%Pe(6(D:T<&<t]09OijEV:$qh!@=s?V=?Smi!jAf*66g'%Pe(;:G?K],e!ZHiNG;hMueCkL<e@antLLZm+l8ZZCCRhY!C;GJ,?l]A(_jYkQJhjm@<EF&(QaR_8*,7k;I55<G4@j'BtkFk:F"^:PDf#^cU<>i(Kb4m1=#YK?\0G-iI[rNgQj45TY#;g5o%n%7?%MQlj$cK4G<f5j^CopWP^DFZ4ohEO)g\)Uc?3H`qho"M^VXU':Rls/D-G<P-=?*DBImWPr]m/=83GrsmUS86upYK<6:5j7E*kh*5N3Ft()^2YKAF=)+rg"W%&RRH$m'08/f3qhoW:0C;cDk%+SSI$<`p,8hM-IFctKT=?2N]h`Y;c]+G)eVK-B0sY1^!/",8b@uuTqaE;A'a#oPgq&U`gP3$RF&3ODfa'9&q/e6kib_(fX&%IAMo=YE@,dL-?SV-g[&(nCr;`:=`qsCdCH+h_7Q2Z9/_.'.BAJS4$)!#,'\<1H-'Z:2J(DnDb&uZ<Wql/.PKKAc).R'k3_A;du*)>:$![j^"JWMa1NF`CK_=_];`GRZT"AZlBo&UF%n0:G;keRD"_I><ZUdTFKT=HnF!1EP0Mj"b,St.Nm9Ma#i=B:?F&7R9j)V_gX3R/'u@MOb"FX>ZRMr8Grn(=Zm+#4Rj-rfmX!1MK"l6lp^1OfBu<U)O`Ddm4m.+,h`#b,"gXQ'i?e%c3Kq(Ho=X#MRle=cfhC,h&p^:Ca^*5<?L[^6*FFA6->e!a4AsJcY3.o#q"s36Y<Y"02S;F!.;*\QF.O3GI<3G1+IbqA?6YGp1V)g3cO9`d\`53%c(ke%O[mQ^h"@3#"b5FbnJ0,WdY=+0,NVVeHHu,6^MiQ8$=kr,_b9'QE[GunkBXo$2g9WQZC/)Y;6rj_mX<C!b&^>6opi_?2<ia.\U0r)Z1=D`G<KSWF%n]=7IK$q9WUA>e6UDRgK]r&?'2bn3>3ph3H`qpp,:Nu@oqaZIEodRF&(QaSA!0)l.?`]H_3+!nsiX&4_J\S9fdGdmb[,#X?>[q?-h3Y>a(1ROh:?J'._BhFk:^.2V4a7=6/dtcG[kH:>PT5^!/G!fG1rDT/3bCS5XVpB5b-.<R"[`j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd2Dp;G%j?7Y[[5QUB*aTd,WNJ?E[c'6E2P9;IO-CCD\L(Wa.6=or3N"d-lXl3B($W7U?<8R:[c'6E2P9;IO-CCD\L(Wa.6=or3N"d-lXl3B($W7U?<8R:[c'6E2P9;IO-CCD\L(Wa.6=or3N"d-lXl3B($W7U?<8R:[c'6E2P9;IO-CCD\L(Wa.6=or3N"d-lXl3B($W7U?<8R:[c'6E2P9;IO-CCD\L(Wa.6=or3N"d-lXl3B($XDh92otuD"dA"]JdiCn#k9mD#PI$fpa:W4Zk6u%C4[!lZG(SJ&cX(B$"WqccU$UD"d:C?-VNhnXR9qZJ!.%o%G4U]t7TPZh\f-B5a)Pp@,/r2TTM!Y1M3?rZ0><RjFOe4=dTEZIukUFZ#Y<a)grda^u(0b%lWGp?m64c0!pRS@r(2fu(/eg)ulu]3\RFq0+r6DjG55n>s8\aCanDf@=^:*REE.-(@%[/$BDfft6Qm24IBYp8h//e@\GU;MiJ,c\bQjY1Jq_QWSOY*UaWA<$JX$ZQdo3lZM=F-!$UYa1K8>Q&'8MX9^]PH<kf?M3[8ZnLh(=,pJgA.mhLm?<>uh@c]Uo]M#>(M9';TMGWoIf9LQH=F&14mh2[#,-on.,1O9kFlhF*<h=BQ]>Q1aLhudd#W;'s?$UXNQ06rm0!S"p,+C_G6I!,K=5I4ljZ.Ot9<;$JaC`bU;"LjAQ$8QsH-RH!'!"tUZIuQ.e@b*ijkWX.1G?#eqak/V-!"=r17QEj1D/;FPF?d1^QHZ3XLpr32O1a`,-na+2=l-D,F+TtH&9UY.W<R"A91I[k4S^C.PJ't&s:jHhO9;Bk*jfDlhufB?=N"B,."8]2%u+s26!"qq\uNI`6(_@AlEtj-6epp;DYNN2c=pXQ'[<NVXi;36oNYmAmXqEV",-K0+jUHjfOr,Cp$@S]\_O:jX!r6+u5Y1>;HlE>a(V%]t]]P9<>coA2]^^Atk<T;g?Te2S:t@,td,RRC_-mEsg5ReV<ffWC/2J-<#+MDGK.NVqUXs.$Z37f4=/aa3?%qk>WDW)l41Dn=!&,mC501kF?;)H_XQ7'OI!&],`i.n=3EoG]/g=Peq2kFgpDn'V9BG%I]9SM,JRmVXAW_SAK>B[Geer.T$PVajf.,Ro=RWWA_CJ8gR*g24;&1EH;K53RrlY7]Ad)]I(>(YMo.J2Nt`oWC3^gK',hso%o/Ro;U?s^$CeQPaWnCc3,fhI<[oIHHk9X*iVQ,=b>g1nFGFkfCPungqE$98sGbjGg6FFmsTFDT6ec<],mq>WEFi99^qW0LY)-sfA+(*O\1k,-$[]<0CO=64eI&Fh7F`-7&a=@k=kC9hM9_SWRoq=l]Ff(RO*4(">B4lGWh[Fc/#uQWC3^gK',hso%o/Ro;U?s^$CeQPaWnCc3,dt7oF2cboP^*2<UFs]A?4(<]*IV5rNq7UXu#O^@-A(JQUGJeHX^^nVpjrY5,ftblhKUP>iK3F2p4cc+3!6Xu@#M<D?A.ONeg'kV_Oln%7FM+BC?k[6Z]pI&#;`CVK7`1P&ZY,h3+Ph!pA1F0>>QlcfQA<KgB$A95dMHHj"_qlVjkLfI/ID33!_hrlr\Rd[lF9H[@n8[UiBGC61;S85k-H8?^eQf,PDC6i]0S@q<2o9-^,WC5TK!cbA'9/_.B?D<I*a^'s,,4@.837jZHRltC;;9-?1Y"'t(GF(RbCX/*fT!Oc^@pX3-,F-?^9-DM;B?=c3fh9gL0=gD29'"eS&EfLgA@(Ic-0gkah"=2ao'R-HF3RjnflQj"Fj*MHHDD1!G6u3ujt,3P3I?TDjs>47;Mi&u"QE[-Q>H8b]gNn4P.Md77,D2NENV;p2LE_UU5jN@?&qsZ<#[:L^$a1ROigmL1P&Z)W7c77ft6RpH>TJKf%`qA<[heWS9">kHF$osWOt)I'8TYGRQ[R=]t<.&f1%6.c-6B#Q(hm:.;/+P2s[l6b$/pCJQSbIflP<h]Bd^fD5?aRge8hk.;JRHEq\pIZX+TM]JVV]LfK>$4f=g`]ABX@7Oi?$blhL@U1V_#BCDu^la;kt>B;TO=J_tLF3<1Jlcj`mV"3*l9H[@bCA+0<p?m7PSs9Q&9-@976lgV\j!@=*;:F4)nfW2a`%%%NA'\r'7&`(Z3dXmK,VO^NV%Rq;H&\.=eOE8GccUn$,nR+VU5hC?nIh\PW9NYOH'#ZA@[0R8Z0*uNU/W'hSNSJ6P*\G8;MdI.]Z*U/C87Z4BB;GM&r9O;;9,9[G_o=8e9(Dc4@ic[Yt?>-f^g"7;6#VEcCU:+a\*aWWC.bR?K3>([8GE+Zgo5a$,e<YW+4.h]L8_W;U-;p,-7=ApK=>_;inYkT'r.CZ$%JLB9dL461Un!^2GpKg6loP<Q[<*ad_Sk^=a39B>T't.H_BjDlW!tAlGe%$27T!S5YN^WLiRJ9sJjggh2mm:-nHJHG4;U`S-`!T2j#o"j*8!q7bMrCM1M4<[m2G,]B^Gqdrd.SI,$nV4:JG]W%LkRn^/2-JW7!E_b":DbXkRQ(%AJ>G[k']-M<p%?`,N[AKfWYtE8eXK>CGhHc:'eHSU0Z<C2UR96:t4k<X_BC@IpRqdR$8m/9qktJ0VZQ<n_Pd>S#jA!$J&uD\\e9!$<WEG:i<Qa",9Cet6+GiusCMGmDX445kg+)4Nh'I>FD3..7X#2c*M,e<A@r7KOp?n*VWA[;APgu4kcGV1il`mlj3I>sAhGbF>;9EWJ9kRq#Re9ceV4>62,]B[lOsjnLVPZ/S9$M[`X]!I$?'7.s7Oh8m<8Q+DH(.`LUo_5R?5olU*D,?e]ofcaeOI^(g[)>1]%`?HhUEKiRo=1"XLuea)l^Fi8``[[Ogd@$7`rm.m'VtegQ>Ile/N\&;f/>3]Zjb%WOj0Bj\<FN[lMu.b0&K*[?8&TO]:2e)gRoOD5=8Gc!D?g],aK)9tc[u3RpUAb1l9jOh0;0<8Q+DH(.`LUo_5R?5olU*D,?e]ofcaeOI^(g[)?,h&V5Y(kuH9L1(pR@2O`-(kuH9L1(pR@2O`-(kuItaa^[flE^~>
+endstream
 endobj
 xref
-0 9
+0 11
 0000000000 65535 f 
-0000000061 00000 n 
-0000000102 00000 n 
-0000000209 00000 n 
-0000000321 00000 n 
-0000000514 00000 n 
-0000000582 00000 n 
-0000000843 00000 n 
-0000000902 00000 n 
+0000000015 00000 n 
+0000000074 00000 n 
+0000000113 00000 n 
+0000000162 00000 n 
+0000000471 00000 n 
+0000008955 00000 n 
+0000009062 00000 n 
+0000009169 00000 n 
+0000009281 00000 n 
+0000009393 00000 n 
 trailer
 <<
-/ID 
-[<b3b03cabfd23d70db3d23d77b82fb085><b3b03cabfd23d70db3d23d77b82fb085>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 6 0 R
-/Root 5 0 R
-/Size 9
+/Size 11
+/Root 3 0 R
+/Info 2 0 R
 >>
 startxref
-2767
+16868
 %%EOF

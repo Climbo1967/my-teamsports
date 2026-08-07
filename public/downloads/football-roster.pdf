@@ -1,80 +1,473 @@
 %PDF-1.4
-%“Œ‹ž ReportLab Generated PDF document (opensource)
+%âãÏÓ
 1 0 obj
 <<
-/F1 2 0 R /F2 3 0 R /F3 4 0 R
+/Type /Pages
+/Count 1
+/Kids [ 4 0 R ]
 >>
 endobj
 2 0 obj
 <<
-/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+/Producer (pypdf)
 >>
 endobj
 3 0 obj
 <<
-/BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding /Name /F2 /Subtype /Type1 /Type /Font
+/Type /Catalog
+/Pages 1 0 R
 >>
 endobj
 4 0 obj
 <<
-/BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding /Name /F3 /Subtype /Type1 /Type /Font
+/Contents 5 0 R
+/MediaBox [ 0 0 612 792 ]
+/Resources <<
+/Font <<
+/F1 6 0 R
+/F1-0 7 0 R
+/F2 8 0 R
+/F2-0 9 0 R
+/F3 10 0 R
+>>
+/XObject <<
+/FormXob.88c5873de6247f7563d2d5a5b13b74f3 11 0 R
+>>
+/ProcSet [ /ImageB /ImageC /ImageI /PDF /Text ]
+>>
+/Rotate 0
+/Trans <<
+>>
+/Type /Page
+/Annots [ ]
+/Parent 1 0 R
 >>
 endobj
 5 0 obj
 <<
-/Contents 9 0 R /MediaBox [ 0 0 612 792 ] /Parent 8 0 R /Resources <<
-/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
->> /Rotate 0 /Trans <<
-
->> 
-  /Type /Page
+/Length 8879
 >>
+stream
+q
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+.043137 .145098 .270588 rg
+n 0 723.6 612 68.4 re f*
+1 1 1 rg
+BT /F2 19 Tf 22.8 TL ET
+BT 1 0 0 1 43.2 756 Tm (Football Team Roster) Tj T* ET
+BT /F1 10.5 Tf 12.6 TL ET
+.788235 .862745 .937255 rg
+BT 1 0 0 1 43.2 740.16 Tm (Players \267 positions \267 contacts \227 one page) Tj T* ET
+.956863 .635294 .380392 rg
+BT /F2 11 Tf 13.2 TL ET
+BT 1 0 0 1 483.231 756 Tm (My-Team Sports) Tj T* ET
+.788235 .862745 .937255 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 494.1785 743.04 Tm (my-teamsports.com) Tj T* ET
+.043137 .145098 .270588 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 43.2 707.04 Tm (Team:) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 75.705 705.6 m 237.6 705.6 l S
+.043137 .145098 .270588 rg
+BT /F2 9 Tf 10.8 TL ET
+BT 1 0 0 1 259.2 707.04 Tm (Coach:) Tj T* ET
+.788235 .831373 .87451 RG
+.8 w
+n 295.701 705.6 m 424.8 705.6 l S
+.043137 .145098 .270588 rg
+n 43.2 658.08 540 18.72 re f*
+1 1 1 rg
+BT /F2 8.6 Tf 10.32 TL ET
+BT 1 0 0 1 47.2 663.84 Tm (#) Tj T* ET
+BT 1 0 0 1 76 663.84 Tm (Player Name) Tj T* ET
+BT 1 0 0 1 212.8 663.84 Tm (Pos) Tj T* ET
+BT 1 0 0 1 252.4 663.84 Tm (Grade) Tj T* ET
+BT 1 0 0 1 295.6 663.84 Tm (Parent / Guardian) Tj T* ET
+BT 1 0 0 1 428.8 663.84 Tm (Phone) Tj T* ET
+BT 1 0 0 1 511.6 663.84 Tm (Emergency #) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 632.16 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 632.16 540 25.92 re S
+n 72 632.16 m 72 658.08 l S
+n 208.8 632.16 m 208.8 658.08 l S
+n 248.4 632.16 m 248.4 658.08 l S
+n 291.6 632.16 m 291.6 658.08 l S
+n 424.8 632.16 m 424.8 658.08 l S
+n 507.6 632.16 m 507.6 658.08 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 641.16 Tm (1) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 606.24 540 25.92 re S
+n 72 606.24 m 72 632.16 l S
+n 208.8 606.24 m 208.8 632.16 l S
+n 248.4 606.24 m 248.4 632.16 l S
+n 291.6 606.24 m 291.6 632.16 l S
+n 424.8 606.24 m 424.8 632.16 l S
+n 507.6 606.24 m 507.6 632.16 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 615.24 Tm (2) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 580.32 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 580.32 540 25.92 re S
+n 72 580.32 m 72 606.24 l S
+n 208.8 580.32 m 208.8 606.24 l S
+n 248.4 580.32 m 248.4 606.24 l S
+n 291.6 580.32 m 291.6 606.24 l S
+n 424.8 580.32 m 424.8 606.24 l S
+n 507.6 580.32 m 507.6 606.24 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 589.32 Tm (3) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 554.4 540 25.92 re S
+n 72 554.4 m 72 580.32 l S
+n 208.8 554.4 m 208.8 580.32 l S
+n 248.4 554.4 m 248.4 580.32 l S
+n 291.6 554.4 m 291.6 580.32 l S
+n 424.8 554.4 m 424.8 580.32 l S
+n 507.6 554.4 m 507.6 580.32 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 563.4 Tm (4) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 528.48 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 528.48 540 25.92 re S
+n 72 528.48 m 72 554.4 l S
+n 208.8 528.48 m 208.8 554.4 l S
+n 248.4 528.48 m 248.4 554.4 l S
+n 291.6 528.48 m 291.6 554.4 l S
+n 424.8 528.48 m 424.8 554.4 l S
+n 507.6 528.48 m 507.6 554.4 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 537.48 Tm (5) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 502.56 540 25.92 re S
+n 72 502.56 m 72 528.48 l S
+n 208.8 502.56 m 208.8 528.48 l S
+n 248.4 502.56 m 248.4 528.48 l S
+n 291.6 502.56 m 291.6 528.48 l S
+n 424.8 502.56 m 424.8 528.48 l S
+n 507.6 502.56 m 507.6 528.48 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 511.56 Tm (6) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 476.64 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 476.64 540 25.92 re S
+n 72 476.64 m 72 502.56 l S
+n 208.8 476.64 m 208.8 502.56 l S
+n 248.4 476.64 m 248.4 502.56 l S
+n 291.6 476.64 m 291.6 502.56 l S
+n 424.8 476.64 m 424.8 502.56 l S
+n 507.6 476.64 m 507.6 502.56 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 485.64 Tm (7) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 450.72 540 25.92 re S
+n 72 450.72 m 72 476.64 l S
+n 208.8 450.72 m 208.8 476.64 l S
+n 248.4 450.72 m 248.4 476.64 l S
+n 291.6 450.72 m 291.6 476.64 l S
+n 424.8 450.72 m 424.8 476.64 l S
+n 507.6 450.72 m 507.6 476.64 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 459.72 Tm (8) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 424.8 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 424.8 540 25.92 re S
+n 72 424.8 m 72 450.72 l S
+n 208.8 424.8 m 208.8 450.72 l S
+n 248.4 424.8 m 248.4 450.72 l S
+n 291.6 424.8 m 291.6 450.72 l S
+n 424.8 424.8 m 424.8 450.72 l S
+n 507.6 424.8 m 507.6 450.72 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 433.8 Tm (9) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 398.88 540 25.92 re S
+n 72 398.88 m 72 424.8 l S
+n 208.8 398.88 m 208.8 424.8 l S
+n 248.4 398.88 m 248.4 424.8 l S
+n 291.6 398.88 m 291.6 424.8 l S
+n 424.8 398.88 m 424.8 424.8 l S
+n 507.6 398.88 m 507.6 424.8 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 407.88 Tm (10) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 372.96 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 372.96 540 25.92 re S
+n 72 372.96 m 72 398.88 l S
+n 208.8 372.96 m 208.8 398.88 l S
+n 248.4 372.96 m 248.4 398.88 l S
+n 291.6 372.96 m 291.6 398.88 l S
+n 424.8 372.96 m 424.8 398.88 l S
+n 507.6 372.96 m 507.6 398.88 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 381.96 Tm (11) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 347.04 540 25.92 re S
+n 72 347.04 m 72 372.96 l S
+n 208.8 347.04 m 208.8 372.96 l S
+n 248.4 347.04 m 248.4 372.96 l S
+n 291.6 347.04 m 291.6 372.96 l S
+n 424.8 347.04 m 424.8 372.96 l S
+n 507.6 347.04 m 507.6 372.96 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 356.04 Tm (12) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 321.12 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 321.12 540 25.92 re S
+n 72 321.12 m 72 347.04 l S
+n 208.8 321.12 m 208.8 347.04 l S
+n 248.4 321.12 m 248.4 347.04 l S
+n 291.6 321.12 m 291.6 347.04 l S
+n 424.8 321.12 m 424.8 347.04 l S
+n 507.6 321.12 m 507.6 347.04 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 330.12 Tm (13) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 295.2 540 25.92 re S
+n 72 295.2 m 72 321.12 l S
+n 208.8 295.2 m 208.8 321.12 l S
+n 248.4 295.2 m 248.4 321.12 l S
+n 291.6 295.2 m 291.6 321.12 l S
+n 424.8 295.2 m 424.8 321.12 l S
+n 507.6 295.2 m 507.6 321.12 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 304.2 Tm (14) Tj T* ET
+.956863 .972549 .984314 rg
+n 43.2 269.28 540 25.92 re f*
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 269.28 540 25.92 re S
+n 72 269.28 m 72 295.2 l S
+n 208.8 269.28 m 208.8 295.2 l S
+n 248.4 269.28 m 248.4 295.2 l S
+n 291.6 269.28 m 291.6 295.2 l S
+n 424.8 269.28 m 424.8 295.2 l S
+n 507.6 269.28 m 507.6 295.2 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 278.28 Tm (15) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 243.36 540 25.92 re S
+n 72 243.36 m 72 269.28 l S
+n 208.8 243.36 m 208.8 269.28 l S
+n 248.4 243.36 m 248.4 269.28 l S
+n 291.6 243.36 m 291.6 269.28 l S
+n 424.8 243.36 m 424.8 269.28 l S
+n 507.6 243.36 m 507.6 269.28 l S
+.541176 .592157 .647059 rg
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 49.2 252.36 Tm (16) Tj T* ET
+.788235 .831373 .87451 RG
+.5 w
+n 43.2 51.84 m 568.8 51.84 l S
+.541176 .592157 .647059 rg
+BT /F3 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 43.2 39.6 Tm (Keep a copy in your bag. Or manage the live roster free at my-teamsports.com.) Tj T* ET
+BT /F1 8.5 Tf 10.2 TL ET
+BT 1 0 0 1 350.112 39.6 Tm (Free printable from My-Team Sports \267 my-teamsports.com) Tj T* ET
+ 
+Q
+
+q
+0.0 0.0 612 792 re
+W
+n
+1 0 0 1 0 0 cm
+BT
+/F1-0 12 Tf
+14.4 TL
+ET
+1 1 1 rg
+n
+348.112 34.8405 222.688 14.5 re
+f*
+0.945 0.961 0.976 rg
+0.796 0.835 0.882 RG
+0.75 w
+n
+47.2 58 m
+564.8 58 l
+567.0112 58 568.8 59.7888 568.8 62 c
+568.8 134 l
+568.8 136.2112 567.0112 138 564.8 138 c
+47.2 138 l
+44.9888 138 43.2 136.2112 43.2 134 c
+43.2 62 l
+43.2 59.7888 44.9888 58 47.2 58 c
+h
+B*
+q
+64 0 0 64 55.2 68 cm
+/FormXob.88c5873de6247f7563d2d5a5b13b74f3 Do
+Q
+BT
+/F1-0 6.2 Tf
+7.44 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 70.3143 61 Tm
+(scan\040to\040start) Tj
+T*
+ET
+BT
+/F2-0 11 Tf
+13.2 TL
+ET
+0.043 0.145 0.271 rg
+BT
+1 0 0 1 133.2 116 Tm
+(Tired\040of\040rewriting\040this\040every\040week\077) Tj
+T*
+ET
+BT
+/F1-0 8.4 Tf
+10.08 TL
+ET
+0.392 0.455 0.545 rg
+BT
+1 0 0 1 133.2 101 Tm
+(Put\040your\040roster\054\040schedule\040and\040lineups\040on\040your\040team\047s\040own\040site\040\227\040always\040current\054\040shared\040with\040one\040link\056) Tj
+T*
+ET
+BT
+1 0 0 1 133.2 88 Tm
+(Free\04030\055day\040trial\040\040\267\040\040\04415\040a\040season\040for\040the\040whole\040team\040\040\267\040\040Parents\040never\040pay\054\040never\040install\040an\040app\056) Tj
+T*
+ET
+BT
+/F2-0 10 Tf
+12 TL
+ET
+0.086 0.639 0.29 rg
+BT
+1 0 0 1 133.2 72 Tm
+(my\055teamsports\056com) Tj
+T*
+ET
+Q
+
+
+endstream
 endobj
 6 0 obj
 <<
-/PageMode /UseNone /Pages 8 0 R /Type /Catalog
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 7 0 obj
 <<
-/Author (anonymous) /CreationDate (D:20260710004754+00'00') /Creator (anonymous) /Keywords () /ModDate (D:20260710004754+00'00') /Producer (ReportLab PDF Library - \(opensource\)) 
-  /Subject (unspecified) /Title (untitled) /Trapped /False
+/BaseFont /Helvetica
+/Encoding /WinAnsiEncoding
+/Name /F1
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 8 0 obj
 <<
-/Count 1 /Kids [ 5 0 R ] /Type /Pages
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
 >>
 endobj
 9 0 obj
 <<
-/Filter [ /ASCII85Decode /FlateDecode ] /Length 1816
+/BaseFont /Helvetica-Bold
+/Encoding /WinAnsiEncoding
+/Name /F2
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+10 0 obj
+<<
+/BaseFont /Helvetica-Oblique
+/Encoding /WinAnsiEncoding
+/Name /F3
+/Subtype /Type1
+/Type /Font
+>>
+endobj
+11 0 obj
+<<
+/BitsPerComponent 8
+/ColorSpace /DeviceRGB
+/Filter [ /ASCII85Decode /FlateDecode ]
+/Height 350
+/Subtype /Image
+/Type /XObject
+/Width 350
+/Length 7532
 >>
 stream
-Gatn(95iQS'Lqir'c4rg%?LnZ71QqG&UVnQ@P,3c("u]^&Htd@TmtsFle\"L9pID?RD.Rkc5BNU`1_394T&MiJ0.k^nWj7nY^-GTR"EjAn7d$_.ODWAJ8qEdec6@XV2^&rl"9+I2F=\fC=fOFY0GV:j80eINVd^Pd&@$%qG)`P-?\VQcdVY]1'*B;@:eE0gL3'*FPACKqTct@iGe/(mpYl*XPTje@?))O@@"b>SS$Ol,GYNUC=+I(g<)luS`W2X;AJ53\3IFXW?2Z?Vl1Qe%u8DL1[NQKHIs7Mp!Fk<#)6CoqsLFRP@:Sr9eCqH;N"QVPGXMF^rtkKQ@@2Ib;SeGP*_I6HMS3(I(pcCirK\^lH24!PA!pZj0X^6`b;htku<DBm-2F8NHGLoZ1VMpE0k^F<OHPFM_;%W&*-ga_rP#!(_3*V/)p'om`+qnO5!HiAo9T[Km%&[#hc`>GdN2%s#2s3><9BgL2QrPCO2`JoAaD28gmbde,4A$:9=u+$u"a7A6:'/S1qs$m'%$]jg=P@eWQ?1OE^=2ag%__Tt&_5\'F]rEP_VLM-CCD$V;r*WK*-cA,#(_YH<S4HgSh%GD)#rpU(sTCqAGE4!i*0Z[$`Wi,i"@:<3-?qsgZCX\\G(l@a$1$)Cc!C7Ho1m7?1h%Gm,lXNbopfbZ^9Mi3S`rLPVf)ubjZ?lNjT$EMD4F@[%e?WPL0GXrHa=FEcZ6_&teZm='C:?\^oIAFc%Jn`37gJ:MPJnqj3CZT__qt>r0kG*:9mddiXF;Smq1SL])`f`c`$/Ac4X9m[F^oRjtP/+.*gmfLg$/D$nX;?N4[I;qh'sk?]2W5Qqh3O[JS?/NL7>A%3;C7R2Q#d""_H+qg/.#N0#pK[[.1%24.4a,Zi<&GKaOsd(CO[!UaYm*L_G&=R.KN8bjoFO;^ubX:9Xpr"ThM\f!.hd"<Hk-t>@#M.lL$5mR;9;.7,t?nQL%``d?1K^%ae,Ta:?Tp!ltl!OTX5Gd?+O`c=/ii9q(D'qp=pnGpSiLIa^t:M\$Q)\P+[jYU+i\'=&p85ngUc5tDZt3C-Ip#1q\bUaLhAen.uXmDcbYZVNGR<`7$`6eG!['1pj!3IrJb/*@&$KWUIAObBj$"Hg'U'kOc@h-4T*DgD(ji,AN@iPq$LTF'CY-EIO/P/+.*glfIS$/D$nX9m[P+KQB3l^lRopnhcfD>C[ZY1rJ"gL_h,@Z__+,ZT[D@O)2_+!Ms8YTDdK"c+1n,6`mn`GA)eil/U%^!gQYTM/9Y-$pttWKo#gN2`BN#Vr9'%Nri[C'e:hQtcq8aGWo<I@>tW=0jfqC]nOWI70W@S;"nE7<43H>UG&YP*3V8Lm+";MMRLe+HD8CS03u\dNT.p]a$.\T2DEl+"^48N?sKR'=t_J?k^*tJRK5'-%TJ<\iE&a'=p1i?nXuNfD21#549Xp$I8FS&#iKeZ^+_!8.j74bJY%@;A.Upd8CV0'%)jU`"LI\'?&=.>%H`A%pJ*[V>AO4VW#OP7@Z*e>U?1#g(M2o1"d2TS2&Y9+IFn8*$CI^_ceLTW6T``'t%h+m=!2Xj6S"Vm+Dj<OfMRpnPK?Y&+NKu8.Y6Q"'?*(OTS_3;EdKYI-3f:r9%&<I`pu"c;_**0`dceKJOcU&f<Gk>8!;[@@Io521_51K_8er[ICj7](Pts!P&0jhG(*^%uoQ3/MiUj0sc*<b2U'_me].hYTEKcf^.NQHl_1>HXcLA#e&K1:H]\iHe<68mU6O]4Mp.2pWsr>`><.Qjd2.6c:#75EmE'CDLKk.EO.`M%pO7,O+RW4'k$qTo!P[di9"B6_*DW~>endstream
+Gb"/a6'c17%`<VmS,PRQal=(*#b,&G4GdnLn%W9JL1(pR@2O`-(kuH9L1(pR@2O`-(kuH9L1(pRYOTBRn\)*>kFA".m)ihlp^(Z0Z`EOTVe/$&nsD=a6JCYil?ggUg!6`_VN%402EJJHSo\YTZR_)Nj!UX^cE=nES=8j3b%'0#$#-0@X7&'HAimWqQo9C[g?@ngHd8VDcE9:,NLu:j3kP6[F)&.i/!"E)-_uaIY.j(hRdKIaA(p\aBqr#8ml@:X41k(Qg)ukJ;U4@khM[uC99e/s1!Xu$H_d1Rh=[k)QRK8pA"<"(p..3-]B`T102ZJja#Mu0m#c<8GLs/B?D>q]O)_n?fd#TPm]L1c]L8aD*ohW\ZU`0+gg/6PG_o=f4i[<CAri04\\"I+n.MQUH]7QeboS<HEd'\4i?_*5p))sSRlsZpjR.?F_b66JlnQe02LD6iakcWkLR0EsfjgOJD-kO$3h?#6mC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseLGF\DrmC;Ib&a*,"cg"bV-gseL%F2nlZY.V;S*b;EGg=dX*G8j3fsBl.c#u,]4QgG=N\ds*m+HIRAilOiT(B=/a-g%Pp?XedZ^oAEc["6Sj%QO8HhNuCfhQ13k<*V:E@+_W4aYK2Co9)*F.P;X3"r@<Sip_)[aUZ&3DUT<S;C6Yc^qI%gZ_E$S>V?.cGZ`hB@#8#m;s\"cI9cRB4BEEZfg]"Fug:!k@p^-fd#$:VfSaN@G3\`\'s"TeOHHXV\NXo3-D^Zfd#$:VfSaN@G3\`\'s"TeOHHXV\NXo3-D^Zfd#$:VfSaN@G3\`\'s"TeOHHXV\NXo3-D^Zfd#$:VfSaN@G3\`\'s"TeOHHXV\NXo3-D^Zfd#$:VfSaN@G3\`\'s"TeOHHXV\S102H"coVDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6c$_HoR$ZTM!VDc262q>6)Vq%6]([T(UEb>@Bm#.t::)eD+cHL`ap-mPXVi<c&B4enAq]b@=e&IrN1UGu1I?A[/C#dLbRFuN)^;rA(ZuP9lbj;fO?Y#^Og:6`qB(juc0=&kbD;=qI1]-Rm(Kopl2X^L5RJljGMlcMF)g?bVb^Op47Fla>T9(BuDq'(,`C.W50?C=irTDJ<0.%TlImJNhl9BLLI50,'r!W)];ZF<!mYcpViEq[RQho%!G@+$#%0(qW]$u5t]_c04@JCZ"f;8IfkM6pf%E#q'^Fo2O47BnNBGg^Pq/r\:gj/Y57)SLIaKJ88kK^[m-5q=DGm3cQ*iV'1Y.W$?0!X\8jP;,D=!/'T43d,TC;]A[gJ%#JX3O,i>lo9T!jT>cbV#kQ]WSolj=[_&9]Y"UOB3P9X#nSmP%qo#b1fVX'!';GhH^2."Tks?e''GD2S?3*c/^L^l:g9p-'21N&?@n;m#l,$lcRsUmLlSG7,D2NGm+8S]$nkUWA_Dl]ZoLiZ0G$Dh'J.a+:tS8c0UU._s>J"9^WOoc:$Mp!dOqNZ+AE./u^bAY.W$?0!X\8jP;,D=!/'T43d,TC;]A[gJ%#JX3O,i>lo9T_Mc\B0<`u-b%e,N*E$a!Grms/[aBqufBXnt[F`\6WA_E%SXV^qket[1Fd98dCM/E%)d_CHc(/]nioTjE8m1PhZU:`%05p%9c8I`Rnp4T<XS1B$+k;=6[rZV')kD5!]rk76HgU0]C;\6L\[f&+:;"5G="12`G'6EaiT9I^gt>.E?='h9Pgs)%4/CU"noep=CnhXsYLcdsC9O0K;JgZ(4#_Ald>=4AlRHJRf?Ol*2S?\nS%U^XZNRIkPa1E*2Q%1M=YJ0\cDa3BQJf05ZLXO-k#<N[lQpl)3L,EE'"g,#<h;,#S4Z1]]gOM7V\5+pK%EK7b&\o!;i/SsQfpm$<$F(jnCgE9H-TrA.M8*A'#!M!8jm7t?5k=Dc^ATE,pK[%U)0A!M9%6aCEmEP3Kq^e6tFkAoV-CV&XaqiD5=6qB<jO_Ls11%??Apg,-qEUNKf^k9K&d]O]a?bMpA:iA<u/]Og=PJalZPH1@$64dFkjp7))N^RS@e)f?*ot7&dhiM,LZ/cLj5D^Qp:5[kglr2T<45-h#Y"V=JdV9$O4mfB_Mr>,#!Qc:"Yb'^'e5]O+<rb1i=424NT1YES]rM,JU\';];>SEk=gIP"DHDeGfoCl3;I:>W0#9',G6PaY<dY1Lem[7%",SV^7N.F.TIGoIEnAdMc_hHeI<F0g(7n',`mjWu+rhHb&ci3hP"ope*&H[#5@lrI1o,3%tFok"M:)r=lH\T>*$GONdoFlanncJDiFQJf10h=[:"2g]cChX"9E?6\Cqh=Y@d?5qa,cae,'GB`N#DKY%e,0o%NDjK=hiSF0s4#_M1pYP7;='d*1m+q>H$!nS-?-g'&ZZgW^c#.[c,pLXk?#Q%e[Gfs7S3&ZVGPBt\<``TOip>LoAdMc_hHeI<F0g(7n',`mjWu+rhHb&ci3hP"ope*&H[#5@lrI1o,3#-0l\aKjS5Y8B<lDO)0:>N\nshj@M9';gS4]$O,0la)a_WGhkNn='6oG_A<2,TlEUM%DAlFOKB9-"9ZC*\M&uD[cF(\f7RnDa%H__::c,;W--tPi;47eWg<$KZA,F+($-I/SY.4aE5R?u-p&p_bDWC18QED@fP=V9iB]OWpcaE.&G,pJh8F"1&0ME#hB-*sR=T!Lp:&_TjJ;i+CQ`47ZWR8#!uS39c,aCaG%8sHV*cCK7&Car;[ZZk#jolr4=qC]UrqdQ;5=1P`,h!N=TlH6G*-!K1PG^!Lg[.c&Z2NtbDGuJ!o<iJLQ]*.TjMi%.6jjn$a[khs&/'f]1BRQ6*h0h$*hQ,Gc9^[)d9m,Q#V%Tp!'"kh0-JEg3>FWajcFg-Z4KDGUoj*/npVfOIYB"D7\_EN2eWjd49!l<*nF"#XB^\r=D'jHgo;9+iXAXo+G7!-^(DH2Lb,rqLDJ.g*=.WDAdJ>K3]DH'3]iVbPRG@2RS*J/&8gRZu-$XW@9XOOD[l0G^WNJ9p40?.uZIpJa9K%7(*oH;+S*dTRB$"YGPV_"Zc$Fc@.rVlFb*s]H4]9R9ZT%4?]ro$$:+L7KD"^C[PKhsca7m19Aim--=gH^*j\.RZZQA#ib+%e*nn-!UO-DHRm*0j(Y:FP"e&n.+RlsZpA@"5\n\)*<fhO&9Q>H7c3Kq_EXN1(Hnn'tc]NMPn,NVTWHa=dNlcP^a[.7hNAri04g$Ht0F=(10p7,'<;R<^?_2@1,ot'^q4Qf\<eEh!hYTe=9]rjIJcT.7=2*79HX9dZgY:IrAF&"#Rc-GGU.tVuslcQR)S5Y8BZa73YMW!=`](2pbk>\2*ltgRD,'\=FXun5\3L)!M4.@1j#i8jj/'l@Z:*iNWcK5<]Jp5i4b-UZ/;i+DYZamo0i8+(;nuOt:<2.n/Ci6I$V!\krml>U_fCH(9rJf+IU^_pB\'qmO^Qs(<l>Lc^->a=,]Ud?=r3a1Q;LbH_1MML"jm@0XjKIZNPPQ5hRn4P%05mb0-\!`:Rag6Yge?EEG^2BA48EZ;f;/C8k@W-H_9:TtgrWpH]-d203]E6\#[Z@_k>)"[hDM:IdCG[P61FGg3d:/HnubR_NR#eE%>'qUe%([WQ?Q'gDffkl[F*+jg.45f-GP>fAEOmDX%pC\7`q,Uq)uA;45YirFn34(;U2)[n)6.Wq*r<&POGoAE[FM0&$O+#2^2:nI'8No1MQE,GYN@q&[CW^HYoRK8X&&LCU3PkLfGh[CEqq7Rf"45PFZV[X?-/`)_#FJjS//4m!L$ee]IR>83)k\^PCEOk8P#6:;5=Lb*b*^4hN+KHm:<5*WKCq05mj"@c\p,2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<ap3-XNXhT4HAb3LAE2S[np)D<`eh9'TIY"l[O2ltT#Hd=iQ<d._1Mq:EG?<=%2j;V-8cFrB^.B>P4T#GK?'<eH80CfRQ2<Wh;O-J1c<mTd5d>?K*W>GAbeXCRJ\OXg-:9/$tg??K@lI:`>_eRH,pY7!)Ff3crG\qQ^F`lt<^1"G3gjAIOZF\NM=hHXRn[^dS,2]V.F7)3c86Ob_odjDgSTnG2HBE,JXZ?-IH_db2[!ELkND@-h:;+_-XO`ngcTP0,G?R.ff1%,o=/TBc)cgb"^#pFcX#mHOP3ON^aNL&np(EM4SU$(BD#XCqorR>HZLSV?B.jkMgmOL2c0!o%?I*rC.4[%`EV:$-c(0-:eSP6`k4Ph=S?h\u&SEa/g"`!^=O$!cDdLb9c7(7s&TRLWOj0GBM:HGArT<dSkFAjK&eSb0&_Ys-QWVMpheuiIHHmri0+i3t&s:G0H&:'frr)!PXQQ+Zne)OI0+lmmR?q%#k21)`c[*kc.k_KSp(EM4SU$(BD#XCqorR>HZLSV?B.jkMgmOL2c0!o%?I,K,PImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9o\/dmPImg,.BA]>8#d$e0!Xu9oJV&5]XXC!in[RtWQec+<$H6:_7Q2j9R-)FWl`b&05i>&\!c119l25iGW4/`C9s6cQ,q]RnF!/3'4/>@C,33MbF;,bD'jLO;k"(HhG#kqg?doq-1Wr-]Xt/fKGX*SRS7Slntm%FRgIs-e7QRUG>h552LB^JM7h(9mqukriPiF.-<$DI]W"<UAqG4c[@-ODh,KT;c!K7+,&]9R]:7MJGk#[OajaoUD^nV^<Qa!am:>\1rcV@Y8<YJn,-MIE'fothfmC'?h:3FlA."L@CVtLQcIktdhX#0)[>$N+JgBp@n6Vf0[ZeB`qqGDY+\egVM7baZ=6Q1AAFIeBG#rHMP:9$HY79q83bLP-HaCKCeJckH$BiJG_g@*_fhV7tlu.*UL,><M,kB[Y?D2GKPJ&pPgKgp)9r9%i]JdE(ka_$Nn'1iT=)1?j.7bYd%IY#mB04dnZbP>H)Ud\c#P*JGfbAeJrt`O5eJ4JuG^7&ZpO_7<MS3AA$f[]AMTc^G]\gVR6#S[#hClMFEDCXFAdMf#n):sQ2k+:F(Z'a'Vn+(Y">B6<n6XJ29sOF#DaBml?'/9AQhPiO0BgZXf_^B3+O6sha=P0Nq`VS.oO_%grPDbMk>YMnQJgm'*o79NZRPTsi@Tk,W[fhtnFD#=mfgDX'RRUa(;r5`'q$@mH,#./K&1=$]jH!ligf:kbS%QV01+B;&[*^'2FT+!f@>1'JQR'SFk)?#PrG0VQ.P>:]pV-e3q9fH`9YR89p*TaFg^("+BG%X?$5.LjisYnjn62gD^H$r:;!_jn[e:';l&u1?*-%!LfGg/=.OSAH*\qtH+gB3RgI$5'<eH3]WSp#'WJ`O=6n*6@b$=e<@;*ShJA'K?E^F&Acf7&`9XE:Y:FNL74PLmeTs$&=EWVGeVVnC2k)"VfB[1bR?5!Qn6Y(6s/o@7?K.K\,+H\[O&R=l/qH!+k2#nD*I3K_b)1!^G<Ji\]Xn=+gmNBT2g"+,c7(9LRG@I+-1^I:Li[4c^#.2!QT1nEaC]JE,F-?^9-DNNH1ubT7pb2FZ6Gd[?&qr/mk0/NGNR`Y%39_NF39AV-?hUNM7gG'inTrGml,@L--dqiZC0M@81!ip&r:UAhS%gnOdA&*XN5!of-?R%]1X9lSU'sY6UtJBS?a?.a^'s,,4@.83-XN@q[FQkM0$gsCaO?h;Me:gN,o(SG3(`2G_u.Nqh8)gk6>8Zb&d:G'(*C,$a280%D:>YkNq.Rg3`9)?=B?CGd/dFfu$IipYIR9_DjLD@TT/-LR2]C]jH#<EGj^RXup>-0@AX'^[MTjgq\hRH-RI;U:p;Mi>'ACJJYrhS3=MQHggpM.u\NO06ZG;H[(D@hYW".)!;*0m)jDCn.P-%pC"1oU9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbT8U9eM*i[]EFDT[jp,tbS-Eo-,"LND;,F!buU3n=%#k7f1[Woqk_iES>9S-baC:3D$73<dNol8^^p37lD<B0p7*;k;ff:-nHJH;;]tc?43SRF%Ac<9H32;inYkSl;tKF5>Vm-?LRqebMr&'I7UskL;'A>W;DI$(ZoJFahe""j*8!3AjGhf?HHk6>*#kS_nNa61Un!:<aEsF`Ylsd$a)sk;Sr1OM%Qa;mV-uh;!&uF=''!q+^#d,]B^Ge1BQ`2trgKSV^*aIa^<rMg7JKeDGLj1V'!\nfW3>gZZ"Jj#O#DnAWZ5DT^+SjR$cYdqXm*S9i!f2j:j&.h@fPZ]._\24emS"^g%Ym\['J8D_WM3j$tXcD_V-EAP.pZLT,`458u+>2qW@?LYqYjDN,_KB2E9UXNt;kF?k7(H7Pi.4Ypl\$M&hX#6Jil31PM9^\dZ4@n>S2EItkGg<9)HuUsQS$MT-GrsdEZs)KMVdAl3c/`cbb(JdBCr8o1,*eMMok(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2H"a+,aF_Ook(lqaBd-7913C*2S?Z>0FYiQ%)Xb-__;M:0FYiQ%)Xb-__;M:0FYiQ%%[;<qTD-[~>
+endstream
 endobj
 xref
-0 10
+0 12
 0000000000 65535 f 
-0000000061 00000 n 
-0000000112 00000 n 
-0000000219 00000 n 
-0000000331 00000 n 
-0000000446 00000 n 
-0000000639 00000 n 
-0000000707 00000 n 
-0000000968 00000 n 
-0000001027 00000 n 
+0000000015 00000 n 
+0000000074 00000 n 
+0000000113 00000 n 
+0000000162 00000 n 
+0000000482 00000 n 
+0000009413 00000 n 
+0000009520 00000 n 
+0000009627 00000 n 
+0000009739 00000 n 
+0000009851 00000 n 
+0000009967 00000 n 
 trailer
 <<
-/ID 
-[<7ab4739e6ed4475fbfc40b504c65b8da><7ab4739e6ed4475fbfc40b504c65b8da>]
-% ReportLab generated PDF document -- digest (opensource)
-
-/Info 7 0 R
-/Root 6 0 R
-/Size 10
+/Size 12
+/Root 3 0 R
+/Info 2 0 R
 >>
 startxref
-2934
+17689
 %%EOF
