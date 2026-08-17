@@ -11,7 +11,6 @@ export default function robots() {
           "/api",
           "/team",
           "/login",
-          "/signup",
           "/forgot-password",
           "/reset-password",
         ],
