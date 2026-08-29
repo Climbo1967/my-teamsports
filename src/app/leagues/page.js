@@ -21,7 +21,7 @@ const MAILTO =
   encodeURIComponent("League inquiry — My-Team Sports") +
   "&body=" +
   encodeURIComponent(
-    "League name:\nSports:\nApprox. number of teams:\nSeason start:\nComing from (LeagueLineup / other / spreadsheet):\n"
+    "League name:\nSports:\nApprox. number of teams:\nSeason start:\nComing from (which platform / spreadsheet):\n"
   );
 
 const OFFICE = [
@@ -95,13 +95,13 @@ export default function LeaguesPage() {
         <p className="mt-4 text-xs text-slate-500">Real person, usually same day. No sales team.</p>
       </section>
 
-      {/* LEAVING LEAGUELINEUP */}
+      {/* SWITCHING FROM ANOTHER LEAGUE SITE */}
       <section className="px-6 py-16 bg-[var(--color-navy-mid)]">
         <div className="max-w-[820px] mx-auto bg-gradient-to-br from-blue-500/[0.08] to-green-500/[0.05] border border-blue-500/20 rounded-3xl p-10 md:p-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">LEAVING LEAGUELINEUP?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">SWITCHING FROM ANOTHER LEAGUE SITE?</h2>
           <p className="text-slate-400 text-lg leading-relaxed mb-6">
-            If you&apos;re moving your league off LeagueLineup — and what you liked was a simple public site with your
-            schedule, results and standings, and what you didn&apos;t like was the ads — that&apos;s exactly what
+            If you&apos;re moving your league off another platform — and what you liked was a simple public site with
+            your schedule, results and standings, and what you didn&apos;t like was the ads — that&apos;s exactly what
             we&apos;re building, and we&apos;d like to build it with a few leagues who are moving now.
           </p>
           <ul className="space-y-3">
