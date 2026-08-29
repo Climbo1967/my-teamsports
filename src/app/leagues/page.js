@@ -100,10 +100,9 @@ export default function LeaguesPage() {
         <div className="max-w-[820px] mx-auto bg-gradient-to-br from-blue-500/[0.08] to-green-500/[0.05] border border-blue-500/20 rounded-3xl p-10 md:p-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">LEAVING LEAGUELINEUP?</h2>
           <p className="text-slate-400 text-lg leading-relaxed mb-6">
-            LeagueLineup is shutting down, and every league on it needs a new home before the winter season. If what you
-            liked was a simple public site with your schedule, results and standings — and what you didn&apos;t like was
-            the ads — that&apos;s exactly what we&apos;re building, and we&apos;d like to build it with a few leagues who
-            are moving now.
+            If you&apos;re moving your league off LeagueLineup — and what you liked was a simple public site with your
+            schedule, results and standings, and what you didn&apos;t like was the ads — that&apos;s exactly what
+            we&apos;re building, and we&apos;d like to build it with a few leagues who are moving now.
           </p>
           <ul className="space-y-3">
             {[

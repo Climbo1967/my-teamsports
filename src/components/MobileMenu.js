@@ -6,16 +6,20 @@ import Link from "next/link";
 const MENU_LINKS = [
   { href: "/how-it-works", label: "How It Works" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/leagues", label: "Leagues" },
   { href: "/faq", label: "FAQ" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },
 ];
 
-export default function MobileMenu({ links = MENU_LINKS }) {
+export default function MobileMenu({ links = MENU_LINKS, breakpoint = "md" }) {
   const [open, setOpen] = useState(false);
+  // Tailwind needs literal class names; "lg" is used by the homepage whose nav
+  // has too many links to fit at tablet width.
+  const hideAt = breakpoint === "lg" ? "lg:hidden" : "md:hidden";
 
   return (
-    <div className="md:hidden">
+    <div className={hideAt}>
       <button
         type="button"
         onClick={() => setOpen(!open)}

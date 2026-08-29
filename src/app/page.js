@@ -71,27 +71,28 @@ export default function Home() {
             MY-TEAM <span className="text-[var(--color-accent-blue)]">SPORTS</span>
           </span>
         </Link>
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           <a href="#features" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Features</a>
           <a href="#playbook" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Playbook</a>
           <a href="#ai-coach" className="text-sm font-medium text-purple-300 hover:text-white transition-colors">AI Coach</a>
           <a href="#how" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">How It Works</a>
           <a href="#demo" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Live Demo</a>
           <Link href="/pricing" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Pricing</Link>
+          <Link href="/leagues" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Leagues</Link>
           <Link href="/blog" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Blog</Link>
           <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-white transition-colors">Login</Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-green-500 transition-all">
             Get Started Free
           </Link>
         </div>
-        <div className="md:hidden flex items-center gap-4">
+        <div className="lg:hidden flex items-center gap-4">
           <Link href="/login" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
             Login
           </Link>
           <Link href="/signup" className="bg-[var(--color-accent-green)] text-white text-sm font-semibold px-4 py-2 rounded-md">
             Start Free
           </Link>
-          <MobileMenu />
+          <MobileMenu breakpoint="lg" />
         </div>
       </nav>
 
