@@ -68,6 +68,10 @@ export default function PricingPage() {
           </Link>
           <p className="mt-4 text-xs text-slate-500">No credit card required.</p>
         </div>
+        <p className="mt-6 text-center text-sm text-slate-400">
+          Running a league? League pricing covers every team on one invoice.{" "}
+          <Link href="/leagues" className="text-[var(--color-accent-blue)] hover:text-white transition-colors font-medium">Talk to us →</Link>
+        </p>
       </section>
 
       {/* PARENTS FREE */}

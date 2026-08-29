@@ -55,8 +55,10 @@ export function SiteFooter() {
         <Link href="/faq" className="text-slate-500 hover:text-white transition-colors">FAQ</Link>
         <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
         <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
+        <Link href="/leagues" className="text-slate-500 hover:text-white transition-colors">Leagues</Link>
         <Link href="/signup" className="text-slate-500 hover:text-white transition-colors">Create a Team</Link>
         <Link href="/login" className="text-slate-500 hover:text-white transition-colors">Coach Login</Link>
+        <a href="mailto:support@2bcreations.com" className="text-slate-500 hover:text-white transition-colors">Contact Us</a>
       </div>
       <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-4 text-xs">
         {getAllSports().map((s) => (

@@ -383,7 +383,9 @@ export default function Home() {
           <Link href="/faq" className="text-slate-500 hover:text-white transition-colors">FAQ</Link>
           <Link href="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
           <Link href="/blog" className="text-slate-500 hover:text-white transition-colors">Blog</Link>
+          <Link href="/leagues" className="text-slate-500 hover:text-white transition-colors">Leagues</Link>
           <a href="#demo" className="text-slate-500 hover:text-white transition-colors">Live Demo</a>
+          <a href="mailto:support@2bcreations.com" className="text-slate-500 hover:text-white transition-colors">Contact Us</a>
         </div>
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mb-4 text-xs">
           {getAllSports().map((s) => (

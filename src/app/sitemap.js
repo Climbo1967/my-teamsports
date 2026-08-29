@@ -22,6 +22,7 @@ export default function sitemap() {
       priority: 0.9,
     })),
     { url: `${BASE}/how-it-works`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/leagues`, lastModified: new Date("2026-08-28"), changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
