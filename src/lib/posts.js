@@ -10,6 +10,416 @@
 
 export const posts = [
   {
+    "slug": "volleyball-lineup-sheet-template",
+    "title": "Volleyball Lineup Sheet Template (Free Printable PDF)",
+    "description": "A free printable volleyball lineup sheet with serve order, starting zones, and libero rows — one card per set, ready for club and school volleyball.",
+    "excerpt": "Serve order, starting zones, and libero rows on one printable card per set — filled out before warmups, not argued at the score table.",
+    "tag": "Volleyball",
+    "date": "2026-08-24",
+    "updated": "2026-08-24",
+    "readingTime": "4 min read",
+    "keywords": [
+      "volleyball lineup sheet",
+      "printable volleyball lineup sheet",
+      "volleyball lineup template",
+      "volleyball rotation lineup sheet",
+      "volleyball lineup card",
+      "volleyball serving order sheet"
+    ],
+    "body": [
+      {
+        "p": "Every volleyball lineup is really one decision: the serve order. Get those six numbers right and the rotation, the front row, and the matchups all follow from it. This free printable gives you one clean card per set — serve order 1 through 6, each player's starting zone, and a dedicated libero row — so the lineup you hand the scorekeeper is the one you actually planned."
+      },
+      {
+        "download": {
+          "href": "/downloads/volleyball-lineup-sheet.pdf",
+          "label": "Volleyball Lineup Sheet Template (printable PDF)",
+          "note": "Cards for five sets, serve order 1–6, starting zones, libero and subs rows, plus a rotation cheat box. Free, no email required."
+        }
+      },
+      {
+        "h2": "What is on the sheet"
+      },
+      {
+        "p": "Five set cards (three on page one, two on page two — enough for a full five-set match), each with serve order slots 1–6, jersey number and name columns, a starting-zone column, a libero row, and a substitutes line. Page two adds a rotation reminder box with the overlap basics, because the fastest way to lose a point in youth volleyball is a rotation fault nobody caught until the whistle."
+      },
+      {
+        "h2": "Setting the serve order"
+      },
+      {
+        "p": "Three rules cover most teams. Put your best server in slot one — she may serve five or six in a row while everyone else is still nervous. Split your two strongest hitters so one is always front row. And put your setter where your system expects her: in a 5-1 the setter's slot decides every rotation that follows, so pick it first and build around it. Write the zones in before you arrive; the card is the plan, warmups are for volleyball."
+      },
+      {
+        "h2": "Do not forget the libero rules"
+      },
+      {
+        "p": "The libero doesn't appear in the serve order — she replaces back-row players (usually the middles) without a formal substitution. That trips up new scorekeepers constantly, which is why the card gives her a separate labeled row instead of a slot in the six. Write who she replaces, hand the card over, and the score table has no questions to ask."
+      },
+      {
+        "h2": "From paper card to live lineup"
+      },
+      {
+        "p": "The paper card runs the bench; the season runs better online. With My-Team Sports your roster, schedule, and lineups live on one team site parents open like an app — and the live scorekeeper tracks sets point by point from your phone while the AI assistant coach plans your next practice. Print the card, clip it to the bench, and let the site handle everything else."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/volleyball-rotation-explained",
+        "label": "Volleyball Rotation Explained",
+        "note": "The overlap rules, minus the headache"
+      },
+      {
+        "href": "/blog/volleyball-practice-plan-template",
+        "label": "Volleyball Practice Plan Template",
+        "note": "A full practice, ready to print"
+      },
+      {
+        "href": "/blog/live-scorekeeping-every-sport",
+        "label": "Live Scorekeeping",
+        "note": "Every sport, one scoreboard"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you fill out a volleyball lineup sheet?",
+        "a": "List your six starters in serve order — slot one serves first — with each player's jersey number and starting zone. Note your libero separately (she is not part of the serve order) along with who she replaces, and list eligible substitutes at the bottom. Hand a copy to the scorekeeper before each set."
+      },
+      {
+        "q": "Does the libero go on the volleyball lineup?",
+        "a": "The libero is listed on the lineup sheet but not in the serve order. She replaces back-row players — most often the middle blockers — without a formal substitution, so she gets her own row on the card rather than one of the six slots."
+      },
+      {
+        "q": "What order should volleyball players serve in?",
+        "a": "A common shape: best server first, setter placed to fit your system (a 5-1 builds around the setter's slot), and your two strongest hitters split three slots apart so one is always in the front row. Adjust for matchups set by set — that's why the sheet gives you one card per set."
+      }
+    ]
+  },
+  {
+    "slug": "volleyball-stat-sheet-template",
+    "title": "Volleyball Stat Sheet Template (Free Printable PDF)",
+    "description": "A free printable volleyball stat sheet — aces, kills, digs, assists, blocks, and errors in a simple tally grid a parent volunteer can keep from the bench.",
+    "excerpt": "Eight stats that actually change coaching decisions, in a tally grid simple enough to keep during a rally.",
+    "tag": "Volleyball",
+    "date": "2026-08-24",
+    "updated": "2026-08-24",
+    "readingTime": "4 min read",
+    "keywords": [
+      "volleyball stat sheet",
+      "printable volleyball stat sheets",
+      "volleyball stats template",
+      "volleyball stat tracking sheet",
+      "high school volleyball stat sheet",
+      "volleyball hitting percentage"
+    ],
+    "body": [
+      {
+        "p": "Most volleyball stat sheets fail the same way: they track twenty numbers and get abandoned by the second set. This free printable tracks eight — the ones that actually change what you coach on Tuesday — in a tally grid simple enough for a parent volunteer to keep during a rally."
+      },
+      {
+        "download": {
+          "href": "/downloads/volleyball-stat-sheet.pdf",
+          "label": "Volleyball Stat Sheet Template (printable PDF)",
+          "note": "Per-set tally grid for 12 players across 8 stats, plus a match summary page with totals and hitting percentage. Free, no email required."
+        }
+      },
+      {
+        "h2": "The eight stats worth keeping"
+      },
+      {
+        "table": {
+          "headers": [
+            "Stat",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Aces / Serve errors",
+              "Whether aggressive serving is paying for its misses — the first ratio to fix at youth level"
+            ],
+            [
+              "Kills / Attack errors",
+              "Who should get more swings, and whether they're earning points or donating them"
+            ],
+            [
+              "Assists",
+              "Whether the offense runs through your setter or around her"
+            ],
+            [
+              "Digs",
+              "Your real back-row anchor — often not who you'd guess"
+            ],
+            [
+              "Blocks",
+              "Whether your middles are closing, or reaching"
+            ],
+            [
+              "Reception errors",
+              "Who the other team will serve at all night — because they're tallying this too"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "How to keep it without losing the match"
+      },
+      {
+        "p": "Tally marks, not numbers. One sheet per set, one volunteer, one pen — the sheet is laid out so every player is a row and every stat is a column wide enough for hash marks. If you only have one stat-keeper, have them track serving and attacking and let the rest go; a complete record of two stats beats a guess at eight. Total the columns between sets, and the halftime talk writes itself."
+      },
+      {
+        "h2": "The one derived number: hitting percentage"
+      },
+      {
+        "p": "Kills minus attack errors, divided by total attempts. It's the single most honest hitting stat because it punishes donated points: a hitter with 10 kills and 8 errors is hurting you more than one with 6 and 1. The summary page has the formula printed on it with space to work it per player — above .200 is solid at the high school level, and at youth level the trend matters more than the number."
+      },
+      {
+        "h2": "From tally marks to live stats"
+      },
+      {
+        "p": "Paper stats are great until someone asks what happened two weeks ago. With My-Team Sports, the live scorekeeper tracks every set from your phone and the team site keeps the season's results where parents can see them — no app install, one link, and your stat history stops living in a binder in the trunk of your car."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/volleyball-lineup-sheet-template",
+        "label": "Volleyball Lineup Sheet",
+        "note": "Serve order and zones, one card per set"
+      },
+      {
+        "href": "/blog/volleyball-rotation-explained",
+        "label": "Volleyball Rotation Explained",
+        "note": "The overlap rules, minus the headache"
+      },
+      {
+        "href": "/blog/live-scorekeeping-every-sport",
+        "label": "Live Scorekeeping",
+        "note": "Every sport, one scoreboard"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What stats should you track in volleyball?",
+        "a": "For most teams: aces, serve errors, kills, attack errors, assists, digs, blocks, and reception errors. Those eight cover serving, attacking, running the offense, and defense — enough to make lineup and practice decisions without needing a trained statistician on the bench."
+      },
+      {
+        "q": "What is a good hitting percentage in volleyball?",
+        "a": "Hitting percentage is kills minus attack errors, divided by total attack attempts. Above .200 is solid at the high school level and .300+ is excellent. At the youth level the trend week to week matters more than the absolute number."
+      },
+      {
+        "q": "Who should keep stats for a youth volleyball team?",
+        "a": "A parent volunteer is the standard answer — the sheet just has to be simple enough, which is why a tally grid beats an app with forty buttons. If you only have one volunteer, track serving and attacking accurately and skip the rest."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-shot-chart-template",
+    "title": "Basketball Shot Chart Template (Free Printable PDF)",
+    "description": "A free printable basketball shot chart — full-page half court plus per-quarter charts. Mark makes and misses by location and see your shot selection by halftime.",
+    "excerpt": "Mark every attempt where it happened, and by halftime you know exactly which shots your team should stop taking.",
+    "tag": "Basketball",
+    "date": "2026-08-24",
+    "updated": "2026-08-24",
+    "readingTime": "4 min read",
+    "keywords": [
+      "basketball shot chart template",
+      "printable basketball shot chart",
+      "basketball shot chart pdf",
+      "shot chart basketball",
+      "basketball shooting chart",
+      "youth basketball shot tracking"
+    ],
+    "body": [
+      {
+        "p": "A shot chart is the cheapest scouting tool in basketball: one page, one pen, and by halftime you know exactly where your points come from and which shots you should stop taking. This free printable gives you a full-page half court for the game plus four smaller courts to break it down by quarter."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-shot-chart.pdf",
+          "label": "Basketball Shot Chart Template (printable PDF)",
+          "note": "Full-page half court with legend, plus a per-quarter page with four mini courts. Free, no email required."
+        }
+      },
+      {
+        "h2": "How to mark it"
+      },
+      {
+        "p": "Circle for a make, X for a miss, jersey number next to the mark. That's the whole system. A parent on the bench can keep it after thirty seconds of instruction, and unlike a stat sheet it captures the thing box scores hide — location. Ten misses spread around the arc and ten misses all from the same broken corner possession are very different problems, and only the chart can tell them apart."
+      },
+      {
+        "h2": "What one game of marks tells you"
+      },
+      {
+        "p": "Three things show up almost immediately. Shot selection: a cloud of X's from long two-point range is the classic youth-team disease, and seeing it on paper convinces kids in a way yelling never does. Where your points live: most youth teams score in a small area — usually the paint — and the chart tells you whether your offense is actually getting the ball there. And who's hunting bad shots: numbers next to the marks make the conversation specific instead of personal."
+      },
+      {
+        "h2": "The film session without film"
+      },
+      {
+        "p": "Nobody has game film at the rec level, but a shot chart on the whiteboard is eighty percent of one. Lay the quarter charts side by side at practice and let players find the pattern themselves — where did we score, where did we miss, what changed in the fourth. Then build the week's practice around the answer: if the chart says paint points, you drill finishing; if it says corner threes nobody rebounds, you fix the shot selection first."
+      },
+      {
+        "h2": "Chart the shots, score the game live"
+      },
+      {
+        "p": "The chart covers where — My-Team Sports covers everything else. The live basketball scoreboard tracks the score from your phone while parents follow along on the team site, the Coach's Playbook draws the sets that create the shots you want, and the AI assistant coach turns what the chart told you into a practice plan. Print the chart, clip it to the bench, done."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-play-designer",
+        "label": "Basketball Play Designer",
+        "note": "Draw and print the plays that create good shots"
+      },
+      {
+        "href": "/blog/basketball-live-scoreboard-app",
+        "label": "Basketball Live Scoreboard",
+        "note": "Score the game from your phone"
+      },
+      {
+        "href": "/blog/basketball-rotation-chart",
+        "label": "Basketball Rotation Chart",
+        "note": "Fair minutes, planned before tipoff"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you fill out a basketball shot chart?",
+        "a": "Mark every attempt on the court diagram where it was taken: a circle for a make, an X for a miss, with the shooter's jersey number next to the mark. Use one chart per game (or the per-quarter page for more detail) and review the pattern at halftime and after the game."
+      },
+      {
+        "q": "What does a shot chart tell you?",
+        "a": "Three things a box score can't: shot selection (are you living in the low-value long-two zone), where your points actually come from, and which players are taking shots outside the offense. At the youth level it doubles as a film session — the pattern on paper convinces players faster than a lecture."
+      },
+      {
+        "q": "Who should keep the shot chart?",
+        "a": "A parent or a player who isn't dressed that game. The circle/X/jersey-number system takes thirty seconds to learn, and it's one of the best jobs to give an injured player — they watch the game more closely than anyone."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-tryout-evaluation-form",
+    "title": "Basketball Tryout Evaluation Form (Free Printable PDF)",
+    "description": "A free printable basketball tryout evaluation form — rate ball handling, shooting, defense, and coachability 1–5, plus a multi-player grid for scoring a full gym.",
+    "excerpt": "Rate every player on the same eight skills, keep the paper, and every roster decision becomes explainable.",
+    "tag": "Basketball",
+    "date": "2026-08-24",
+    "updated": "2026-08-24",
+    "readingTime": "5 min read",
+    "keywords": [
+      "basketball tryout evaluation form",
+      "basketball tryout score sheet",
+      "basketball tryout template",
+      "youth basketball tryout evaluation",
+      "basketball tryout rating sheet",
+      "basketball tryout drills and evaluation"
+    ],
+    "body": [
+      {
+        "p": "The hardest conversation in youth basketball isn't with a player — it's with a parent who wants to know why their kid didn't make it. A tryout evaluation form is how that conversation stays short and fair: every player rated on the same skills, by the same scale, on paper you still have in March. This free printable gives you a full single-player form plus a grid for scoring a whole gym."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-tryout-evaluation.pdf",
+          "label": "Basketball Tryout Evaluation Form (printable PDF)",
+          "note": "Single-player form with 8 rated skills and notes, plus a 15-player quick grid for full-gym scoring. Free, no email required."
+        }
+      },
+      {
+        "h2": "The eight things to rate"
+      },
+      {
+        "table": {
+          "headers": [
+            "Skill",
+            "What to watch for"
+          ],
+          "rows": [
+            [
+              "Ball handling",
+              "Head up under pressure — not the crossover, the eyes"
+            ],
+            [
+              "Shooting form",
+              "Mechanics and footwork, not whether it went in today"
+            ],
+            [
+              "Finishing",
+              "Both hands at the rim, contact doesn't end the play"
+            ],
+            [
+              "Passing",
+              "Sees the open teammate before the defense does"
+            ],
+            [
+              "On-ball defense",
+              "Slides without crossing feet, stays down in a stance"
+            ],
+            [
+              "Rebounding & athleticism",
+              "Pursues the ball out of area; second jump"
+            ],
+            [
+              "Game sense",
+              "Spacing, cuts, decisions in scrimmage — the unteachable tell"
+            ],
+            [
+              "Coachability & effort",
+              "Eye contact during instruction, sprints in the boring drills"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Run the tryout so the numbers mean something"
+      },
+      {
+        "p": "The form is only as fair as the tryout underneath it. Number every player with tape or pinnies so evaluators score jerseys, not names. Run the same station sequence for every group — handling, shooting, defense, then scrimmage — so player twelve gets judged on the same drills as player one. And use at least two evaluators scoring independently; where your sheets disagree is exactly where to watch the scrimmage closer. Rate shooting on form, not makes: a nervous ten-year-old's percentage on one Tuesday tells you nothing, but their footwork does."
+      },
+      {
+        "h2": "After the last whistle"
+      },
+      {
+        "p": "Total the scores, sort the grid, and make the easy calls first — the top group and the clear cuts. Spend your time on the middle, and let game sense and coachability break the ties; skills catch up to attitude, rarely the reverse. Then keep every form. When a parent calls, you're reading from the same sheet every kid was scored on — and next season, the kid who missed the cut gets a specific answer about what to work on instead of a shrug."
+      },
+      {
+        "h2": "Roster picked — now put it somewhere"
+      },
+      {
+        "p": "The day after tryouts, the real season admin starts. With My-Team Sports, you paste the roster in, the schedule goes up on a team site parents open like an app, the live scoreboard covers game night, and the AI assistant coach builds practice plans around exactly the gaps the tryout exposed. The form finds the team; the site runs it."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-practice-plan-template",
+        "label": "Basketball Practice Plan Template",
+        "note": "The first week of practice, ready to print"
+      },
+      {
+        "href": "/blog/basketball-drills-for-beginners",
+        "label": "Basketball Drills for Beginners",
+        "note": "Station-ready tryout drills"
+      },
+      {
+        "href": "/blog/basketball-depth-chart-template",
+        "label": "Basketball Depth Chart",
+        "note": "Turn the tryout grid into a rotation"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What should a basketball tryout evaluation form include?",
+        "a": "Player identification (number, name, age or grade), a consistent rating scale — 1 to 5 works — across a fixed set of skills like ball handling, shooting form, finishing, passing, defense, rebounding, game sense, and coachability, plus space for notes and an overall recommendation."
+      },
+      {
+        "q": "How do you score basketball tryouts fairly?",
+        "a": "Same drills for every group, numbered players so evaluators score jerseys rather than reputations, at least two evaluators scoring independently, and ratings anchored to what you watched — form and decisions — rather than makes and misses on one nervous afternoon. Keep the forms afterward so decisions are documentable."
+      },
+      {
+        "q": "How many evaluators do you need for a tryout?",
+        "a": "Two is the practical minimum — independent scores catch personal bias, and where they disagree tells you who to watch in the scrimmage. For big tryouts, one evaluator per station plus one floating on scrimmage play works well with the multi-player grid."
+      }
+    ]
+  },
+  {
     slug: "hockey-line-chart-template",
     title: "Hockey Line Chart Template (Free Printable PDF)",
     description:
