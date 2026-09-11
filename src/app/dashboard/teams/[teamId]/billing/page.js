@@ -20,6 +20,7 @@ export default function BillingPage({ params }) {
   const processing = search.get("status") === "processing";
 
   const [team, setTeam] = useState(null);
+  const [league, setLeague] = useState(null); // team_league_info result; null for solo teams
   const [payments, setPayments] = useState([]);
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(null); // 'season' | 'ai'
@@ -27,7 +28,7 @@ export default function BillingPage({ params }) {
   const load = useCallback(async () => {
     const [{ data: t, error: err }, { data: pays }] = await Promise.all([
       supabase.from("teams")
-        .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_enabled")
+        .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_enabled, league_id")
         .eq("id", teamId).single(),
       supabase.from("payments")
         .select("id, product, season_year, amount_cents, created_at")
@@ -36,6 +37,12 @@ export default function BillingPage({ params }) {
     if (err) setError(err.message);
     setTeam(t || null);
     setPayments(pays || []);
+    if (t?.league_id) {
+      const { data: info } = await supabase.rpc("team_league_info", { p_team_id: teamId });
+      setLeague(info || null);
+    } else {
+      setLeague(null);
+    }
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { load(); }, [load]);
@@ -68,7 +75,7 @@ export default function BillingPage({ params }) {
 
   if (!team) return <Spinner />;
 
-  const access = teamAccess(team);
+  const access = teamAccess(team, new Date(), league);
   const year = currentSeasonYear();
   const seasonPrice = priceFor("season", year);
   const aiPrice = priceFor("ai", year);
@@ -101,7 +108,12 @@ export default function BillingPage({ params }) {
       <Card>
         <h3 className="font-bold text-lg mb-3">PLAN STATUS</h3>
         <div className="space-y-2 text-sm">
-          {access.paid ? (
+          {access.leagueActive ? (
+            <p className="text-slate-300">
+              <span className="text-[var(--color-accent-green)] font-semibold">✓ Covered by {access.leagueName}</span>
+              {" "}— {access.schoolName ? `${access.schoolName}'s school plan` : "league plan"} covers this team through {dateFmt(access.leaguePaidThrough)}. Nothing to buy for coaching tools.
+            </p>
+          ) : access.paid ? (
             <p className="text-slate-300">
               <span className="text-[var(--color-accent-green)] font-semibold">✓ Season Pass active</span>
               {" "}— covered through {dateFmt(access.paidThrough)}.
@@ -134,6 +146,8 @@ export default function BillingPage({ params }) {
       </Card>
 
       <div className="grid sm:grid-cols-2 gap-4">
+        {/* League-covered teams never see the Season Pass offer — the school/league already paid. */}
+        {!access.leagueActive && (
         <Card className="border-blue-500/25">
           <h4 className="font-bold mb-1">SEASON PASS — {year}</h4>
           <p className="text-3xl font-bold mb-1">
@@ -152,6 +166,7 @@ export default function BillingPage({ params }) {
             {busy === "season" ? "Opening checkout..." : access.paid ? "EXTEND SEASON PASS" : "BUY SEASON PASS"}
           </Button>
         </Card>
+        )}
 
         <Card className="border-purple-500/25">
           <h4 className="font-bold mb-1">AI ASSISTANT COACH — {year}</h4>

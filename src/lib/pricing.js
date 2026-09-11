@@ -35,21 +35,41 @@ export function seasonEndDate(year) {
  * Compute a team's access state from its billing columns.
  * Lock model: expired teams lose the coach dashboard only —
  * the public team site never locks.
+ *
+ * `league` is the optional result of the `team_league_info` RPC (null for
+ * every solo team). A team is league-covered when its school's plan or the
+ * league's own paid_through is current — that unlocks the coach dashboard
+ * exactly like a Season Pass. The AI add-on is never bundled (design v1 §7).
  */
-export function teamAccess(team, now = new Date()) {
+export function teamAccess(team, now = new Date(), league = null) {
   const today = now.toISOString().slice(0, 10);
   const paid = !!(team.paid_through && team.paid_through >= today);
   const trialActive = !!(team.trial_ends_at && new Date(team.trial_ends_at) > now);
   const aiPaid = !!(team.ai_paid_through && team.ai_paid_through >= today);
   const ai = aiPaid || !!team.ai_enabled; // ai_enabled doubles as a comp/override flag
+
+  const schoolPaidThrough = league?.school?.paid_through || null;
+  const leaguePaidThrough = league?.league?.paid_through || null;
+  const schoolActive = !!(schoolPaidThrough && schoolPaidThrough >= today);
+  const leagueActive = schoolActive || !!(leaguePaidThrough && leaguePaidThrough >= today);
+  // Whichever coverage reaches furthest is the date we show the coach.
+  const leaguePaidThroughShown = [schoolPaidThrough, leaguePaidThrough]
+    .filter((d) => d && d >= today).sort().pop() || null;
+
   return {
-    active: paid || trialActive,
+    active: paid || trialActive || leagueActive,
     paid,
     trialActive,
+    leagueActive,
     ai,
     aiPaid,
     paidThrough: team.paid_through || null,
     aiPaidThrough: team.ai_paid_through || null,
     trialEndsAt: team.trial_ends_at || null,
+    leaguePaidThrough: leaguePaidThroughShown,
+    leagueName: league?.league?.name || null,
+    leagueSlug: league?.league?.slug || null,
+    schoolName: league?.school?.name || null,
+    divisionName: league?.division?.name || null,
   };
 }

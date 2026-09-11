@@ -42,15 +42,28 @@ export async function POST(request) {
   // RLS: only coaches/owners can see their team.
   const { data: team } = await supabase
     .from("teams")
-    .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_enabled")
+    .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_enabled, league_id")
     .eq("id", teamId)
     .single();
   if (!team) {
     return NextResponse.json({ error: "Team not found." }, { status: 404 });
   }
 
+  // League teams: never sell a Season Pass to a team the school/league already covers.
+  let league = null;
+  if (team.league_id) {
+    const { data: info } = await supabase.rpc("team_league_info", { p_team_id: teamId });
+    league = info || null;
+  }
+
   const year = currentSeasonYear();
-  const access = teamAccess(team);
+  const access = teamAccess(team, new Date(), league);
+  if (product === "season" && access.leagueActive) {
+    return NextResponse.json(
+      { error: `This team is covered by ${access.leagueName} — no Season Pass needed.` },
+      { status: 400 },
+    );
+  }
   if (product === "season" && team.paid_through && team.paid_through >= `${year}-12-31`) {
     return NextResponse.json({ error: `Your ${year} Season Pass is already active.` }, { status: 400 });
   }
