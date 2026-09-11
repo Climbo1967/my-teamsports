@@ -27,6 +27,10 @@ export default async function DashboardLayout({ children }) {
   }
 
   const { data: isAdmin } = await supabase.rpc("is_admin");
+  // League admins (commissioner/scheduler/scorer) get a Leagues entry. Empty
+  // array for everyone else — no UI change for regular coaches.
+  const { data: myLeagues } = await supabase.rpc("my_leagues");
+  const hasLeagues = Array.isArray(myLeagues) && myLeagues.length > 0;
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
@@ -38,6 +42,14 @@ export default async function DashboardLayout({ children }) {
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-5">
+          {hasLeagues && (
+            <Link
+              href="/dashboard/leagues"
+              className="text-sm font-semibold text-amber-300 border border-amber-400/25 px-4 py-2 rounded-lg hover:bg-amber-400/10 transition-colors"
+            >
+              🏆 Leagues
+            </Link>
+          )}
           {isAdmin && (
             <Link
               href="/dashboard/admin"
@@ -49,7 +61,7 @@ export default async function DashboardLayout({ children }) {
           <span className="hidden sm:block text-sm text-slate-400">{user.email}</span>
           <LogoutButton />
         </div>
-        <DashMenu isAdmin={!!isAdmin} email={user.email} />
+        <DashMenu isAdmin={!!isAdmin} hasLeagues={hasLeagues} email={user.email} />
       </nav>
       <main className="max-w-[1100px] mx-auto px-6 py-10">{children}</main>
     </div>

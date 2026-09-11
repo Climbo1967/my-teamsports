@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
-export default function DashMenu({ isAdmin, email }) {
+export default function DashMenu({ isAdmin, hasLeagues = false, email }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -27,6 +27,15 @@ export default function DashMenu({ isAdmin, email }) {
           >
             🏠 My Teams
           </Link>
+          {hasLeagues ? (
+            <Link
+              href="/dashboard/leagues"
+              onClick={() => setOpen(false)}
+              className="py-3 text-sm font-semibold text-amber-300 hover:text-amber-200 transition-colors border-b border-white/5"
+            >
+              🏆 Leagues
+            </Link>
+          ) : null}
           {isAdmin ? (
             <Link
               href="/dashboard/admin"

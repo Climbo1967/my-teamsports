@@ -83,3 +83,6 @@ export function splitRecentAndUpcoming(games, now = Date.now()) {
     .slice(0, 10);
   return { finals, upcoming };
 }
+
+/** Wall clock for list splitting in client components (kept out of render bodies for the purity lint). */
+export function nowMs() { return Date.now(); }

@@ -149,6 +149,7 @@ function EventRow({ event, past, players, rsvps, onEdit, onDelete, onStats }) {
           <p className="font-semibold text-white">
             {event.event_type === "game" && event.opponent ? `vs ${event.opponent}` : event.title || (event.event_type === "practice" ? "Practice" : "Team Event")}
             {event.result && <span className="ml-2 text-[var(--color-accent-green)] font-bold">{event.result}</span>}
+            {event.league_game_id && event.title && <span className="ml-2 text-xs font-semibold uppercase tracking-wider text-yellow-400">{event.title}</span>}
           </p>
           <p className="text-sm text-slate-400">
             {d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
@@ -156,17 +157,29 @@ function EventRow({ event, past, players, rsvps, onEdit, onDelete, onStats }) {
           </p>
           {event.notes && <p className="text-xs text-slate-500 mt-1 whitespace-pre-wrap">{event.notes}</p>}
         </div>
-        <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${
-          event.event_type === "game"
-            ? "bg-blue-500/10 text-[var(--color-accent-blue)] border border-blue-500/25"
-            : "bg-green-500/10 text-green-400 border border-green-500/25"
-        }`}>
-          {event.event_type}
-        </span>
+        {event.league_game_id ? (
+          // Mirrored from the league schedule: the league admin owns date/opponent/
+          // location (a DB trigger blocks edits too). Coach keeps Stats + scorekeeper.
+          <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30" title="Scheduled by the league">
+            🏆 League{event.is_home === false ? " · Away" : event.is_home ? " · Home" : ""}
+          </span>
+        ) : (
+          <span className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${
+            event.event_type === "game"
+              ? "bg-blue-500/10 text-[var(--color-accent-blue)] border border-blue-500/25"
+              : "bg-green-500/10 text-green-400 border border-green-500/25"
+          }`}>
+            {event.event_type}
+          </span>
+        )}
         <div className="flex gap-3 items-center">
           {onStats && <button onClick={onStats} className="text-xs text-[var(--color-accent-green)] hover:underline font-semibold">📊 Stats</button>}
-          <button onClick={onEdit} className="text-xs text-[var(--color-accent-blue)] hover:underline">Edit</button>
-          <button onClick={onDelete} className="text-xs text-red-400 hover:underline">Delete</button>
+          {!event.league_game_id && (
+            <>
+              <button onClick={onEdit} className="text-xs text-[var(--color-accent-blue)] hover:underline">Edit</button>
+              <button onClick={onDelete} className="text-xs text-red-400 hover:underline">Delete</button>
+            </>
+          )}
         </div>
       </div>
 
