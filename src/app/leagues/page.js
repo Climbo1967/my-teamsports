@@ -4,7 +4,7 @@ import { SiteNav, SiteFooter, PageHero } from "@/components/marketing";
 export const metadata = {
   title: "Youth Sports League Websites — Schedules, Standings, No Ads",
   description:
-    "Run your whole league on one site: central schedule, automatic standings, divisions, and a full team website for every coach. No ads, no app, and parents never pay. Now onboarding leagues for the 2026–27 season.",
+    "Run your whole league on one site: central schedule, automatic standings, divisions, and a full team website for every coach. No ads, no app, and parents never pay. See a live league, then talk to us for the 2026–27 season.",
   alternates: { canonical: "/leagues" },
   openGraph: {
     title: "Youth Sports League Websites — Schedules, Standings, No Ads | My-Team Sports",
@@ -15,6 +15,7 @@ export const metadata = {
 };
 
 const LEAGUE_EMAIL = "ron@2bcreations.com";
+const DEMO_URL = "/leagues/demo";
 
 const MAILTO =
   `mailto:${LEAGUE_EMAIL}?subject=` +
@@ -25,12 +26,12 @@ const MAILTO =
   );
 
 const OFFICE = [
-  { icon: "📅", title: "Central schedule", desc: "Load the season once. Every team's page updates automatically; reschedules push to both teams." },
+  { icon: "📅", title: "Central schedule", desc: "Paste your schedule from a spreadsheet, preview every row, import. Every team's page fills in automatically; reschedules and postponements push to both teams." },
   { icon: "🏆", title: "Automatic standings", desc: "Finals roll up from the scorekeeper. W-L, points for and against, head-to-head tiebreakers, per division." },
   { icon: "🏫", title: "Schools and divisions", desc: "Varsity, JV, middle school, boys, girls — organize teams the way your league actually runs." },
   { icon: "🌐", title: "Public league site", desc: "Schedule, results and standings anyone can open. No login, no passcode, no app." },
   { icon: "🔒", title: "Score control", desc: "Home team reports, the league can correct and lock. One official score, everywhere." },
-  { icon: "🧾", title: "One invoice", desc: "The league pays once and every team is covered. Teams that want to go it alone can, at regular team pricing." },
+  { icon: "🧾", title: "One plan per school", desc: "Each school's athletic department covers all of its teams with one plan; the league pays one league fee. Teams that want to go it alone can, at regular team pricing." },
 ];
 
 const FAQS = [
@@ -40,7 +41,7 @@ const FAQS = [
   },
   {
     q: "How do we get our schedule in?",
-    a: "Send it as a spreadsheet — date, time, division, home team, away team, location. We import it and every team's schedule fills in. Changes during the season go through the league admin console.",
+    a: "Paste it straight from your spreadsheet — date, time, division, home, away, location, in any order. The league console previews every row (new, changed, rejected and why) before anything is written, then imports. Or send it to us and we'll load it for you. Changes during the season are a click in the console.",
   },
   {
     q: "Who enters scores?",
@@ -77,6 +78,8 @@ export default function LeaguesPage() {
 
   const btn =
     "inline-block bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-green-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/35";
+  const btnAlt =
+    "inline-block border border-blue-500/40 text-[var(--color-accent-blue)] font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide px-10 py-4 rounded-xl hover:bg-blue-500/10 transition-all duration-200 hover:-translate-y-0.5";
 
   return (
     <div className="min-h-screen">
@@ -91,7 +94,10 @@ export default function LeaguesPage() {
 
       {/* HERO CTA */}
       <section className="px-6 pt-2 pb-16 text-center bg-[var(--color-navy-mid)]">
-        <a href={MAILTO} className={btn}>TALK TO RON →</a>
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <a href={MAILTO} className={btn}>TALK TO RON →</a>
+          <Link href={DEMO_URL} className={btnAlt}>SEE A LIVE LEAGUE →</Link>
+        </div>
         <p className="mt-4 text-xs text-slate-500">Real person, usually same day. No sales team.</p>
       </section>
 
@@ -119,6 +125,35 @@ export default function LeaguesPage() {
         </div>
       </section>
 
+      {/* LIVE DEMO */}
+      <section className="px-6 py-20">
+        <div className="max-w-[1000px] mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">SEE IT RUNNING</h2>
+          <p className="text-slate-400 text-lg text-center max-w-[640px] mx-auto mb-10">
+            A live league on My-Team Sports, mid-season — four schools, two divisions, results rolling in from the
+            coaches&apos; scorekeepers. Open it on your phone — no login, no passcode.
+          </p>
+          <div className="grid md:grid-cols-3 gap-5">
+            {[
+              { href: DEMO_URL, icon: "🏆", title: "League home", desc: "Current standings, this week's games, latest results — the page a commissioner sends to every parent." },
+              { href: `${DEMO_URL}/standings`, icon: "📊", title: "Standings", desc: "Win-loss, points for and against, streak, last five. Automatic from finals; the league can correct and lock any result." },
+              { href: `${DEMO_URL}/schedule`, icon: "📅", title: "Schedule", desc: "Every game with location, filterable by division and school. Postponements show the moment the league marks them." },
+            ].map((c) => (
+              <Link key={c.href} href={c.href} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6 hover:border-blue-500/30 hover:bg-white/[0.05] transition-all block">
+                <div className="text-3xl mb-3">{c.icon}</div>
+                <h3 className="text-lg font-semibold text-white mb-2">{c.title} →</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{c.desc}</p>
+              </Link>
+            ))}
+          </div>
+          <p className="mt-6 text-center text-xs text-slate-500">
+            The demo league&apos;s schools are made up; the software is exactly what your league would run on.
+            The league admin console (schedule import, results, coach invites) is behind the commissioner&apos;s login —
+            ask for a walkthrough.
+          </p>
+        </div>
+      </section>
+
       {/* LEAGUE OFFICE */}
       <section className="px-6 py-20">
         <div className="max-w-[1000px] mx-auto">
@@ -142,7 +177,8 @@ export default function LeaguesPage() {
           <p className="text-slate-400 text-lg leading-relaxed mb-6">
             Each team in your league gets everything a solo My-Team Sports team gets — roster, schedule with parent
             RSVPs, live scoreboard, stats and season totals, photo gallery, game film, announcements, push alerts, and a
-            printable playbook. Coaches manage their own team; the league manages the league.
+            printable playbook. League games land on each coach&apos;s schedule automatically and can&apos;t be moved by
+            accident; coaches manage their own team, the league manages the league.
           </p>
           <Link href="/pricing" className="text-[var(--color-accent-blue)] hover:text-white transition-colors font-medium">
             See everything included on the pricing page →

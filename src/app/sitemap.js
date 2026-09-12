@@ -33,7 +33,7 @@ export default async function sitemap() {
       priority: 0.9,
     })),
     { url: `${BASE}/how-it-works`, lastModified: now, changeFrequency: "monthly", priority: 0.8 },
-    { url: `${BASE}/leagues`, lastModified: new Date("2026-08-28"), changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/leagues`, lastModified: new Date("2026-09-12"), changeFrequency: "monthly", priority: 0.8 },
     ...leagueUrls,
     { url: `${BASE}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/faq`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
