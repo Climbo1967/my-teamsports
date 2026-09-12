@@ -184,6 +184,9 @@ function TeamsTab({ supabase, data, reload, can }) {
   }
   const rpc = async (name, args) => { const { error: e } = await supabase.rpc(name, args); if (e) throw new Error(e.message); };
 
+  // League admins hold owner rows on every team they created (placeholder
+  // ownership); hide those so the column shows the actual coaching staff.
+  const adminEmails = new Set(data.admins.map((a) => a.email));
   const divisionsBySeason = (sid) => data.divisions.filter((d) => d.season_id === sid);
   const divLabel = (id) => { const d = data.divisions.find((x) => x.id === id); const s = d && data.seasons.find((x) => x.id === d.season_id); return d ? `${d.name}${s ? ` (${s.name})` : ""}` : "—"; };
 
@@ -193,7 +196,7 @@ function TeamsTab({ supabase, data, reload, can }) {
 
       <Card>
         <h3 className="font-bold text-lg mb-1">TEAMS ({data.teams.length})</h3>
-        <p className="text-xs text-slate-500 mb-4">Each team gets its own site + passcode exactly like a solo team. Coaches you invite land on the team when they sign up with that email.</p>
+        <p className="text-xs text-slate-500 mb-4">Each team gets its own site + passcode exactly like a solo team. Invite the head coach by email — they get the link, the passcode and signup steps, and the team becomes theirs the moment they sign up with that address (you keep access too).</p>
         {data.teams.length === 0 ? <p className="text-sm text-slate-500">No teams yet.</p> : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
@@ -211,10 +214,7 @@ function TeamsTab({ supabase, data, reload, can }) {
                       <td className="py-2 pr-3 text-slate-300">{sc?.name || <span className="text-slate-600">—</span>}</td>
                       <td className="py-2 pr-3 text-slate-300">{divLabel(t.division_id)}</td>
                       <td className="py-2 pr-3 text-slate-400 text-xs">
-                        {t.coaches.filter((c) => c.role !== "owner").map((c) => (
-                          <span key={c.email} className={c.claimed ? "text-slate-300" : "text-yellow-400"} title={c.claimed ? "Signed up" : "Invited — not signed up yet"}>{c.email}{c.claimed ? "" : " (invited)"}</span>
-                        ))}
-                        {t.coaches.filter((c) => c.role !== "owner").length === 0 && <span className="text-slate-600">none yet</span>}
+                        <CoachCell team={t} adminEmails={adminEmails} canInvite={commissioner} onInvited={reload} />
                       </td>
                       <td className="py-2 pr-3 font-mono text-slate-300 tracking-widest">{t.passcode}</td>
                       <td className="py-2 text-slate-400">{t.players}</td>
@@ -249,7 +249,12 @@ function TeamsTab({ supabase, data, reload, can }) {
                 </Select></div>
               <div><Label>Coach email (optional)</Label><Input type="email" value={teamForm.coach_email} onChange={(e) => setTeamForm({ ...teamForm, coach_email: e.target.value })} placeholder="coach@school.org" /></div>
               <Button disabled={busy || !teamForm.name.trim()} onClick={() => run(async () => {
-                await rpc("league_create_team", { p_league_id: data.league.id, p_school_id: teamForm.school_id || null, p_division_id: teamForm.division_id || null, p_name: teamForm.name, p_sport: teamForm.sport, p_coach_email: teamForm.coach_email || null });
+                const { data: teamId, error: e } = await supabase.rpc("league_create_team", { p_league_id: data.league.id, p_school_id: teamForm.school_id || null, p_division_id: teamForm.division_id || null, p_name: teamForm.name, p_sport: teamForm.sport, p_coach_email: null });
+                if (e) throw new Error(e.message);
+                if (teamForm.coach_email.trim()) {
+                  const msg = await inviteCoach(teamId, teamForm.coach_email);
+                  if (msg) throw new Error(`Team created. ${msg}`);
+                }
                 setTeamForm({ ...teamForm, name: "", coach_email: "" });
               })}>ADD TEAM</Button>
             </div>
@@ -333,6 +338,64 @@ function TeamsTab({ supabase, data, reload, can }) {
       )}
 
       {!commissioner && <p className="text-xs text-slate-600">Only a commissioner can add schools, seasons, divisions and teams.</p>}
+    </div>
+  );
+}
+
+/** POST the invite; returns an error string or null. The RPC behind it re-checks the commissioner role. */
+async function inviteCoach(teamId, email) {
+  try {
+    const res = await fetch("/api/leagues/invite-coach", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamId, email: email.trim() }),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) return body.error || "Invite failed.";
+    return null;
+  } catch (e) { return e.message; }
+}
+
+function CoachCell({ team, adminEmails, canInvite, onInvited }) {
+  const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const staff = team.coaches.filter((c) => !adminEmails.has(c.email));
+  const head = staff.find((c) => c.role === "owner");
+
+  async function send(to) {
+    setBusy(true); setMsg(null);
+    const err = await inviteCoach(team.id, to);
+    setMsg(err || "Invite sent.");
+    setBusy(false);
+    if (!err) { setOpen(false); setEmail(""); onInvited(); }
+  }
+
+  return (
+    <div className="space-y-1">
+      {staff.length === 0 && !open && <span className="text-slate-600 mr-2">none yet</span>}
+      {staff.map((c) => (
+        <div key={c.email} className="flex flex-wrap items-center gap-2">
+          <span className={c.claimed ? "text-slate-300" : "text-yellow-400"} title={c.claimed ? "Signed up" : "Invited — hasn't signed up yet"}>
+            {c.email}{c.role === "owner" ? " · head" : ""}{c.claimed ? "" : " (invited)"}
+          </span>
+          {canInvite && !c.claimed && c.role === "owner" && (
+            <button disabled={busy} onClick={() => send(c.email)} className="text-[var(--color-accent-blue)] hover:underline disabled:opacity-50">resend</button>
+          )}
+        </div>
+      ))}
+      {canInvite && !head && !open && (
+        <button onClick={() => setOpen(true)} className="text-[var(--color-accent-blue)] hover:underline">+ invite head coach</button>
+      )}
+      {open && (
+        <div className="flex items-center gap-2">
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="coach@school.org"
+            className="bg-white/[0.05] border border-white/[0.1] rounded px-2 py-1 text-xs text-white w-48" />
+          <button disabled={busy || !email.includes("@")} onClick={() => send(email)} className="text-[var(--color-accent-green)] font-semibold hover:underline disabled:opacity-50">{busy ? "sending…" : "send"}</button>
+          <button onClick={() => { setOpen(false); setMsg(null); }} className="text-slate-500 hover:text-white">cancel</button>
+        </div>
+      )}
+      {msg && <div className={msg === "Invite sent." ? "text-[var(--color-accent-green)]" : "text-red-400"}>{msg}</div>}
     </div>
   );
 }
