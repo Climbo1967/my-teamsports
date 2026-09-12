@@ -10,6 +10,538 @@
 
 export const posts = [
   {
+    "slug": "4-4-defense-depth-chart-template",
+    "title": "4-4 Defense Depth Chart Template (Free Printable PDF)",
+    "description": "Free printable 4-4 defense depth chart — all 11 spots three deep (DE, DT, OLB, ILB, CB, S), a cross-training column, and nickel and goal-line swaps.",
+    "excerpt": "Every 4-4 spot three deep, the two positions you must cross-train, and the Friday check that keeps a Saturday injury from moving four players at once.",
+    "tag": "Football",
+    "date": "2026-09-12",
+    "updated": "2026-09-12",
+    "readingTime": "5 min read",
+    "keywords": [
+      "4-4 defense depth chart template",
+      "4 4 defense depth chart",
+      "4-4 defense depth chart pdf",
+      "4-4 defense positions",
+      "youth football 4-4 defense",
+      "football defensive depth chart template"
+    ],
+    "body": [
+      {
+        "p": "The 4-4 is the youth football default for a reason: eight players in the box, simple run fits, and every linebacker reads the same key. Its weakness is depth. With four linebackers on the field, one injury can shift two other players and change everyone's reads. A depth chart built for the 4-4 — not a generic offense-defense-special-teams sheet — is what keeps that from turning into a mid-game scramble."
+      },
+      {
+        "download": {
+          "href": "/downloads/4-4-defense-depth-chart.pdf",
+          "label": "4-4 Defense Depth Chart (printable PDF)",
+          "note": "All 11 positions with first, second, and third string, a cross-training column, and a box for the nickel and goal-line swaps. Free, no email required."
+        }
+      },
+      {
+        "h2": "The 11 spots in a 4-4"
+      },
+      {
+        "table": {
+          "headers": [
+            "Position",
+            "Count",
+            "The job",
+            "Who usually fits"
+          ],
+          "rows": [
+            [
+              "Defensive end",
+              "2",
+              "Set the edge, turn everything inside, contain on bootlegs",
+              "Long, disciplined players who won't chase the fake"
+            ],
+            [
+              "Defensive tackle",
+              "2",
+              "Two-gap the guards, eat double teams, stop the dive",
+              "Your two biggest linemen who play low"
+            ],
+            [
+              "Outside linebacker",
+              "2",
+              "Force player against the run, flat coverage against the pass",
+              "Athletic kids who tackle in space"
+            ],
+            [
+              "Inside linebacker",
+              "2",
+              "Read the near back, fill the A and B gaps, call the front",
+              "Your smartest players — they run the defense"
+            ],
+            [
+              "Cornerback",
+              "2",
+              "Deep third or man on the widest receiver, secondary contain",
+              "Fast, willing to tackle in the open field"
+            ],
+            [
+              "Free safety",
+              "1",
+              "Last line of defense, alley player on the run, deep middle",
+              "The best tackler you have who can also cover"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "How to fill the three strings"
+      },
+      {
+        "p": "First string is the 11 who start. Second string is the first name you would call for each spot — and here is the rule that makes the chart useful: one player can back up two positions, but never two positions that go down together. Your left and right tackle do not share a backup, because a chop block takes both out on the same play. Your two corners do not share a backup for the same reason on a crackback."
+      },
+      {
+        "p": "Third string is the emergency plan, and at the youth level it is usually a two-way starter coming over from offense. Write that name down anyway. The point of the third column is that you decided before the game, not in the 30 seconds after the trainer waves you over."
+      },
+      {
+        "h2": "The two positions you must cross-train"
+      },
+      {
+        "p": "Inside linebacker and free safety. The inside linebackers make the front call and read the back; the safety is the only player between a missed tackle and the end zone. If your second-string players at either spot have never taken a full practice rep there, the depth chart is a list of names, not a plan. Give both backups a full team period every week — the cross-training column on the PDF is there so you remember who has actually done it."
+      },
+      {
+        "h2": "Nickel and goal-line swaps"
+      },
+      {
+        "p": "You will not stay in a base 4-4 all game. On third and long you probably pull an inside linebacker for a fifth defensive back; inside the five you probably go to a 6-2 with two ends crashing. Write both swaps in the box at the bottom of the chart: which player leaves, which player enters, and who moves. When the down-and-distance comes up, you read it out loud instead of solving it."
+      },
+      {
+        "h2": "The Friday five-minute check"
+      },
+      {
+        "ul": [
+          "Cross out anyone who missed a practice this week and confirm the backup below them knows they are one play away.",
+          "Read the two swaps out loud to the players involved so nobody is surprised on Saturday.",
+          "Make sure no two positions that get hurt together share a backup.",
+          "Give a copy to your assistant. The chart on your clipboard does not help if you are down the sideline arguing a spot."
+        ]
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/football-depth-chart-template",
+        "label": "Football Depth Chart Template",
+        "note": "Offense, defense, and special teams on one sheet"
+      },
+      {
+        "href": "/blog/special-teams-depth-chart-template",
+        "label": "Special Teams Depth Chart Template",
+        "note": "All five kicking units with a backup for every spot"
+      },
+      {
+        "href": "/blog/football-practice-plan-template",
+        "label": "Football Practice Plan Template",
+        "note": "Build the team period where backups get real reps"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is a 4-4 defense in youth football?",
+        "a": "A base front with four down linemen (two ends, two tackles) and four linebackers (two inside, two outside), backed by two cornerbacks and one free safety. It puts eight players near the line of scrimmage, which is why it is so common against run-heavy youth offenses."
+      },
+      {
+        "q": "How many players are on a 4-4 depth chart?",
+        "a": "Eleven starting spots. A complete chart lists a first, second, and third option at every one — 33 names on paper, though at the youth level many of those names repeat because players go both ways."
+      },
+      {
+        "q": "Can I use this chart for a 4-3 or 6-2?",
+        "a": "Yes. Use the swap box at the bottom to note which linebacker becomes a fifth defensive back for the 4-3 nickel look and which ends crash down for the 6-2 goal-line front. Most youth teams run all three out of the same personnel."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-tryout-plan-template",
+    "title": "Basketball Tryout Plan Template (Free Printable PDF)",
+    "description": "Free printable 90-minute basketball tryout plan — timed skill stations, evaluator assignments, and a scrimmage block so every player is seen the same way.",
+    "excerpt": "A 90-minute tryout that runs itself: six timed blocks, evaluators who know exactly what to watch, and a scrimmage that answers the questions the drills cannot.",
+    "tag": "Basketball",
+    "date": "2026-09-12",
+    "updated": "2026-09-12",
+    "readingTime": "5 min read",
+    "keywords": [
+      "basketball tryout plan",
+      "basketball tryout plan pdf",
+      "basketball tryout schedule",
+      "youth basketball tryout plan",
+      "how to run a basketball tryout",
+      "basketball tryout drills"
+    ],
+    "body": [
+      {
+        "p": "A tryout is the one practice all season where the outcome has to be defensible. The way you make it defensible is not a better eye — it is a plan that shows every player the same drills, for the same amount of time, in front of the same evaluators. This 90-minute plan does that with six timed blocks. Run it on day one, use the blank second page to adjust for day two, and the roster decisions will explain themselves."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-tryout-plan.pdf",
+          "label": "Basketball Tryout Plan (printable PDF)",
+          "note": "90-minute station plan with timing, evaluator rotation, and a scrimmage block, plus a blank second page to plan day two. Free, no email required."
+        }
+      },
+      {
+        "h2": "The 90-minute plan"
+      },
+      {
+        "table": {
+          "headers": [
+            "Time",
+            "Block",
+            "What evaluators watch"
+          ],
+          "rows": [
+            [
+              "0–10",
+              "Check-in, numbers on, dynamic warm-up",
+              "Nothing yet — get names matched to numbers"
+            ],
+            [
+              "10–25",
+              "Station 1: ball handling (two-ball, cone weave, pressure dribble)",
+              "Eyes up, weak hand, composure when a defender closes"
+            ],
+            [
+              "25–40",
+              "Station 2: shooting (form shots, catch-and-shoot, off the dribble)",
+              "Footwork and balance before makes and misses"
+            ],
+            [
+              "40–55",
+              "Station 3: defense and footwork (closeouts, slides, shell drill)",
+              "Stance, effort, communication — the things that cannot be taught by December"
+            ],
+            [
+              "55–70",
+              "3-on-3 half court, rotating winners",
+              "Decision making with space, willingness to pass"
+            ],
+            [
+              "70–85",
+              "5-on-5 full court, balanced teams",
+              "Transition effort, role acceptance, how they treat a teammate's mistake"
+            ],
+            [
+              "85–90",
+              "Free throws under fatigue, wrap-up, what to expect next",
+              "Who wants the ball when they are tired"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Stations, not lines"
+      },
+      {
+        "p": "Split the gym into three stations and rotate groups of eight to ten every 15 minutes. Two things happen: every player gets three times the reps they would get in a single line, and each evaluator sees every player doing the same drill in the same window. If you have one coach, run the stations in sequence for the whole group instead and keep the timing — consistency matters more than parallelism."
+      },
+      {
+        "h2": "Assigning evaluators"
+      },
+      {
+        "p": "Give each evaluator one station and one skill set for the drill blocks, then have everyone score the scrimmage. A coach who only watches ball handling for 15 minutes rates it far more consistently than one trying to score eight skills at once. Use the same rating sheet for every player — the tryout evaluation form linked below is built to sit next to this plan — and collect the sheets before anyone talks about players."
+      },
+      {
+        "h2": "The scrimmage answers the questions drills cannot"
+      },
+      {
+        "p": "Drills tell you who can shoot. Scrimmages tell you who will pass to the open player, who sprints back on defense, and who says something to a teammate after a turnover. Balance the teams on purpose so a good player is not hidden on a bad team, and rotate every three minutes so no one sits. This is where the middle of your roster gets decided."
+      },
+      {
+        "h2": "Day two"
+      },
+      {
+        "ul": [
+          "Shorten stations to ten minutes and lengthen the scrimmage — you have seen the skills, now watch the decisions.",
+          "Move the players you are unsure about onto the same team so they are compared directly.",
+          "Run one new drill nobody has seen. Coachability shows up in the first three reps of something unfamiliar.",
+          "Post cut decisions the same way for everyone, with the rating sheet available to any parent who asks."
+        ]
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-tryout-evaluation-form",
+        "label": "Basketball Tryout Evaluation Form",
+        "note": "The rating sheet built to sit next to this plan"
+      },
+      {
+        "href": "/blog/basketball-drills-for-beginners",
+        "label": "Basketball Drills for Beginners",
+        "note": "Station-ready drills for the skill blocks"
+      },
+      {
+        "href": "/blog/basketball-depth-chart-template",
+        "label": "Basketball Depth Chart",
+        "note": "Turn tryout scores into a rotation"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How long should a basketball tryout be?",
+        "a": "Ninety minutes is enough to see three skill stations and a full scrimmage without fatigue distorting the results. Run two sessions on separate days if you have more than about 30 players or a hard roster limit."
+      },
+      {
+        "q": "What drills should a basketball tryout include?",
+        "a": "One ball-handling block, one shooting block, one defense and footwork block, then 3-on-3 and 5-on-5 play. Keep the drills simple — you are evaluating the player, not their ability to learn a complicated drill in two minutes."
+      },
+      {
+        "q": "How do you evaluate players fairly at a tryout?",
+        "a": "Same drills, same time, same evaluators, same rating sheet, and the sheet gets filled out before anyone discusses names. The plan handles the first four; the evaluation form handles the fifth."
+      }
+    ]
+  },
+  {
+    "slug": "baseball-depth-chart-template",
+    "title": "Baseball Depth Chart Template (Free Printable PDF)",
+    "description": "Free printable baseball depth chart — nine positions plus DH three deep, a pitching staff and pitch-count box, and a layout that works for softball too.",
+    "excerpt": "Nine positions three deep, a pitching staff box that respects pitch counts, and the two spots that need a real backup before the first pitch.",
+    "tag": "Baseball",
+    "date": "2026-09-12",
+    "updated": "2026-09-12",
+    "readingTime": "5 min read",
+    "keywords": [
+      "baseball depth chart template",
+      "baseball depth chart pdf",
+      "softball depth chart template",
+      "baseball position chart fillable",
+      "baseball position template",
+      "youth baseball depth chart"
+    ],
+    "body": [
+      {
+        "p": "A lineup card tells you who is playing today. A depth chart tells you who plays when today goes sideways — the catcher takes a foul tip off the hand, your starter hits the pitch count in the fourth, the shortstop has a tournament with his travel team. Most youth coaches carry that plan in their head. This sheet puts it on paper so an assistant can run the dugout while you argue a call."
+      },
+      {
+        "download": {
+          "href": "/downloads/baseball-depth-chart.pdf",
+          "label": "Baseball & Softball Depth Chart (printable PDF)",
+          "note": "Nine positions plus DH/EH with three options each, a pitching staff and pitch-count box, and a catcher backup line. Works for softball as-is. Free, no email required."
+        }
+      },
+      {
+        "h2": "Positions, three deep"
+      },
+      {
+        "table": {
+          "headers": [
+            "Position",
+            "Fill it in this order",
+            "Backup rule"
+          ],
+          "rows": [
+            [
+              "Catcher",
+              "1st",
+              "Backup must have caught a full game this season — not a practice"
+            ],
+            [
+              "Pitcher",
+              "2nd",
+              "See the staff box — depth here is a rotation, not a name"
+            ],
+            [
+              "Shortstop",
+              "3rd",
+              "Your best infield arm; backup is usually the second baseman"
+            ],
+            [
+              "Center field",
+              "4th",
+              "Your best outfield range; backup comes from a corner"
+            ],
+            [
+              "First and third base",
+              "5th",
+              "Corners can back each other up — same throws, mirrored"
+            ],
+            [
+              "Second base",
+              "6th",
+              "The easiest infield spot to fill from the bench"
+            ],
+            [
+              "Left and right field",
+              "7th",
+              "Where your developing players get innings without hiding them"
+            ],
+            [
+              "DH / EH",
+              "8th",
+              "The best bat not in the field; write the extra hitter here in leagues that allow it"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The two positions you must have a real backup for"
+      },
+      {
+        "p": "Catcher and pitcher. Everyone else can be covered by moving a competent athlete over for an inning. A backup catcher who has never blocked a ball in the dirt with runners on will cost you a game in one inning, and a pitcher you did not plan for will either throw past his count or be a position player walking the bases loaded. Write both backups down before the season and give them real reps. Everything else on the sheet is a preference; those two are a plan."
+      },
+      {
+        "h2": "Pitch counts change the chart"
+      },
+      {
+        "p": "The pitching staff box has room for each pitcher's pitch count from the last outing and the rest days required. That is not bookkeeping — it is the depth chart for the one position where the rules decide availability. Fill it in after every game and the question of who can pitch Saturday answers itself on Friday."
+      },
+      {
+        "h2": "Using it with your lineup card"
+      },
+      {
+        "ul": [
+          "Build the lineup card from the first column, then keep the depth chart on the dugout wall for the game.",
+          "When you substitute, cross out on the depth chart, not the lineup card — the card is the official record and the umpire has a copy.",
+          "Refresh the sheet after every game: who caught, who pitched and for how many pitches, who is unavailable next week.",
+          "For softball, the layout is identical — the pitch-count box works for innings-pitched limits instead."
+        ]
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/baseball-lineup-card-template",
+        "label": "Baseball Lineup Card Template",
+        "note": "Today's nine, batting order and positions"
+      },
+      {
+        "href": "/blog/softball-lineup-card-template",
+        "label": "Softball Lineup Card Template",
+        "note": "The softball version of the lineup card"
+      },
+      {
+        "href": "/blog/youth-baseball-practice-plan",
+        "label": "Youth Baseball Practice Plan",
+        "note": "Where your backup catcher gets real reps"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is a baseball depth chart?",
+        "a": "A list of the first, second, and third choice at every defensive position plus a pitching staff plan. Unlike a lineup card, it covers what happens when the starter is unavailable — injury, pitch count, absence — before it happens."
+      },
+      {
+        "q": "Does this work for softball?",
+        "a": "Yes. The nine positions and DH/EH are the same. Use the pitching box to track innings pitched instead of pitch counts if that is what your league limits."
+      },
+      {
+        "q": "How is a depth chart different from a lineup card?",
+        "a": "The lineup card is the official document for one game: batting order and starting positions. The depth chart is the plan behind it — who backs up each spot and who can pitch — and it stays on the dugout wall all season."
+      }
+    ]
+  },
+  {
+    "slug": "flag-football-depth-chart-template",
+    "title": "Flag Football Depth Chart Template (Free Printable PDF)",
+    "description": "Free printable flag football depth chart for 5v5 and 7v7 — offense and defense two deep, a snapper line, and a playing-time tally for fair rotations.",
+    "excerpt": "5v5 and 7v7 on one sheet, two strings that are actually enough, and the playing-time column that ends the 'my kid sat all game' conversation.",
+    "tag": "Flag Football",
+    "date": "2026-09-12",
+    "updated": "2026-09-12",
+    "readingTime": "4 min read",
+    "keywords": [
+      "flag football depth chart template",
+      "flag football depth chart",
+      "5v5 flag football depth chart",
+      "7v7 flag football positions chart",
+      "flag football rotation chart",
+      "youth flag football lineup"
+    ],
+    "body": [
+      {
+        "p": "Flag football rosters are small, games are short, and most leagues require equal playing time. That combination makes a tackle-football depth chart the wrong tool — you do not need three strings at 11 positions, you need two strings at five or seven and a way to prove everyone played. This sheet is built for exactly that."
+      },
+      {
+        "download": {
+          "href": "/downloads/flag-football-depth-chart.pdf",
+          "label": "Flag Football Depth Chart (printable PDF)",
+          "note": "5v5 and 7v7 layouts — offense and defense with two strings, a snapper line, and a playing-time tally column. Free, no email required."
+        }
+      },
+      {
+        "h2": "5v5 and 7v7 spots"
+      },
+      {
+        "table": {
+          "headers": [
+            "Format",
+            "Offense",
+            "Defense"
+          ],
+          "rows": [
+            [
+              "5v5",
+              "Quarterback, center, three receivers (one often lines up as a running back)",
+              "One rusher, two flat/short defenders, two deep safeties — or a 2-3 with no rusher"
+            ],
+            [
+              "7v7",
+              "Quarterback, center, running back, four receivers",
+              "Two rushers or a rusher plus a spy, two short defenders, three deep"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Two strings is enough"
+      },
+      {
+        "p": "With a roster of ten to twelve, a second string is your whole bench. List the starter and the first substitute at every spot and stop there. What matters more than a third name is that the second-string quarterback has taken snaps in practice this week and the second-string center can snap under a rush — write a check mark next to their names when they have."
+      },
+      {
+        "h2": "Equal playing time without losing the game"
+      },
+      {
+        "p": "The playing-time column is a tally: a mark for every series a player is on the field. Rotate by series, not by quarter, and rotate the receivers and short defenders freely — those are the spots where a substitution changes the least. Keep your quarterback and center steady through a drive and swap them between drives. By halftime, the tally tells you who needs the second half before a parent tells you."
+      },
+      {
+        "ul": [
+          "Rotate by series so every player gets full possessions, not scattered plays.",
+          "Swap receivers and short defenders first; they are the lowest-risk substitutions.",
+          "Change quarterback and center between drives, not in the middle of one.",
+          "Show the tally to any parent who asks. It ends the conversation."
+        ]
+      },
+      {
+        "h2": "The snapper problem"
+      },
+      {
+        "p": "Every flag football team has one player who can snap cleanly and one who cannot. If the good one is out, your offense is done. The sheet has a dedicated snapper line separate from the center position so you list two players who have actually snapped in practice — not two players who happen to be standing at center."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/flag-football-play-sheet-template",
+        "label": "Flag Football Play Sheet Template",
+        "note": "The plays your depth chart is running"
+      },
+      {
+        "href": "/blog/flag-football-practice-plan-template",
+        "label": "Flag Football Practice Plan Template",
+        "note": "Where second-string snappers get their reps"
+      },
+      {
+        "href": "/blog/flag-football-positions-5v5",
+        "label": "5v5 Flag Football Positions",
+        "note": "What each spot on the chart does"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How many positions are on a flag football depth chart?",
+        "a": "Five on offense and five on defense for 5v5; seven and seven for 7v7. The printable lists both formats with two strings each, plus a separate snapper line."
+      },
+      {
+        "q": "How do you rotate players in flag football fairly?",
+        "a": "Rotate by series rather than by quarter, substitute receivers and short defenders first, keep the quarterback and center together through a drive, and keep a tally of series played per player. The chart has a column for the tally."
+      },
+      {
+        "q": "Do I need a third string in flag football?",
+        "a": "Almost never. With a ten to twelve player roster, the second string is the entire bench. Spend the effort on making sure the backups at quarterback and center have practiced the job instead."
+      }
+    ]
+  },
+  {
     "slug": "volleyball-lineup-sheet-template",
     "title": "Volleyball Lineup Sheet Template (Free Printable PDF)",
     "description": "A free printable volleyball lineup sheet with serve order, starting zones, and libero rows — one card per set, ready for club and school volleyball.",
@@ -1240,14 +1772,14 @@ export const posts = [
   },
   {
     slug: "football-play-wristband-template",
-    title: "Football Play Wristband Template (Free Printable Wrist Coach Inserts)",
+    title: "Football Play Wristband Template (Free Printable PDF)",
     description:
-      "Free printable football play wristband templates — pre-sized wrist coach insert cards for youth tackle and flag football, plus a numbering system that gets plays called in seconds.",
+      "Free printable football play wristband template — pre-sized wrist coach insert cards for youth tackle and flag football, with a 12-play numbering system.",
     excerpt:
       "Pre-sized insert cards that actually fit the wristband, a 12-play numbering system, and how to call plays without a huddle.",
     tag: "Football",
     date: "2026-08-03",
-    updated: "2026-08-03",
+    updated: "2026-09-12",
     readingTime: "5 min read",
     keywords: ["football play wristband template", "qb wristband template", "printable football play wristband", "flag football wristband plays", "wrist coach insert template"],
     body: [
