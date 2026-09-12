@@ -2,8 +2,40 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav, SiteFooter, CTASection } from "@/components/marketing";
 import { getAllPosts, getPost } from "@/lib/posts";
+import fs from "node:fs";
+import path from "node:path";
 
 const SITE_URL = "https://my-teamsports.com";
+
+// Printable posts get an auto-detected preview image: /downloads/previews/<pdf-basename>.png.
+// Generated from page 1 of the PDF. If the PNG is missing, the post simply renders without one.
+function previewFor(post) {
+  const dl = (post.body || []).find((b) => b && b.download && b.download.href);
+  if (!dl) return null;
+  const pdfHref = dl.download.href;
+  const base = path.basename(pdfHref, ".pdf");
+  const rel = `/downloads/previews/${base}.png`;
+  try {
+    const abs = path.join(process.cwd(), "public", rel);
+    if (!fs.existsSync(abs)) return null;
+    const head = Buffer.alloc(24);
+    const fd = fs.openSync(abs, "r");
+    fs.readSync(fd, head, 0, 24, 0);
+    fs.closeSync(fd);
+    const width = head.readUInt32BE(16);
+    const height = head.readUInt32BE(20);
+    const plain = post.title.replace(/\s*\([^)]*\)\s*$/, "");
+    return {
+      src: rel,
+      pdfHref,
+      width,
+      height,
+      alt: `${plain} — preview of the free printable PDF from My-Team Sports`,
+    };
+  } catch {
+    return null;
+  }
+}
 
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
@@ -13,6 +45,10 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) return { title: "Post Not Found" };
+  const preview = previewFor(post);
+  const ogImages = preview
+    ? [{ url: `${SITE_URL}${preview.src}`, width: preview.width, height: preview.height, alt: preview.alt }]
+    : undefined;
   return {
     title: post.title,
     description: post.description,
@@ -25,11 +61,13 @@ export async function generateMetadata({ params }) {
       type: "article",
       publishedTime: post.date,
       modifiedTime: post.updated || post.date,
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
+      images: preview ? [`${SITE_URL}${preview.src}`] : undefined,
     },
   };
 }
@@ -125,6 +163,31 @@ function ArticleCTA({ tag }) {
   );
 }
 
+function PreviewFigure({ preview }) {
+  if (!preview) return null;
+  return (
+    <figure className="mb-10">
+      <a
+        href={preview.pdfHref}
+        download
+        className="block overflow-hidden rounded-xl border border-white/10 bg-white transition-all hover:border-green-500/40"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={preview.src}
+          alt={preview.alt}
+          width={preview.width}
+          height={preview.height}
+          className="w-full h-auto"
+        />
+      </a>
+      <figcaption className="mt-2 text-sm text-slate-500">
+        Preview of the free printable PDF — the download button is below.
+      </figcaption>
+    </figure>
+  );
+}
+
 function RelatedLinks({ items }) {
   if (!items || !items.length) return null;
   return (
@@ -167,6 +230,7 @@ export default async function BlogPost({ params }) {
   const { slug } = await params;
   const post = getPost(slug);
   if (!post) notFound();
+  const preview = previewFor(post);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -178,6 +242,7 @@ export default async function BlogPost({ params }) {
     author: { "@type": "Organization", name: "My-Team Sports", url: SITE_URL },
     publisher: { "@type": "Organization", name: "My-Team Sports", url: SITE_URL },
     mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/blog/${post.slug}` },
+    image: preview ? [`${SITE_URL}${preview.src}`] : undefined,
     keywords: post.keywords.join(", "),
   };
 
@@ -209,6 +274,7 @@ export default async function BlogPost({ params }) {
           </div>
           <h1 className="text-4xl md:text-5xl font-bold leading-tight tracking-tight mb-4">{post.title}</h1>
           <p className="text-slate-500 text-sm mb-10">{formatDate(post.date)}</p>
+          <PreviewFigure preview={preview} />
           <div className="text-slate-300 text-lg leading-relaxed">
             {post.body.map((b, i) => (
               <Block key={i} block={b} />
