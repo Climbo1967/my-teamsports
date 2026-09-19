@@ -8,11 +8,16 @@ export const revalidate = 60;
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const site = await fetchLeagueSite(slug);
-  if (!site) return { title: "League not found | My-Team Sports", robots: { index: false } };
+  if (!site) return { title: "League not found", robots: { index: false } };
   return {
-    title: `${site.league.name} Schedule & Results | My-Team Sports`,
+    title: `${site.league.name} Schedule & Results`,
     description: `Full ${site.league.name} game schedule with locations and final scores, by division and school.`,
     alternates: { canonical: `/leagues/${site.league.slug}/schedule` },
+    openGraph: {
+      title: `${site.league.name} Schedule & Results | My-Team Sports`,
+      description: `Full ${site.league.name} game schedule with locations and final scores, by division and school.`,
+      url: `/leagues/${site.league.slug}/schedule`,
+    },
   };
 }
 

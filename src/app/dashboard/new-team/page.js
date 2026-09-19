@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { ColorPicker } from "@/components/ui";
@@ -46,6 +47,7 @@ async function stampStepOne(supabase, userId) {
 }
 
 export default function NewTeamPage() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [ageGroup, setAgeGroup] = useState("");
@@ -58,10 +60,12 @@ export default function NewTeamPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(null);
+  const [dupeName, setDupeName] = useState(null);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(e, { allowDuplicate = false } = {}) {
+    e?.preventDefault?.();
     setError(null);
+    setDupeName(null);
     setLoading(true);
 
     const supabase = createClient();
@@ -77,6 +81,27 @@ export default function NewTeamPage() {
       setError("Please enter a team name with letters or numbers.");
       setLoading(false);
       return;
+    }
+
+    // Same-name guard: if this coach already has a team with this exact name,
+    // confirm before creating a twin. This is the #1 source of accidental
+    // duplicate teams — a coach lands back on this form (stale router cache)
+    // and refills it, thinking the first save didn't take. Non-fatal on a read
+    // error: fall through and let creation proceed.
+    if (!allowDuplicate) {
+      const { data: myTeams } = await supabase
+        .from("teams")
+        .select("name")
+        .eq("coach_id", user.id);
+      const wanted = name.trim().toLowerCase();
+      const twin = (myTeams || []).find(
+        (t) => (t.name || "").trim().toLowerCase() === wanted
+      );
+      if (twin) {
+        setDupeName(twin.name);
+        setLoading(false);
+        return;
+      }
     }
 
     const passcode = generatePasscode();
@@ -110,6 +135,10 @@ export default function NewTeamPage() {
     }
 
     await stampStepOne(supabase, user.id);
+    // Refresh server components + the router cache so a Back navigation (or the
+    // dashboard) shows the new team instead of the stale "create a team" screen
+    // — that cache staleness is what made coaches think the save didn't take.
+    router.refresh();
     setCreated(team);
   }
 
@@ -224,7 +253,7 @@ export default function NewTeamPage() {
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => { setName(e.target.value); setDupeName(null); }}
             required
             maxLength={60}
             placeholder="Riverside Raptors 12U"
@@ -269,6 +298,33 @@ export default function NewTeamPage() {
         </div>
 
         {error && <p className="text-red-400 text-sm">{error}</p>}
+
+        {dupeName && (
+          <div className="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4">
+            <p className="text-sm text-amber-200 mb-3">
+              You already have a team named <strong>{dupeName}</strong> and it&apos;s
+              live. Create another one anyway?
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={(e) => handleSubmit(e, { allowDuplicate: true })}
+                disabled={loading}
+                className="bg-[var(--color-accent-green)] text-white font-medium px-5 py-2.5 rounded-lg hover:bg-green-500 transition-colors disabled:opacity-50"
+              >
+                {loading ? "Creating..." : "Yes, create another"}
+              </button>
+              <button
+                type="button"
+                onClick={() => setDupeName(null)}
+                disabled={loading}
+                className="border border-white/10 text-slate-300 font-medium px-5 py-2.5 rounded-lg hover:bg-white/5 transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
 
         <button
           type="submit"

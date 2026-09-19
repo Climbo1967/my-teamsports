@@ -9,12 +9,17 @@ export const revalidate = 60;
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const site = await fetchLeagueSite(slug);
-  if (!site) return { title: "League not found | My-Team Sports", robots: { index: false } };
+  if (!site) return { title: "League not found", robots: { index: false } };
   const seasons = site.currentSeasons.map((s) => s.name).join(", ");
   return {
-    title: `${site.league.name} — Schedule, Results & Standings | My-Team Sports`,
+    title: `${site.league.name} — Schedule, Results & Standings`,
     description: `${site.league.name}${seasons ? ` ${seasons}` : ""}: league schedule, scores and standings. No ads, no app, no login.`,
     alternates: { canonical: `/leagues/${site.league.slug}` },
+    openGraph: {
+      title: `${site.league.name} — Schedule, Results & Standings | My-Team Sports`,
+      description: `${site.league.name}${seasons ? ` ${seasons}` : ""}: league schedule, scores and standings. No ads, no app, no login.`,
+      url: `/leagues/${site.league.slug}`,
+    },
   };
 }
 
