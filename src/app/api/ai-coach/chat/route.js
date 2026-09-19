@@ -13,9 +13,9 @@ async function requireTeam(supabase, teamId) {
   if (!user) return { error: NextResponse.json({ error: "Please sign in again." }, { status: 401 }) };
   // RLS only returns the team if this coach is on its staff.
   const { data: team } = await supabase
-    .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through").eq("id", teamId).single();
+    .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
   if (!team) return { error: NextResponse.json({ error: "Team not found." }, { status: 404 }) };
-  const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10));
+  const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10)) || (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date());
   if (!aiActive) {
     return { error: NextResponse.json({ error: "The AI Assistant Coach isn't enabled for this team yet." }, { status: 403 }) };
   }

@@ -46,7 +46,10 @@ export function teamAccess(team, now = new Date(), league = null) {
   const paid = !!(team.paid_through && team.paid_through >= today);
   const trialActive = !!(team.trial_ends_at && new Date(team.trial_ends_at) > now);
   const aiPaid = !!(team.ai_paid_through && team.ai_paid_through >= today);
-  const ai = aiPaid || !!team.ai_enabled; // ai_enabled doubles as a comp/override flag
+  // AI Coach: free for the 14-day trial (anchored at the coach's signup, stored
+  // per-team as ai_trial_ends_at), then paid. ai_enabled is a manual comp override.
+  const aiTrialActive = !!(team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > now);
+  const ai = aiPaid || aiTrialActive || !!team.ai_enabled;
 
   const schoolPaidThrough = league?.school?.paid_through || null;
   const leaguePaidThrough = league?.league?.paid_through || null;
@@ -63,8 +66,10 @@ export function teamAccess(team, now = new Date(), league = null) {
     leagueActive,
     ai,
     aiPaid,
+    aiTrialActive,
     paidThrough: team.paid_through || null,
     aiPaidThrough: team.ai_paid_through || null,
+    aiTrialEndsAt: team.ai_trial_ends_at || null,
     trialEndsAt: team.trial_ends_at || null,
     leaguePaidThrough: leaguePaidThroughShown,
     leagueName: league?.league?.name || null,

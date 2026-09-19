@@ -48,7 +48,7 @@ export default function AiCoachPage({ params }) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("teams").select("name, sport, ai_enabled").eq("id", teamId).single();
+      const { data } = await supabase.from("teams").select("name, sport, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
       setTeam(data || null);
     })();
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -94,7 +94,14 @@ export default function AiCoachPage({ params }) {
 
   if (team === undefined) return <Spinner />;
 
-  if (!team?.ai_enabled) {
+  // AI is on during the 14-day trial, while paid, or when comped (ai_enabled).
+  const aiOn = !!team && (
+    team.ai_enabled ||
+    (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10)) ||
+    (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date())
+  );
+
+  if (!aiOn) {
     return (
       <div className="max-w-2xl">
         <Card className="border-blue-500/25 text-center">

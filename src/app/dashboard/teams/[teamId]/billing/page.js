@@ -28,7 +28,7 @@ export default function BillingPage({ params }) {
   const load = useCallback(async () => {
     const [{ data: t, error: err }, { data: pays }] = await Promise.all([
       supabase.from("teams")
-        .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_enabled, league_id")
+        .select("id, name, paid_through, ai_paid_through, trial_ends_at, ai_trial_ends_at, ai_enabled, league_id")
         .eq("id", teamId).single(),
       supabase.from("payments")
         .select("id, product, season_year, amount_cents, created_at")
@@ -136,10 +136,12 @@ export default function BillingPage({ params }) {
                 <span className="text-[var(--color-accent-green)] font-semibold">✓ AI Assistant Coach active</span>
                 {access.aiPaid
                   ? <> — through {dateFmt(access.aiPaidThrough)}.</>
-                  : <> — complimentary preview.</>}
+                  : access.aiTrialActive
+                    ? <> — <span className="text-yellow-400">free trial</span>, ends {new Date(access.aiTrialEndsAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}. Add it below to keep it after the trial.</>
+                    : <> — complimentary.</>}
               </>
             ) : (
-              <span className="text-slate-500">AI Assistant Coach not active.</span>
+              <span className="text-slate-500">AI Assistant Coach not active — the 14-day free trial has ended.</span>
             )}
           </p>
         </div>
