@@ -304,7 +304,7 @@ export default function Home() {
               <Link href="/signup" className="inline-block bg-purple-600 text-white font-[family-name:var(--font-oswald)] text-base font-semibold tracking-wide px-8 py-3 rounded-xl hover:bg-purple-500 transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-purple-600/25">
                 MEET YOUR AI COACH →
               </Link>
-              <span className="text-sm text-slate-400">$20 add-on for the 2026 season</span>
+              <span className="text-sm text-slate-400">Free for 14 days, then a $20 add-on for the 2026 season</span>
             </div>
           </div>
         </div>

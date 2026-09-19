@@ -21,7 +21,7 @@ const INCLUDED = [
   "Live scoreboard & scorekeeper for every sport",
   "Game-day push alerts on parents' phones",
   "Coach's play board & printable playbook",
-  "AI Assistant Coach — briefings, lineups & practice plans ($20 add-on)",
+  "AI Assistant Coach — briefings, lineups & practice plans (free 14-day trial, then $20 add-on)",
   "Win-loss record that updates everywhere",
   "Team photo gallery with parent uploads",
   "Game film via YouTube & Vimeo links",
@@ -95,7 +95,7 @@ export default function PricingPage() {
             {[
               { q: "How much does it cost?", a: "Your first 30 days are free — no credit card to start. After that, the Coach Plan is $15 for the entire 2026 season (half-off launch pricing), and parents never pay a cent." },
               { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan is $30 per team — you'll get plenty of notice, and your existing team data stays yours." },
-              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind paywalls. The only optional extra is the AI Assistant Coach add-on ($20 for the 2026 season)." },
+              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind paywalls. The only optional extra is the AI Assistant Coach — free for your first 14 days, then $20 for the 2026 season." },
               { q: "Do I need to install anything?", a: "Nothing. It runs in any web browser for both coaches and parents — no app store, no downloads." },
             ].map((item) => (
               <div key={item.q} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
