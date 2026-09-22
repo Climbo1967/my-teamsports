@@ -872,42 +872,131 @@ export const posts = [
   {
     "slug": "basketball-shot-chart-template",
     "title": "Basketball Shot Chart Template (Free Printable PDF)",
-    "description": "A free printable basketball shot chart — full-page half court plus per-quarter charts. Mark makes and misses by location and see your shot selection by halftime.",
-    "excerpt": "Mark every attempt where it happened, and by halftime you know exactly which shots your team should stop taking.",
+    "description": "Free printable basketball shot chart, 4 pages: 12-zone chart with tally table, full-page game chart, four quarter charts, and a 5-spot practice shooting chart.",
+    "excerpt": "Four shot charts in one printable — zone, game, quarter, and practice shooting — so by halftime you know which shots to stop taking and by next week which ones to fix.",
     "tag": "Basketball",
     "date": "2026-08-24",
-    "updated": "2026-08-24",
-    "readingTime": "4 min read",
+    "updated": "2026-09-22",
+    "readingTime": "6 min read",
     "keywords": [
       "basketball shot chart template",
       "printable basketball shot chart",
       "basketball shot chart pdf",
+      "basketball zone shot chart",
       "shot chart basketball",
-      "basketball shooting chart",
+      "basketball shooting chart printable",
       "youth basketball shot tracking"
     ],
     "body": [
       {
-        "p": "A shot chart is the cheapest scouting tool in basketball: one page, one pen, and by halftime you know exactly where your points come from and which shots you should stop taking. This free printable gives you a full-page half court for the game plus four smaller courts to break it down by quarter."
+        "p": "A shot chart is the cheapest scouting tool in basketball: one page, one pen, and by halftime you know exactly where your points come from and which shots you should stop taking. The problem with most free templates is that they're one blank half court — fine for marking makes and misses, useless for adding anything up. This printable is four charts in one PDF: a 12-zone chart with a tally table, a full-page game chart, four quarter charts, and a five-spot shooting chart for practice. Pick the page that matches the job."
       },
       {
         "download": {
           "href": "/downloads/basketball-shot-chart.pdf",
-          "label": "Basketball Shot Chart Template (printable PDF)",
-          "note": "Full-page half court with legend, plus a per-quarter page with four mini courts. Free, no email required."
+          "label": "Basketball Shot Chart Template (printable PDF, 4 pages)",
+          "note": "Page 1: 12-zone chart + tally table. Page 2: full-page game chart. Page 3: four quarter charts. Page 4: 5-spot shooting chart for practice. High-school court lines. Free, no email required."
         }
+      },
+      {
+        "h2": "Which shot chart do you need?"
+      },
+      {
+        "table": {
+          "headers": [
+            "Chart",
+            "Best for",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "Zone chart (page 1)",
+              "Adding it up: makes and attempts by zone, so you get a made % for the paint, the mid-range and each three-point spot",
+              "A parent on the bench — tally marks, no drawing"
+            ],
+            [
+              "Game chart (page 2)",
+              "Seeing the pattern: every attempt marked where it happened, with the shooter's number",
+              "An injured player or a parent"
+            ],
+            [
+              "Quarter charts (page 3)",
+              "Seeing what changes: lay four courts side by side and watch shot selection fall apart in the fourth",
+              "Same person, new box each quarter"
+            ],
+            [
+              "Shooting chart (page 4)",
+              "Practice, not games: 10 shots from five spots, makes out of 10 per player, charted every two weeks",
+              "The coach, at practice"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The 12 zones, and what a good youth chart looks like"
+      },
+      {
+        "p": "The zone chart splits the half court the way a scouting report does: at the rim, the rest of the paint, five mid-range zones, and five three-point zones. That's the split that actually answers a coach's questions, because the value of a shot changes at those lines and nowhere else."
+      },
+      {
+        "table": {
+          "headers": [
+            "Zones",
+            "Where",
+            "Good sign",
+            "Bad sign"
+          ],
+          "rows": [
+            [
+              "1–2",
+              "At the rim and the paint",
+              "Most of your attempts and most of your makes live here",
+              "Attempts are here but makes aren't — finishing, not shot selection, is the problem"
+            ],
+            [
+              "3–7",
+              "Mid-range: baselines, wings, top of the key",
+              "A few attempts from players who've earned them",
+              "The cloud of X's. Long twos are the lowest-value shot on the floor and the one youth teams take most"
+            ],
+            [
+              "8–9",
+              "Corner threes",
+              "Open corner looks that came from a drive-and-kick",
+              "Zero attempts — your offense never gets the ball there"
+            ],
+            [
+              "10–12",
+              "Wing and top threes",
+              "Taken in rhythm, off a pass",
+              "Taken off the dribble with 20 seconds left on the clock"
+            ]
+          ]
+        }
+      },
+      {
+        "p": "A healthy youth chart is heavy in zones 1 and 2, light in zones 3 through 7, and shows a few makes in 8 and 9. If your chart is the opposite — X's everywhere in the mid-range, nothing at the rim — the offense isn't getting the ball where it scores, and no shooting drill will fix that. That's a sets problem, not a shooter problem."
       },
       {
         "h2": "How to mark it"
       },
       {
-        "p": "Circle for a make, X for a miss, jersey number next to the mark. That's the whole system. A parent on the bench can keep it after thirty seconds of instruction, and unlike a stat sheet it captures the thing box scores hide — location. Ten misses spread around the arc and ten misses all from the same broken corner possession are very different problems, and only the chart can tell them apart."
+        "p": "Game chart: circle for a make, X for a miss, jersey number next to the mark. That's the whole system. A parent on the bench can keep it after thirty seconds of instruction, and unlike a stat sheet it captures the thing box scores hide — location. Ten misses spread around the arc and ten misses all from the same broken corner possession are very different problems, and only the chart can tell them apart."
+      },
+      {
+        "p": "Zone chart: one tally mark in the Attempts column for every shot, and another in the Makes column if it drops. At the half, divide. Youth teams rarely take more than 50 shots a game, so the tally is faster than drawing and the percentages are ready before the kids are back on the floor."
       },
       {
         "h2": "What one game of marks tells you"
       },
       {
         "p": "Three things show up almost immediately. Shot selection: a cloud of X's from long two-point range is the classic youth-team disease, and seeing it on paper convinces kids in a way yelling never does. Where your points live: most youth teams score in a small area — usually the paint — and the chart tells you whether your offense is actually getting the ball there. And who's hunting bad shots: numbers next to the marks make the conversation specific instead of personal."
+      },
+      {
+        "h2": "Turn the game chart into practice: the shooting chart"
+      },
+      {
+        "p": "The game chart tells you which shots to stop taking. The shooting chart on page 4 tells you which ones to keep practicing until they're back on the menu. Five spots — both corners, both wings, top — ten shots each, partner rebounds and counts, makes out of ten go in the box. Tick the distance (free-throw line, mid-range, or three) so weeks compare. The rule that makes it useful: under 4 of 10 from a spot in practice means that shot is off the menu in games, and the kid knows it because he charted it himself. Run it every two weeks; the trend matters more than any one day."
       },
       {
         "h2": "The film session without film"
@@ -919,7 +1008,7 @@ export const posts = [
         "h2": "Chart the shots, score the game live"
       },
       {
-        "p": "The chart covers where — My-Team Sports covers everything else. The live basketball scoreboard tracks the score from your phone while parents follow along on the team site, the Coach's Playbook draws the sets that create the shots you want, and the AI assistant coach turns what the chart told you into a practice plan. Print the chart, clip it to the bench, done."
+        "p": "The chart covers where — My-Team Sports covers everything else. The live basketball scoreboard tracks the score from your phone while parents follow along on the team site, the Coach's Playbook draws the sets that get the ball to zones 1, 2, 8 and 9, and the AI assistant coach turns what the chart told you into a practice plan. Print the chart, clip it to the bench, done."
       }
     ],
     "related": [
@@ -937,16 +1026,29 @@ export const posts = [
         "href": "/blog/basketball-rotation-chart",
         "label": "Basketball Rotation Chart",
         "note": "Fair minutes, planned before tipoff"
+      },
+      {
+        "href": "/blog/basketball-drills-for-beginners",
+        "label": "Basketball Drills for Beginners",
+        "note": "Fix what the chart found"
       }
     ],
     "faqs": [
       {
         "q": "How do you fill out a basketball shot chart?",
-        "a": "Mark every attempt on the court diagram where it was taken: a circle for a make, an X for a miss, with the shooter's jersey number next to the mark. Use one chart per game (or the per-quarter page for more detail) and review the pattern at halftime and after the game."
+        "a": "Mark every attempt on the court diagram where it was taken: a circle for a make, an X for a miss, with the shooter's jersey number next to the mark. On a zone chart, add a tally mark under Attempts for every shot and under Makes when it drops, then divide at halftime. Use one chart per game, or the per-quarter page for more detail."
+      },
+      {
+        "q": "What is a zone shot chart?",
+        "a": "A shot chart that divides the half court into scoring zones — at the rim, the paint, mid-range areas, and three-point spots — and records makes and attempts per zone instead of individual dots. It's the format scouting reports use, because it gives you a shooting percentage for each area of the floor after one game."
       },
       {
         "q": "What does a shot chart tell you?",
         "a": "Three things a box score can't: shot selection (are you living in the low-value long-two zone), where your points actually come from, and which players are taking shots outside the offense. At the youth level it doubles as a film session — the pattern on paper convinces players faster than a lecture."
+      },
+      {
+        "q": "What's the difference between a shot chart and a shooting chart?",
+        "a": "A shot chart records game attempts by location. A shooting chart records practice shooting — a set number of shots from fixed spots, scored as makes out of ten — so you can track whether a player's shot is improving from the spots that matter. The PDF includes both."
       },
       {
         "q": "Who should keep the shot chart?",
