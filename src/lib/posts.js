@@ -10,6 +10,133 @@
 
 export const posts = [
   {
+    "slug": "kick-return-depth-chart-template",
+    "title": "Kick Return Depth Chart Template (Free Printable PDF)",
+    "description": "Free printable kick return depth chart — all 11 spots (front line, wedge, up backs, returners) with starter and backup, plus the onside hands-team swap.",
+    "excerpt": "The one unit where a missing kid costs you a touchdown the other way. All 11 kick return spots, a backup for each, and the onside swap already written down.",
+    "tag": "Football",
+    "date": "2026-09-22",
+    "updated": "2026-09-22",
+    "readingTime": "5 min read",
+    "keywords": [
+      "kick return depth chart",
+      "kick return depth chart template",
+      "kickoff return depth chart",
+      "kick return positions",
+      "football kick return team",
+      "youth football kick return"
+    ],
+    "body": [
+      {
+        "p": "Most special teams sheets give kick return one row: two returners, nine blockers, done. Then a front-line kid misses a week, the wedge sets on the wrong hash, and the ball goes out at your own 12. Kick return is the unit where a missing player does the most damage, because every one of the 11 has a specific spot on the field and a specific man to find. This free template gives all 11 spots their own line, a backup for each, and a row for the swap you'll make when the other team shows onside."
+      },
+      {
+        "download": {
+          "href": "/downloads/kick-return-depth-chart.pdf",
+          "label": "Kick Return Depth Chart Template (printable PDF)",
+          "note": "Front line, wedge, up backs, and returners with starter + backup columns, plus a situational swap box for onside, squib, and deep kicks. Free, no email required."
+        }
+      },
+      {
+        "h2": "The 11 kick return spots"
+      },
+      {
+        "table": {
+          "headers": [
+            "Group",
+            "Count",
+            "The job",
+            "Who usually fits"
+          ],
+          "rows": [
+            [
+              "Front line",
+              "5",
+              "Retreat 10 yards, find your man, block him — not the ball",
+              "Linemen who can run backwards without turning around"
+            ],
+            [
+              "Wedge",
+              "2",
+              "Set the wedge at the 20, kick out the first man through",
+              "Tight ends and fullbacks who like contact"
+            ],
+            [
+              "Up backs",
+              "2",
+              "Field the short kick, block the second wave, make the call",
+              "Sure-handed running backs and linebackers"
+            ],
+            [
+              "Returners",
+              "2",
+              "Catch it clean, one call, get north — no dancing",
+              "Your best athlete plus a second kid who never drops it"
+            ]
+          ]
+        }
+      },
+      {
+        "p": "The group that gets skipped is the up backs. Coaches pick returners and linemen and treat the middle as leftovers, but the up backs are the ones who handle a squib, call \"go\" or \"stay\" on a short kick, and pick up the gunner who beats the front line. Put your two most reliable non-returners there and name one of them the caller."
+      },
+      {
+        "h2": "Backups: who moves when someone's out"
+      },
+      {
+        "p": "The backup column isn't just a second name — it's a rule for how the unit shifts. A returner's backup is always an up back, never a front-line kid, because the up back has already been fielding kicks all week. An up back's backup comes from the wedge. A front-line backup can be almost anyone on the roster who can run backwards. Write the sheet that way and one absence moves one player, not four. Youth wrinkle: if your league has minimum-play rules, the front line is the easiest place in the whole game to get a kid his snaps — use the backup column as your playing-time ledger."
+      },
+      {
+        "h2": "The swap column: onside, squib, deep"
+      },
+      {
+        "p": "Kick return is the only unit where the other team picks your personnel. If the kicker lines up for an onside, your front line needs hands, not size — that's the hands team, and it should be written down before the game, not shouted from the sideline. A squib means the up backs are the returners now. A deep kick from a strong leg means your second returner drops back level with the primary. The sheet has one row for each so the swap is a read-off, not a debate during a TV timeout you don't have."
+      },
+      {
+        "h2": "The Friday walk-through"
+      },
+      {
+        "p": "Once a week, line the unit up on the sheet, read every spot out loud, and call one \"onside\" so the hands team runs on. Two minutes. The kids who've stood in the right spot on Friday don't stand in the wrong one on Saturday. Keep this page in the binder right behind the special teams depth chart — that one covers all five units at a glance, this one is the detail sheet for the unit that needs it most."
+      },
+      {
+        "h2": "Keep it with the roster"
+      },
+      {
+        "p": "A kick return chart drifts the moment a kid misses practice. If your roster and attendance live on My-Team Sports, you already know who's available before you fill in the backup column — update the sheet from real attendance instead of memory, and post the week's units on the team site so parents see where their kid lines up."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/special-teams-depth-chart-template",
+        "label": "Special Teams Depth Chart Template",
+        "note": "All five units on one sheet"
+      },
+      {
+        "href": "/blog/football-depth-chart-template",
+        "label": "Football Depth Chart Template",
+        "note": "Offense and defense, printable"
+      },
+      {
+        "href": "/blog/4-4-defense-depth-chart-template",
+        "label": "4-4 Defense Depth Chart Template",
+        "note": "Every spot three deep"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How many players are on a kick return team?",
+        "a": "Eleven, like every other unit: a five-man front line, two wedge blockers, two up backs, and two returners. The exact shape varies by scheme, but almost every youth and high school return uses some version of 5-2-2-2."
+      },
+      {
+        "q": "What is the hardest position on kick return?",
+        "a": "The up backs. They have to field short and squib kicks, make the go-or-stay call for the returners, and block the first man who beats the front line — all in about four seconds. Put sure-handed, calm kids there, not leftovers."
+      },
+      {
+        "q": "Should my best athlete be the kick returner?",
+        "a": "Usually, but only if he catches it clean every time. A dropped kick costs more than a slow return gains. If your fastest kid is shaky under the ball, make him the second returner and give the primary spot to the kid who never drops it."
+      }
+    ]
+  },
+  {
     "slug": "4-4-defense-depth-chart-template",
     "title": "4-4 Defense Depth Chart Template (Free Printable PDF)",
     "description": "Free printable 4-4 defense depth chart — all 11 spots three deep (DE, DT, OLB, ILB, CB, S), a cross-training column, and nickel and goal-line swaps.",
@@ -1497,6 +1624,11 @@ export const posts = [
         "href": "/blog/football-roster-template",
         "label": "Football Roster Template",
         "note": "The other page of the binder"
+      },
+      {
+        "href": "/blog/kick-return-depth-chart-template",
+        "label": "Kick Return Depth Chart Template",
+        "note": "All 11 return spots, starter + backup"
       },
       {
         "href": "/blog/football-positions-explained",
