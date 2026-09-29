@@ -4,6 +4,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { signMediaUrls } from "@/lib/media";
 import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord, hexToRgba, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
+import CoachPreviewBar from "./CoachPreviewBar";
 import TeamSiteSections from "./TeamSiteSections";
 import LiveScoreBanner from "./LiveScoreBanner";
 import PushOptIn from "./PushOptIn";
@@ -21,14 +22,44 @@ export default async function TeamPage({ params }) {
   const cookieStore = await cookies();
   const passcode = cookieStore.get(`team_access_${normalizedSlug}`)?.value;
 
+  const supabase = await createClient();
+
   let site = null;
   if (passcode) {
-    const supabase = await createClient();
     const { data } = await supabase.rpc("get_team_site", {
       p_slug: normalizedSlug,
       p_passcode: passcode,
     });
     site = data;
+  }
+
+  // Coach bypass: a signed-in coach of this team (owner or assistant) sees their
+  // own site without the parent passcode. RLS on `teams` is the authorization —
+  // the row only comes back if the current user is a coach of it — and the
+  // passcode on that row feeds the same RPC parents use, so the page is
+  // rendered identically.
+  let coachPreview = null;
+  if (!site) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) {
+      const { data: own } = await supabase
+        .from("teams")
+        .select("id, passcode")
+        .eq("slug", normalizedSlug)
+        .maybeSingle();
+      if (own?.passcode) {
+        const { data } = await supabase.rpc("get_team_site", {
+          p_slug: normalizedSlug,
+          p_passcode: own.passcode,
+        });
+        if (data) {
+          site = data;
+          coachPreview = { teamId: own.id, passcode: own.passcode };
+        }
+      }
+    }
   }
 
   if (!site) {
@@ -56,7 +87,12 @@ export default async function TeamPage({ params }) {
 
   return (
     <div className="min-h-screen bg-[var(--color-navy)]">
-      <ViewPing pageKey="team" />
+      {/* Coach previews don't count as parent views. */}
+      {coachPreview ? (
+        <CoachPreviewBar teamId={coachPreview.teamId} passcode={coachPreview.passcode} />
+      ) : (
+        <ViewPing pageKey="team" />
+      )}
       {/* TEAM HEADER */}
       <header className="relative bg-gradient-to-b from-[#0d1f3c] to-[var(--color-navy)] border-b border-white/5 px-6 py-14 text-center overflow-hidden">
         <div className="absolute inset-x-0 top-0 h-1.5" style={{ backgroundColor: teamColor }} />

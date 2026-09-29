@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { ColorPicker } from "@/components/ui";
 import { DEFAULT_TEAM_COLOR, SPORTS } from "@/lib/constants";
 import { uploadTeamImage } from "@/lib/upload";
+import { pingCounter } from "@/components/ViewPing";
 
 // Unambiguous characters only (no 0/O, 1/I/L)
 const PASSCODE_CHARS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
@@ -177,7 +178,10 @@ export default function NewTeamPage() {
             <p className="text-3xl font-mono font-bold tracking-[0.3em] text-white">{created.passcode}</p>
           </div>
           <button
-            onClick={() => navigator.clipboard.writeText(`Join our team site! ${"https://" + link} — Passcode: ${created.passcode}`)}
+            onClick={() => {
+              navigator.clipboard.writeText(`Join our team site! ${"https://" + link} — Passcode: ${created.passcode}`);
+              pingCounter("invite_copied");
+            }}
             className="text-sm font-medium text-slate-400 hover:text-white border border-white/10 px-5 py-2.5 rounded-lg transition-colors"
           >
             📋 Copy invite message
@@ -206,6 +210,7 @@ export default function NewTeamPage() {
         <div className="flex justify-center gap-4">
           <Link
             href={`/team/${created.slug}`}
+            onClick={() => pingCounter("team_site_viewed")}
             className="bg-[var(--color-accent-blue)] text-white font-[family-name:var(--font-oswald)] font-semibold tracking-wide px-7 py-3.5 rounded-xl hover:bg-blue-600 transition-all"
           >
             VIEW TEAM SITE

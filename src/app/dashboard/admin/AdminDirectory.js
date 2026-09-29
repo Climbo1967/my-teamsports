@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { SPORTS, SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 
-export default function AdminDirectory({ data }) {
+export default function AdminDirectory({ data, counters = {} }) {
   const { totals, teams, coaches } = data;
   const [roleFilter, setRoleFilter] = useState("all");
   const [sportFilter, setSportFilter] = useState("all");
@@ -114,6 +114,11 @@ export default function AdminDirectory({ data }) {
     { label: "Subscribers", value: totals.subscribers, icon: "🔔" },
     { label: "Homepage views", value: fmt(totals.homepage_views), icon: "🏠" },
     { label: "Team-site views", value: fmt(totals.team_views), icon: "👁️" },
+    // The two share actions — the only real "value" signals in onboarding.
+    // Counted since 2026-09-29; coach previews of their own site are excluded
+    // from "Team-site views" above, so that one stays parents-only.
+    { label: "Invite copied", value: fmt(counters.invite_copied), icon: "📋" },
+    { label: "Coach viewed own site", value: fmt(counters.team_site_viewed), icon: "👀" },
   ];
 
   return (

@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { inviteMessage } from "@/lib/constants";
+import { pingCounter } from "@/components/ViewPing";
 
 export default function CopyInviteButton({ team }) {
   const [copied, setCopied] = useState(false);
 
   async function copy() {
     await navigator.clipboard.writeText(inviteMessage(team));
+    pingCounter("invite_copied");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }

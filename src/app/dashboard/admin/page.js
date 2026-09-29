@@ -19,9 +19,12 @@ export default async function AdminPage() {
     .select("*")
     .order("created_at", { ascending: false });
 
+  // All site counters ({key: views}); admin-only RPC, null for anyone else.
+  const { data: counters } = await supabase.rpc("admin_counters");
+
   return (
     <>
-      <AdminDirectory data={data} />
+      <AdminDirectory data={data} counters={counters || {}} />
       <AdminActivation data={data} />
       <AdminSupport initial={support || []} />
     </>

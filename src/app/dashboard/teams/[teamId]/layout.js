@@ -6,6 +6,7 @@ import { signMediaUrl } from "@/lib/media";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import TeamTabs from "./TeamTabs";
 import BillingGate from "./BillingGate";
+import CountedLink from "@/components/CountedLink";
 import { teamAccess } from "@/lib/pricing";
 
 export default async function TeamManageLayout({ children, params }) {
@@ -70,13 +71,14 @@ export default async function TeamManageLayout({ children, params }) {
             </p>
           )}
         </div>
-        <Link
+        <CountedLink
+          counterKey="team_site_viewed"
           href={`/team/${team.slug}`}
           target="_blank"
           className="text-sm font-medium text-[var(--color-accent-blue)] border border-blue-500/25 px-4 py-2 rounded-lg hover:bg-blue-500/10 transition-colors"
         >
           View public site ↗
-        </Link>
+        </CountedLink>
       </div>
 
       <TeamTabs teamId={team.id} showBoard={team.board_enabled} />

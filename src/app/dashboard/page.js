@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import GettingStarted from "@/components/GettingStarted";
+import CountedLink from "@/components/CountedLink";
 
 
 export default async function DashboardPage() {
@@ -74,12 +75,13 @@ export default async function DashboardPage() {
                 >
                   Manage team
                 </Link>
-                <Link
+                <CountedLink
+                  counterKey="team_site_viewed"
                   href={`/team/${team.slug}`}
                   className="text-sm font-medium text-[var(--color-accent-blue)] hover:underline px-2 py-2"
                 >
                   View site →
-                </Link>
+                </CountedLink>
               </div>
             </div>
         ))}
