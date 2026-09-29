@@ -32,7 +32,7 @@ const SPORTS = [
 const DEMO_TEAMS = [
   { emoji: "⚾", name: "Riverside Raptors 12U", sport: "Baseball", slug: "riverside-raptors-12u", passcode: "XK7M2P" },
   { emoji: "🏀", name: "Downtown Dragons 16U", sport: "Basketball", slug: "downtown-dragons-16u", passcode: "DRGN24" },
-  { emoji: "🚩", name: "Westside Wolves 12U", sport: "Flag Football", slug: "westside-wolves-12u", passcode: "WVS24K" },
+  { emoji: "🚩", name: "Westside Wolves 12U", sport: "Flag Football", slug: "westside-wolves-12u", passcode: "SUPER777" },
 ];
 
 const DEMO_PLAY = {
