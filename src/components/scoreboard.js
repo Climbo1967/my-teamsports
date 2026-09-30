@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { scoreboardConfig, periodShort, formatClock, gameResultString } from "@/lib/constants";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
@@ -18,21 +18,26 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   const [plays, setPlays] = useState([]); // scoring_plays, most recent first
   const [pending, setPending] = useState(null); // { points } awaiting player pick (us side)
   const [error, setError] = useState(null);
-  const [nowTick, setNowTick] = useState(Date.now());
+  const [nowTick, setNowTick] = useState(() => Date.now());
   // L2: a game that was already final (loaded final, or ended once) must not
   // push a second "final" alert when it is reopened and ended again.
   const finalAnnounced = useRef(false);
 
-  const load = useCallback(async () => {
-    const [{ data: g }, { data: pl }] = await Promise.all([
+  // Initial fetch: state is set in the promise callback; a late response after
+  // leaving this game is dropped.
+  useEffect(() => {
+    let live = true;
+    Promise.all([
       supabase.from("game_scores").select("*").eq("event_id", event.id).maybeSingle(),
       supabase.from("scoring_plays").select("*").eq("event_id", event.id).order("created_at", { ascending: false }),
-    ]);
-    setGame(g || null);
-    if (g?.status === "final") finalAnnounced.current = true;
-    setPlays(pl || []);
+    ]).then(([{ data: g }, { data: pl }]) => {
+      if (!live) return;
+      setGame(g || null);
+      if (g?.status === "final") finalAnnounced.current = true;
+      setPlays(pl || []);
+    });
+    return () => { live = false; };
   }, [event.id]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { load(); }, [load]);
 
   // Tick locally while the clock runs so the coach sees it count down smoothly.
   useEffect(() => {
@@ -198,6 +203,7 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
           {timed && (
             <Card className="mb-4">
               <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">Game clock</p>
+              {/* Two rows: four buttons in one row ran ~35px off a 320px phone. */}
               <div className="flex gap-2">
                 {game.clock_running ? (
                   <Button variant="danger" className="flex-1" onClick={pauseClock}>⏸ Pause</Button>
@@ -205,8 +211,10 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
                   <Button variant="green" className="flex-1" onClick={startClock}>▶ Start</Button>
                 )}
                 <Button variant="ghost" onClick={resetClock}>Reset</Button>
-                <Button variant="ghost" onClick={() => changePeriod(-1)} disabled={game.period <= 1}>◀ {cfg.periodLabel}</Button>
-                <Button variant="ghost" onClick={() => changePeriod(1)}>{cfg.periodLabel} ▶</Button>
+              </div>
+              <div className="flex gap-2 mt-2">
+                <Button variant="ghost" className="flex-1" onClick={() => changePeriod(-1)} disabled={game.period <= 1}>◀ {cfg.periodLabel}</Button>
+                <Button variant="ghost" className="flex-1" onClick={() => changePeriod(1)}>{cfg.periodLabel} ▶</Button>
               </div>
             </Card>
           )}

@@ -11,6 +11,14 @@ import { confirmDialog } from "@/components/confirm";
 import Link from "next/link";
 import { ShareTeamCard } from "../FirstSession";
 
+async function fetchPlaybook(supabase, teamId) {
+  const [{ data: team }, { data: rows, error: err }] = await Promise.all([
+    supabase.from("teams").select("sport").eq("id", teamId).single(),
+    supabase.from("plays").select("*").eq("team_id", teamId).order("sort_order").order("created_at"),
+  ]);
+  return { team, rows, err };
+}
+
 export default function PlaybookPage({ params, searchParams }) {
   const { teamId } = use(params);
   // ?start=1 — first-session path from "YOUR TEAM IS LIVE": open straight onto
@@ -24,17 +32,24 @@ export default function PlaybookPage({ params, searchParams }) {
   const [catFilter, setCatFilter] = useState("All");
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
-    const [{ data: team }, { data: rows, error: err }] = await Promise.all([
-      supabase.from("teams").select("sport").eq("id", teamId).single(),
-      supabase.from("plays").select("*").eq("team_id", teamId).order("sort_order").order("created_at"),
-    ]);
+  const apply = useCallback(({ team, rows, err }) => {
     setSport(team?.sport || "other");
     if (err) setError(err.message);
     setPlays(rows || []);
-  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  // Re-fetch after a mutation (delete / duplicate / save).
+  const load = useCallback(async () => {
+    apply(await fetchPlaybook(supabase, teamId));
+  }, [teamId, apply]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Initial fetch: state is set in the promise callback, and a response that
+  // lands after unmount / team switch is dropped.
+  useEffect(() => {
+    let live = true;
+    fetchPlaybook(createClient(), teamId).then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [teamId, apply]);
 
   async function remove(p) {
     if (!(await confirmDialog({ title: "Delete play?", message: `Delete the play "${p.name}"? This can't be undone.`, confirmLabel: "Delete", danger: true }))) return;
@@ -208,7 +223,10 @@ function PlayEditor({ teamId, sport, play, nextOrder, firstRun = false, onDone, 
   const [notes, setNotes] = useState(play?.notes || "");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
-  const diagramRef = useRef(normalizeDiagram(play?.diagram) || emptyDiagram());
+  // The board's starting diagram, fixed for the life of this editor. Held in
+  // state (not read off the ref) so render never touches ref.current.
+  const [initialDiagram] = useState(() => normalizeDiagram(play?.diagram) || emptyDiagram());
+  const diagramRef = useRef(initialDiagram);
 
   const onBoardChange = useCallback((d) => { diagramRef.current = d; }, []);
 
@@ -255,7 +273,7 @@ function PlayEditor({ teamId, sport, play, nextOrder, firstRun = false, onDone, 
       )}
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
-        <PlaybookBoard initial={diagramRef.current} onChange={onBoardChange} sport={sport} />
+        <PlaybookBoard initial={initialDiagram} onChange={onBoardChange} sport={sport} />
 
         <Card className="border-white/10">
           <h3 className="font-bold mb-4">{play ? "Edit play" : "New play"}</h3>

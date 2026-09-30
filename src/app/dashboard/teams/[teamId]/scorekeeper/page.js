@@ -13,6 +13,27 @@ import { confirmDialog } from "@/components/confirm";
 import QuickAddPlayer from "@/components/QuickAddPlayer";
 import { QuickGameCard, ShareTeamCard, formatGameWhen } from "../FirstSession";
 
+async function fetchScorekeeper(supabase, teamId) {
+  const [{ data: team }, { data: eventRows }, { data: playerRows }] = await Promise.all([
+    supabase.from("teams").select("sport, name").eq("id", teamId).single(),
+    supabase.from("events").select("*").eq("team_id", teamId).eq("event_type", "game").order("starts_at"),
+    supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
+  ]);
+  return { team, eventRows, playerRows };
+}
+
+async function fetchGame(supabase, teamId, eventId) {
+  const [{ data: g }, { data: lu }, { data: pl }, { data: ab }] = await Promise.all([
+    supabase.from("game_scores").select("*").eq("event_id", eventId).maybeSingle(),
+    // Player names come from the join, so batters typed inline in the lineup
+    // builder show up without waiting on the parent's players list.
+    supabase.from("game_lineups").select("player_id, spot, players(id, name, jersey_number)").eq("event_id", eventId).order("spot"),
+    supabase.from("pitching_lines").select("*").eq("event_id", eventId),
+    supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
+  ]);
+  return { g, lu, pl, ab };
+}
+
 export default function ScorekeeperPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
@@ -24,19 +45,25 @@ export default function ScorekeeperPage({ params }) {
   const [justAdded, setJustAdded] = useState(null); // game created via QuickGameCard this visit
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
-    const [{ data: team }, { data: eventRows }, { data: playerRows }] = await Promise.all([
-      supabase.from("teams").select("sport, name").eq("id", teamId).single(),
-      supabase.from("events").select("*").eq("team_id", teamId).eq("event_type", "game").order("starts_at"),
-      supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
-    ]);
+  const apply = useCallback(({ team, eventRows, playerRows }) => {
     setSport(team?.sport || "other");
     setTeamName(team?.name || "");
     setGames(eventRows || []);
     setPlayers(playerRows || []);
-  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  // Re-fetch after leaving a game or adding Game 1.
+  const load = useCallback(async () => {
+    apply(await fetchScorekeeper(supabase, teamId));
+  }, [teamId, apply]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Initial fetch: state is set in the promise callback; a late response after
+  // unmount / team switch is dropped.
+  useEffect(() => {
+    let live = true;
+    fetchScorekeeper(createClient(), teamId).then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [teamId, apply]);
 
   // Move 2: players typed inline (lineup / "who scored?") join the roster
   // immediately, without a round trip through the Roster tab.
@@ -177,26 +204,26 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   // push a second "final" alert when it is reopened and ended again.
   const finalAnnounced = useRef(false);
 
-  const load = useCallback(async () => {
-    const [{ data: g }, { data: lu }, { data: pl }, { data: ab }] = await Promise.all([
-      supabase.from("game_scores").select("*").eq("event_id", event.id).maybeSingle(),
-      // Join the player name in: players typed inline in the lineup builder may
-      // not be in the `players` prop this callback closed over.
-      supabase.from("game_lineups").select("player_id, spot, players(id, name, jersey_number)").eq("event_id", event.id).order("spot"),
-      supabase.from("pitching_lines").select("*").eq("event_id", event.id),
-      supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
-    ]);
+  const apply = useCallback(({ g, lu, pl, ab }) => {
     setGame(g || null);
     if (g?.status === "final") finalAnnounced.current = true;
-    const pmap = Object.fromEntries(players.map((p) => [p.id, p]));
-    setLineup((lu || []).map(({ players: joined, ...r }) => ({ ...r, ...(pmap[r.player_id] || joined || {}) })));
+    setLineup((lu || []).map(({ players: joined, ...r }) => ({ ...r, ...(joined || {}) })));
     setPitchMap(Object.fromEntries((pl || []).map((r) => [r.player_id, r])));
     const grouped = {};
     for (const r of ab || []) { if (r.player_id) (grouped[r.player_id] = grouped[r.player_id] || []).push(r); }
     setTendencyByPlayer(Object.fromEntries(Object.entries(grouped).map(([pid, rows]) => [pid, computeTendencies(rows)])));
-  }, [event.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  // Re-fetch after lineup edits / at-bats.
+  const load = useCallback(async () => {
+    apply(await fetchGame(supabase, teamId, event.id));
+  }, [teamId, event.id, apply]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let live = true;
+    fetchGame(createClient(), teamId, event.id).then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [teamId, event.id, apply]);
 
   async function patchGame(patch) {
     const next = { ...game, ...patch, updated_at: new Date().toISOString() };
