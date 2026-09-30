@@ -8,13 +8,19 @@ import PlaybookBoard from "@/components/PlaybookBoard";
 import { sportLabel } from "@/lib/constants";
 import { emptyDiagram, normalizeDiagram, hasBoard, playCategoriesForSport } from "@/lib/playbook";
 import { confirmDialog } from "@/components/confirm";
+import Link from "next/link";
+import { ShareTeamCard } from "../FirstSession";
 
-export default function PlaybookPage({ params }) {
+export default function PlaybookPage({ params, searchParams }) {
   const { teamId } = use(params);
+  // ?start=1 — first-session path from "YOUR TEAM IS LIVE": open straight onto
+  // a blank board (first-session value spec, Move 1, 2026-09-30).
+  const firstRun = use(searchParams)?.start === "1";
   const supabase = createClient();
   const [sport, setSport] = useState(null);
   const [plays, setPlays] = useState(null);
-  const [editing, setEditing] = useState(null); // play object | "new" | null
+  const [editing, setEditing] = useState(firstRun ? "new" : null); // play object | "new" | null
+  const [firstSaved, setFirstSaved] = useState(null); // id of the play saved on the first-run path
   const [catFilter, setCatFilter] = useState("All");
   const [error, setError] = useState(null);
 
@@ -83,7 +89,8 @@ export default function PlaybookPage({ params }) {
         sport={sport}
         play={editing === "new" ? null : editing}
         nextOrder={plays.length}
-        onDone={() => { setEditing(null); load(); }}
+        firstRun={firstRun && editing === "new" && plays.length === 0}
+        onDone={(savedId, wasFirstRun) => { if (wasFirstRun && savedId) setFirstSaved(savedId); setEditing(null); load(); }}
         onCancel={() => setEditing(null)}
       />
     );
@@ -105,6 +112,10 @@ export default function PlaybookPage({ params }) {
       </div>
 
       <ErrorText>{error}</ErrorText>
+
+      {firstSaved && plays.some((p) => p.id === firstSaved) && (
+        <FirstPlayDone teamId={teamId} play={plays.find((p) => p.id === firstSaved)} onPrint={() => openPrint(firstSaved)} />
+      )}
 
       {plays.length > 0 && cats.length > 1 && (
         <div className="flex flex-wrap gap-2 mb-5">
@@ -163,13 +174,35 @@ export default function PlaybookPage({ params }) {
   );
 }
 
-function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
+// Move 3: after the first play is saved — print it, send the team page to a
+// parent, and give them a dated reason to come back (Game 1).
+function FirstPlayDone({ teamId, play, onPrint }) {
+  return (
+    <div className="space-y-4 mb-8">
+      <Card className="border-green-500/30">
+        <p className="text-lg font-bold text-white">✅ “{play.name}” is in your playbook</p>
+        <p className="text-sm text-slate-400 mt-1">
+          Print it for practice, or keep drawing. It&apos;s also on your team page for your players — tap “On team site” below to hide it.
+        </p>
+        <div className="flex flex-wrap gap-3 mt-4">
+          <Button variant="primary" onClick={onPrint}>🖨 Print this play</Button>
+          <Link href={`/dashboard/teams/${teamId}/scorekeeper`} className="font-semibold text-sm px-4 py-2.5 rounded-lg border border-white/10 text-slate-300 hover:bg-white/5 transition-all">
+            📅 Add your first game →
+          </Link>
+        </div>
+      </Card>
+      <ShareTeamCard teamId={teamId} />
+    </div>
+  );
+}
+
+function PlayEditor({ teamId, sport, play, nextOrder, firstRun = false, onDone, onCancel }) {
   const supabase = createClient();
   const categories = playCategoriesForSport(sport);
   // L4: after a sport change, existing plays can carry a category the new
   // sport does not use. Surface it so the coach can keep it or re-file it.
   const legacyCategory = play?.category && !categories.includes(play.category) ? play.category : null;
-  const [name, setName] = useState(play?.name || "");
+  const [name, setName] = useState(play?.name || (firstRun ? "Play 1" : ""));
   const [category, setCategory] = useState(play?.category || categories[0]);
   const [formation, setFormation] = useState(play?.formation || "");
   const [notes, setNotes] = useState(play?.notes || "");
@@ -194,12 +227,12 @@ function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
       updated_at: new Date().toISOString(),
     };
     const query = play
-      ? supabase.from("plays").update(row).eq("id", play.id)
-      : supabase.from("plays").insert({ ...row, sort_order: nextOrder });
-    const { error: err } = await query;
+      ? supabase.from("plays").update(row).eq("id", play.id).select("id").single()
+      : supabase.from("plays").insert({ ...row, sort_order: nextOrder }).select("id").single();
+    const { data: saved, error: err } = await query;
     setBusy(false);
     if (err) { setError(err.message); return; }
-    onDone();
+    onDone(saved?.id, firstRun);
   }
 
   return (
@@ -211,6 +244,15 @@ function PlayEditor({ teamId, sport, play, nextOrder, onDone, onCancel }) {
           <Button variant="green" onClick={save} disabled={busy}>{busy ? "Saving…" : play ? "Save changes" : "Save play"}</Button>
         </div>
       </div>
+
+      {firstRun && (
+        <div className="mb-4 rounded-xl border border-[var(--color-accent-blue)]/30 bg-blue-500/[0.06] px-4 py-3">
+          <p className="font-semibold text-white">Draw your first play — no roster needed.</p>
+          <p className="text-sm text-slate-400 mt-0.5">
+            Tap a player button, then tap the field to drop them. Pick a line tool and drag to draw a route. Hit <span className="text-white font-medium">Save play</span> — then print it.
+          </p>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-6 items-start">
         <PlaybookBoard initial={diagramRef.current} onChange={onBoardChange} sport={sport} />

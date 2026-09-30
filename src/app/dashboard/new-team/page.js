@@ -47,6 +47,25 @@ async function stampStepOne(supabase, userId) {
   }
 }
 
+/**
+ * First-session value spec (Sydney, approved by Ron 2026-09-30), Move 1:
+ * the coach's next click after creating a team lands in a tool that produces a
+ * finished thing with zero players — not the dashboard's "add your players" gate.
+ *   - baseball / softball → Scorekeeper: Game 1 + a lineup typed inline
+ *   - every other sport with a play board → a blank board, straight into drawing
+ *   - "other" (no board, no scorer) → unchanged: team site / dashboard
+ */
+function firstToolFor(team) {
+  const base = `/dashboard/teams/${team.id}`;
+  if (team.sport === "baseball" || team.sport === "softball") {
+    return { href: `${base}/scorekeeper`, label: "⚾ SET UP GAME 1", blurb: "Put your first game on the schedule and type your batting order — about a minute. Your roster fills in as you go." };
+  }
+  if (["football", "flag_football", "basketball", "soccer", "hockey", "volleyball"].includes(team.sport)) {
+    return { href: `${base}/playbook?start=1`, label: "✏️ DRAW YOUR FIRST PLAY", blurb: "Open the play board, draw a play, and print it with your team name on top — no roster needed." };
+  }
+  return null;
+}
+
 export default function NewTeamPage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -161,10 +180,22 @@ export default function NewTeamPage() {
 
   if (created) {
     const link = `my-teamsports.com/team/${created.slug}`;
+    const firstTool = firstToolFor(created);
     return (
       <div className="max-w-xl mx-auto text-center">
         <div className="text-6xl mb-4">🎉</div>
         <h1 className="text-3xl md:text-4xl font-bold mb-2">YOUR TEAM IS LIVE!</h1>
+        {firstTool ? (
+          <div className="mt-6 mb-10">
+            <Link
+              href={firstTool.href}
+              className="block w-full bg-[var(--color-accent-green)] text-white font-[family-name:var(--font-oswald)] text-lg font-semibold tracking-wide py-4 rounded-xl hover:bg-green-500 transition-all"
+            >
+              {firstTool.label}
+            </Link>
+            <p className="text-sm text-slate-400 mt-3">{firstTool.blurb}</p>
+          </div>
+        ) : null}
         <p className="text-slate-400 mb-8">
           Text this link and passcode to your parents. They open it in any browser — no app, no accounts.
         </p>
@@ -207,7 +238,7 @@ export default function NewTeamPage() {
           {error && <p className="text-red-400 text-xs mt-2">{error}</p>}
         </div>
 
-        <div className="flex justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-4">
           <Link
             href={`/team/${created.slug}`}
             onClick={() => pingCounter("team_site_viewed")}

@@ -5,10 +5,11 @@ import { createClient } from "@/lib/supabase/client";
 import { scoreboardConfig, periodShort, formatClock, gameResultString } from "@/lib/constants";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
 import { notifyGame } from "@/lib/pushClient";
+import QuickAddPlayer from "@/components/QuickAddPlayer";
 
 // Universal live scorer for clock/period sports (basketball, soccer, hockey,
 // football, flag football, volleyball). Reuses game_scores + the live banner.
-export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBack }) {
+export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPlayerAdded, onBack }) {
   const supabase = createClient();
   const cfg = scoreboardConfig(sport);
   const timed = cfg && cfg.clockMinutes != null;
@@ -252,8 +253,10 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onBa
       {/* Player attribution overlay */}
       {pending && (
         <PlayerPicker
+          teamId={teamId}
           players={players}
           points={pending.points}
+          onAdded={onPlayerAdded}
           onPick={(pid) => applyScore("us", pending.points, pid)}
           onCancel={() => setPending(null)}
         />
@@ -292,15 +295,23 @@ function ScoreSide({ label, buttons, onScore, onAdjust, accent }) {
   );
 }
 
-function PlayerPicker({ players, points, onPick, onCancel }) {
+function PlayerPicker({ teamId, players, points, onAdded, onPick, onCancel }) {
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-4" onClick={onCancel}>
       <div className="w-full max-w-md bg-[#132140] border border-white/10 rounded-2xl p-6 max-h-[80vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <p className="text-sm font-semibold text-white mb-1">Who scored? <span className="text-[var(--color-accent-green)]">+{points}</span></p>
         <p className="text-xs text-slate-500 mb-4">Tap a player to credit their season stats, or skip.</p>
-        {players.length === 0 ? (
-          <p className="text-slate-500 text-sm mb-4">No players on the roster yet.</p>
-        ) : (
+        {/* Move 2 (first-session spec): name the scorer right here; they join the roster. */}
+        <div className="mb-4">
+          <QuickAddPlayer
+            teamId={teamId}
+            placeholder={players.length === 0 ? "Type their name" : "Someone new? Type a name"}
+            buttonLabel="Credit"
+            autoFocus={players.length === 0}
+            onAdded={(p) => { onAdded?.(p); onPick(p.id); }}
+          />
+        </div>
+        {players.length === 0 ? null : (
           <div className="grid grid-cols-1 gap-2 mb-4">
             {players.map((p) => (
               <button key={p.id} onClick={() => onPick(p.id)}

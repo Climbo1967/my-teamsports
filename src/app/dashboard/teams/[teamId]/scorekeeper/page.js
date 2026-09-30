@@ -10,6 +10,8 @@ import { computeTendencies, tendencySentence, ZONE_LABEL, pctText } from "@/lib/
 import { recommendLineup } from "@/lib/lineup";
 import { notifyGame } from "@/lib/pushClient";
 import { confirmDialog } from "@/components/confirm";
+import QuickAddPlayer from "@/components/QuickAddPlayer";
+import { QuickGameCard, ShareTeamCard, formatGameWhen } from "../FirstSession";
 
 export default function ScorekeeperPage({ params }) {
   const { teamId } = use(params);
@@ -19,6 +21,7 @@ export default function ScorekeeperPage({ params }) {
   const [games, setGames] = useState(null);
   const [players, setPlayers] = useState([]);
   const [selected, setSelected] = useState(null); // event row
+  const [justAdded, setJustAdded] = useState(null); // game created via QuickGameCard this visit
   const [error, setError] = useState(null);
 
   const load = useCallback(async () => {
@@ -34,6 +37,10 @@ export default function ScorekeeperPage({ params }) {
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { load(); }, [load]);
+
+  // Move 2: players typed inline (lineup / "who scored?") join the roster
+  // immediately, without a round trip through the Roster tab.
+  const addPlayer = (p) => setPlayers((ps) => (ps.some((x) => x.id === p.id) ? ps : [...ps, p]));
 
   if (!games || sport === null) return <Spinner />;
 
@@ -55,6 +62,7 @@ export default function ScorekeeperPage({ params }) {
         teamId={teamId}
         event={selected}
         players={players}
+        onPlayerAdded={addPlayer}
         onBack={() => { setSelected(null); load(); }}
       />
     ) : (
@@ -64,6 +72,7 @@ export default function ScorekeeperPage({ params }) {
         teamName={teamName}
         event={selected}
         players={players}
+        onPlayerAdded={addPlayer}
         onBack={() => { setSelected(null); load(); }}
       />
     );
@@ -74,8 +83,16 @@ export default function ScorekeeperPage({ params }) {
       <h2 className="text-xl font-bold mb-1">⚾ Live Scorekeeper</h2>
       <p className="text-slate-400 text-sm mb-6">Pick a game to score. Stats roll into each player&apos;s season totals automatically, and the score goes live on your team page.</p>
       <ErrorText>{error}</ErrorText>
+      {justAdded && (
+        <GameAddedCard
+          teamId={teamId}
+          event={justAdded}
+          isBaseball={isBaseball}
+          onLineup={() => setSelected(justAdded)}
+        />
+      )}
       {games.length === 0 ? (
-        <EmptyState icon="📅" text="No games on the schedule yet. Add a game on the Schedule tab first." />
+        <QuickGameCard teamId={teamId} onAdded={(ev) => { setJustAdded(ev); load(); }} />
       ) : (
         <div className="space-y-3">
           {games.map((g) => (
@@ -83,6 +100,27 @@ export default function ScorekeeperPage({ params }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+// Move 3: the dated reason to come back, plus the one outward action.
+function GameAddedCard({ teamId, event, isBaseball, onLineup }) {
+  return (
+    <div className="space-y-4 mb-6">
+      <Card className="border-green-500/30">
+        <p className="text-lg font-bold text-white">
+          ✅ Game 1{event.opponent ? ` vs ${event.opponent}` : ""} is on your schedule
+        </p>
+        <p className="text-[var(--color-accent-green)] font-semibold mt-0.5">{formatGameWhen(event.starts_at)}</p>
+        <p className="text-sm text-slate-400 mt-2">
+          Open Scorekeeper on game day and score it live — the score shows on your team page as it happens.
+        </p>
+        {isBaseball && (
+          <Button variant="primary" className="mt-4" onClick={onLineup}>Set your batting order now →</Button>
+        )}
+      </Card>
+      <ShareTeamCard teamId={teamId} note="Send it now so they see Game 1 on the schedule — no app, no account." />
     </div>
   );
 }
@@ -124,7 +162,7 @@ function GamePickRow({ event, teamId, onPick }) {
 }
 
 // ============================ GAME SCORER ============================
-function GameScorer({ teamId, event, players, onBack }) {
+function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   const supabase = createClient();
   const [game, setGame] = useState(undefined); // undefined=loading, null=not started, row
   const [lineup, setLineup] = useState([]); // [{player_id, spot, name, jersey_number}]
@@ -142,14 +180,16 @@ function GameScorer({ teamId, event, players, onBack }) {
   const load = useCallback(async () => {
     const [{ data: g }, { data: lu }, { data: pl }, { data: ab }] = await Promise.all([
       supabase.from("game_scores").select("*").eq("event_id", event.id).maybeSingle(),
-      supabase.from("game_lineups").select("player_id, spot").eq("event_id", event.id).order("spot"),
+      // Join the player name in: players typed inline in the lineup builder may
+      // not be in the `players` prop this callback closed over.
+      supabase.from("game_lineups").select("player_id, spot, players(id, name, jersey_number)").eq("event_id", event.id).order("spot"),
       supabase.from("pitching_lines").select("*").eq("event_id", event.id),
       supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
     ]);
     setGame(g || null);
     if (g?.status === "final") finalAnnounced.current = true;
     const pmap = Object.fromEntries(players.map((p) => [p.id, p]));
-    setLineup((lu || []).map((r) => ({ ...r, ...pmap[r.player_id] })));
+    setLineup((lu || []).map(({ players: joined, ...r }) => ({ ...r, ...(pmap[r.player_id] || joined || {}) })));
     setPitchMap(Object.fromEntries((pl || []).map((r) => [r.player_id, r])));
     const grouped = {};
     for (const r of ab || []) { if (r.player_id) (grouped[r.player_id] = grouped[r.player_id] || []).push(r); }
@@ -383,6 +423,7 @@ function GameScorer({ teamId, event, players, onBack }) {
       {(lineupLen === 0 || editingLineup) ? (
         <LineupBuilder
           teamId={teamId} event={event} players={players} existing={lineup}
+          onPlayerAdded={onPlayerAdded}
           onDone={() => { setEditingLineup(false); load(); }}
           onCancel={lineupLen ? () => setEditingLineup(false) : null}
         />
@@ -451,7 +492,7 @@ function GameScorer({ teamId, event, players, onBack }) {
 }
 
 // ============================ LINEUP ============================
-function LineupBuilder({ teamId, event, players, existing, onDone, onCancel }) {
+function LineupBuilder({ teamId, event, players, existing, onPlayerAdded, onDone, onCancel }) {
   const supabase = createClient();
   const [order, setOrder] = useState(existing.map((e) => e.player_id));
   const [busy, setBusy] = useState(false);
@@ -486,7 +527,11 @@ function LineupBuilder({ teamId, event, players, existing, onDone, onCancel }) {
           <button onClick={suggest} className="text-xs font-semibold text-[var(--color-accent-blue)] hover:underline whitespace-nowrap">🧠 Suggest from stats</button>
         )}
       </div>
-      <p className="text-sm text-slate-400 mb-4">Tap players in order. Tap again to remove.</p>
+      <p className="text-sm text-slate-400 mb-4">
+        {players.length === 0
+          ? "Who's up first? Type each batter in order — they're saved to your roster as you go."
+          : "Tap players in order, or type a new name. Tap remove to take someone out."}
+      </p>
       <ErrorText>{error}</ErrorText>
 
       {chosen.length > 0 && (
@@ -515,7 +560,19 @@ function LineupBuilder({ teamId, event, players, existing, onDone, onCancel }) {
         </>
       )}
 
-      {players.length === 0 && <p className="text-sm text-slate-500 mb-4">Add players on the Roster tab first.</p>}
+      {/* Move 2: the roster is a side effect of setting the lineup, not a gate. */}
+      <div className="mb-5">
+        <p className="text-xs uppercase tracking-widest text-slate-500 mb-2">
+          {order.length === 0 ? "Batter 1" : `Batter ${order.length + 1}`} — new player
+        </p>
+        <QuickAddPlayer
+          teamId={teamId}
+          placeholder="e.g. 12 Sam Lee"
+          buttonLabel="Add to lineup"
+          autoFocus={players.length === 0}
+          onAdded={(p) => { onPlayerAdded?.(p); setOrder((o) => [...o, p.id]); }}
+        />
+      </div>
 
       <div className="flex gap-3">
         <Button variant="green" onClick={save} disabled={busy || order.length === 0}>{busy ? "Saving..." : "Save lineup"}</Button>
