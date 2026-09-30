@@ -21,7 +21,9 @@ export default function BoardPage({ params }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const [{ data: t }, { data: th, error: err }, { data: po }, { data: { user } }] = await Promise.all([
       supabase.from("teams").select("id, name, board_enabled").eq("id", teamId).single(),
       supabase.from("team_board_threads").select("*").eq("team_id", teamId)
@@ -30,14 +32,24 @@ export default function BoardPage({ params }) {
         .order("created_at", { ascending: true }),
       supabase.auth.getUser(),
     ]);
+    return { t, th, err, po, user };
+  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const apply = useCallback(({ t, th, err, po, user }) => {
     if (err) setError(err.message);
     setTeam(t || null);
     setThreads(th || []);
     setPosts(po || []);
     setUserId(user?.id || null);
-  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   function notifyTeam(threadTitle, body) {
     // Fire-and-forget: a push hiccup should never block the post itself.

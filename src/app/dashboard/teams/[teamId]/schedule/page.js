@@ -9,6 +9,12 @@ import { confirmDialog } from "@/components/confirm";
 
 // Push slice 3: build the human-readable alert line for a schedule change.
 // Formatted on the client so times render in the coach's local timezone.
+// True when an event starts after this moment. Used in handlers / at form open,
+// never re-evaluated during render.
+function isUpcoming(iso) {
+  return new Date(iso).getTime() > Date.now();
+}
+
 function scheduleAlertPayload(kind, row) {
   const isGame = row.event_type === "game";
   const label = isGame
@@ -30,28 +36,43 @@ export default function SchedulePage({ params }) {
   const [editing, setEditing] = useState(null);
   const [statsFor, setStatsFor] = useState(null); // event object
   const [error, setError] = useState(null);
+  const [now, setNow] = useState(0);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const [{ data: eventRows, error: err }, { data: playerRows }, { data: rsvpRows }, { data: team }] = await Promise.all([
       supabase.from("events").select("*").eq("team_id", teamId).order("starts_at"),
       supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("name"),
       supabase.from("rsvps").select("event_id, player_id, status, note").eq("team_id", teamId),
       supabase.from("teams").select("sport").eq("id", teamId).single(),
     ]);
+    return { eventRows, err, playerRows, rsvpRows, team, loadedAt: Date.now() };
+  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const apply = useCallback(({ eventRows, err, playerRows, rsvpRows, team, loadedAt }) => {
     if (err) setError(err.message);
     setEvents(eventRows || []);
     setPlayers(playerRows || []);
     setRsvps(rsvpRows || []);
     if (team) setSport(team.sport);
-  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+    // Upcoming/past split is taken as of each load, not re-read every render.
+    setNow(loadedAt);
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   async function remove(event) {
     if (!(await confirmDialog({ title: "Delete event?", message: "Parents will no longer see it on the team site.", confirmLabel: "Delete", danger: true }))) return;
     await supabase.from("events").delete().eq("id", event.id);
     // Alert opted-in devices only when an UPCOMING event is canceled.
-    if (new Date(event.starts_at).getTime() > Date.now()) {
+    if (isUpcoming(event.starts_at)) {
       queueScheduleAlert(teamId, scheduleAlertPayload("canceled", event));
     }
     load();
@@ -59,7 +80,6 @@ export default function SchedulePage({ params }) {
 
   if (!events) return <Spinner />;
 
-  const now = Date.now();
   const upcoming = events.filter((e) => new Date(e.starts_at) >= now);
   const past = events.filter((e) => new Date(e.starts_at) < now).reverse();
 
@@ -375,7 +395,8 @@ function EventForm({ teamId, event, onDone, onCancel }) {
   const [repeat, setRepeat] = useState(false);
   const [repeatUntil, setRepeatUntil] = useState("");
 
-  const isPast = event && new Date(event.starts_at) < Date.now();
+  // Whether this event was already in the past when the form opened.
+  const [isPast] = useState(() => Boolean(event) && !isUpcoming(event.starts_at));
 
   async function save(e) {
     e.preventDefault();
@@ -416,11 +437,11 @@ function EventForm({ teamId, event, onDone, onCancel }) {
     // Result/notes-only edits and past events never alert; quick consecutive
     // edits get bundled into one digest notification (~25s debounce).
     // A repeating series sends ONE alert (for the first occurrence), not 12.
-    const isFuture = new Date(row.starts_at).getTime() > Date.now();
+    const isFuture = isUpcoming(row.starts_at);
     if (!event && isFuture) {
       queueScheduleAlert(teamId, scheduleAlertPayload("added", rows[0]));
     } else if (event) {
-      const wasFuture = new Date(event.starts_at).getTime() > Date.now();
+      const wasFuture = isUpcoming(event.starts_at);
       const meaningful =
         event.event_type !== row.event_type ||
         (event.opponent || null) !== row.opponent ||

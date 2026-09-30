@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 // Parent-facing team board. Rendered only when the team's board_enabled flag
 // is on (the server checks before mounting this). Parents are reply-only and
@@ -142,19 +142,24 @@ function Post({ post, slug }) {
   );
 }
 
+// Display name remembered on this device (like the RSVP player picker). Read via
+// useSyncExternalStore: "" on the server / during hydration, saved value after.
+function subscribeStorage(cb) {
+  window.addEventListener("storage", cb);
+  return () => window.removeEventListener("storage", cb);
+}
+
 function ReplyForm({ threadId, slug }) {
-  const [name, setName] = useState("");
+  const saved = useSyncExternalStore(
+    subscribeStorage,
+    () => { try { return localStorage.getItem(`mts_board_name_${slug}`) || ""; } catch { return ""; } },
+    () => ""
+  );
+  const [typed, setName] = useState(null); // null = not edited here yet
+  const name = typed ?? saved;
   const [body, setBody] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
-
-  // Remember the display name on this device, like the RSVP player picker.
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(`mts_board_name_${slug}`);
-      if (saved) setName(saved);
-    } catch {}
-  }, [slug]);
 
   async function submit(e) {
     e.preventDefault();

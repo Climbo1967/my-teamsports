@@ -17,16 +17,28 @@ export default function VideosPage({ params }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const { data, error: err } = await supabase
       .from("videos").select("*").eq("team_id", teamId)
       .order("game_date", { ascending: false, nullsFirst: false })
       .order("created_at", { ascending: false });
-    if (err) setError(err.message);
-    setVideos(data || []);
+    return { data, err };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { load(); }, [load]);
+  const apply = useCallback(({ data, err }) => {
+    if (err) setError(err.message);
+    setVideos(data || []);
+  }, []);
+
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   function startEdit(v) {
     setEditingId(v.id);

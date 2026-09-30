@@ -29,23 +29,35 @@ export default function SettingsPage({ params }) {
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const { data } = await supabase.from("teams").select("*").eq("id", teamId).single();
-    if (data) {
-      setTeam(data);
-      setName(data.name);
-      setSport(data.sport);
-      setSeason(data.season || "");
-      setAgeGroup(data.age_group || "");
-      // logo_url stores a private-bucket path; keep the path for saving and
-      // a signed URL for display.
-      setLogoPath(data.logo_url);
-      setLogoUrl(await signMediaUrl(supabase, data.logo_url));
-      setPrimaryColor(data.primary_color || DEFAULT_TEAM_COLOR);
-    }
+    // logo_url stores a private-bucket path; keep the path for saving and
+    // a signed URL for display.
+    const signedLogo = data ? await signMediaUrl(supabase, data.logo_url) : null;
+    return { data, signedLogo };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { load(); }, [load]);
+  const apply = useCallback(({ data, signedLogo }) => {
+    if (!data) return;
+    setTeam(data);
+    setName(data.name);
+    setSport(data.sport);
+    setSeason(data.season || "");
+    setAgeGroup(data.age_group || "");
+    setLogoPath(data.logo_url);
+    setLogoUrl(signedLogo);
+    setPrimaryColor(data.primary_color || DEFAULT_TEAM_COLOR);
+  }, []);
+
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   async function handleLogo(e) {
     const file = e.target.files?.[0];

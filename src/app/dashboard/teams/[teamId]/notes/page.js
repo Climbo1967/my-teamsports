@@ -12,14 +12,26 @@ export default function NotesPage({ params }) {
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const { data, error: err } = await supabase
       .from("notes").select("*").eq("team_id", teamId).order("created_at", { ascending: false });
-    if (err) setError(err.message);
-    setNotes(data || []);
+    return { data, err };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { load(); }, [load]);
+  const apply = useCallback(({ data, err }) => {
+    if (err) setError(err.message);
+    setNotes(data || []);
+  }, []);
+
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   async function remove(n) {
     if (!(await confirmDialog({ title: "Delete note?", confirmLabel: "Delete", danger: true }))) return;

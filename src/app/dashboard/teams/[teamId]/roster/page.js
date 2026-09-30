@@ -16,20 +16,32 @@ export default function RosterPage({ params }) {
   const [editing, setEditing] = useState(null); // player object or "new"
   const [error, setError] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const [{ data: playerRows, error: pErr }, { data: team }] = await Promise.all([
       supabase.from("players").select("*").eq("team_id", teamId).order("sort_order").order("name"),
       supabase.from("teams").select("sport").eq("id", teamId).single(),
     ]);
-    if (pErr) setError(pErr.message);
     // photo_url stores a private-bucket path; sign for display (photo_display).
     const rows = playerRows || [];
     const displays = await signMediaUrls(supabase, rows.map((p) => p.photo_url));
-    setPlayers(rows.map((p, i) => ({ ...p, photo_display: displays[i] })));
-    if (team) setSport(team.sport);
+    return { pErr, team, rows, displays };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { load(); }, [load]);
+  const apply = useCallback(({ pErr, team, rows, displays }) => {
+    if (pErr) setError(pErr.message);
+    setPlayers(rows.map((p, i) => ({ ...p, photo_display: displays[i] })));
+    if (team) setSport(team.sport);
+  }, []);
+
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   async function removePlayer(player) {
     if (!(await confirmDialog({ title: "Remove player?", message: `Remove ${player.name} from the roster?`, confirmLabel: "Remove", danger: true }))) return;

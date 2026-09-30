@@ -48,7 +48,9 @@ export default function Turnstile({ onToken, resetSignal = 0 }) {
   const boxRef = useRef(null);
   const widgetIdRef = useRef(null);
   const onTokenRef = useRef(onToken);
-  onTokenRef.current = onToken;
+  // Keep the latest callback for Turnstile's async callbacks. Updated after
+  // commit, not during render (tokens only ever arrive after mount).
+  useEffect(() => { onTokenRef.current = onToken; }, [onToken]);
 
   const retriesRef = useRef(0);
   const retryTimerRef = useRef(null);

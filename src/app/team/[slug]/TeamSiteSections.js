@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
 import { videoEmbedUrl } from "@/lib/video";
@@ -159,7 +159,8 @@ function AnnouncementsSection({ announcements, slug }) {
 
 /* ---------- Schedule ---------- */
 function ScheduleSection({ events, players, rsvps, slug }) {
-  const now = Date.now();
+  // Upcoming/past split as of when the page opened (not re-read every render).
+  const [now] = useState(() => Date.now());
   const upcoming = events.filter((e) => new Date(e.starts_at) >= now);
   const past = events.filter((e) => new Date(e.starts_at) < now).reverse();
 
@@ -228,19 +229,29 @@ function EventCard({ event, past, players, rsvps, slug }) {
   );
 }
 
+// Which player this device RSVPs for, remembered in localStorage. Read through
+// useSyncExternalStore: "" on the server and during hydration (no mismatch),
+// the saved value on the client, and fresh on every render so all RSVP rows
+// pick it up after the first RSVP.
+function subscribeStorage(cb) {
+  window.addEventListener("storage", cb);
+  return () => window.removeEventListener("storage", cb);
+}
+function useSavedPlayer(slug) {
+  return useSyncExternalStore(
+    subscribeStorage,
+    () => { try { return localStorage.getItem(`mts_player_${slug}`) || ""; } catch { return ""; } },
+    () => ""
+  );
+}
+
 function RsvpWidget({ event, players, rsvps, slug }) {
   const router = useRouter();
-  const [playerId, setPlayerId] = useState("");
+  const saved = useSavedPlayer(slug);
+  const [picked, setPlayerId] = useState(null); // null = not chosen here yet
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
-
-  // Remember which player this device belongs to
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(`mts_player_${slug}`);
-      if (saved && players.some((p) => p.id === saved)) setPlayerId(saved);
-    } catch {}
-  }, [slug, players]);
+  const playerId = picked ?? (players.some((p) => p.id === saved) ? saved : "");
 
   const going = rsvps.filter((r) => r.status === "going").length;
   const maybe = rsvps.filter((r) => r.status === "maybe").length;
@@ -288,7 +299,7 @@ function RsvpWidget({ event, players, rsvps, slug }) {
           onChange={(e) => setPlayerId(e.target.value)}
           className="bg-white/[0.05] border border-white/[0.1] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-[var(--color-accent-blue)] [&>option]:bg-[#132140]"
         >
-          <option value="">Who's RSVPing?</option>
+          <option value="">Who&apos;s RSVPing?</option>
           {players.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
         </select>
         {btn("going", "✓ Going", "border-green-500/50 bg-green-500/15 text-green-400")}

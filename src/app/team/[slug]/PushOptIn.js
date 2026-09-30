@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const VAPID = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
 
@@ -19,7 +19,7 @@ export default function PushOptIn({ slug, teamName }) {
   const [endpoint, setEndpoint] = useState(null);
   const [prefs, setPrefs] = useState(null); // { announcements, games, schedule } | null
 
-  async function loadPrefs(ep) {
+  const loadPrefs = useCallback(async (ep) => {
     try {
       const res = await fetch("/api/push/prefs", {
         method: "POST",
@@ -31,7 +31,7 @@ export default function PushOptIn({ slug, teamName }) {
     } catch {
       /* prefs are optional sugar; ignore */
     }
-  }
+  }, [slug]);
 
   async function togglePref(key) {
     if (!prefs || !endpoint) return;
@@ -81,7 +81,7 @@ export default function PushOptIn({ slug, teamName }) {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [loadPrefs]);
 
   async function enable() {
     setState("working");

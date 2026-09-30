@@ -7,7 +7,7 @@ import { SCOREBOARD_SPORTS, periodShort, formatClock } from "@/lib/constants";
 // Handles both the baseball-style game and the universal clock/period scoreboard.
 export default function LiveScoreBanner({ slug, teamName }) {
   const [live, setLive] = useState(null);
-  const [tick, setTick] = useState(Date.now());
+  const [tick, setTick] = useState(() => Date.now());
 
   useEffect(() => {
     let active = true;

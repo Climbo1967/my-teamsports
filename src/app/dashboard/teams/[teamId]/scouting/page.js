@@ -17,21 +17,33 @@ export default function ScoutingPage({ params }) {
   const [pitching, setPitching] = useState([]);
   const [selected, setSelected] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const [{ data: team }, { data: playerRows }, { data: abRows }, { data: plRows }] = await Promise.all([
       supabase.from("teams").select("sport").eq("id", teamId).single(),
       supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
       supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
       supabase.from("pitching_lines").select("player_id, pitches, outs, strikeouts, walks, hits, runs").eq("team_id", teamId),
     ]);
+    return { team, playerRows, abRows, plRows };
+  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const apply = useCallback(({ team, playerRows, abRows, plRows }) => {
     setSport(team?.sport || "other");
     setPlayers(playerRows || []);
     setAtBats(abRows || []);
     setPitching(plRows || []);
     setSelected((cur) => cur || (playerRows && playerRows[0]?.id) || null);
-  }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
-  useEffect(() => { load(); }, [load]);
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   const byPlayer = useMemo(() => {
     const m = {};

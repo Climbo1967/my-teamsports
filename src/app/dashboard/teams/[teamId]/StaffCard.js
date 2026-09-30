@@ -14,16 +14,28 @@ export default function StaffCard({ teamId }) {
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
 
-  const load = useCallback(async () => {
+  // Fetch only (no state writes) so the mount effect can apply the result in a
+  // promise callback and drop a response that lands after unmount.
+  const fetchData = useCallback(async () => {
     const [{ data: rows }, { data: { user } }] = await Promise.all([
       supabase.from("team_coaches").select("*").eq("team_id", teamId).order("created_at"),
       supabase.auth.getUser(),
     ]);
-    setStaff(rows || []);
-    setMyId(user?.id || null);
+    return { rows, user };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => { load(); }, [load]);
+  const apply = useCallback(({ rows, user }) => {
+    setStaff(rows || []);
+    setMyId(user?.id || null);
+  }, []);
+
+  const load = useCallback(async () => { apply(await fetchData()); }, [fetchData, apply]);
+
+  useEffect(() => {
+    let live = true;
+    fetchData().then((d) => { if (live) apply(d); });
+    return () => { live = false; };
+  }, [fetchData, apply]);
 
   const isOwner = staff?.some((s) => s.user_id === myId && s.role === "owner");
 
