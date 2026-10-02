@@ -100,9 +100,9 @@ export default function AiChatPage({ params }) {
           <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto">
             Ask anything about your team &mdash; lineups, practice ideas, what to tell parents &mdash; and get answers grounded in your real roster, schedule, and stats. Available as a paid add-on on your team&apos;s Billing page.
           </p>
-          <a href="/pricing" target="_blank" className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all">
-            Learn more
-          </a>
+          <Link href={`/dashboard/teams/${teamId}/billing`} className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all no-underline">
+            Unlock on your Billing page
+          </Link>
         </Card>
       </div>
     );

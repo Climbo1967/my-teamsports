@@ -122,9 +122,9 @@ export default function AiCoachPage({ params }) {
           <p className="text-slate-400 text-sm mb-6 max-w-md mx-auto">
             Your own assistant coach that reads this team&apos;s data &mdash; record, stats, and schedule &mdash; and hands you a specific game plan: who&apos;s hot, what to work on, and a focus for the next practice. Available as a paid add-on on your team&apos;s Billing page.
           </p>
-          <a href="/pricing" target="_blank" className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all">
-            Learn more
-          </a>
+          <Link href={`/dashboard/teams/${teamId}/billing`} className="inline-block bg-[var(--color-accent-green)] text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-green-500 transition-all no-underline">
+            Unlock on your Billing page
+          </Link>
         </Card>
       </div>
     );
