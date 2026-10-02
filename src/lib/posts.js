@@ -2000,7 +2000,7 @@ export const posts = [
       },
       {
         "q": "How much does a team management site cost?",
-        "a": "My-Team Sports is $15 for the 2026 season per team, or $20 with the AI assistant coach included. Parents always free, unlimited."
+        "a": "My-Team Sports is $15 per team for the 2026 season. The AI assistant coach is an optional $20 add-on. Parents always free, unlimited."
       }
     ]
   },
