@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
-import { PRODUCT_NAMES, currentSeasonYear, priceFor, teamAccess } from "@/lib/pricing";
+import { PRODUCT_NAMES, passOffer, priceFor, teamAccess } from "@/lib/pricing";
 import { APP_TAG, fulfillCheckoutSession } from "@/lib/billing/fulfill";
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -56,7 +56,10 @@ export async function POST(request) {
     league = info || null;
   }
 
-  const year = currentSeasonYear();
+  // What is on sale right now: the price of this year, covering through the end
+  // of this year, or of next year when bought from October 1 (late-year rule).
+  const offer = passOffer();
+  const year = offer.priceYear;
   const access = teamAccess(team, new Date(), league);
   if (product === "season" && access.leagueActive) {
     return NextResponse.json(
@@ -64,11 +67,11 @@ export async function POST(request) {
       { status: 400 },
     );
   }
-  if (product === "season" && team.paid_through && team.paid_through >= `${year}-12-31`) {
-    return NextResponse.json({ error: `Your ${year} Season Pass is already active.` }, { status: 400 });
+  if (product === "season" && team.paid_through && team.paid_through >= offer.endDate) {
+    return NextResponse.json({ error: `Your Season Pass is already active through Dec 31, ${offer.passYear}.` }, { status: 400 });
   }
-  if (product === "ai" && access.aiPaid && team.ai_paid_through >= `${year}-12-31`) {
-    return NextResponse.json({ error: `AI Assistant Coach is already active for ${year}.` }, { status: 400 });
+  if (product === "ai" && team.ai_paid_through && team.ai_paid_through >= offer.endDate) {
+    return NextResponse.json({ error: `AI Assistant Coach is already active through Dec 31, ${offer.passYear}.` }, { status: 400 });
   }
 
   const stripe = new Stripe(secretKey);
@@ -81,7 +84,7 @@ export async function POST(request) {
     const found = await stripe.paymentIntents.search({
       query:
         `metadata['app']:'${APP_TAG}' AND metadata['team_id']:'${teamId}'` +
-        ` AND metadata['product']:'${product}' AND metadata['season_year']:'${year}'` +
+        ` AND metadata['product']:'${product}' AND metadata['season_year']:'${offer.passYear}'` +
         ` AND status:'succeeded'`,
       limit: 1,
     });
@@ -90,7 +93,7 @@ export async function POST(request) {
       const sessions = await stripe.checkout.sessions.list({ payment_intent: intent.id, limit: 1 });
       if (sessions.data[0]) await fulfillCheckoutSession(sessions.data[0]);
       return NextResponse.json(
-        { error: `${PRODUCT_NAMES[product]} is already paid for ${year} — refresh this page. You have not been charged again.` },
+        { error: `${PRODUCT_NAMES[product]} is already paid through Dec 31, ${offer.passYear} — refresh this page. You have not been charged again.` },
         { status: 409 }
       );
     }
@@ -111,7 +114,9 @@ export async function POST(request) {
     app: APP_TAG,
     team_id: teamId,
     product,
-    season_year: String(year),
+    // The last year this purchase covers. Fulfilment sets paid_through to
+    // Dec 31 of this year, and the duplicate guard above searches on it.
+    season_year: String(offer.passYear),
     coach_id: user.id,
   };
 
@@ -151,8 +156,10 @@ export async function POST(request) {
             currency: "usd",
             unit_amount: amount,
             product_data: {
-              name: `${PRODUCT_NAMES[product]} — ${year} season`,
-              description: `${team.name} on my-teamsports.com (covers through Dec 31, ${year})`,
+              name: offer.lateYear
+                ? `${PRODUCT_NAMES[product]} — rest of ${offer.priceYear} + all of ${offer.passYear}`
+                : `${PRODUCT_NAMES[product]} — ${offer.passYear} season`,
+              description: `${team.name} on my-teamsports.com (covers through Dec 31, ${offer.passYear})`,
             },
           },
         },

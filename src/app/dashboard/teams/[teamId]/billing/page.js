@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
 import {
-  PRODUCT_NAMES, currentSeasonYear, fmtUsd, priceFor, regularPriceFor, teamAccess,
+  PRODUCT_NAMES, fmtUsd, passOffer, priceFor, regularPriceFor, teamAccess,
 } from "@/lib/pricing";
 
 const dateFmt = (d) =>
@@ -76,10 +76,18 @@ export default function BillingPage({ params }) {
   if (!team) return <Spinner />;
 
   const access = teamAccess(team, new Date(), league);
-  const year = currentSeasonYear();
+  // What is on sale right now (same rule the checkout route applies).
+  const offer = passOffer();
+  const year = offer.priceYear;
   const seasonPrice = priceFor("season", year);
   const aiPrice = priceFor("ai", year);
   const halfOff = year === 2026;
+  const coversLine = offer.lateYear
+    ? `Buy now and it covers the rest of ${offer.priceYear} and all of ${offer.passYear} (through Dec 31, ${offer.passYear}).`
+    : `Covers through Dec 31, ${offer.passYear}.`;
+  // Already covered to the end of what is on sale: nothing more to buy yet.
+  const seasonCovered = !!(team.paid_through && team.paid_through >= offer.endDate);
+  const aiCovered = !!(team.ai_paid_through && team.ai_paid_through >= offer.endDate);
 
   return (
     <div className="max-w-3xl space-y-6">
@@ -151,7 +159,7 @@ export default function BillingPage({ params }) {
         {/* League-covered teams never see the Season Pass offer — the school/league already paid. */}
         {!access.leagueActive && (
         <Card className="border-blue-500/25">
-          <h4 className="font-bold mb-1">SEASON PASS — {year}</h4>
+          <h4 className="font-bold mb-1">SEASON PASS</h4>
           <p className="text-3xl font-bold mb-1">
             {fmtUsd(seasonPrice)}
             {halfOff && (
@@ -162,16 +170,20 @@ export default function BillingPage({ params }) {
           </p>
           <p className="text-sm text-slate-400 mb-4">
             Everything: roster, schedule + RSVP, live scoring, stats, playbook, photos, game film,
-            alerts. Covers through Dec 31, {year}. Parents always free.
+            alerts. {coversLine} One payment, not a subscription. Parents always free.
           </p>
-          <Button onClick={() => buy("season")} disabled={busy !== null}>
-            {busy === "season" ? "Opening checkout..." : access.paid ? "EXTEND SEASON PASS" : "BUY SEASON PASS"}
-          </Button>
+          {seasonCovered ? (
+            <p className="text-sm text-[var(--color-accent-green)] font-semibold">✓ You&apos;re covered through {dateFmt(team.paid_through)}. Nothing to buy.</p>
+          ) : (
+            <Button onClick={() => buy("season")} disabled={busy !== null}>
+              {busy === "season" ? "Opening checkout..." : access.paid ? "EXTEND SEASON PASS" : "BUY SEASON PASS"}
+            </Button>
+          )}
         </Card>
         )}
 
         <Card className="border-purple-500/25">
-          <h4 className="font-bold mb-1">AI ASSISTANT COACH — {year}</h4>
+          <h4 className="font-bold mb-1">AI ASSISTANT COACH</h4>
           <p className="text-3xl font-bold mb-1">
             {fmtUsd(aiPrice)}
             {halfOff && (
@@ -182,11 +194,15 @@ export default function BillingPage({ params }) {
           </p>
           <p className="text-sm text-slate-400 mb-4">
             Coach&apos;s briefing, lineup advisor, and printable practice planner — built from your
-            team&apos;s real stats. Add-on to the Season Pass.
+            team&apos;s real stats. Add-on to the Season Pass. {coversLine}
           </p>
-          <Button variant="green" onClick={() => buy("ai")} disabled={busy !== null}>
-            {busy === "ai" ? "Opening checkout..." : "ADD AI COACH"}
-          </Button>
+          {aiCovered ? (
+            <p className="text-sm text-[var(--color-accent-green)] font-semibold">✓ You&apos;re covered through {dateFmt(team.ai_paid_through)}. Nothing to buy.</p>
+          ) : (
+            <Button variant="green" onClick={() => buy("ai")} disabled={busy !== null}>
+              {busy === "ai" ? "Opening checkout..." : access.aiPaid ? "EXTEND AI COACH" : "ADD AI COACH"}
+            </Button>
+          )}
         </Card>
       </div>
 
@@ -201,7 +217,7 @@ export default function BillingPage({ params }) {
             {payments.map((p) => (
               <div key={p.id} className="flex items-center justify-between text-sm bg-white/[0.03] rounded-lg px-3 py-2">
                 <span className="text-white">
-                  {PRODUCT_NAMES[p.product]} — {p.season_year} season
+                  {PRODUCT_NAMES[p.product]} — through Dec 31, {p.season_year}
                 </span>
                 <span className="text-slate-400">
                   {fmtUsd(p.amount_cents)} ·{" "}

@@ -31,7 +31,7 @@ const SECTIONS = [
   {
     h: "3. Pricing and billing",
     body: [
-      "The Coach Plan is offered at half-off launch pricing for the 2026 season ($15 per team), with an optional AI Coach add-on ($20). Regular pricing of $30 per team (plus any add-ons) applies from the 2027 season. Coach accounts begin with a 30-day free trial, and parents never pay. We may add, change, or discontinue features, and we will give reasonable notice of any pricing changes.",
+      "The Coach Plan is offered at half-off launch pricing for the 2026 season ($15 per team), with an optional AI Coach add-on ($20). Regular pricing of $30 per team (plus any add-ons) applies from the 2027 season. Each purchase is a one-time payment covering through December 31 of the year it is bought in; a Coach Plan or add-on bought from October 1 through December 31 also covers the whole of the following calendar year. Coach accounts begin with a 30-day free trial, and parents never pay. We may add, change, or discontinue features, and we will give reasonable notice of any pricing changes.",
     ],
   },
   {

@@ -32,6 +32,31 @@ export function seasonEndDate(year) {
 }
 
 /**
+ * What a pass bought right now costs and covers.
+ *
+ * Late-year rule (Ron, 2026-10-02): a pass bought from October 1 covers the
+ * rest of that calendar year AND all of the next one, so nobody pays in the
+ * fall and again in January. It is still a one-time calendar-year pass: the
+ * price is the price of the year it is bought in, and it ends on a Dec 31.
+ *
+ *   priceYear  the year whose price applies (the year of purchase)
+ *   passYear   the last year the pass covers; stored as the purchase's
+ *              season_year, which is what fulfilment turns into paid_through
+ *   endDate    `${passYear}-12-31`
+ *   lateYear   true from October 1 through December 31
+ *
+ * Uses UTC so the browser and the server always agree on the offer.
+ */
+export const LATE_YEAR_FROM_MONTH = 10; // October
+
+export function passOffer(now = new Date()) {
+  const priceYear = now.getUTCFullYear();
+  const lateYear = now.getUTCMonth() + 1 >= LATE_YEAR_FROM_MONTH;
+  const passYear = lateYear ? priceYear + 1 : priceYear;
+  return { priceYear, passYear, lateYear, endDate: seasonEndDate(passYear) };
+}
+
+/**
  * Compute a team's access state from its billing columns.
  * Lock model: expired teams lose the coach dashboard only —
  * the public team site never locks.

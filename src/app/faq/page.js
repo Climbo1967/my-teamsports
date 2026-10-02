@@ -20,11 +20,11 @@ const FAQS = [
   },
   {
     q: "How much does it cost?",
-    a: "Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is $15 for the 2026 season (half-off launch pricing), then $30 for the 2027 season. Parents never pay anything, ever.",
+    a: "Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is $15 for the 2026 season (half-off launch pricing), then $30 for the 2027 season. It is one payment, not a subscription, and a pass bought from October 1 covers the rest of 2026 and all of 2027. Parents never pay anything, ever.",
   },
   {
     q: "Is the AI Assistant Coach free?",
-    a: "The AI Assistant Coach is included in your 30-day free trial. After that it's an optional $20 add-on for the 2026 season — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.",
+    a: "The AI Assistant Coach is included in your 30-day free trial. After that it's an optional $20 add-on for the 2026 season (bought from October 1, it covers all of 2027 too) — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.",
   },
   {
     q: "Do parents have to create an account?",

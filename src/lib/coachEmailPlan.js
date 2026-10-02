@@ -4,7 +4,7 @@
 //
 // Used by: the daily job (/api/cron/coach-emails), the welcome on email confirm,
 // the admin panel's Email Coaches card, and that card's server route.
-import { currentSeasonYear, fmtUsd, priceFor, seasonEndDate } from "./pricing.js";
+import { fmtUsd, passOffer, priceFor } from "./pricing.js";
 
 export const SITE_URL = "https://my-teamsports.com";
 
@@ -148,8 +148,12 @@ function billingLink(events) {
 }
 
 function priceLines(now) {
-  const year = currentSeasonYear(now);
-  const through = new Date(`${seasonEndDate(year)}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+  const offer = passOffer(now);
+  const year = offer.priceYear;
+  const date = new Date(`${offer.endDate}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" });
+  // From October 1 a pass also covers the whole next year; say so, it is the
+  // reason to buy now rather than wait for January.
+  const through = offer.lateYear ? `${date} (the rest of ${offer.priceYear} and all of ${offer.passYear})` : date;
   return { year, through, season: fmtUsd(priceFor("season", year)), ai: fmtUsd(priceFor("ai", year)) };
 }
 

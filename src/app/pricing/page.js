@@ -51,6 +51,7 @@ export default function PricingPage() {
             <span className="text-slate-400 mb-3 text-lg">/ 2026 season</span>
           </div>
           <p className="text-sm text-slate-300 mb-1">Half-off launch price. Then <span className="text-white font-semibold">$30 per team</span> for the 2027 season.</p>
+          <p className="text-sm text-green-400 mb-1">Buy from October 1 and your pass covers the rest of 2026 and all of 2027.</p>
           <p className="text-slate-400 mb-8">Stand up your whole team in about 5 minutes.</p>
           <ul className="text-left space-y-3 mb-9">
             {INCLUDED.map((item) => (
@@ -93,9 +94,9 @@ export default function PricingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">PRICING QUESTIONS</h2>
           <div className="space-y-6">
             {[
-              { q: "How much does it cost?", a: "Your first 30 days are free — no credit card to start. After that, the Coach Plan is $15 for the entire 2026 season (half-off launch pricing), and parents never pay a cent." },
-              { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan is $30 per team — you'll get plenty of notice, and your existing team data stays yours." },
-              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind paywalls. The only optional extra is the AI Assistant Coach — included in your 30-day free trial, then $20 for the 2026 season." },
+              { q: "How much does it cost?", a: "Your first 30 days are free — no credit card to start. After that, the Coach Plan is $15 for the entire 2026 season (half-off launch pricing), and parents never pay a cent. It is one payment, not a subscription, and a pass bought from October 1 also covers all of 2027." },
+              { q: "What happens after the 2026 season?", a: "Parents are always free. Starting with the 2027 season, the Coach Plan is $30 per team — you'll get plenty of notice, and your existing team data stays yours. If you bought your pass on or after October 1, 2026, you are already covered through December 31, 2027." },
+              { q: "Are there any hidden fees or upsells?", a: "No. Everything listed above is included. We don't paywall game film, charge per player, or lock features behind paywalls. The only optional extra is the AI Assistant Coach — included in your 30-day free trial, then $20 for the 2026 season (bought from October 1, it covers all of 2027 too)." },
               { q: "Do I need to install anything?", a: "Nothing. It runs in any web browser for both coaches and parents — no app store, no downloads." },
             ].map((item) => (
               <div key={item.q} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
