@@ -21,7 +21,7 @@ export default function AdminSupport({ initial }) {
   }
 
   return (
-    <div className="mt-12">
+    <div className="mb-10">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <h2 className="text-xl font-bold">
           🛟 SUPPORT REQUESTS {openCount > 0 && <span className="text-sm text-orange-400">({openCount} open)</span>}

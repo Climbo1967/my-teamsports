@@ -11,7 +11,9 @@ const KIND_LABELS = { welcome: "Welcome", trial_ending: "Trial ending", trial_en
 // emailMeta: { [email]: { greeting, values, missing, optOut } } for every coach
 // with an account, or null when the email log isn't set up (sending is then off).
 // emailLog: the most recent emails the app sent to coaches.
-export default function AdminDirectory({ data, counters = {}, emailMeta = null, emailLog = [] }) {
+// children: panels the page wants directly under the summary tiles and above
+// the Email Coaches card (activation funnel, AI Coach use, support requests).
+export default function AdminDirectory({ data, counters = {}, emailMeta = null, emailLog = [], children = null }) {
   const { totals, teams, coaches } = data;
   const [roleFilter, setRoleFilter] = useState("all");
   const [sportFilter, setSportFilter] = useState("all");
@@ -178,6 +180,9 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
           </div>
         ))}
       </div>
+
+      {/* ACTIVATION FUNNEL, AI COACH USE, SUPPORT REQUESTS (passed in by the page) */}
+      {children}
 
       {/* COACH DIRECTORY + EMAIL TOOLS */}
       <Card className="mb-10">

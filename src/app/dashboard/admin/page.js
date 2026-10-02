@@ -67,10 +67,13 @@ export default async function AdminPage() {
 
   return (
     <>
-      <AdminDirectory data={data} counters={counters || {}} emailMeta={emailMeta} emailLog={emailLog} />
-      <AdminActivation data={data} />
-      <AdminAiUse summary={aiUse} truncated={aiUseTruncated} />
-      <AdminSupport initial={support || []} />
+      {/* The three panels render inside the directory, under the summary
+          tiles and above the Email Coaches card. */}
+      <AdminDirectory data={data} counters={counters || {}} emailMeta={emailMeta} emailLog={emailLog}>
+        <AdminActivation data={data} />
+        <AdminAiUse summary={aiUse} truncated={aiUseTruncated} />
+        <AdminSupport initial={support || []} />
+      </AdminDirectory>
     </>
   );
 }
