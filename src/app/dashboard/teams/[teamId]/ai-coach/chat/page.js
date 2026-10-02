@@ -13,6 +13,18 @@ const SUGGESTIONS = [
   "How should I handle playing time this weekend?",
 ];
 
+// Same rule as the AI Coach hub page and /api/ai-coach/chat: AI is on during
+// the 14-day trial, while paid, or when comped (ai_enabled).
+function aiActive(team) {
+  if (!team) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  return !!(
+    team.ai_enabled ||
+    (team.ai_paid_through && team.ai_paid_through >= today) ||
+    (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date())
+  );
+}
+
 export default function AiChatPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
@@ -26,9 +38,10 @@ export default function AiChatPage({ params }) {
 
   useEffect(() => {
     (async () => {
-      const { data } = await supabase.from("teams").select("name, sport, ai_enabled").eq("id", teamId).single();
-      setTeam(data || null);
-      if (data?.ai_enabled) {
+      const { data } = await supabase.from("teams").select("name, sport, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
+      const aiOn = aiActive(data);
+      setTeam(data ? { ...data, aiOn } : null);
+      if (aiOn) {
         try {
           const res = await fetch(`/api/ai-coach/chat?teamId=${teamId}`);
           const json = await res.json();
@@ -71,7 +84,7 @@ export default function AiChatPage({ params }) {
 
   if (team === undefined || loading) return <Spinner />;
 
-  if (!team?.ai_enabled) {
+  if (!team?.aiOn) {
     return (
       <div className="max-w-2xl">
         <Card className="border-blue-500/25 text-center">
