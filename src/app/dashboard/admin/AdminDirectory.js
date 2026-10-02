@@ -1,12 +1,59 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { SPORTS, SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 import { FILL_INS, fillTemplate, tokensUsed } from "@/lib/coachEmailPlan";
 
 const KIND_LABELS = { welcome: "Welcome", trial_ending: "Trial ending", trial_ended: "Trial ended", admin: "From you" };
+
+// Open/closed state for the two long lists (Coaches, Teams). Both start
+// collapsed. The choice is remembered in this browser; if storage is blocked
+// it still works for the visit.
+const openFlags = new Map();
+const flagListeners = new Set();
+function readFlag(key) {
+  if (openFlags.has(key)) return openFlags.get(key);
+  let saved = false;
+  try { saved = window.localStorage.getItem(key) === "1"; } catch {}
+  openFlags.set(key, saved);
+  return saved;
+}
+function writeFlag(key, value) {
+  openFlags.set(key, value);
+  try { window.localStorage.setItem(key, value ? "1" : "0"); } catch {}
+  flagListeners.forEach((fn) => fn());
+}
+function subscribeFlags(fn) {
+  flagListeners.add(fn);
+  return () => flagListeners.delete(fn);
+}
+function useOpenFlag(key) {
+  const open = useSyncExternalStore(subscribeFlags, () => readFlag(key), () => false);
+  return [open, () => writeFlag(key, !open)];
+}
+
+// Heading that shows or hides the list under it.
+function ListToggle({ title, note, open, onToggle, controls }) {
+  return (
+    <h2 className="text-xl font-bold mb-4">
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={controls}
+        className="w-full flex items-center justify-between gap-3 text-left rounded-2xl border border-white/[0.06] bg-white/[0.03] px-4 py-3 hover:bg-white/[0.06] transition-colors"
+      >
+        <span>
+          {title}
+          {note ? <>{" "}<span className="text-sm font-normal text-slate-400">· {note}</span></> : null}
+        </span>
+        <span className="text-sm font-normal text-slate-400 whitespace-nowrap">{open ? "Hide ▲" : "Show ▼"}</span>
+      </button>
+    </h2>
+  );
+}
 
 // emailMeta: { [email]: { greeting, values, missing, optOut } } for every coach
 // with an account, or null when the email log isn't set up (sending is then off).
@@ -26,6 +73,8 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
   const [sendNotice, setSendNotice] = useState(null);
   const messageRef = useRef(null);
   const router = useRouter();
+  const [coachesOpen, toggleCoaches] = useOpenFlag("mts-admin-coaches-open");
+  const [teamsOpen, toggleTeams] = useOpenFlag("mts-admin-teams-open");
 
   // Put a fill-in where the cursor is (or at the end), then put the cursor
   // back right after it so typing carries on naturally.
@@ -271,14 +320,14 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
         <p className="text-sm text-slate-400 mb-3">
           {selected.size > 0 ? (
             <>
-              Sending to the <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} checked in the table below ·{" "}
+              Sending to the <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} checked in the Coaches list below ·{" "}
               <button onClick={() => setSelected(new Set())} className="underline hover:text-white">
                 clear selection
               </button>
             </>
           ) : (
             <>
-              Sending to all <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} matching the filters — or check boxes in the table below to pick individual coaches.
+              Sending to all <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} matching the filters — or open the Coaches list below and check boxes to pick individual coaches.
             </>
           )}
           {(optedOutCount > 0 || noAccountCount > 0) && (
@@ -357,9 +406,16 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
         )}
       </div>
 
-      {/* COACHES TABLE */}
-      <h2 className="text-xl font-bold mb-4">COACHES ({filtered.length})</h2>
-      <div className="overflow-x-auto rounded-2xl border border-white/[0.06] mb-10">
+      {/* COACHES TABLE (collapsed until opened; the checkboxes keep their state either way) */}
+      <ListToggle
+        title={`COACHES (${filtered.length})`}
+        note={selected.size > 0 ? `${selected.size} checked` : null}
+        open={coachesOpen}
+        onToggle={toggleCoaches}
+        controls="admin-coaches-list"
+      />
+      <div id="admin-coaches-list" hidden={!coachesOpen} className={coachesOpen ? "overflow-x-auto rounded-2xl border border-white/[0.06] mb-10" : ""}>
+        {coachesOpen && (
         <table className="w-full text-sm">
           <thead className="bg-white/[0.04] text-left">
             <tr>
@@ -438,11 +494,18 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
             ))}
           </tbody>
         </table>
+        )}
       </div>
 
-      {/* TEAMS TABLE */}
-      <h2 className="text-xl font-bold mb-4">TEAMS ({teams.length})</h2>
-      <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+      {/* TEAMS TABLE (collapsed until opened) */}
+      <ListToggle
+        title={`TEAMS (${teams.length})`}
+        open={teamsOpen}
+        onToggle={toggleTeams}
+        controls="admin-teams-list"
+      />
+      <div id="admin-teams-list" hidden={!teamsOpen} className={teamsOpen ? "overflow-x-auto rounded-2xl border border-white/[0.06]" : ""}>
+        {teamsOpen && (
         <table className="w-full text-sm">
           <thead className="bg-white/[0.04] text-left">
             <tr>
@@ -472,6 +535,7 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
             ))}
           </tbody>
         </table>
+        )}
       </div>
     </div>
   );
