@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaude } from "@/lib/ai";
+import { logAiUse } from "@/lib/aiUse";
 
 const MINUTES = new Set([45, 60, 75, 90]);
 const FOCI = {
@@ -91,5 +92,7 @@ export async function POST(request) {
   if (!result.ok) {
     return NextResponse.json({ error: result.error || "Could not build the practice plan." }, { status: 502 });
   }
+  // Use log: one row per practice plan actually delivered (never blocks the reply).
+  after(() => logAiUse("practice", { teamId, userId: user.id }));
   return NextResponse.json({ ok: true, plan: result.text, minutes, focus, generatedAt: new Date().toISOString() });
 }

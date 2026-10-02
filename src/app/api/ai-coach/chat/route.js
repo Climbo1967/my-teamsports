@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaudeChat } from "@/lib/ai";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
+import { logAiUse } from "@/lib/aiUse";
 
 const MONTHLY_TEAM_CAP = 400; // coach messages per team per calendar month
 const HISTORY_TURNS = 20;     // prior messages sent to the model
@@ -144,5 +145,8 @@ export async function POST(request) {
     { team_id: teamId, coach_id: user.id, role: "assistant", content: reply },
   ]);
 
+  // Use log: one row per answered message. Unlike ai_chat_messages, these
+  // rows survive "clear chat", so chat use is no longer undercounted.
+  after(() => logAiUse("chat", { teamId, userId: user.id }));
   return NextResponse.json({ ok: true, reply, generatedAt: nowIso });
 }

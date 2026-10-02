@@ -41,6 +41,13 @@ export default function AiChatPage({ params }) {
       const { data } = await supabase.from("teams").select("name, sport, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
       const aiOn = aiActive(data);
       setTeam(data ? { ...data, aiOn } : null);
+      // Use log: "a coach opened the AI Coach" (same once-a-day row as the hub).
+      if (data) {
+        fetch("/api/ai-coach/seen", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ teamId }), keepalive: true,
+        }).catch(() => {});
+      }
       if (aiOn) {
         try {
           const res = await fetch(`/api/ai-coach/chat?teamId=${teamId}`);

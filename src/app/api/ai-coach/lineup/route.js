@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { createClient } from "@/lib/supabase/server";
 import { sportLabel } from "@/lib/constants";
 import { recommendLineup, fmtAvg, MIN_PA } from "@/lib/lineup";
 import { askClaude } from "@/lib/ai";
+import { logAiUse } from "@/lib/aiUse";
 
 const DIAMOND = new Set(["baseball", "softball"]);
 
@@ -93,5 +94,7 @@ export async function POST(request) {
   if (!result.ok) {
     return NextResponse.json({ error: result.error || "Could not generate the lineup advice." }, { status: 502 });
   }
+  // Use log: one row per lineup actually delivered (never blocks the reply).
+  after(() => logAiUse("lineup", { teamId, userId: user.id }));
   return NextResponse.json({ ok: true, order, advice: result.text, generatedAt: new Date().toISOString() });
 }

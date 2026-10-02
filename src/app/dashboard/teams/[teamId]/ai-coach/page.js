@@ -5,6 +5,15 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, EmptyState, ErrorText, Select, Spinner } from "@/components/ui";
 
+function pingAiSeen(teamId) {
+  try {
+    fetch("/api/ai-coach/seen", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ teamId }), keepalive: true,
+    }).catch(() => {});
+  } catch {}
+}
+
 const FOCUS_LABELS = {
   auto: "Auto (from your data)",
   offense: "Offense",
@@ -50,6 +59,9 @@ export default function AiCoachPage({ params }) {
     (async () => {
       const { data } = await supabase.from("teams").select("name, sport, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
       setTeam(data || null);
+      // Use log: "a coach opened the AI Coach tab". Fire-and-forget; the
+      // server decides whether it was the tools or the locked card.
+      if (data) pingAiSeen(teamId);
     })();
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 

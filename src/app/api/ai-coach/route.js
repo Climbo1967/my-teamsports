@@ -1,8 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaude } from "@/lib/ai";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
+import { logAiUse } from "@/lib/aiUse";
 
 export async function POST(request) {
   if (await rateLimited(request, "ai-briefing", { limit: 10, windowMs: 300_000 })) {
@@ -78,5 +79,7 @@ export async function POST(request) {
   if (!result.ok) {
     return NextResponse.json({ error: result.error || "Could not generate the briefing." }, { status: 502 });
   }
+  // Use log: one row per briefing actually delivered (never blocks the reply).
+  after(() => logAiUse("briefing", { teamId, userId: user.id }));
   return NextResponse.json({ ok: true, briefing: result.text, generatedAt: new Date().toISOString() });
 }

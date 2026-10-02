@@ -3,9 +3,12 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { coachFillIns } from "@/lib/coachEmailPlan";
 import { loadCoachSnapshot } from "@/lib/coachEmail";
+import { loadAiUseRows } from "@/lib/aiUse";
+import { summarizeAiUse } from "@/lib/aiUseSummary";
 import AdminDirectory from "./AdminDirectory";
 import AdminActivation from "./AdminActivation";
 import AdminSupport from "./AdminSupport";
+import AdminAiUse from "./AdminAiUse";
 
 export const metadata = { title: "Admin | My-Team Sports" };
 
@@ -31,6 +34,10 @@ export default async function AdminPage() {
   // turns sending off rather than sending without an unsubscribe link.
   let emailMeta = null;
   let emailLog = [];
+  // AI Coach use log, summarised for real coaches only. Null when either the
+  // log table or the coach snapshot isn't available.
+  let aiUse = null;
+  let aiUseTruncated = false;
   const admin = createAdminClient();
   const snap = await loadCoachSnapshot(admin);
   if (snap.ok) {
@@ -50,12 +57,19 @@ export default async function AdminPage() {
       .order("created_at", { ascending: false })
       .limit(100);
     emailLog = log || [];
+
+    const use = await loadAiUseRows(admin);
+    if (use.ok) {
+      aiUse = summarizeAiUse(use.rows, snap.snapshot.teams, snap.snapshot.coaches, now);
+      aiUseTruncated = use.truncated;
+    }
   }
 
   return (
     <>
       <AdminDirectory data={data} counters={counters || {}} emailMeta={emailMeta} emailLog={emailLog} />
       <AdminActivation data={data} />
+      <AdminAiUse summary={aiUse} truncated={aiUseTruncated} />
       <AdminSupport initial={support || []} />
     </>
   );
