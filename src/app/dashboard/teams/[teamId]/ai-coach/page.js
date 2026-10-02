@@ -94,7 +94,7 @@ export default function AiCoachPage({ params }) {
 
   if (team === undefined) return <Spinner />;
 
-  // AI is on during the 14-day trial, while paid, or when comped (ai_enabled).
+  // AI is on during the free trial, while paid, or when comped (ai_enabled).
   const aiOn = !!team && (
     team.ai_enabled ||
     (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10)) ||

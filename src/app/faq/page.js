@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: "Is the AI Assistant Coach free?",
-    a: "Every team gets the AI Assistant Coach free for the first 14 days. After that it's an optional $20 add-on for the 2026 season — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.",
+    a: "The AI Assistant Coach is included in your 30-day free trial. After that it's an optional $20 add-on for the 2026 season — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.",
   },
   {
     q: "Do parents have to create an account?",

@@ -1,11 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SPORTS, SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
+import { FILL_INS, fillTemplate, tokensUsed } from "@/lib/coachEmailPlan";
 
-export default function AdminDirectory({ data, counters = {} }) {
+const KIND_LABELS = { welcome: "Welcome", trial_ending: "Trial ending", trial_ended: "Trial ended", admin: "From you" };
+
+// emailMeta: { [email]: { greeting, values, missing, optOut } } for every coach
+// with an account, or null when the email log isn't set up (sending is then off).
+// emailLog: the most recent emails the app sent to coaches.
+export default function AdminDirectory({ data, counters = {}, emailMeta = null, emailLog = [] }) {
   const { totals, teams, coaches } = data;
   const [roleFilter, setRoleFilter] = useState("all");
   const [sportFilter, setSportFilter] = useState("all");
@@ -16,7 +22,22 @@ export default function AdminDirectory({ data, counters = {} }) {
   const [messageBody, setMessageBody] = useState("");
   const [sending, setSending] = useState(false);
   const [sendNotice, setSendNotice] = useState(null);
+  const messageRef = useRef(null);
   const router = useRouter();
+
+  // Put a fill-in where the cursor is (or at the end), then put the cursor
+  // back right after it so typing carries on naturally.
+  function insertFillIn(token) {
+    const el = messageRef.current;
+    const start = el ? el.selectionStart : messageBody.length;
+    const end = el ? el.selectionEnd : messageBody.length;
+    setMessageBody(messageBody.slice(0, start) + token + messageBody.slice(end));
+    requestAnimationFrame(() => {
+      if (!el) return;
+      el.focus();
+      el.setSelectionRange(start + token.length, start + token.length);
+    });
+  }
 
   // Keep the console live: soft-refresh the server data every 30s. Re-runs the
   // admin_overview fetch and reconciles in place, preserving filters and scroll.
@@ -44,7 +65,23 @@ export default function AdminDirectory({ data, counters = {} }) {
     return inView;
   }, [filtered, selected]);
 
-  const emails = recipients.map((c) => c.email);
+  // Who actually gets it: coaches who unsubscribed are always left out, and so
+  // is anyone invited but not signed up yet (no account = no unsubscribe link).
+  const metaFor = (email) => (emailMeta ? emailMeta[email] : undefined);
+  const sendable = emailMeta ? recipients.filter((c) => metaFor(c.email) && !metaFor(c.email).optOut) : recipients;
+  const optedOutCount = emailMeta ? recipients.filter((c) => metaFor(c.email)?.optOut).length : 0;
+  const noAccountCount = emailMeta ? recipients.filter((c) => !metaFor(c.email)).length : 0;
+
+  // Fill-ins: what the first coach will actually read, and who falls back to
+  // generic wording because they have no team or no trial date.
+  const used = tokensUsed(`${subject} ${messageBody}`);
+  const first = sendable[0] ? metaFor(sendable[0].email) : null;
+  const preview = first && messageBody.trim() ? `Hi ${first.greeting},\n\n${fillTemplate(messageBody, first.values)}` : "";
+  const generic = emailMeta && used.length > 0
+    ? sendable.filter((c) => used.some((t) => metaFor(c.email).missing.includes(t)))
+    : [];
+
+  const emails = sendable.map((c) => c.email);
   const mailto = `mailto:?bcc=${emails.join(",")}${subject ? `&subject=${encodeURIComponent(subject)}` : ""}`;
 
   function toggleCoach(email) {
@@ -70,7 +107,7 @@ export default function AdminDirectory({ data, counters = {} }) {
   // Send through the app (Resend, noreply@my-teamsports.com) — one personalized
   // email per coach, replies come back to the signed-in admin.
   async function sendFromApp() {
-    if (sending || emails.length === 0 || !subject.trim() || !messageBody.trim()) return;
+    if (sending || !emailMeta || emails.length === 0 || !subject.trim() || !messageBody.trim()) return;
     const n = emails.length;
     if (!window.confirm(`Send this to ${n} coach${n === 1 ? "" : "es"} from noreply@my-teamsports.com?`)) return;
     setSending(true);
@@ -85,11 +122,16 @@ export default function AdminDirectory({ data, counters = {} }) {
       if (!res.ok) {
         setSendNotice({ ok: false, text: data.error || "Sending failed — nothing went out." });
       } else {
+        const left = [
+          data.optedOut ? `${data.optedOut} unsubscribed` : "",
+          data.noAccount ? `${data.noAccount} without an account` : "",
+        ].filter(Boolean).join(", ");
         setSendNotice({
           ok: true,
-          text: `✓ Sent to ${data.sent} coach${data.sent === 1 ? "" : "es"} from noreply@my-teamsports.com — replies come straight to your inbox.`,
+          text: `✓ Sent to ${data.sent} coach${data.sent === 1 ? "" : "es"} from noreply@my-teamsports.com — replies come straight to your inbox.${left ? ` Left out: ${left}.` : ""}`,
         });
         setMessageBody("");
+        router.refresh(); // pull the new rows into the sent log below
       }
     } catch {
       setSendNotice({ ok: false, text: "Network error — try again." });
@@ -181,6 +223,7 @@ export default function AdminDirectory({ data, counters = {} }) {
         <div className="mb-4">
           <Label>Message</Label>
           <textarea
+            ref={messageRef}
             value={messageBody}
             onChange={(e) => setMessageBody(e.target.value)}
             maxLength={5000}
@@ -188,7 +231,38 @@ export default function AdminDirectory({ data, counters = {} }) {
             placeholder='Write your message once — each coach gets their own email starting "Hi <first name>,"'
             className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-2.5 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)]"
           />
+          <div className="flex flex-wrap items-center gap-2 mt-2">
+            <span className="text-xs text-slate-500">Fill-ins (tap to add, each coach gets their own):</span>
+            {FILL_INS.filter((f) => f.token !== "{first_name}").map((f) => (
+              <button
+                key={f.token}
+                type="button"
+                onClick={() => insertFillIn(f.token)}
+                title={f.label}
+                className="text-xs font-mono text-slate-300 bg-white/[0.04] border border-white/10 rounded-full px-2.5 py-1 hover:bg-white/[0.08] transition-colors"
+              >
+                {f.token}
+              </button>
+            ))}
+          </div>
         </div>
+        {preview && (
+          <div className="mb-4 rounded-lg border border-white/[0.08] bg-black/20 px-4 py-3">
+            <p className="text-xs text-slate-500 mb-2 break-words"><span className="uppercase tracking-widest">Preview</span> &middot; as {sendable[0].email} will read it</p>
+            <p className="text-sm text-slate-200 whitespace-pre-wrap break-words">{preview}</p>
+          </div>
+        )}
+        {generic.length > 0 && (
+          <p className="text-sm text-yellow-400 mb-3">
+            {generic.length} coach{generic.length === 1 ? "" : "es"} will get generic wording for a fill-in (no team or no trial date on file):{" "}
+            <span className="text-slate-400">{generic.map((c) => c.email).join(", ")}</span>
+          </p>
+        )}
+        {!emailMeta && (
+          <p className="text-sm text-yellow-400 mb-3">
+            Sending from the app is off: the email log isn&apos;t set up on the database yet.
+          </p>
+        )}
         <p className="text-sm text-slate-400 mb-3">
           {selected.size > 0 ? (
             <>
@@ -202,11 +276,16 @@ export default function AdminDirectory({ data, counters = {} }) {
               Sending to all <span className="text-white font-semibold">{emails.length}</span> coach{emails.length === 1 ? "" : "es"} matching the filters — or check boxes in the table below to pick individual coaches.
             </>
           )}
+          {(optedOutCount > 0 || noAccountCount > 0) && (
+            <span className="block text-xs text-slate-500 mt-1">
+              Left out: {[optedOutCount ? `${optedOutCount} unsubscribed` : "", noAccountCount ? `${noAccountCount} invited, no account yet` : ""].filter(Boolean).join(" · ")}
+            </span>
+          )}
         </p>
         <div className="flex flex-wrap items-center gap-3">
           <button
             onClick={sendFromApp}
-            disabled={sending || emails.length === 0 || !subject.trim() || !messageBody.trim()}
+            disabled={sending || !emailMeta || emails.length === 0 || !subject.trim() || !messageBody.trim()}
             className="bg-[var(--color-accent-green)] hover:bg-green-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {sending ? "Sending…" : `📨 Send to ${emails.length} coach${emails.length === 1 ? "" : "es"}`}
@@ -230,12 +309,48 @@ export default function AdminDirectory({ data, counters = {} }) {
           </button>
         </div>
         <p className="text-xs text-slate-500 mt-3">
-          Send delivers one email per coach from noreply@my-teamsports.com with a personal greeting — replies go to your address. The other two buttons are the old way (your own email app, everyone BCC&apos;d).
+          Send delivers one email per coach from noreply@my-teamsports.com with a personal greeting and an unsubscribe link — replies go to your address. The green button needs a subject and a message. The other two buttons are the old way (your own email app, everyone BCC&apos;d).
         </p>
         {sendNotice && (
           <p className={`text-sm mt-2 ${sendNotice.ok ? "text-green-400" : "text-red-400"}`}>{sendNotice.text}</p>
         )}
       </Card>
+
+      {/* SENT LOG */}
+      <h2 className="text-xl font-bold mb-1">EMAILS SENT TO COACHES ({emailLog.length})</h2>
+      <p className="text-sm text-slate-500 mb-4">Everything the app has sent: the automatic welcome and trial emails, and what you send from here. Newest first.</p>
+      <div className="overflow-x-auto rounded-2xl border border-white/[0.06] mb-10 max-h-96 overflow-y-auto">
+        {emailLog.length === 0 ? (
+          <p className="text-sm text-slate-500 px-4 py-6">Nothing sent yet.</p>
+        ) : (
+          <table className="w-full text-sm">
+            <thead className="bg-white/[0.04] text-left sticky top-0">
+              <tr>
+                <th className="py-3 px-4 text-slate-400 font-medium">When</th>
+                <th className="py-3 px-4 text-slate-400 font-medium">To</th>
+                <th className="py-3 px-4 text-slate-400 font-medium">Type</th>
+                <th className="py-3 px-4 text-slate-400 font-medium">Subject</th>
+                <th className="py-3 px-4 text-slate-400 font-medium">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {emailLog.map((e) => (
+                <tr key={e.id} className="border-t border-white/[0.05]">
+                  <td className="py-2.5 px-4 text-slate-400 whitespace-nowrap">
+                    {new Date(e.created_at).toLocaleString("en-US", { timeZone: "America/Chicago", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })} CT
+                  </td>
+                  <td className="py-2.5 px-4 text-slate-300">{e.email}</td>
+                  <td className="py-2.5 px-4 text-slate-300 whitespace-nowrap">{KIND_LABELS[e.kind] || e.kind}</td>
+                  <td className="py-2.5 px-4 text-slate-300">{e.subject}</td>
+                  <td className={`py-2.5 px-4 whitespace-nowrap ${e.status === "failed" ? "text-red-400" : e.status === "sent" ? "text-green-400" : "text-slate-400"}`}>
+                    {e.status}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
       {/* COACHES TABLE */}
       <h2 className="text-xl font-bold mb-4">COACHES ({filtered.length})</h2>
@@ -271,7 +386,12 @@ export default function AdminDirectory({ data, counters = {} }) {
                   />
                 </td>
                 <td className="py-3 px-4">
-                  <p className="text-white font-medium">{c.full_name || "—"}</p>
+                  <p className="text-white font-medium">
+                    {c.full_name || "—"}
+                    {metaFor(c.email)?.optOut && (
+                      <span className="ml-2 text-[10px] font-semibold uppercase tracking-wider text-red-400 border border-red-400/30 rounded px-1.5 py-0.5">Unsubscribed</span>
+                    )}
+                  </p>
                   <p className="text-xs text-slate-500">{c.email}</p>
                 </td>
                 <td className="py-3 px-4">

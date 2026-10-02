@@ -6,17 +6,25 @@ const RESEND_ENDPOINT = "https://api.resend.com/emails";
 export const MAIL_FROM = "My-Team Sports <noreply@my-teamsports.com>";
 export const SUPPORT_INBOX = "support@2bcreations.com";
 
-export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
+// Coach-facing mail (welcome, trial reminders, admin notes) is signed by Ron and
+// replies come back to him. Same verified sending address as everything else.
+export const COACH_FROM = "Ron at My-Team Sports <noreply@my-teamsports.com>";
+export const COACH_REPLY_TO = process.env.COACH_REPLY_TO || "ron@2bcreations.com";
+
+// `from` overrides the sender display name (must stay on the verified
+// my-teamsports.com domain); `headers` carries extras such as List-Unsubscribe.
+export async function sendEmail({ to, bcc, subject, html, text, replyTo, from, headers }) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return { ok: false, error: "Email is not configured yet." };
 
   const toList = Array.isArray(to) ? to : to ? [to] : [];
-  const payload = { from: MAIL_FROM, subject };
+  const payload = { from: from || MAIL_FROM, subject };
   if (toList.length) payload.to = toList;
   if (bcc && bcc.length) payload.bcc = bcc;
   if (html) payload.html = html;
   if (text) payload.text = text;
   if (replyTo) payload.reply_to = replyTo;
+  if (headers && Object.keys(headers).length) payload.headers = headers;
 
   try {
     const res = await fetch(RESEND_ENDPOINT, {
@@ -40,7 +48,8 @@ export async function sendEmail({ to, bcc, subject, html, text, replyTo }) {
 // looping sendEmail() would trip Resend's 2-requests/second limit and risk
 // serverless timeouts. Each message: { to, subject, html, text, replyTo },
 // plus optional `from` to override the default sender display name (must
-// still be an address on the verified my-teamsports.com domain).
+// still be an address on the verified my-teamsports.com domain) and optional
+// `headers` (e.g. List-Unsubscribe).
 export async function sendEmailBatch(messages) {
   const key = process.env.RESEND_API_KEY;
   if (!key) return { ok: false, error: "Email is not configured yet." };
@@ -56,6 +65,7 @@ export async function sendEmailBatch(messages) {
     if (m.html) item.html = m.html;
     if (m.text) item.text = m.text;
     if (m.replyTo) item.reply_to = m.replyTo;
+    if (m.headers && Object.keys(m.headers).length) item.headers = m.headers;
     return item;
   });
 

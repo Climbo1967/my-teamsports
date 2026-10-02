@@ -4,8 +4,72 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
+// Coach emails (welcome, trial reminders, notes from Ron) carry ?c=<token>.
+// Nothing happens until the button is tapped — link scanners that open the URL
+// must not unsubscribe anyone.
+function CoachUnsubscribe({ token }) {
+  const [state, setState] = useState({ status: "idle" });
+
+  async function setOptOut(optOut) {
+    setState({ status: "busy" });
+    const supabase = createClient();
+    const { data, error } = await supabase.rpc("coach_email_opt", { p_token: token, p_opt_out: optOut });
+    if (error || !data || !data.ok) {
+      setState({ status: "error", msg: "That link didn't work. Reply to the email and we'll take you off the list." });
+      return;
+    }
+    setState({ status: optOut ? "out" : "in" });
+  }
+
+  return (
+    <div className="min-h-screen bg-[var(--color-navy)] flex items-center justify-center px-6 py-16">
+      <div className="w-full max-w-md bg-white/[0.03] border border-white/[0.08] rounded-2xl p-8 text-center">
+        <div className="text-4xl mb-3">✉️</div>
+        {state.status === "out" ? (
+          <>
+            <h1 className="text-2xl font-bold text-white mb-2">You&apos;re unsubscribed</h1>
+            <p className="text-slate-400 text-sm">
+              You won&apos;t get any more emails from My-Team Sports about your trial, your team or product news. Password resets and receipts still come through.
+            </p>
+            <button onClick={() => setOptOut(false)} className="text-xs text-slate-500 hover:text-white underline mt-6">
+              Changed your mind? Turn emails back on
+            </button>
+          </>
+        ) : state.status === "in" ? (
+          <>
+            <h1 className="text-2xl font-bold text-white mb-2">Emails are back on</h1>
+            <p className="text-slate-400 text-sm">You&apos;ll hear from us about your trial and your team again.</p>
+          </>
+        ) : (
+          <>
+            <h1 className="text-2xl font-bold text-white mb-2">Unsubscribe</h1>
+            <p className="text-slate-400 text-sm mb-6">
+              Stop emails from My-Team Sports about your trial, your team and product news. Password resets and receipts still come through.
+            </p>
+            {state.status === "error" && <p className="text-red-400 text-sm mb-4">{state.msg}</p>}
+            <button
+              onClick={() => setOptOut(true)}
+              disabled={state.status === "busy"}
+              className="w-full bg-[var(--color-accent-green)] text-white font-semibold py-3 rounded-lg hover:bg-green-500 transition-all disabled:opacity-50"
+            >
+              {state.status === "busy" ? "Working..." : "Unsubscribe me"}
+            </button>
+            <a href="https://my-teamsports.com" className="block text-xs text-slate-500 hover:text-white mt-6">← My-Team Sports</a>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function UnsubscribeInner() {
   const params = useSearchParams();
+  const coachToken = params.get("c") || "";
+  if (coachToken) return <CoachUnsubscribe token={coachToken} />;
+  return <TeamUnsubscribe params={params} />;
+}
+
+function TeamUnsubscribe({ params }) {
   const slug = params.get("team") || "";
   const [email, setEmail] = useState(params.get("email") || "");
   const [state, setState] = useState({ status: "idle" });

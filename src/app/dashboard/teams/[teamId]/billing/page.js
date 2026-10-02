@@ -141,7 +141,7 @@ export default function BillingPage({ params }) {
                     : <> — complimentary.</>}
               </>
             ) : (
-              <span className="text-slate-500">AI Assistant Coach not active — the 14-day free trial has ended.</span>
+              <span className="text-slate-500">AI Assistant Coach not active — the free trial has ended.</span>
             )}
           </p>
         </div>

@@ -14,7 +14,7 @@ const SUGGESTIONS = [
 ];
 
 // Same rule as the AI Coach hub page and /api/ai-coach/chat: AI is on during
-// the 14-day trial, while paid, or when comped (ai_enabled).
+// the free trial, while paid, or when comped (ai_enabled).
 function aiActive(team) {
   if (!team) return false;
   const today = new Date().toISOString().slice(0, 10);
