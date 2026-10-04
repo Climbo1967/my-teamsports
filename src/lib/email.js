@@ -3,6 +3,13 @@
 // (matches the site — mismatched senders were landing in spam).
 const RESEND_ENDPOINT = "https://api.resend.com/emails";
 
+// A Resend call that hangs used to hold the function until the platform killed
+// it, leaving a coach email claimed as "sending" forever. Give up after this.
+const RESEND_TIMEOUT_MS = 15_000;
+
+// Resend accepts at most 50 recipients per message (to + cc + bcc combined).
+export const RESEND_MAX_RECIPIENTS = 50;
+
 export const MAIL_FROM = "My-Team Sports <noreply@my-teamsports.com>";
 export const SUPPORT_INBOX = "support@2bcreations.com";
 
@@ -31,6 +38,7 @@ export async function sendEmail({ to, bcc, subject, html, text, replyTo, from, h
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
     });
     if (!res.ok) {
       const detail = await res.text();
@@ -74,6 +82,7 @@ export async function sendEmailBatch(messages) {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(RESEND_TIMEOUT_MS),
     });
     if (!res.ok) {
       const detail = await res.text();

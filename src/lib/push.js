@@ -7,7 +7,14 @@ function ensureConfigured() {
   const pub = process.env.VAPID_PUBLIC_KEY;
   const priv = process.env.VAPID_PRIVATE_KEY;
   if (!pub || !priv) return false;
-  webpush.setVapidDetails(process.env.VAPID_SUBJECT || "mailto:support@2bcreations.com", pub, priv);
+  try {
+    webpush.setVapidDetails(process.env.VAPID_SUBJECT || "mailto:support@2bcreations.com", pub, priv);
+  } catch (e) {
+    // A malformed key used to throw out of sendPush, which callers assume
+    // never throws (the announcement route had already sent the email).
+    console.error(`[push] VAPID setup failed: ${String(e?.message || e).slice(0, 200)}`);
+    return false;
+  }
   ready = true;
   return true;
 }

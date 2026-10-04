@@ -12,8 +12,12 @@ import { deliverCoachEmail, loadCoachSnapshot } from "@/lib/coachEmail";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-const MAX_PER_RUN = 60;        // stays well inside the 60s limit at ~0.6s each
-const SPACING_MS = 600;        // Resend allows 2 requests/second
+// Each item is a log insert, a Resend call and a log update (about 1 to 1.5 s)
+// plus the spacing, so the cap is on elapsed time, not just count. Whatever is
+// left is reported as deferred and goes out on the next run.
+const MAX_PER_RUN = 60;
+const TIME_BUDGET_MS = 45_000;  // stop claiming new items after this; maxDuration is 60 s
+const SPACING_MS = 600;         // Resend allows 2 requests/second
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -37,7 +41,11 @@ export async function GET(request) {
   const counts = { sent: 0, skipped: 0, failed: 0 };
   const errors = [];
   const batch = plan.slice(0, MAX_PER_RUN);
+  const startedAt = Date.now();
+  let done = 0;
   for (let i = 0; i < batch.length; i++) {
+    if (Date.now() - startedAt > TIME_BUDGET_MS) break;
+    done = i + 1;
     const item = batch[i];
     const teamIds = [...new Set(item.events.flatMap((e) => e.team_ids))];
     const result = await deliverCoachEmail(admin, {
@@ -51,9 +59,9 @@ export async function GET(request) {
       meta: { source: "cron" },
     });
     counts[result.status] += 1;
-    if (result.status === "failed") errors.push({ to: item.coach.email, error: String(result.error || "").slice(0, 200) });
+    if (result.error) errors.push({ to: item.coach.email, status: result.status, error: String(result.error || "").slice(0, 200) });
     if (i < batch.length - 1) await sleep(SPACING_MS);
   }
 
-  return NextResponse.json({ ok: true, planned: plan.length, deferred: plan.length - batch.length, ...counts, errors });
+  return NextResponse.json({ ok: true, planned: plan.length, deferred: plan.length - done, elapsedMs: Date.now() - startedAt, ...counts, errors });
 }

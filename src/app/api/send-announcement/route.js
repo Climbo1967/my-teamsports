@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { sendEmail, basicHtml } from "@/lib/email";
+import { sendEmail, basicHtml, RESEND_MAX_RECIPIENTS } from "@/lib/email";
 import { sendPush } from "@/lib/push";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
@@ -43,14 +43,15 @@ export async function POST(request) {
   }
 
   let emailCount = 0;
+  let emailFailed = 0;
   let pushCount = 0;
   let emailError = null;
 
-  // Email channel (unchanged behavior, now optional).
+  // Email channel. Resend takes at most 50 recipients per message, so the
+  // list goes out in chunks; one bad chunk no longer fails everyone.
   if (emails.length > 0) {
-    const result = await sendEmail({
+    const message = {
       to: "noreply@my-teamsports.com",
-      bcc: emails,
       replyTo: user.email,
       subject: cleanSubject,
       text: `${cleanBody}\n\n— ${team.name}\nhttps://my-teamsports.com/team/${team.slug}\n\nUnsubscribe: https://my-teamsports.com/unsubscribe?team=${team.slug}`,
@@ -60,9 +61,17 @@ export async function POST(request) {
         footer: `Sent by ${team.name} via My-Team Sports · my-teamsports.com/team/${team.slug}`,
         unsubscribeUrl: `https://my-teamsports.com/unsubscribe?team=${team.slug}`,
       }),
-    });
-    if (result.ok) emailCount = emails.length;
-    else emailError = result.error || "Email failed to send.";
+    };
+    const chunkSize = RESEND_MAX_RECIPIENTS - 1; // the "to" address counts too
+    for (let i = 0; i < emails.length; i += chunkSize) {
+      const chunk = emails.slice(i, i + chunkSize);
+      const result = await sendEmail({ ...message, bcc: chunk });
+      if (result.ok) emailCount += chunk.length;
+      else {
+        emailFailed += chunk.length;
+        emailError = emailError || result.error || "Email failed to send.";
+      }
+    }
   }
 
   // Push channel (devices that opted in on the team site).
@@ -82,8 +91,12 @@ export async function POST(request) {
     return NextResponse.json({ error: emailError || "Could not notify the team." }, { status: 502 });
   }
 
-  if (announcementId) {
+  // Only stamp the post as emailed when at least one email actually went; a
+  // push-only success used to mark it emailed and hide the email failure.
+  if (announcementId && emailCount > 0) {
     await supabase.from("announcements").update({ emailed_at: new Date().toISOString() }).eq("id", announcementId);
   }
-  return NextResponse.json({ ok: true, emailCount, pushCount });
+  // A partial failure is still ok: true (something went out), with the
+  // numbers and the first error so the coach can see what did not.
+  return NextResponse.json({ ok: true, emailCount, emailFailed, pushCount, emailError });
 }

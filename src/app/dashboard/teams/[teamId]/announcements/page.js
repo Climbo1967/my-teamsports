@@ -79,9 +79,13 @@ export default function AnnouncementsPage({ params }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId, announcementId: p.id, subject: p.title || "Team update", body: p.body }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Could not send email.");
       await load();
+      // Something went out, but not everything: say so instead of looking done.
+      if (data.emailFailed > 0) {
+        setError(`Sent to ${data.emailCount} email subscriber${data.emailCount === 1 ? "" : "s"} and ${data.pushCount} device${data.pushCount === 1 ? "" : "s"}, but ${data.emailFailed} email${data.emailFailed === 1 ? "" : "s"} failed: ${data.emailError || "unknown error"}. Try again to resend.`);
+      }
     } catch (e) {
       setError(e.message);
     } finally {
