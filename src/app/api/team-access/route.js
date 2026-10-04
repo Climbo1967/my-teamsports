@@ -26,6 +26,15 @@ export async function POST(request) {
   });
 
   if (error) {
+    // The database locks a team after 60 different wrong passcodes in 15
+    // minutes (passcode_gate, 2026-10-04 migration). Say so instead of a
+    // generic failure, so a parent knows to wait rather than keep retrying.
+    if (error.message?.includes("too many attempts")) {
+      return NextResponse.json(
+        { error: "Too many wrong passcodes for this team right now. Wait 15 minutes and try again." },
+        { status: 429 }
+      );
+    }
     return NextResponse.json({ error: "Something went wrong. Try again." }, { status: 500 });
   }
 
