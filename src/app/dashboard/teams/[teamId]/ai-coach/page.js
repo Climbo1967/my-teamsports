@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, EmptyState, ErrorText, Select, Spinner } from "@/components/ui";
+import { aiActiveFor } from "@/lib/pricing";
 
 function pingAiSeen(teamId) {
   try {
@@ -113,11 +114,7 @@ export default function AiCoachPage({ params }) {
   if (team === undefined) return <Spinner />;
 
   // AI is on during the free trial, while paid, or when comped (ai_enabled).
-  const aiOn = !!team && (
-    team.ai_enabled ||
-    (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10)) ||
-    (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date())
-  );
+  const aiOn = aiActiveFor(team);
 
   if (!aiOn) {
     return (

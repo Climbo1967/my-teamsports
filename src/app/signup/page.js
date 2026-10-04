@@ -40,12 +40,14 @@ export default function SignupPage() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [needsConfirm, setNeedsConfirm] = useState(false);
+  const [existingAccount, setExistingAccount] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
   const [captchaReset, setCaptchaReset] = useState(0);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
+    setExistingAccount(false);
     setLoading(true);
 
     const supabase = createClient();
@@ -63,6 +65,16 @@ export default function SignupPage() {
     if (signUpError) {
       setCaptchaReset((n) => n + 1); // tokens are single-use
       setError(signUpError.message);
+      return;
+    }
+
+    // Supabase does not reveal whether an email is taken: for an existing
+    // confirmed account it answers with a user that has no identities and no
+    // session, and sends nothing. The page used to say "check your email" and
+    // no email ever came (bug sweep 2026-10-03, #14).
+    if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+      setCaptchaReset((n) => n + 1);
+      setExistingAccount(true);
       return;
     }
 
@@ -97,13 +109,23 @@ export default function SignupPage() {
   }
 
   return (
-    <AuthShell title="CREATE YOUR COACH ACCOUNT" subtitle="Half off for the 2026 season. Set up your team in minutes.">
+    <AuthShell title="CREATE YOUR COACH ACCOUNT" subtitle="Free for 30 days, no card needed. Set up your team in minutes.">
       <form onSubmit={handleSubmit} className="space-y-4">
         <Field label="Your Name" type="text" value={fullName} onChange={setFullName} placeholder="Coach Smith" required />
         <Field label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" required />
         <Field label="Password" type="password" value={password} onChange={setPassword} placeholder="At least 6 characters" required minLength={6} />
         <Turnstile onToken={setCaptchaToken} resetSignal={captchaReset} />
         {error && <p className="text-red-400 text-sm">{error}</p>}
+        {existingAccount && (
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-3 text-sm text-amber-400">
+            <p>
+              There is already a coach account for <span className="text-white font-semibold">{email}</span>.{" "}
+              <Link href="/login" className="text-[var(--color-accent-blue)] hover:underline font-medium">Log in</Link>
+              {" "}or{" "}
+              <Link href="/forgot-password" className="text-[var(--color-accent-blue)] hover:underline font-medium">reset your password</Link>.
+            </p>
+          </div>
+        )}
         <button
           type="submit"
           disabled={loading || (captchaEnabled && !captchaToken)}

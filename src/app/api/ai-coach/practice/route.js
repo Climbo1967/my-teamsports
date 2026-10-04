@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/constants";
 import { askClaude } from "@/lib/ai";
 import { logAiUse } from "@/lib/aiUse";
+import { aiActiveFor } from "@/lib/pricing";
 
 // A briefing or practice plan can take 20–40 s to generate; give the function
 // room so the platform doesn't cut it off with an HTML error page.
@@ -42,7 +43,7 @@ export async function POST(request) {
   const { data: team } = await supabase
     .from("teams").select("id, name, sport, season, age_group, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
-  const aiActive = team.ai_enabled || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10)) || (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date());
+  const aiActive = aiActiveFor(team);
   if (!aiActive) {
     return NextResponse.json({ error: "The AI Assistant Coach isn't enabled for this team yet." }, { status: 403 });
   }

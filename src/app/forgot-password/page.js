@@ -1,11 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import Turnstile, { captchaEnabled } from "@/components/Turnstile";
 
 export default function ForgotPasswordPage() {
+  return (
+    <Suspense fallback={null}>
+      <ForgotPasswordForm />
+    </Suspense>
+  );
+}
+
+function ForgotPasswordForm() {
+  // /auth/confirm sends a used or expired reset link here with this message.
+  const message = useSearchParams().get("message");
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(null);
@@ -58,6 +69,11 @@ export default function ForgotPasswordPage() {
               <p className="text-slate-400 text-sm text-center mb-6">
                 Enter your email and we&apos;ll send you a reset link.
               </p>
+              {message === "reset_expired" && !error && (
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-4 py-3 text-sm text-amber-400 mb-4">
+                  That reset link expired or was already used. Reset links work once, for one hour. Enter your email and we&apos;ll send a new one.
+                </div>
+              )}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-400 mb-1.5">Email</label>

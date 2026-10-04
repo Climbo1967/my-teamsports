@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav, SiteFooter, CTASection } from "@/components/marketing";
 import { getAllSports, getSport } from "@/lib/sports";
+import { pricingCopy } from "@/lib/pricingCopy";
 
 const SITE_URL = "https://my-teamsports.com";
 
@@ -16,6 +17,9 @@ const CORE_FEATURES = [
   { icon: "🔔", title: "Game-Day Alerts", desc: "Parents tap once for push alerts on announcements and game updates." },
   { icon: "💬", title: "Message Board", desc: "Announcements that stay positive, pinned, and out of a group-text pile-up." },
 ];
+
+// The badge comes from lib/pricing.js; re-render hourly for January 1.
+export const revalidate = 3600;
 
 export function generateStaticParams() {
   return getAllSports().map((s) => ({ sport: s.slug }));
@@ -48,6 +52,7 @@ export default async function SportPage({ params }) {
   const { sport } = await params;
   const data = getSport(sport);
   if (!data) notFound();
+  const price = pricingCopy();
 
   const pageUrl = `${SITE_URL}/sports/${data.slug}`;
   const jsonLd = {
@@ -89,7 +94,7 @@ export default async function SportPage({ params }) {
         <div className="relative z-10 max-w-[860px] mx-auto text-center">
           <div className={`inline-flex items-center gap-2.5 ${data.accentBg} border ${data.accentBorder} ${data.accentText} text-xs font-bold tracking-widest uppercase px-5 py-2.5 rounded-full mb-7`}>
             <span className="text-lg leading-none">{data.emoji}</span>
-            {data.sport} · Half off for the 2026 season
+            {data.sport} · {price.badge}
           </div>
           <h1 className="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-5">
             {data.heroTitle}

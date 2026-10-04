@@ -51,7 +51,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the baseball team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the game live if they can't make it?",
@@ -122,7 +122,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the softball team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the game live?",
@@ -193,7 +193,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the basketball team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the game live if they're not in the gym?",
@@ -264,7 +264,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the soccer team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the match live?",
@@ -335,7 +335,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the football team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can I build and print a playbook?",
@@ -406,7 +406,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the flag football team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can I design and print play sheets?",
@@ -477,7 +477,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the volleyball team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the match live?",
@@ -548,7 +548,7 @@ export const SPORTS = [
     faqs: [
       {
         q: "Is the hockey team website really free?",
-        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free, and the full season is half off for 2026.",
+        a: "It's free for parents, always — they open your team link, type a passcode once, and they're in with no app and no account. Coaches start free with a 30-day trial, then one payment covers the whole season.",
       },
       {
         q: "Can parents follow the game live?",

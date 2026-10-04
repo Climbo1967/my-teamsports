@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 import { getAllSports } from "@/lib/sports";
+import { pricingCopy } from "@/lib/pricingCopy";
 
 const SITE_URL = "https://my-teamsports.com";
 
@@ -24,13 +25,17 @@ export const metadata = {
   },
 };
 
+// The badge comes from lib/pricing.js; re-render hourly for January 1.
+export const revalidate = 3600;
+
 export default function SportsIndexPage() {
+  const price = pricingCopy();
   const sports = getAllSports();
   return (
     <div className="min-h-screen">
       <SiteNav />
       <PageHero
-        badge="Every sport · Half off for 2026"
+        badge={`Every sport · ${price.badge}`}
         title="A TEAM WEBSITE"
         accent="FOR YOUR SPORT"
         subtitle="Same five-minute setup, same free-for-parents promise — with the positions, stats, and plays that fit how your sport actually plays. Pick yours."

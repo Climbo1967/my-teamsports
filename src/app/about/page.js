@@ -20,6 +20,10 @@ const VALUES = [
   { icon: "🔒", title: "Private by default", desc: "Team sites are gated behind a passcode you control. Rosters, photos, and schedules stay with your team — not splashed across the public internet." },
 ];
 
+// CTASection shows the season price (lib/pricing.js); re-render hourly so it
+// rolls over on January 1.
+export const revalidate = 3600;
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen">

@@ -20,6 +20,10 @@ function formatDate(iso) {
   return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
+// CTASection shows the season price (lib/pricing.js); re-render hourly so it
+// rolls over on January 1.
+export const revalidate = 3600;
+
 export default function BlogIndex() {
   const posts = getAllPosts();
   return (

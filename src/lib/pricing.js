@@ -57,6 +57,45 @@ export function passOffer(now = new Date()) {
 }
 
 /**
+ * The calendar day that paid_through / ai_paid_through are compared against.
+ *
+ * Passes end on a Dec 31. Comparing against the UTC date locked a pass
+ * "through Dec 31" at 6 PM Central on Dec 31 (bug sweep 2026-10-03, #23).
+ * Coaches are in the US, so the day is taken in the westernmost US zone:
+ * nobody is locked out while it is still Dec 31 where they are. Hawaii has no
+ * daylight saving, so the rollover is a fixed 10:00 UTC.
+ *
+ * Used for coach dashboard access and the AI gate (lib + API routes + pages).
+ * Monitor statistics in SQL use current_date and are not access decisions.
+ */
+export const ACCESS_TIME_ZONE = "Pacific/Honolulu";
+
+export function accessToday(now = new Date()) {
+  // en-CA formats as YYYY-MM-DD, which compares as a string against the
+  // date columns exactly like the old toISOString().slice(0, 10) did.
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: ACCESS_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(now);
+}
+
+/**
+ * AI Assistant Coach gate, shared by the AI routes and pages: on during the
+ * free trial, while paid, or when comped (ai_enabled).
+ */
+export function aiActiveFor(team, now = new Date()) {
+  if (!team) return false;
+  const today = accessToday(now);
+  return !!(
+    team.ai_enabled ||
+    (team.ai_paid_through && team.ai_paid_through >= today) ||
+    (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > now)
+  );
+}
+
+/**
  * Compute a team's access state from its billing columns.
  * Lock model: expired teams lose the coach dashboard only —
  * the public team site never locks.
@@ -67,7 +106,7 @@ export function passOffer(now = new Date()) {
  * exactly like a Season Pass. The AI add-on is never bundled (design v1 §7).
  */
 export function teamAccess(team, now = new Date(), league = null) {
-  const today = now.toISOString().slice(0, 10);
+  const today = accessToday(now);
   const paid = !!(team.paid_through && team.paid_through >= today);
   const trialActive = !!(team.trial_ends_at && new Date(team.trial_ends_at) > now);
   const aiPaid = !!(team.ai_paid_through && team.ai_paid_through >= today);

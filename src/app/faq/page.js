@@ -1,4 +1,9 @@
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
+import { pricingCopy } from "@/lib/pricingCopy";
+
+// The price answers come from lib/pricing.js; re-render hourly so they roll
+// over on January 1 without a deploy.
+export const revalidate = 3600;
 
 export const metadata = {
   title: "FAQ — Common Questions",
@@ -13,18 +18,20 @@ export const metadata = {
   },
 };
 
-const FAQS = [
+const faqs = (c) => [
   {
     q: "Do parents need to download an app?",
     a: "No. My-Team Sports runs entirely in a web browser. Parents open your team link on any phone, tablet, or computer — there is nothing to install from an app store.",
   },
   {
     q: "How much does it cost?",
-    a: "Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is $15 for the 2026 season (half-off launch pricing), then $30 for the 2027 season. It is one payment, not a subscription, and a pass bought from October 1 covers the rest of 2026 and all of 2027. Parents never pay anything, ever.",
+    a: c.halfOff
+      ? `Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is ${c.season} for the ${c.year} season (half-off launch pricing), then ${c.regularSeason} for the ${c.nextYear} season. It is one payment, not a subscription, and a pass bought from October 1 covers the rest of ${c.year} and all of ${c.nextYear}. Parents never pay anything, ever.`
+      : `Coaches start with a 30-day free trial — no credit card to begin. After that, the Coach Plan is ${c.season} for the ${c.year} season. It is one payment, not a subscription, and a pass bought from October 1 covers the rest of ${c.year} and all of ${c.nextYear}. Parents never pay anything, ever.`,
   },
   {
     q: "Is the AI Assistant Coach free?",
-    a: "The AI Assistant Coach is included in your 30-day free trial. After that it's an optional $20 add-on for the 2026 season (bought from October 1, it covers all of 2027 too) — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.",
+    a: `The AI Assistant Coach is included in your 30-day free trial. After that it's an optional ${c.ai} add-on for the ${c.year} season (bought from October 1, it covers all of ${c.nextYear} too) — the rest of your Coach Plan works exactly the same either way, and parents never pay for anything.`,
   },
   {
     q: "Do parents have to create an account?",
@@ -61,6 +68,7 @@ const FAQS = [
 ];
 
 export default function FAQPage() {
+  const FAQS = faqs(pricingCopy());
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

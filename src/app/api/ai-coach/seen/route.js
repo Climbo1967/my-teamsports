@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { logAiUse } from "@/lib/aiUse";
+import { aiActiveFor } from "@/lib/pricing";
 
 // Called once when a coach opens the AI Coach tab (or the chat screen).
 // Records "opened it" or "opened it and saw the locked card" in the use log,
@@ -30,9 +31,7 @@ export async function POST(request) {
     .from("teams").select("id, ai_enabled, ai_paid_through, ai_trial_ends_at").eq("id", teamId).single();
   if (!team) return NextResponse.json({ error: "Team not found." }, { status: 404 });
 
-  const aiActive = team.ai_enabled
-    || (team.ai_paid_through && team.ai_paid_through >= new Date().toISOString().slice(0, 10))
-    || (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date());
+  const aiActive = aiActiveFor(team);
 
   await logAiUse(aiActive ? "hub_view" : "locked_view", { teamId: team.id, userId: user.id });
   return NextResponse.json({ ok: true });

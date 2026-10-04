@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, ErrorText, Spinner, TextArea } from "@/components/ui";
 import { confirmDialog } from "@/components/confirm";
+import { aiActiveFor } from "@/lib/pricing";
 
 const SUGGESTIONS = [
   "What should we focus on at the next practice?",
@@ -16,13 +17,7 @@ const SUGGESTIONS = [
 // Same rule as the AI Coach hub page and /api/ai-coach/chat: AI is on during
 // the free trial, while paid, or when comped (ai_enabled).
 function aiActive(team) {
-  if (!team) return false;
-  const today = new Date().toISOString().slice(0, 10);
-  return !!(
-    team.ai_enabled ||
-    (team.ai_paid_through && team.ai_paid_through >= today) ||
-    (team.ai_trial_ends_at && new Date(team.ai_trial_ends_at) > new Date())
-  );
+  return aiActiveFor(team);
 }
 
 export default function AiChatPage({ params }) {

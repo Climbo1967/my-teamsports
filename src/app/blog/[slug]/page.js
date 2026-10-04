@@ -37,6 +37,10 @@ function previewFor(post) {
   }
 }
 
+// CTASection shows the season price (lib/pricing.js); re-render hourly so it
+// rolls over on January 1.
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));
 }

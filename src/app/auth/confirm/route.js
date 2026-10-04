@@ -30,6 +30,12 @@ export async function GET(request) {
     }
   }
 
+  // A used or expired password-reset link: the coach needs a new reset link,
+  // not a confirmation resend (bug sweep 2026-10-03, #15).
+  if (type === "recovery") {
+    return NextResponse.redirect(new URL("/forgot-password?message=reset_expired", origin));
+  }
+
   // Link expired or already used. If it was used before, the email is already
   // confirmed — the login page shows a friendly banner + resend option.
   return NextResponse.redirect(new URL("/login?message=confirm_expired", origin));

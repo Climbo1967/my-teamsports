@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MobileMenu from "@/components/MobileMenu";
 import { getAllSports } from "@/lib/sports";
+import { pricingCopy } from "@/lib/pricingCopy";
 
 const NAV_LINKS = [
   { href: "/how-it-works", label: "How It Works" },
@@ -79,13 +80,16 @@ export function SiteFooter() {
 }
 
 export function CTASection() {
+  // Season price from lib/pricing.js. Every page that renders this is static
+  // and sets revalidate = 3600 so the line rolls over on January 1.
+  const price = pricingCopy();
   return (
     <section className="px-6 py-24 text-center relative bg-gradient-to-b from-[var(--color-navy-mid)] to-[var(--color-navy)]">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent" />
       <div className="max-w-[600px] mx-auto bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] border border-green-500/20 rounded-3xl p-12 md:p-14">
         <h2 className="text-3xl md:text-4xl font-bold mb-4">YOUR TEAM&apos;S HOME<br />IS WAITING.</h2>
         <p className="text-slate-400 mb-8 text-lg leading-relaxed">
-          It&apos;s live. It&apos;s ready. It takes 5 minutes, and it&apos;s half off for the 2026 season.
+          It&apos;s live. It&apos;s ready. It takes 5 minutes, and {price.halfOff ? `it's half off for the ${price.seasonLabel}` : `it's ${price.season} for the whole ${price.seasonLabel}`}.
         </p>
         <Link
           href="/signup"

@@ -38,6 +38,10 @@ const PARENT_EXPERIENCE = [
   "No app, no account, no password, no cost",
 ];
 
+// CTASection shows the season price (lib/pricing.js); re-render hourly so it
+// rolls over on January 1.
+export const revalidate = 3600;
+
 export default function HowItWorksPage() {
   return (
     <div className="min-h-screen">
