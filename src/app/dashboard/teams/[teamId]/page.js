@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { computeRecord, formatRecord } from "@/lib/constants";
 import CopyInviteButton from "./CopyInviteButton";
 import PasscodeManager from "@/components/PasscodeManager";
+import LocalDateTime from "@/components/LocalDateTime";
 
 export default async function TeamOverviewPage({ params }) {
   const { teamId } = await params;
@@ -83,21 +84,18 @@ export default async function TeamOverviewPage({ params }) {
           </p>
         ) : (
           <ul className="space-y-3">
-            {nextEvents.map((e) => {
-              const d = new Date(e.starts_at);
-              return (
-                <li key={e.id} className="text-sm">
-                  <p className="font-semibold text-white">
-                    {e.event_type === "game" && e.opponent ? `vs ${e.opponent}` : e.title || (e.event_type === "practice" ? "Practice" : "Event")}
-                  </p>
-                  <p className="text-slate-500">
-                    {d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}
-                    {" · "}
-                    {d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
-                  </p>
-                </li>
-              );
-            })}
+            {nextEvents.map((e) => (
+              <li key={e.id} className="text-sm">
+                <p className="font-semibold text-white">
+                  {e.event_type === "game" && e.opponent ? `vs ${e.opponent}` : e.title || (e.event_type === "practice" ? "Practice" : "Event")}
+                </p>
+                {/* Formatted in the browser: this is a server component, and the
+                    server clock is UTC, so formatting here showed times 5 hours off. */}
+                <p className="text-slate-500">
+                  <LocalDateTime iso={e.starts_at} />
+                </p>
+              </li>
+            ))}
           </ul>
         )}
       </div>

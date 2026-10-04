@@ -114,7 +114,9 @@ export default function PhotosPage({ params }) {
             <div key={photo.id} className="group relative rounded-xl overflow-hidden border border-white/[0.08] bg-white/[0.02]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={photo.display_url} alt={photo.caption || "Team photo"} className="w-full aspect-square object-cover" loading="lazy" />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 transition-opacity">
+              {/* Shown on hover where there is a mouse; always shown on touch
+                  screens, where hover never fires and Delete was invisible. */}
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 opacity-0 group-hover:opacity-100 [@media(hover:none)]:opacity-100 transition-opacity">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-xs text-slate-300 truncate">
                     {photo.player_id ? playerName(photo.player_id) : photo.uploaded_by === "parent" ? "From a parent" : ""}

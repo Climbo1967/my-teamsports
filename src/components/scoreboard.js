@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { scoreboardConfig, periodShort, formatClock, gameResultString } from "@/lib/constants";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
 import { notifyGame } from "@/lib/pushClient";
+import { confirmDialog } from "@/components/confirm";
 import QuickAddPlayer from "@/components/QuickAddPlayer";
 
 // Universal live scorer for clock/period sports (basketball, soccer, hockey,
@@ -132,9 +133,20 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   }
 
   async function endGame() {
-    await supabase.from("game_scores").update({ status: "final", clock_running: false }).eq("id", game.id);
-    await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
-    if (cfg.statKey) await supabase.rpc("rollup_scoreboard_stats", { p_event_id: event.id });
+    // One mis-tap used to finalize the game and push "Final" to parents.
+    if (!(await confirmDialog({ title: "End this game?", message: "The score will be saved as the game result.", confirmLabel: "End & finalize" }))) return;
+    // Each save is checked: on a bad connection at the field any of these can
+    // fail, and the coach must see that instead of being sent back as if the
+    // game were saved (and parents told "Final" for a game still in progress).
+    setError(null);
+    const { error: e1 } = await supabase.from("game_scores").update({ status: "final", clock_running: false }).eq("id", game.id);
+    if (e1) { setError(`Couldn't end the game: ${e1.message}. Check your connection and try again.`); return; }
+    const { error: e2 } = await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
+    if (e2) { setError(`Game ended, but the result didn't save to the schedule: ${e2.message}. Tap End game again.`); return; }
+    if (cfg.statKey) {
+      const { error: e3 } = await supabase.rpc("rollup_scoreboard_stats", { p_event_id: event.id });
+      if (e3) { setError(`Game ended, but stats didn't update: ${e3.message}. Tap End game again.`); return; }
+    }
     if (!finalAnnounced.current) {
       notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
       finalAnnounced.current = true;

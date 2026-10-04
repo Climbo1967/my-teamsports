@@ -38,7 +38,11 @@ export default function TeamSiteSections({ site, slug, emoji }) {
   const playbookNav = plays.length ? [{ id: "playbook", label: "Playbook", icon: "✏️" }] : [];
   // Board rides the ships-dark flag: no nav item, no section unless enabled.
   const boardNav = team.board_enabled ? [{ id: "board", label: "Board", icon: "🗣️" }] : [];
-  const navItems = [...NAV.slice(0, 1), ...boardNav, ...NAV.slice(1, 4), ...playbookNav, ...NAV.slice(4)];
+  // Stats, Game Film and Coach's Notes render nothing when empty, so their
+  // pills only appear once there is something to scroll to.
+  const present = { stats: stats.length > 0, videos: videos.length > 0, notes: (notes || []).length > 0 };
+  const show = (items) => items.filter((n) => present[n.id] !== false);
+  const navItems = [...NAV.slice(0, 1), ...boardNav, ...show(NAV.slice(1, 4)), ...playbookNav, ...show(NAV.slice(4))];
 
   return (
     <>

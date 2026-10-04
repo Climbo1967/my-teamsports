@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { ColorPicker } from "@/components/ui";
-import { DEFAULT_TEAM_COLOR, SPORTS } from "@/lib/constants";
+import { DEFAULT_TEAM_COLOR, SPORTS, defaultSeason } from "@/lib/constants";
 import { uploadTeamImage } from "@/lib/upload";
 import { pingCounter } from "@/components/ViewPing";
 
@@ -71,7 +71,7 @@ export default function NewTeamPage() {
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [ageGroup, setAgeGroup] = useState("");
-  const [season, setSeason] = useState("Spring 2026");
+  const [season, setSeason] = useState(() => defaultSeason());
   const [color, setColor] = useState(DEFAULT_TEAM_COLOR);
   const [logoUrl, setLogoUrl] = useState(null);
   const [logoBusy, setLogoBusy] = useState(false);
@@ -323,7 +323,7 @@ export default function NewTeamPage() {
             value={season}
             onChange={(e) => setSeason(e.target.value)}
             maxLength={40}
-            placeholder="Spring 2026"
+            placeholder="Fall 2026, Winter 26-27..."
             className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors"
           />
         </div>

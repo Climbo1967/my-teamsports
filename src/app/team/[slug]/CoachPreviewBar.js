@@ -10,7 +10,7 @@ export default function CoachPreviewBar({ teamId, passcode }) {
         <p className="text-slate-200">
           <span className="mr-1.5">👀</span>
           <span className="font-semibold text-white">Coach preview.</span>{" "}
-          This is your team site exactly as parents see it. They get in with passcode{" "}
+          This is your team site as parents see it. They get in with passcode{" "}
           <span className="font-mono font-bold tracking-widest text-white">{passcode}</span>.
         </p>
         <Link

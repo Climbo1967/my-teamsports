@@ -18,6 +18,7 @@ export default function SettingsPage({ params }) {
   const fileRef = useRef(null);
   const cameraRef = useRef(null);
   const [team, setTeam] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
   const [name, setName] = useState("");
   const [sport, setSport] = useState("baseball");
   const [season, setSeason] = useState("");
@@ -32,16 +33,28 @@ export default function SettingsPage({ params }) {
   // Fetch only (no state writes) so the mount effect can apply the result in a
   // promise callback and drop a response that lands after unmount.
   const fetchData = useCallback(async () => {
-    const { data } = await supabase.from("teams").select("*").eq("id", teamId).single();
+    const [{ data }, { data: { user } }] = await Promise.all([
+      supabase.from("teams").select("*").eq("id", teamId).single(),
+      supabase.auth.getUser(),
+    ]);
     // logo_url stores a private-bucket path; keep the path for saving and
     // a signed URL for display.
     const signedLogo = data ? await signMediaUrl(supabase, data.logo_url) : null;
-    return { data, signedLogo };
+    // Only the head coach can delete the team (the database enforces it; the
+    // button used to show for assistants too, and their delete silently did
+    // nothing). Owner = the team's coach_id, or an "owner" staff row.
+    let owner = !!(data && user && data.coach_id === user.id);
+    if (data && user && !owner) {
+      const { data: me } = await supabase.from("team_coaches").select("role").eq("team_id", teamId).eq("user_id", user.id).maybeSingle();
+      owner = me?.role === "owner";
+    }
+    return { data, signedLogo, owner };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const apply = useCallback(({ data, signedLogo }) => {
+  const apply = useCallback(({ data, signedLogo, owner }) => {
     if (!data) return;
     setTeam(data);
+    setIsOwner(!!owner);
     setName(data.name);
     setSport(data.sport);
     setSeason(data.season || "");
@@ -114,8 +127,11 @@ export default function SettingsPage({ params }) {
       requireText: team.name,
     });
     if (!ok) return;
-    const { error: err } = await supabase.from("teams").delete().eq("id", teamId);
+    // .select() so a delete the database refused (not the owner) comes back as
+    // zero rows instead of looking like success.
+    const { data: gone, error: err } = await supabase.from("teams").delete().eq("id", teamId).select("id");
     if (err) { setError(err.message); return; }
+    if (!gone || gone.length === 0) { setError("Only the head coach can delete this team."); return; }
     router.push("/dashboard");
     router.refresh();
   }
@@ -166,7 +182,7 @@ export default function SettingsPage({ params }) {
             </div>
             <div>
               <Label>Season</Label>
-              <Input value={season} onChange={(e) => setSeason(e.target.value)} maxLength={40} placeholder="Spring 2026" />
+              <Input value={season} onChange={(e) => setSeason(e.target.value)} maxLength={40} placeholder="Fall 2026, Winter 26-27..." />
             </div>
             <div>
               <Label>Age Group / Division</Label>
@@ -195,11 +211,14 @@ export default function SettingsPage({ params }) {
         <PasscodeManager teamId={teamId} passcode={team.passcode} onChanged={load} />
       </Card>
 
-      <Card className="border-red-500/20">
-        <h3 className="font-bold text-lg mb-1 text-red-400">DANGER ZONE</h3>
-        <p className="text-sm text-slate-400 mb-4">Deleting the team removes everything — roster, schedule, posts, and photos. This cannot be undone.</p>
-        <Button variant="danger" onClick={deleteTeam}>Delete this team</Button>
-      </Card>
+      {isOwner && (
+        <Card className="border-red-500/20">
+          <h3 className="font-bold text-lg mb-1 text-red-400">DANGER ZONE</h3>
+          <p className="text-sm text-slate-400 mb-4">Deleting the team removes everything — roster, schedule, posts, and photos. This cannot be undone.</p>
+          <ErrorText>{error}</ErrorText>
+          <Button variant="danger" onClick={deleteTeam}>Delete this team</Button>
+        </Card>
+      )}
     </div>
   );
 }

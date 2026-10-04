@@ -81,7 +81,10 @@ export default function RosterPage({ params }) {
           onCancel={() => setEditing(null)}
         />
       ) : editing ? (
+        // Keyed on the row so switching Edit → Edit (or Edit → Add) remounts the
+        // form with that row's values instead of keeping the previous one's.
         <PlayerForm
+          key={editing === "new" ? "new" : editing.id}
           teamId={teamId}
           sport={sport}
           player={editing === "new" ? null : editing}

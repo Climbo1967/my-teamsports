@@ -104,6 +104,16 @@ export const STAT_KEYS = {
   ],
 };
 
+// Default season label for a new team, from today's date: "Fall 2026" in
+// September–November, "Winter 2026" in December–February, "Spring 2026" in
+// March–May, "Summer 2026" in June–August. Replaces the hard-coded "Spring 2026"
+// that fall teams were shipping with.
+export function defaultSeason(now = new Date()) {
+  const m = now.getMonth() + 1;
+  const label = m >= 9 && m <= 11 ? "Fall" : m >= 6 ? "Summer" : m >= 3 ? "Spring" : "Winter";
+  return `${m === 12 ? "Winter" : label} ${now.getFullYear()}`;
+}
+
 export function inviteMessage(team) {
   return `Join our team site! https://my-teamsports.com/team/${team.slug} — Passcode: ${team.passcode}`;
 }

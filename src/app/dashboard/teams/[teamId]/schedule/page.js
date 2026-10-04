@@ -69,8 +69,16 @@ export default function SchedulePage({ params }) {
   }, [fetchData, apply]);
 
   async function remove(event) {
-    if (!(await confirmDialog({ title: "Delete event?", message: "Parents will no longer see it on the team site.", confirmLabel: "Delete", danger: true }))) return;
-    await supabase.from("events").delete().eq("id", event.id);
+    // Deleting an event cascades to everything recorded against it (stats,
+    // live scoring, RSVPs), so say so when there is anything to lose.
+    const scored = event.event_type === "game" && (event.result || !isUpcoming(event.starts_at));
+    const message = scored
+      ? "This also deletes any stats, live scoring and RSVPs recorded for this game. Parents will no longer see it on the team site."
+      : "Parents will no longer see it on the team site.";
+    if (!(await confirmDialog({ title: "Delete event?", message, confirmLabel: "Delete", danger: true }))) return;
+    setError(null);
+    const { error: err } = await supabase.from("events").delete().eq("id", event.id);
+    if (err) { setError(err.message); return; }
     // Alert opted-in devices only when an UPCOMING event is canceled.
     if (isUpcoming(event.starts_at)) {
       queueScheduleAlert(teamId, scheduleAlertPayload("canceled", event));
@@ -93,7 +101,10 @@ export default function SchedulePage({ params }) {
       <ErrorText>{error}</ErrorText>
 
       {editing && (
+        // Keyed on the row so switching Edit → Edit (or Edit → Add) remounts the
+        // form with that row's values instead of keeping the previous one's.
         <EventForm
+          key={editing === "new" ? "new" : editing.id}
           teamId={teamId}
           event={editing === "new" ? null : editing}
           onDone={() => { setEditing(null); load(); }}

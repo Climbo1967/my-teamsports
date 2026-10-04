@@ -232,8 +232,12 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     if (e) setError(e.message);
   }
 
+  // Re-rolls season stats from this game's at-bats. Returns true on success;
+  // on failure the error is shown and false comes back so callers can stop.
   async function rollup() {
-    await supabase.rpc("rollup_game_stats", { p_event_id: event.id });
+    const { error: e } = await supabase.rpc("rollup_game_stats", { p_event_id: event.id });
+    if (e) { setError(`Stats didn't update: ${e.message}`); return false; }
+    return true;
   }
 
   if (game === undefined) return <Spinner />;
@@ -423,9 +427,15 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
 
   async function endGame() {
     if (!(await confirmDialog({ title: "End this game?", message: "The score will be saved as the game result.", confirmLabel: "End & finalize" }))) return;
-    await supabase.from("game_scores").update({ status: "final" }).eq("id", game.id);
-    await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
-    await rollup();
+    // Each save is checked: on a bad connection at the field any of these can
+    // fail, and the coach must see that instead of being sent back as if the
+    // game were saved (and parents told "Final" for a game still in progress).
+    setError(null);
+    const { error: e1 } = await supabase.from("game_scores").update({ status: "final" }).eq("id", game.id);
+    if (e1) { setError(`Couldn't end the game: ${e1.message}. Check your connection and try again.`); return; }
+    const { error: e2 } = await supabase.from("events").update({ result: gameResultString(game.our_score, game.opp_score) }).eq("id", event.id);
+    if (e2) { setError(`Game ended, but the result didn't save to the schedule: ${e2.message}. Tap End game again.`); return; }
+    if (!(await rollup())) return;
     if (!finalAnnounced.current) {
       notifyGame({ teamId, kind: "final", opponent: event.opponent, ourScore: game.our_score, oppScore: game.opp_score });
       finalAnnounced.current = true;

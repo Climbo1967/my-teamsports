@@ -5,6 +5,10 @@ import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/consta
 import { askClaude } from "@/lib/ai";
 import { logAiUse } from "@/lib/aiUse";
 
+// A briefing or practice plan can take 20–40 s to generate; give the function
+// room so the platform doesn't cut it off with an HTML error page.
+export const maxDuration = 60;
+
 const MINUTES = new Set([45, 60, 75, 90]);
 const FOCI = {
   auto: "Let the data decide where to spend the time.",

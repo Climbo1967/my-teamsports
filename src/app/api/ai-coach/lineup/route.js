@@ -6,6 +6,10 @@ import { recommendLineup, fmtAvg, MIN_PA } from "@/lib/lineup";
 import { askClaude } from "@/lib/ai";
 import { logAiUse } from "@/lib/aiUse";
 
+// A briefing or practice plan can take 20–40 s to generate; give the function
+// room so the platform doesn't cut it off with an HTML error page.
+export const maxDuration = 60;
+
 const DIAMOND = new Set(["baseball", "softball"]);
 
 export async function POST(request) {

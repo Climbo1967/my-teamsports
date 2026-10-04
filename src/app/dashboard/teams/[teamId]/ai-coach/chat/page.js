@@ -73,7 +73,7 @@ export default function AiChatPage({ params }) {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId, message }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "The assistant coach couldn't answer.");
       setMessages((m) => [...m, { id: `tmp-a-${Date.now()}`, role: "assistant", content: data.reply }]);
     } catch (e) {

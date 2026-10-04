@@ -5,6 +5,10 @@ import { askClaudeChat } from "@/lib/ai";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { logAiUse } from "@/lib/aiUse";
 
+// A briefing or practice plan can take 20–40 s to generate; give the function
+// room so the platform doesn't cut it off with an HTML error page.
+export const maxDuration = 60;
+
 const MONTHLY_TEAM_CAP = 400; // coach messages per team per calendar month
 const HISTORY_TURNS = 20;     // prior messages sent to the model
 const MAX_MESSAGE_CHARS = 1500;

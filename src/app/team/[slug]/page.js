@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { signMediaUrls } from "@/lib/media";
@@ -15,8 +16,9 @@ export async function generateMetadata({ params }) {
   return { title: `Team Site | My-Team Sports`, robots: { index: false } };
 }
 
-export default async function TeamPage({ params }) {
+export default async function TeamPage({ params, searchParams }) {
   const { slug } = await params;
+  const { from } = (await searchParams) || {};
   const normalizedSlug = String(slug).toLowerCase();
 
   const cookieStore = await cookies();
@@ -33,31 +35,37 @@ export default async function TeamPage({ params }) {
     site = data;
   }
 
-  // Coach bypass: a signed-in coach of this team (owner or assistant) sees their
-  // own site without the parent passcode. RLS on `teams` is the authorization —
-  // the row only comes back if the current user is a coach of it — and the
-  // passcode on that row feeds the same RPC parents use, so the page is
-  // rendered identically.
+  // Coach preview: a signed-in coach of this team (owner or assistant) sees
+  // their own site without typing the parent passcode. RLS on `teams` is the
+  // authorization — the row only comes back if the current user is a coach of
+  // it. The coach gets the same access cookie parents have (set by
+  // /api/team-access/coach, since a page can't set cookies), so the Team
+  // Board, RSVP, live score and parent upload all work in the preview too.
   let coachPreview = null;
-  if (!site) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data: own } = await supabase
-        .from("teams")
-        .select("id, passcode")
-        .eq("slug", normalizedSlug)
-        .maybeSingle();
-      if (own?.passcode) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    const { data: own } = await supabase
+      .from("teams")
+      .select("id, passcode")
+      .eq("slug", normalizedSlug)
+      .maybeSingle();
+    if (own?.passcode) {
+      coachPreview = { teamId: own.id, passcode: own.passcode };
+      const cookieMatches = passcode && passcode.toUpperCase().trim() === String(own.passcode).toUpperCase().trim();
+      if (!site || !cookieMatches) {
+        // No cookie, or a stale one from before a passcode change. Go set it,
+        // unless we just came from there (cookies blocked): then render the
+        // preview from the coach's own passcode and leave the gated parts off.
+        if (from !== "coach") {
+          redirect(`/api/team-access/coach?slug=${encodeURIComponent(normalizedSlug)}`);
+        }
         const { data } = await supabase.rpc("get_team_site", {
           p_slug: normalizedSlug,
           p_passcode: own.passcode,
         });
-        if (data) {
-          site = data;
-          coachPreview = { teamId: own.id, passcode: own.passcode };
-        }
+        if (data) site = data;
       }
     }
   }

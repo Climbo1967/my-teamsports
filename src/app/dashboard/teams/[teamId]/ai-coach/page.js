@@ -72,7 +72,9 @@ export default function AiCoachPage({ params }) {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId }),
       });
-      const data = await res.json();
+      // A platform timeout answers with an HTML page, not JSON; don't let that
+      // surface as "Unexpected token" to the coach.
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Could not generate the briefing.");
       setBriefing(data.briefing); setGeneratedAt(data.generatedAt);
     } catch (e) { setError(e.message); } finally { setBusy(false); }
@@ -85,7 +87,9 @@ export default function AiCoachPage({ params }) {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId }),
       });
-      const data = await res.json();
+      // A platform timeout answers with an HTML page, not JSON; don't let that
+      // surface as "Unexpected token" to the coach.
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Could not build the lineup.");
       setLineup({ order: data.order, advice: data.advice, generatedAt: data.generatedAt });
     } catch (e) { setLineupError(e.message); } finally { setLineupBusy(false); }
@@ -98,7 +102,9 @@ export default function AiCoachPage({ params }) {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teamId, minutes: planMinutes, focus: planFocus }),
       });
-      const data = await res.json();
+      // A platform timeout answers with an HTML page, not JSON; don't let that
+      // surface as "Unexpected token" to the coach.
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(data.error || "Could not build the practice plan.");
       setPlan({ plan: data.plan, minutes: data.minutes, focus: data.focus, generatedAt: data.generatedAt });
     } catch (e) { setPlanError(e.message); } finally { setPlanBusy(false); }
