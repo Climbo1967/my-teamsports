@@ -92,9 +92,20 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
 
   // Keep the console live: soft-refresh the server data every 30s. Re-runs the
   // admin_overview fetch and reconciles in place, preserving filters and scroll.
+  // Only while the tab is visible: a minimized or background tab used to keep
+  // polling around the clock (same fix as QKM, 2026-10-05, on Ron's go). On
+  // return it refreshes once and the 30 s cadence resumes.
   useEffect(() => {
-    const id = setInterval(() => router.refresh(), 30000);
-    return () => clearInterval(id);
+    let id = null;
+    const start = () => { if (id === null) id = setInterval(() => router.refresh(), 30000); };
+    const stop = () => { if (id !== null) { clearInterval(id); id = null; } };
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") { router.refresh(); start(); }
+      else stop();
+    };
+    if (document.visibilityState === "visible") start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => { stop(); document.removeEventListener("visibilitychange", onVisibility); };
   }, [router]);
 
   const filtered = useMemo(() => {
