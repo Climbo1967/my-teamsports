@@ -5,12 +5,12 @@ import { askClaudeChat } from "@/lib/ai";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { logAiUse } from "@/lib/aiUse";
 import { aiActiveFor } from "@/lib/pricing";
+import { aiMonthlyUse, aiCapMessage, monthStart } from "@/lib/aiCap";
 
 // A briefing or practice plan can take 20–40 s to generate; give the function
 // room so the platform doesn't cut it off with an HTML error page.
 export const maxDuration = 60;
 
-const MONTHLY_TEAM_CAP = 400; // coach messages per team per calendar month
 const HISTORY_TURNS = 20;     // prior messages sent to the model
 const MAX_MESSAGE_CHARS = 1500;
 
@@ -78,15 +78,19 @@ export async function POST(request) {
   if (ctx.error) return ctx.error;
   const { user, team } = ctx;
 
-  // Monthly budget: coach messages per team, all coaches combined.
-  const monthStart = new Date();
-  monthStart.setUTCDate(1); monthStart.setUTCHours(0, 0, 0, 0);
-  const { count } = await supabase
-    .from("ai_chat_messages")
-    .select("id", { count: "exact", head: true })
-    .eq("team_id", teamId).eq("role", "user").gte("created_at", monthStart.toISOString());
-  if ((count || 0) >= MONTHLY_TEAM_CAP) {
-    return NextResponse.json({ error: "This team has used its AI chat allowance for the month. It resets on the 1st." }, { status: 429 });
+  // Monthly budget: coach messages per team, all coaches combined, counted
+  // from the append-only use log so Clear chat cannot reset it (sweep #19).
+  let budget = await aiMonthlyUse("chat", teamId);
+  if (budget.source === "none") {
+    // Log unavailable: fall back to this coach's own messages, as before.
+    const { count } = await supabase
+      .from("ai_chat_messages")
+      .select("id", { count: "exact", head: true })
+      .eq("team_id", teamId).eq("role", "user").gte("created_at", monthStart().toISOString());
+    budget = { allowed: (count || 0) < budget.cap, used: count || 0, cap: budget.cap, source: "fallback" };
+  }
+  if (!budget.allowed) {
+    return NextResponse.json({ error: aiCapMessage("chat") }, { status: 429 });
   }
 
   // Fresh team context on every message — same data the briefing reads.

@@ -5,6 +5,7 @@ import { computeRecord, formatRecord, STAT_KEYS, sportLabel } from "@/lib/consta
 import { askClaude } from "@/lib/ai";
 import { logAiUse } from "@/lib/aiUse";
 import { aiActiveFor } from "@/lib/pricing";
+import { aiMonthlyUse, aiCapMessage } from "@/lib/aiCap";
 
 // A briefing or practice plan can take 20–40 s to generate; give the function
 // room so the platform doesn't cut it off with an HTML error page.
@@ -46,6 +47,11 @@ export async function POST(request) {
   const aiActive = aiActiveFor(team);
   if (!aiActive) {
     return NextResponse.json({ error: "The AI Assistant Coach isn't enabled for this team yet." }, { status: 403 });
+  }
+  // Monthly allowance per team, counted from the use log (sweep #19).
+  const budget = await aiMonthlyUse("practice", teamId);
+  if (!budget.allowed) {
+    return NextResponse.json({ error: aiCapMessage("practice") }, { status: 429 });
   }
 
   const [{ data: players }, { data: events }, { data: stats }] = await Promise.all([

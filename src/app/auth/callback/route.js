@@ -9,17 +9,34 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  // Only allow same-site relative paths to avoid open redirects.
-  const nextParam = searchParams.get("next");
-  const next = nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/dashboard";
+  // Only allow same-site destinations to avoid open redirects. The old check
+  // let "/\\evil.com" through (browsers read "/\\" as "//"). The value is now
+  // resolved against our origin and the redirect uses that absolute URL, so
+  // whatever the spelling, the browser can only land on this site.
+  const next = safeNext(searchParams.get("next"), origin);
 
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(new URL(next, origin));
+      return NextResponse.redirect(next);
     }
   }
 
   return NextResponse.redirect(new URL("/login?message=email_confirmed_login", origin));
+}
+
+// Returns an absolute URL on `origin`. Anything that is not a plain path, or
+// that resolves off-site ("//evil.com", "/\\evil.com", "/..//evil.com"), goes
+// to the dashboard instead.
+function safeNext(value, origin) {
+  const fallback = new URL("/dashboard", origin).href;
+  if (!value || typeof value !== "string" || !value.startsWith("/") || /^\/[\/\\]/.test(value)) return fallback;
+  try {
+    const resolved = new URL(value, origin);
+    if (resolved.origin !== origin || resolved.pathname.startsWith("//")) return fallback;
+    return resolved.href;
+  } catch {
+    return fallback;
+  }
 }
