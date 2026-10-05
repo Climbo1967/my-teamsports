@@ -43,8 +43,10 @@ export async function POST(request) {
   if (!ext) {
     return NextResponse.json({ error: "Please upload a JPG, PNG, or WebP image." }, { status: 400 });
   }
-  if (file.size > 15 * 1024 * 1024) {
-    return NextResponse.json({ error: "Image is too large (max 15MB)." }, { status: 400 });
+  // The platform rejects request bodies over 4.5 MB before this runs, so the
+  // real limit is lower than this; the team site shrinks photos first.
+  if (file.size > 4 * 1024 * 1024) {
+    return NextResponse.json({ error: "Image is too large (max 4MB)." }, { status: 400 });
   }
 
   const cookieStore = await cookies();

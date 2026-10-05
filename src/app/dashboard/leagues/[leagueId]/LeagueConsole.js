@@ -201,7 +201,7 @@ function TeamsTab({ supabase, data, reload, can }) {
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
               <thead><tr className="text-left text-[11px] uppercase tracking-wider text-slate-500 border-b border-white/[0.06]">
-                <th className="py-2 pr-3">Team</th><th className="py-2 pr-3">School</th><th className="py-2 pr-3">Division</th><th className="py-2 pr-3">Coaches</th><th className="py-2 pr-3">Passcode</th><th className="py-2">Roster</th>
+                <th className="py-2 pr-3">Team</th><th className="py-2 pr-3">School</th><th className="py-2 pr-3">Division</th><th className="py-2 pr-3">Coaches</th>{commissioner && <th className="py-2 pr-3">Passcode</th>}<th className="py-2">Roster</th>
               </tr></thead>
               <tbody>
                 {data.teams.map((t) => {
@@ -216,7 +216,8 @@ function TeamsTab({ supabase, data, reload, can }) {
                       <td className="py-2 pr-3 text-slate-400 text-xs">
                         <CoachCell team={t} adminEmails={adminEmails} canInvite={commissioner} onInvited={reload} />
                       </td>
-                      <td className="py-2 pr-3 font-mono text-slate-300 tracking-widest">{t.passcode}</td>
+                      {/* Parent passcodes are for the commissioner only; the RPC returns null for other roles. */}
+                      {commissioner && <td className="py-2 pr-3 font-mono text-slate-300 tracking-widest">{t.passcode || <span className="text-slate-600">—</span>}</td>}
                       <td className="py-2 text-slate-400">{t.players}</td>
                     </tr>
                   );

@@ -77,7 +77,7 @@ export default function LiveScoreBanner({ slug, teamName }) {
       </div>
       <div className="flex items-center text-center py-4">
         <Side name={us} score={live.our_score} />
-        <div className="px-4 min-w-[90px]">
+        <div className="px-2 min-w-[68px] sm:px-4 sm:min-w-[90px]">
           <p className="text-[10px] uppercase tracking-widest text-slate-500">Count</p>
           <p className="font-[family-name:var(--font-oswald)] text-2xl font-bold text-white">{live.balls}<span className="text-slate-600">-</span>{live.strikes}</p>
         </div>
@@ -103,9 +103,12 @@ function Banner({ children }) {
 }
 
 function Side({ name, score }) {
+  // Names wrap to two lines on phones instead of being cut off at 390 px
+  // (bug sweep 2026-10-03); letter-spacing eases on narrow screens for the
+  // same reason.
   return (
-    <div className="flex-1 px-2">
-      <p className="text-xs uppercase tracking-widest text-slate-400 mb-1 truncate">{name}</p>
+    <div className="flex-1 min-w-0 px-1 sm:px-2">
+      <p className="text-[11px] sm:text-xs uppercase tracking-wide sm:tracking-widest text-slate-400 mb-1 line-clamp-2 break-words leading-tight" title={name}>{name}</p>
       <p className="font-[family-name:var(--font-oswald)] text-4xl font-bold text-white">{score}</p>
     </div>
   );

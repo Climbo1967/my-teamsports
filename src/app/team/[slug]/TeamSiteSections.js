@@ -735,6 +735,36 @@ function PhotosSection({ photos, players, slug, playerById, onView }) {
   );
 }
 
+// Phone photos are 3-8 MB and the upload goes through our own API, which
+// Vercel caps at 4.5 MB per request (it answered 413 before the route's own
+// 15 MB check could run; bug sweep 2026-10-03). Shrink in the browser first:
+// longest side 1600 px, JPEG. Anything that cannot be decoded (some HEIC) is
+// sent as-is and the server message explains the limit.
+const UPLOAD_MAX_SIDE = 1600;
+const UPLOAD_SHRINK_OVER_BYTES = 1_500_000;
+const UPLOAD_HARD_LIMIT_BYTES = 4_000_000;
+
+async function shrinkImage(file) {
+  if (!file || file.size <= UPLOAD_SHRINK_OVER_BYTES || typeof document === "undefined") return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, UPLOAD_MAX_SIDE / Math.max(bitmap.width, bitmap.height));
+    const w = Math.max(1, Math.round(bitmap.width * scale));
+    const h = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    canvas.getContext("2d").drawImage(bitmap, 0, 0, w, h);
+    bitmap.close?.();
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.85));
+    if (!blob || blob.size >= file.size) return file;
+    const name = (file.name || "photo").replace(/\.[a-z0-9]+$/i, "") + ".jpg";
+    return new File([blob], name, { type: "image/jpeg" });
+  } catch {
+    return file;
+  }
+}
+
 function ParentUpload({ slug, players }) {
   const router = useRouter();
   const fileRef = useRef(null);
@@ -751,9 +781,15 @@ function ParentUpload({ slug, players }) {
     if (!file) return;
     setBusy(true);
     setError(null);
+    const upload = await shrinkImage(file);
+    if (upload.size > UPLOAD_HARD_LIMIT_BYTES) {
+      setBusy(false);
+      setError("That photo is too large to send from here (over 4 MB). Try a smaller copy or a different photo.");
+      return;
+    }
     const form = new FormData();
     form.append("slug", slug);
-    form.append("file", file);
+    form.append("file", upload);
     form.append("caption", caption);
     if (playerId) form.append("playerId", playerId);
 
@@ -761,7 +797,7 @@ function ParentUpload({ slug, players }) {
     setBusy(false);
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
-      setError(body.error || "Upload failed. Try again.");
+      setError(res.status === 413 ? "That photo is too large to send (over 4 MB). Try a smaller one." : (body.error || "Upload failed. Try again."));
       return;
     }
     setOpen(false);

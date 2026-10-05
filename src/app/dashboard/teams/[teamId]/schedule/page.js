@@ -291,13 +291,22 @@ function StatsEditor({ teamId, event, players, sport, onClose }) {
         }
       }
     }
-    // Replace only the columns this grid manages, so stats in other columns
-    // (e.g. live-scored keys, or a manually-kept column like Runs) are left untouched.
-    const { error: delErr } = await supabase.from("stats").delete().eq("event_id", event.id).in("stat_key", keys.map((k) => k.key));
-    if (delErr) { setError(delErr.message); setBusy(false); return; }
+    // Only the columns this grid manages are touched, so stats in other
+    // columns (live-scored keys, a manually-kept Runs column) stay as they are.
+    // Write first, then clear: the old delete-then-insert lost the game's
+    // previous numbers whenever the insert failed (bug sweep 2026-10-03).
+    // (event_id, player_id, stat_key) is unique, so the upsert replaces in place.
     if (rows.length > 0) {
-      const { error: insErr } = await supabase.from("stats").insert(rows);
-      if (insErr) { setError(insErr.message); setBusy(false); return; }
+      const { error: upErr } = await supabase.from("stats").upsert(rows, { onConflict: "event_id,player_id,stat_key" });
+      if (upErr) { setError(upErr.message); setBusy(false); return; }
+    }
+    // Then remove the cells the coach cleared, one managed column at a time.
+    for (const k of keys) {
+      const keep = rows.filter((r) => r.stat_key === k.key).map((r) => r.player_id);
+      let q = supabase.from("stats").delete().eq("event_id", event.id).eq("stat_key", k.key);
+      if (keep.length > 0) q = q.not("player_id", "in", `(${keep.join(",")})`);
+      const { error: delErr } = await q;
+      if (delErr) { setError(`Saved, but could not clear old ${k.abbr || k.key} values: ${delErr.message}`); setBusy(false); return; }
     }
     setBusy(false);
     onClose();
