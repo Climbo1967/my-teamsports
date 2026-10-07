@@ -74,6 +74,11 @@ export const FILL_INS = [
   { token: "{team}", label: "Team name", fallback: "your team" },
   { token: "{trial_end}", label: "Free trial end date", fallback: "the end of your free trial" },
   { token: "{ai_trial_end}", label: "AI Coach trial end date", fallback: "the end of your AI Coach trial" },
+  // The two below need `slug` and `passcode` on the team rows, which the admin
+  // panel and its send route load alongside the snapshot (loadCoachSnapshot
+  // with teamLinks: true). Without them the generic wording is used.
+  { token: "{team_link}", label: "Team site link (the page parents open)", fallback: `${SITE_URL}/dashboard` },
+  { token: "{passcode}", label: "Parent passcode", fallback: "the passcode on your team's Settings tab" },
 ];
 
 // Per-coach values for the admin panel's fill-ins. `missing` lists the tokens
@@ -91,9 +96,21 @@ export function coachFillIns(coach, ownedTeams, now = new Date()) {
   const aiSource = team?.ai_trial_ends_at || coach?.ai_trial_ends_at;
   let aiEnd = aiSource ? formatDay(aiSource) : "";
   if (!aiEnd) { aiEnd = "the end of your AI Coach trial"; missing.push("{ai_trial_end}"); }
+  // Team site link and parent passcode: only when the team row carries them.
+  let teamLink = team?.slug ? `${SITE_URL}/team/${team.slug}` : "";
+  if (!teamLink) { teamLink = `${SITE_URL}/dashboard`; missing.push("{team_link}"); }
+  let passcode = team?.passcode ? String(team.passcode) : "";
+  if (!passcode) { passcode = "the passcode on your team's Settings tab"; missing.push("{passcode}"); }
   return {
     greeting: first,
-    values: { "{first_name}": first, "{team}": teamName, "{trial_end}": trialEnd, "{ai_trial_end}": aiEnd },
+    values: {
+      "{first_name}": first,
+      "{team}": teamName,
+      "{trial_end}": trialEnd,
+      "{ai_trial_end}": aiEnd,
+      "{team_link}": teamLink,
+      "{passcode}": passcode,
+    },
     missing,
   };
 }

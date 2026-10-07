@@ -6,10 +6,24 @@ import { coachEmailFooter, unsubscribeHeaders, unsubscribeLinks } from "@/lib/co
 
 // Everything the daily job and the admin panel need, in one call. Returns
 // { ok, snapshot } or { ok: false, error } (e.g. the migration isn't applied).
-export async function loadCoachSnapshot(admin) {
+//
+// teamLinks: true (admin panel and its send route only) also puts each team's
+// public `slug` and parent `passcode` on the snapshot's team rows, for the
+// {team_link} and {passcode} fill-ins. The daily job never asks for them. If
+// that extra read fails the snapshot still comes back; the fill-ins then use
+// their generic wording and the panel says which coaches are affected.
+export async function loadCoachSnapshot(admin, { teamLinks = false } = {}) {
   if (!admin) return { ok: false, error: "Server key is not configured." };
   const { data, error } = await admin.rpc("coach_email_snapshot");
   if (error || !data) return { ok: false, error: error?.message || "Snapshot unavailable." };
+  if (teamLinks && Array.isArray(data.teams) && data.teams.length > 0) {
+    const { data: rows } = await admin.from("teams").select("id, slug, passcode");
+    const byId = new Map((rows || []).map((r) => [r.id, r]));
+    data.teams = data.teams.map((t) => {
+      const r = byId.get(t.id);
+      return r ? { ...t, slug: r.slug || null, passcode: r.passcode || null } : t;
+    });
+  }
   return { ok: true, snapshot: data };
 }
 

@@ -319,7 +319,7 @@ export default function AdminDirectory({ data, counters = {}, emailMeta = null, 
         )}
         {generic.length > 0 && (
           <p className="text-sm text-yellow-400 mb-3">
-            {generic.length} coach{generic.length === 1 ? "" : "es"} will get generic wording for a fill-in (no team or no trial date on file):{" "}
+            {generic.length} coach{generic.length === 1 ? "" : "es"} will get generic wording for a fill-in (no team, trial date, or passcode on file):{" "}
             <span className="text-slate-400">{generic.map((c) => c.email).join(", ")}</span>
           </p>
         )}

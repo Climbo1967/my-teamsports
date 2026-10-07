@@ -39,7 +39,7 @@ export default async function AdminPage() {
   let aiUse = null;
   let aiUseTruncated = false;
   const admin = createAdminClient();
-  const snap = await loadCoachSnapshot(admin);
+  const snap = await loadCoachSnapshot(admin, { teamLinks: true });
   if (snap.ok) {
     const now = new Date();
     const teamsByCoach = new Map();

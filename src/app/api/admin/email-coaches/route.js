@@ -62,7 +62,7 @@ export async function POST(request) {
 
   // Per-coach details (name, team, trial dates, unsubscribe token, opt-out).
   const admin = createAdminClient();
-  const snap = await loadCoachSnapshot(admin);
+  const snap = await loadCoachSnapshot(admin, { teamLinks: true });
   if (!snap.ok) {
     return NextResponse.json({ error: "The email log isn't set up yet, so nothing was sent." }, { status: 503 });
   }
