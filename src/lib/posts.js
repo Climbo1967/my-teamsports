@@ -10,6 +10,628 @@
 
 export const posts = [
   {
+    "slug": "basketball-score-sheet-template",
+    "title": "Basketball Score Sheet Template (Free Printable PDF)",
+    "description": "Free printable basketball score sheet, 2 pages: both teams on one page with running score to 100, player fouls, team fouls, timeouts and quarter scores, plus a simple one-team sheet a parent can keep.",
+    "excerpt": "Two score sheets in one printable: the full both-teams page with running score, fouls and timeouts for the table, and a simple one-team page for whoever got handed the clipboard.",
+    "tag": "Basketball",
+    "date": "2026-10-07",
+    "readingTime": "5 min read",
+    "keywords": [
+      "basketball score sheet template",
+      "printable basketball score sheet",
+      "basketball score sheet pdf",
+      "basketball scoresheet",
+      "basketball scorebook sheet printable",
+      "youth basketball score sheet",
+      "basketball running score sheet"
+    ],
+    "body": [
+      {
+        "p": "Every youth basketball game needs a score sheet and almost nobody arrives with one. The league's official book stays with the league, the gym's scoreboard resets when a kid leans on the button, and at the end of the game two coaches disagree about the score. This printable fixes that with two pages: a full score sheet with both teams, a running score to 100, player and team fouls, timeouts and quarter scores, and a simpler one-team sheet for the parent who has never kept score before. Print one of each per game."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-score-sheet.pdf",
+          "label": "Basketball Score Sheet Template (printable PDF, 2 pages)",
+          "note": "Page 1: both teams, 12 players each with 5 foul boxes, running score 1–100 per team, quarter scores, team fouls per quarter, timeouts. Page 2: one-team simple sheet with points by quarter. Free, no email required."
+        }
+      },
+      {
+        "h2": "Which page do you need?"
+      },
+      {
+        "table": {
+          "headers": [
+            "Page",
+            "Best for",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "Full score sheet (page 1)",
+              "The scorer's table: both rosters, every foul, the running score that settles arguments, team fouls for the bonus, timeouts left",
+              "Whoever sits at the table — a parent with 30 seconds of instruction"
+            ],
+            [
+              "Simple sheet (page 2)",
+              "Your own bench: who scored how much each quarter, who is in foul trouble, running score for your team and theirs",
+              "An assistant, an injured player, or the coach between timeouts"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "How to keep the running score"
+      },
+      {
+        "p": "The running score is the whole trick, and it is why official scorebooks look the way they do. Every time a team scores, slash the next number in that team's row: a two-point basket crosses out two numbers, a free throw crosses out one. The last number slashed is the score. You never add anything up during the game, you never lose count, and if the scoreboard and the sheet disagree the sheet wins because it has a mark for every point."
+      },
+      {
+        "p": "Next to the basket, put the player's points in the PTS column as a tally. At the end of the game the tallies in the PTS column must equal the last slashed number in the running score. If they don't, somebody scored a basket that didn't get credited, and that is a thirty-second fix at halftime instead of a mystery on Monday."
+      },
+      {
+        "h2": "Fouls, the bonus, and timeouts"
+      },
+      {
+        "p": "Each player has five boxes. Tick one per foul; when the fifth box is ticked the player is done, and the person keeping the sheet should say so out loud, because referees forget. Team fouls go in the quarter boxes below: in most youth leagues the fifth team foul in a quarter puts the other team in the bonus (two free throws on every foul), and the coach who knows the count is the coach who stops fouling at four. Timeouts are the boxes nobody tracks until the last minute, when it matters most; tick them as they are called."
+      },
+      {
+        "table": {
+          "headers": [
+            "Situation",
+            "What to mark",
+            "Why it matters"
+          ],
+          "rows": [
+            [
+              "Made basket",
+              "Slash 2 (or 3) numbers in the running score, tally in PTS",
+              "Score is always the last slashed number"
+            ],
+            [
+              "Free throw made",
+              "Slash 1 number, tally 1 in PTS",
+              "Same rule, one point"
+            ],
+            [
+              "Personal foul",
+              "Tick the next box for that player, tick the team-foul box for the quarter",
+              "Five = out; team's fifth per quarter = bonus"
+            ],
+            [
+              "Timeout",
+              "Tick full or 30-second for that team",
+              "Knowing you have none left changes the last play"
+            ],
+            [
+              "End of quarter",
+              "Write the quarter score in the box",
+              "Shows which quarter the game turned"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The simple sheet, for the bench"
+      },
+      {
+        "p": "Page 2 drops everything the table needs and keeps what the bench needs: one team, fourteen rows, five foul boxes, points by quarter, and both running scores. Hand it to an assistant with one sentence: tally the points in the quarter box as they happen. At the end of the quarter the totals go across, and you know at a glance who is carrying the scoring and who has three fouls before halftime. The quarter columns are the useful part. A kid who scores eight in the first and nothing after is a different conversation than a kid who scores two a quarter."
+      },
+      {
+        "h2": "Score it live instead"
+      },
+      {
+        "p": "The sheet is for the table. My-Team Sports is for everyone who isn't in the gym. The live basketball scoreboard runs from your phone with 1, 2 and 3-point buttons, period by period, and parents who open your team's site see the score as it happens. Points credited to a player go straight into the Stats tab, where points, rebounds, assists, steals and blocks add up over the season. Print the sheet for the official book, score it live for the family in the car."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-stat-sheet-template",
+        "label": "Basketball Stat Sheet",
+        "note": "Twelve stats, tally marks, season totals page"
+      },
+      {
+        "href": "/blog/basketball-live-scoreboard-app",
+        "label": "Basketball Live Scoreboard",
+        "note": "Score the game from your phone"
+      },
+      {
+        "href": "/blog/basketball-rotation-chart",
+        "label": "Basketball Rotation Chart",
+        "note": "Fair minutes, planned before tipoff"
+      },
+      {
+        "href": "/blog/basketball-shot-chart-template",
+        "label": "Basketball Shot Chart",
+        "note": "Where the points came from"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you fill out a basketball score sheet?",
+        "a": "Write both rosters with jersey numbers before tipoff. When a team scores, slash the next number(s) in that team's running score and tally the points next to the player. Tick a foul box for the player and the team-foul box for the quarter on every personal foul. Tick timeouts as they are called and write each quarter's score in the quarter box at the break."
+      },
+      {
+        "q": "What is a running score in basketball?",
+        "a": "A row of numbers from 1 to 100 (or more) for each team. Each point scored crosses out the next number, so the last crossed-out number is always the current score. It is how official scorebooks work and it means you never add during the game."
+      },
+      {
+        "q": "How many fouls before a player fouls out in youth basketball?",
+        "a": "Five personal fouls in most youth and high-school leagues (six in the NBA). The sheet has five boxes per player; when the fifth is ticked the player is done, and the scorer should tell the referee."
+      },
+      {
+        "q": "When is a team in the bonus?",
+        "a": "It depends on the league. Under current high-school rules the fifth team foul in a quarter puts the opponent in the bonus with two free throws; older rules use the seventh foul in a half for one-and-one and the tenth for two shots. Check your league and use the team-foul boxes to count."
+      },
+      {
+        "q": "Can a parent keep the score sheet?",
+        "a": "Yes, and they usually do. The simple sheet on page 2 needs one instruction: tally the points in the quarter box when they happen. The full sheet on page 1 takes about a minute to explain and is the one to use at the scorer's table."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-stat-sheet-template",
+    "title": "Basketball Stat Sheet Template (Free Printable PDF)",
+    "description": "Free printable basketball stat sheet, 2 pages: a tally sheet for 14 players with 2PT, 3PT and FT made/attempted, rebounds, assists, steals, blocks, turnovers and fouls, plus a season totals page with FG% and PPG.",
+    "excerpt": "A game stat sheet that two keepers can split, and a season totals page with the three numbers worth working out. Tally marks, no app, no spreadsheet.",
+    "tag": "Basketball",
+    "date": "2026-10-07",
+    "readingTime": "6 min read",
+    "keywords": [
+      "basketball stat sheet template",
+      "printable basketball stat sheet",
+      "basketball stat sheet pdf",
+      "basketball stats sheet",
+      "youth basketball stat sheet",
+      "basketball box score template",
+      "basketball season stats sheet"
+    ],
+    "body": [
+      {
+        "p": "A stat sheet is only useful if it gets filled in every game, and most of them don't, because they ask one parent to track fifteen things at once. This one is built to be split. The shooting columns (2-point, 3-point and free throws, made and attempted) are one job; rebounds, assists, steals, blocks, turnovers and fouls are the other. Two keepers and you have a real box score. One keeper, and the sheet tells you which four columns to keep and which to let go. Page 2 is the season totals sheet with the three derived numbers that actually tell you something."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-stat-sheet.pdf",
+          "label": "Basketball Stat Sheet Template (printable PDF, 2 pages)",
+          "note": "Page 1: game tally sheet, 14 players, 2PT/3PT/FT made-attempted, OREB, DREB, AST, STL, BLK, TO, PF, PTS, team totals. Page 2: season totals with GP, FG%, PPG. Free, no email required."
+        }
+      },
+      {
+        "h2": "What's on the game sheet"
+      },
+      {
+        "table": {
+          "headers": [
+            "Column",
+            "What to mark",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "2PT m/a, 3PT m/a, FT m/a",
+              "A tally on the left of the line for every make, on the right for every attempt (makes count as attempts too)",
+              "Keeper 1: shooting only, eyes on the ball"
+            ],
+            [
+              "OREB / DREB",
+              "A tally when a player grabs a miss: offensive if it was our shot, defensive if theirs",
+              "Keeper 2"
+            ],
+            [
+              "AST, STL, BLK",
+              "Tally. Assist = the pass before a made basket; steal = takes it from a dribbler or passing lane; block = deflects a shot",
+              "Keeper 2"
+            ],
+            [
+              "TO, PF",
+              "Turnover = we lose it without a shot; PF from the referee's signal",
+              "Keeper 2"
+            ],
+            [
+              "PTS",
+              "Add it at the break: 2 × 2PT made + 3 × 3PT made + FT made",
+              "Either, at halftime and the end"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "One keeper? Track four things"
+      },
+      {
+        "p": "If you only have one parent on the bench, do not try to fill every column. Keep the three shooting columns and turnovers, and leave the rest blank. Shooting tells you where your points come from and whether the problem is shot selection or finishing; turnovers tell you whether you got to shoot at all. Those four columns kept every game are worth more than twelve columns kept twice. The footer on the sheet says the same thing, because every coach needs reminding of it in week three."
+      },
+      {
+        "h2": "The check that catches mistakes"
+      },
+      {
+        "p": "Add the PTS column. It has to equal the scoreboard. If it doesn't, somebody's basket was marked in the wrong row, or a three was marked as a two, and you can usually find it in a minute at halftime while the players are getting water. Do this check every game and your season totals will be right; skip it and by January nobody trusts the sheet."
+      },
+      {
+        "h2": "Season totals and the three numbers worth working out"
+      },
+      {
+        "p": "Page 2 has a row per player and the columns to add each game sheet into: games played, field goals made and attempted, threes, free throws, rebounds, assists, steals, turnovers and points. The last two columns are the ones to actually talk about."
+      },
+      {
+        "table": {
+          "headers": [
+            "Number",
+            "How",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "FG%",
+              "FGM ÷ FGA",
+              "Youth teams live between 30% and 40%. Under 30% is usually shot selection, not shooting form — check the shot chart before you run a shooting drill"
+            ],
+            [
+              "PPG",
+              "PTS ÷ GP",
+              "Compare it with minutes, not with the other players. A 4-point kid playing 8 minutes may be your most efficient scorer"
+            ],
+            [
+              "AST ÷ TO (team)",
+              "Team assists ÷ team turnovers",
+              "Above 1.0 means the ball is moving. Below 0.7 means the offense is a dribble and a prayer. It moves faster than any other number once you work on it"
+            ]
+          ]
+        }
+      },
+      {
+        "p": "Resist the urge to add columns. A column with gaps is worse than no column, because it looks like data and isn't. If the sheet gets kept every game with four stats, add a fifth in December."
+      },
+      {
+        "h2": "Or let the totals add themselves"
+      },
+      {
+        "p": "The paper sheet is the bench copy. In My-Team Sports the Stats tab is a grid: enter points, rebounds, assists, steals and blocks per game, and the season totals, games played and per-game averages compute themselves and show on your team's site for parents. Score the game live from your phone and the points credited to each player land in the same place. Print the sheet, keep it in the gym, type the five numbers in on the drive home."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-score-sheet-template",
+        "label": "Basketball Score Sheet",
+        "note": "Running score, fouls and timeouts for the table"
+      },
+      {
+        "href": "/blog/basketball-shot-chart-template",
+        "label": "Basketball Shot Chart",
+        "note": "Where the makes and misses happened"
+      },
+      {
+        "href": "/blog/basketball-live-scoreboard-app",
+        "label": "Basketball Live Scoreboard",
+        "note": "Score the game from your phone"
+      },
+      {
+        "href": "/blog/basketball-tryout-evaluation-form",
+        "label": "Basketball Tryout Evaluation Form",
+        "note": "Rate players before the season starts"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What stats should you keep for youth basketball?",
+        "a": "If you have one person: field goals made and attempted (2-point and 3-point), free throws made and attempted, and turnovers. Those tell you where points come from and whether you got to shoot. With two keepers add rebounds, assists, steals, blocks and fouls. Points are computed from the shooting columns."
+      },
+      {
+        "q": "How do you keep basketball stats with tally marks?",
+        "a": "Each shooting column is split by a line: a mark on the left for a make, a mark on the right for every attempt (a make is also an attempt). Other columns get one mark per event. Total between quarters, and check that the points column equals the scoreboard."
+      },
+      {
+        "q": "How do you calculate field goal percentage?",
+        "a": "Field goals made divided by field goals attempted, including both 2-point and 3-point shots. 12 makes on 30 attempts is 40%. Free throws are not field goals and are tracked separately."
+      },
+      {
+        "q": "What is a good field goal percentage for a youth basketball team?",
+        "a": "Most youth teams fall between 30% and 40% over a season. Below 30% usually means too many long two-point shots rather than bad shooters; pair the stat sheet with a shot chart to tell the difference."
+      },
+      {
+        "q": "What is an assist-to-turnover ratio and what should it be?",
+        "a": "Team assists divided by team turnovers. Above 1.0 is healthy for a youth team and means the ball is moving to open players; below 0.7 means possessions end in a dribble and a bad shot or a turnover. It is the quickest number to improve with passing drills and a simple offense."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-scouting-report-template",
+    "title": "Basketball Scouting Report Template (Free Printable PDF)",
+    "description": "Free printable basketball scouting report, 2 pages: key players with strengths, weaknesses and how to guard them, their offense and defense, a tendencies checklist, three keys to the game, and two half-court diagrams for their main set and out-of-bounds play.",
+    "excerpt": "One opponent on one page, filled in from one game of watching: their best five, what they run, what they can't handle, and three keys for the bench. Page 2 is two courts to draw their sets.",
+    "tag": "Basketball",
+    "date": "2026-10-07",
+    "readingTime": "6 min read",
+    "keywords": [
+      "basketball scouting report template",
+      "printable basketball scouting report",
+      "basketball scouting report pdf",
+      "basketball scouting sheet",
+      "how to scout a basketball team",
+      "youth basketball scouting report",
+      "basketball opponent scouting form"
+    ],
+    "body": [
+      {
+        "p": "You don't need film to scout a youth basketball team. You need one game of watching with a pen and a page that asks the right questions, and the discipline to only write down what you would tell your players. This printable is that page: their key players and how you guard each one, what they run on offense and how they defend, a checklist of tendencies, and three keys to the game in order. Page 2 is two half courts for the two things your players will see most, their main set and their go-to inbounds play."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-scouting-report.pdf",
+          "label": "Basketball Scouting Report Template (printable PDF, 2 pages)",
+          "note": "Page 1: opponent details, key players table (6 rows), their offense, their defense, tendencies checklist, keys to the game. Page 2: two half-court diagrams with notes and a \"what we do about it\" box. High-school court lines. Free, no email required."
+        }
+      },
+      {
+        "h2": "How to scout a team in one game"
+      },
+      {
+        "p": "Sit high, not on the baseline, and watch the team, not the ball. For the first quarter write nothing but names and numbers. By the second quarter you will know their best two players and what they want to do; write that down. In the second half, fill in the offense and defense lines and tick the tendencies. If you are scouting from a game your own team is playing, hand the page to an assistant or a parent with a basketball background; the coach never sees the game clearly enough to scout it."
+      },
+      {
+        "h2": "The key players table"
+      },
+      {
+        "table": {
+          "headers": [
+            "Column",
+            "What to write",
+            "Example"
+          ],
+          "rows": [
+            [
+              "Hand",
+              "Which hand they drive with. Most youth players have one",
+              "Right only"
+            ],
+            [
+              "What they do well",
+              "One thing. The thing they score with",
+              "Drives right, pull-up from the elbow"
+            ],
+            [
+              "Weakness",
+              "One thing. The thing they avoid",
+              "Won't go left; passes late off the drive"
+            ],
+            [
+              "How we guard",
+              "A sentence your defender can repeat",
+              "Force left, hand up on the pull-up, no help needed"
+            ]
+          ]
+        }
+      },
+      {
+        "p": "Six rows is plenty. Youth teams run through two or three players; the rest of the report is about those two or three, and your best defender's assignment is the most important sentence on the page."
+      },
+      {
+        "h2": "Their offense and their defense"
+      },
+      {
+        "p": "The offense lines ask what they run against man, what they run against zone, whether they use ball screens, who takes the big shot, and what their baseline and sideline out-of-bounds plays look like. The defense lines ask their base (man, 2-3, 3-2, 1-3-1, or switching), whether and when they press, how they cover ball screens, how good the help side is, and which defender to attack and which to avoid. Circle the options that apply; most lines are a circle and a few words, which is the point. A scouting report your players can't absorb in five minutes before tipoff is a scouting report for you, not for them."
+      },
+      {
+        "h2": "Tendencies: the checklist that wins youth games"
+      },
+      {
+        "p": "The checklist at the bottom is the part most templates skip and the part that decides youth games. Slow starters, go on runs, fall apart under pressure, one ball-handler, short bench, bad free-throw team, crash the offensive glass, transition team. Each ticked box is a decision: one ball-handler means you press; short bench means you make them play fast and foul; bad free-throw team means you foul late instead of letting them run the clock. Tick what you saw, not what you assume, and turn each tick into a key."
+      },
+      {
+        "h2": "Three keys, in order"
+      },
+      {
+        "p": "The three lines at the bottom are the whole report as far as your players are concerned. Write them in order of importance and in words a ten-year-old can repeat back: \"Number 5 goes left. Nobody else shoots threes. Box out on every miss.\" Say them in the huddle before the game, again at halftime, and put the sheet on the bench where you can see it. If you can't get the report down to three keys, you don't have a report yet; you have notes."
+      },
+      {
+        "h2": "Page 2: draw what they run"
+      },
+      {
+        "p": "Two half courts, high-school lines, with note lines under each and a box for what you do about it. Draw their main half-court set on the left and their go-to out-of-bounds play on the right, with their players as O and yours as X. Draw it the way your players see it from the bench, not from the scouting seat. Two plays your team recognises are worth more than ten plays listed in a column, because recognition is what lets a kid be in the right spot before the ball gets there."
+      },
+      {
+        "h2": "Keep the report where the roster lives"
+      },
+      {
+        "p": "Scouting is half of a game plan, and the other half is your own: starters, matchups, rotation, your sets against what they run. The basketball game plan template pairs with this one. In My-Team Sports the Coach's Playbook draws and prints your own sets and inbounds plays for any sport, the roster and schedule live on your team's site, and the AI assistant coach turns a game's stats into a practice plan. Scout on paper, plan on paper, run the season in one place."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-game-plan-template",
+        "label": "Basketball Game Plan",
+        "note": "Starters, matchups, rotation and sets on one page"
+      },
+      {
+        "href": "/blog/basketball-play-designer",
+        "label": "Basketball Play Designer",
+        "note": "Draw and print your own sets"
+      },
+      {
+        "href": "/blog/basketball-depth-chart-template",
+        "label": "Basketball Depth Chart",
+        "note": "Three strings at five positions"
+      },
+      {
+        "href": "/blog/basketball-shot-chart-template",
+        "label": "Basketball Shot Chart",
+        "note": "Chart their shots too"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What should a basketball scouting report include?",
+        "a": "Their best players with one strength, one weakness and how you guard each; what they run on offense against man and zone, plus their inbounds plays; their base defense, press and ball-screen coverage; a short list of tendencies; and three keys to the game your players can repeat. One page is the right length."
+      },
+      {
+        "q": "How do you scout a youth basketball team without film?",
+        "a": "Watch one of their games from high in the stands, not the baseline. Write only names and numbers in the first quarter, then their best two players and what they want to do, then the offense and defense lines in the second half. If the game is against your own team, give the sheet to an assistant; the head coach can't scout and coach at once."
+      },
+      {
+        "q": "How many keys to the game should you give players?",
+        "a": "Three, in order of importance, in plain words. More than three and nothing gets remembered. Repeat them before the game and at halftime."
+      },
+      {
+        "q": "What tendencies matter most at the youth level?",
+        "a": "One ball-handler (press them), a short bench (play fast, make them foul), a bad free-throw team (foul late rather than let them run clock), slow starters (press early), and teams that fall apart under pressure. The checklist on the sheet covers these and each tick becomes a decision."
+      },
+      {
+        "q": "Should you scout at the youth level at all?",
+        "a": "Yes, in proportion. One page from one game, three keys for the kids, two plays drawn. That is an hour of work and it changes how the first quarter goes. A ten-page report changes nothing because nobody reads it."
+      }
+    ]
+  },
+  {
+    "slug": "basketball-game-plan-template",
+    "title": "Basketball Game Plan Template (Free Printable PDF)",
+    "description": "Free printable basketball game plan, 2 pages: starters and matchups, rotation by quarter, your sets against man and zone, defense, inbounds plays, press break, three keys to win, halftime box and timeout plan, plus two play-call cards to cut out.",
+    "excerpt": "Everything you decided before tipoff on one page, so the timeout is for adjusting instead of remembering. Page 2 is two play-call cards: one for the bench, one for your pocket.",
+    "tag": "Basketball",
+    "date": "2026-10-07",
+    "readingTime": "6 min read",
+    "keywords": [
+      "basketball game plan template",
+      "printable basketball game plan",
+      "basketball game plan pdf",
+      "basketball play call sheet",
+      "basketball play call card template",
+      "youth basketball game plan",
+      "basketball coaching game plan sheet"
+    ],
+    "body": [
+      {
+        "p": "A youth basketball timeout is thirty seconds long and the first fifteen go to getting the kids to look at you. If you are using the other fifteen to remember what you planned, you have no timeout. A game plan is the page where you decided everything before the gym got loud: who starts and who they guard, who comes in for whom and when, what you run against man and against zone, your inbounds plays, your press break, your defense, and the three things that win the game. This printable is that page, with a halftime box and a timeout plan, and a second page of play-call cards you cut in half: one for the bench, one for your pocket."
+      },
+      {
+        "download": {
+          "href": "/downloads/basketball-game-plan.pdf",
+          "label": "Basketball Game Plan Template (printable PDF, 2 pages)",
+          "note": "Page 1: starters and matchups, rotation by quarter, our offense (vs man, vs zone, first play, BLOB, SLOB, press break, last-shot), our defense, three keys, halftime adjustments, first two timeouts. Page 2: two play-call cards on dotted cut lines. Free, no email required."
+        }
+      },
+      {
+        "h2": "What goes on the page"
+      },
+      {
+        "table": {
+          "headers": [
+            "Section",
+            "What to decide",
+            "Why before the game"
+          ],
+          "rows": [
+            [
+              "Starters and matchups",
+              "Five starters by position and the opponent number each one guards",
+              "The matchup is the first thing a kid forgets when the ball goes up"
+            ],
+            [
+              "Rotation",
+              "Who comes in for whom, at what minute, in each quarter",
+              "Fair minutes get planned, not improvised; it also stops the parent conversation"
+            ],
+            [
+              "Our offense",
+              "First set against man, second set, what you run against zone, the first play of the game, BLOB, SLOB, press break, last-shot play",
+              "Each is a call you make under pressure; write the name you will shout"
+            ],
+            [
+              "Our defense",
+              "Base defense, when you press, who guards their best player, how you handle ball screens, when you switch to zone, where you stop fouling",
+              "The things that change mid-game are the things you decided a rule for"
+            ],
+            [
+              "Keys to win",
+              "Three, in order, in words your players can repeat",
+              "Pregame huddle, halftime huddle, and the bench sheet"
+            ],
+            [
+              "Halftime and timeouts",
+              "A box for what changed at the half, and when you will call your first two timeouts",
+              "The best time to plan a timeout is when nobody is yelling"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The rotation table is the part parents care about"
+      },
+      {
+        "p": "Five rows, one per quarter plus overtime, with who comes in, who comes out, and when. Fill it in before the game and you have done two things: you have guaranteed every kid the minutes you promised in August, and you have a piece of paper to point to when a parent asks. It also protects you from your own instincts. The urge in a close third quarter is to leave the starters in; the rotation table says the bench kid plays four minutes here, and the bench kid plays, and next week he is better for it."
+      },
+      {
+        "h2": "Offense: name the calls, don't describe the plays"
+      },
+      {
+        "p": "The offense lines are for the name you will shout, not a diagram. \"Vs man, first set: Horns.\" \"BLOB: Box.\" \"Press break: Line.\" If you don't have a name for it, you can't call it from the bench and your players can't recognise it. Youth teams need fewer plays with better names, and the page has room for exactly that: two sets against man, one against zone, one baseline and one sideline inbounds play, one press break, one last-shot play. That is a complete youth offense. Draw the plays on the play board; put the names here."
+      },
+      {
+        "h2": "Defense: decide the rules you will need under pressure"
+      },
+      {
+        "p": "Most mid-game defensive decisions are the same every game, so make them once: when you press (after made baskets? only when behind?), how you cover ball screens (go under against a non-shooter, over against a shooter), who guards their best player and whether he gets help, when you switch to zone (foul trouble? they can't shoot?), and the minute after which nobody fouls. The free-throw alignment line is the small one that wins games: decide who boxes out and who leaks out on a missed free throw, because it happens twenty times a game and nobody practises it."
+      },
+      {
+        "h2": "Page 2: play-call cards"
+      },
+      {
+        "p": "Two identical cards on dotted lines, each with slots for half-court sets, zone sets, BLOB, SLOB, press break and after-timeout plays, with a call and a one-line reminder for each. Cut them apart. One goes on the bench where the assistant can see it, one goes in your pocket for the timeout huddle. The reminder line is the coaching point you always forget to say: \"Horns: screener rolls, don't pop.\" Six plays a youth team actually knows beat twenty on a card, so fill the lines you will use and leave the rest blank."
+      },
+      {
+        "h2": "Plan on paper, run the game live"
+      },
+      {
+        "p": "The game plan is for the bench. My-Team Sports runs the rest. Draw and print the sets you named here in the Coach's Playbook, keep the rotation chart alongside the roster on your team's site, score the game live from your phone so the parents who aren't there see it, and let the AI assistant coach turn the stat sheet into Tuesday's practice plan. Print the plan Friday, fill it in Saturday morning, and spend the timeouts coaching."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/basketball-scouting-report-template",
+        "label": "Basketball Scouting Report",
+        "note": "The other half of the game plan"
+      },
+      {
+        "href": "/blog/basketball-rotation-chart",
+        "label": "Basketball Rotation Chart",
+        "note": "Minutes planned by quarter"
+      },
+      {
+        "href": "/blog/basketball-play-designer",
+        "label": "Basketball Play Designer",
+        "note": "Draw and print the sets you named"
+      },
+      {
+        "href": "/blog/basketball-practice-plan-template",
+        "label": "Basketball Practice Plan Template",
+        "note": "Build the week from the game"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What should a basketball game plan include?",
+        "a": "Starters and who they guard, the substitution rotation by quarter, your offensive sets against man and zone with their call names, inbounds plays and a press break, your defensive rules (base defense, press, ball screens, when to switch to zone, when to stop fouling), three keys to win, and a plan for your first two timeouts. One page."
+      },
+      {
+        "q": "How many plays should a youth basketball team have?",
+        "a": "About six: two half-court sets against man, one against zone, a baseline and a sideline inbounds play, and a press break, plus one last-shot play if you want. Fewer plays with clear names and reminders are run better than a long list."
+      },
+      {
+        "q": "What is a play-call card?",
+        "a": "A pocket-sized list of your plays with the call you shout and a one-line coaching reminder for each. The PDF has two on a page with cut lines: one for the bench and one for the coach's pocket for timeouts."
+      },
+      {
+        "q": "How do you plan substitutions in youth basketball?",
+        "a": "Write a rotation table before the game: for each quarter, who comes in, who they replace, and at what minute. It guarantees the minutes you promised, keeps you from leaving starters in out of habit, and gives you something to show a parent who asks."
+      },
+      {
+        "q": "When should you call a timeout in youth basketball?",
+        "a": "Decide the triggers before the game and write them on the plan: a run of six or eight points against you, two turnovers in a row, or a dead ball before a last-shot situation. Pre-deciding means you call it on time instead of two baskets late."
+      }
+    ]
+  },
+  {
     "slug": "kick-return-depth-chart-template",
     "title": "Kick Return Depth Chart Template (Free Printable PDF)",
     "description": "Free printable kick return depth chart — all 11 spots (front line, wedge, up backs, returners) with starter and backup, plus the onside hands-team swap.",
