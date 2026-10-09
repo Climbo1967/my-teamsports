@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
@@ -27,8 +27,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("upsert_rsvp", {
+  const supabase = await createPasscodeClient(clientIp(request));
+  const { data, error } = await supabase.rpc("upsert_rsvp", {
     p_slug: normalizedSlug,
     p_passcode: passcode,
     p_event_id: eventId,
@@ -37,13 +37,15 @@ export async function POST(request) {
     p_note: note ? String(note).slice(0, 200) : null,
   });
 
+  if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
   if (error) {
     const denied = error.message?.includes("invalid");
     return NextResponse.json(
-      { error: denied ? "Your team access expired. Re-enter the passcode." : "Could not save your RSVP. Try again." },
+      { error: denied ? EXPIRED_MSG : "Could not save your RSVP. Try again." },
       { status: denied ? 401 : 500 }
     );
   }
+  if (passcodeDenied(data)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
 
   return NextResponse.json({ ok: true });
 }

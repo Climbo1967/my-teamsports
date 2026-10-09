@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { mediaPath } from "@/lib/media";
@@ -55,12 +55,14 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
 
   // Validate passcode and get the team id
-  const { data: site } = await supabase.rpc("get_team_site", { p_slug: slug, p_passcode: passcode });
+  const { data: site, error: siteError } = await supabase.rpc("get_team_site", { p_slug: slug, p_passcode: passcode });
+  if (lockedOut(siteError)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
+  if (siteError) return NextResponse.json({ error: "Could not check your team access. Try again." }, { status: 500 });
   if (!site) {
-    return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
+    return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   }
   const teamId = site.team.id;
 
@@ -81,16 +83,18 @@ export async function POST(request) {
 
   // Record the object path (passcode re-checked inside the function);
   // the team page turns it into a signed URL at render time.
-  const { error: rpcError } = await supabase.rpc("add_team_photo", {
+  const { data: photoId, error: rpcError } = await supabase.rpc("add_team_photo", {
     p_slug: slug,
     p_passcode: passcode,
     p_url: path,
     p_caption: caption || null,
     p_player_id: playerId,
   });
-  if (rpcError) {
+  if (rpcError || passcodeDenied(photoId)) {
     // Roll back the orphaned object so it doesn't linger
     await admin.storage.from(BUCKET).remove([path]).catch(() => {});
+    if (lockedOut(rpcError)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
+    if (!rpcError) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
     return NextResponse.json({ error: "Could not save the photo. Try again." }, { status: 500 });
   }
 
@@ -118,10 +122,12 @@ export async function DELETE(request) {
   if (!passcode) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
   const { data, error } = await supabase.rpc("delete_team_photo", {
     p_slug: slug, p_passcode: passcode, p_photo_id: photoId,
   });
+  if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
+  if (!error && passcodeDenied(data)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   if (error || !data?.ok) {
     return NextResponse.json({ error: "Could not remove the photo." }, { status: 500 });
   }

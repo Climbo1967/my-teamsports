@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
@@ -19,22 +19,17 @@ export async function POST(request) {
     return NextResponse.json({ error: "Missing slug or passcode" }, { status: 400 });
   }
 
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
   const { data, error } = await supabase.rpc("get_team_site", {
     p_slug: String(slug).toLowerCase(),
     p_passcode: String(passcode).toUpperCase().trim(),
   });
 
   if (error) {
-    // The database locks a team after 60 different wrong passcodes in 15
-    // minutes (passcode_gate, 2026-10-04 migration). Say so instead of a
-    // generic failure, so a parent knows to wait rather than keep retrying.
-    if (error.message?.includes("too many attempts")) {
-      return NextResponse.json(
-        { error: "Too many wrong passcodes for this team right now. Wait 15 minutes and try again." },
-        { status: 429 }
-      );
-    }
+    // The database locks a team + caller IP after 60 different wrong
+    // passcodes in 15 minutes (passcode_gate, 2026-10-09 migration). Say so
+    // instead of a generic failure, so a parent knows to wait.
+    if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
     return NextResponse.json({ error: "Something went wrong. Try again." }, { status: 500 });
   }
 

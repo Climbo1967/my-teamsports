@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 // Anonymous parents (no account) subscribe/unsubscribe a device to a team's push
@@ -32,8 +32,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("add_push_subscription", {
+  const supabase = await createPasscodeClient(clientIp(request));
+  const { data, error } = await supabase.rpc("add_push_subscription", {
     p_slug: slug,
     p_passcode: passcode,
     p_endpoint: subscription.endpoint,
@@ -41,13 +41,15 @@ export async function POST(request) {
     p_auth: subscription.keys.auth,
     p_user_agent: (request.headers.get("user-agent") || "").slice(0, 300) || null,
   });
+  if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
   if (error) {
     const denied = /invalid|passcode/i.test(error.message || "");
     return NextResponse.json(
-      { error: denied ? "Your team access expired. Re-enter the passcode." : "Could not turn on alerts." },
+      { error: denied ? EXPIRED_MSG : "Could not turn on alerts." },
       { status: denied ? 401 : 500 }
     );
   }
+  if (passcodeDenied(data)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   return NextResponse.json({ ok: true });
 }
 
@@ -72,12 +74,14 @@ export async function DELETE(request) {
   if (!passcode) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("remove_push_subscription", {
+  const supabase = await createPasscodeClient(clientIp(request));
+  const { data, error } = await supabase.rpc("remove_push_subscription", {
     p_slug: slug,
     p_passcode: passcode,
     p_endpoint: endpoint,
   });
+  if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
   if (error) return NextResponse.json({ error: "Could not turn off alerts." }, { status: 500 });
+  if (passcodeDenied(data)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   return NextResponse.json({ ok: true });
 }

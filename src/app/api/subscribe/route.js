@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 export async function POST(request) {
@@ -27,8 +27,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("subscribe_team", {
+  const supabase = await createPasscodeClient(clientIp(request));
+  const { data, error } = await supabase.rpc("subscribe_team", {
     p_slug: normalizedSlug,
     p_passcode: passcode,
     p_email: String(email),
@@ -36,11 +36,13 @@ export async function POST(request) {
   });
 
   if (error) {
+    if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
     if (error.message?.includes("invalid email")) {
       return NextResponse.json({ error: "That email doesn't look right — check it and try again." }, { status: 400 });
     }
     return NextResponse.json({ error: "Could not subscribe. Try again." }, { status: 500 });
   }
+  if (passcodeDenied(data)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
 
   return NextResponse.json({ ok: true });
 }

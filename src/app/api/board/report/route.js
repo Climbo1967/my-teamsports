@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendEmail, basicHtml } from "@/lib/email";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
@@ -31,17 +31,18 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
   const { data: report, error } = await supabase.rpc("report_board_post", {
     p_slug: normalizedSlug,
     p_passcode: passcode,
     p_post_id: postId,
   });
 
-  if (error || !report) {
-    const denied = error?.message?.includes("invalid");
+  if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
+  if (error || !report || passcodeDenied(report)) {
+    const denied = error?.message?.includes("invalid") || passcodeDenied(report);
     return NextResponse.json(
-      { error: denied ? "Your team access expired. Re-enter the passcode." : "Could not send the report. Try again." },
+      { error: denied ? EXPIRED_MSG : "Could not send the report. Try again." },
       { status: denied ? 401 : 500 }
     );
   }

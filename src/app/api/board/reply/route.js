@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 // Parent reply on a board thread. Reply-only by design — thread creation is
@@ -32,8 +32,8 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("add_board_reply", {
+  const supabase = await createPasscodeClient(clientIp(request));
+  const { data, error } = await supabase.rpc("add_board_reply", {
     p_slug: normalizedSlug,
     p_passcode: passcode,
     p_thread_id: threadId,
@@ -42,8 +42,9 @@ export async function POST(request) {
   });
 
   if (error) {
+    if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
     if (error.message?.includes("invalid")) {
-      return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
+      return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
     }
     if (error.message?.includes("locked")) {
       return NextResponse.json({ error: "This thread was locked by the coach." }, { status: 409 });
@@ -52,6 +53,9 @@ export async function POST(request) {
       return NextResponse.json({ error: "The board is not available for this team." }, { status: 404 });
     }
     return NextResponse.json({ error: "Could not post your reply. Try again." }, { status: 500 });
+  }
+  if (passcodeDenied(data)) {
+    return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   }
 
   return NextResponse.json({ ok: true });

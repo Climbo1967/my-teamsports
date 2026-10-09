@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp } from "@/lib/supabase/passcode";
 
 // Public (passcode-gated) live score for a team page. Polled by the team site.
 export async function GET(request) {
@@ -11,7 +11,7 @@ export async function GET(request) {
   const passcode = cookieStore.get(`team_access_${slug}`)?.value;
   if (!passcode) return NextResponse.json({ live: null }, { status: 200 });
 
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
   const { data, error } = await supabase.rpc("get_live_game", {
     p_slug: slug,
     p_passcode: passcode,

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { createClient } from "@/lib/supabase/server";
+import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
 // Push slice 3: per-device notification preferences for anonymous parents.
@@ -30,10 +30,10 @@ export async function POST(request) {
     return NextResponse.json({ error: "Your team access expired. Re-enter the passcode." }, { status: 401 });
   }
 
-  const supabase = await createClient();
+  const supabase = await createPasscodeClient(clientIp(request));
 
   if (prefs && typeof prefs === "object") {
-    const { error } = await supabase.rpc("set_push_prefs", {
+    const { data: saved, error } = await supabase.rpc("set_push_prefs", {
       p_slug: slug,
       p_passcode: passcode,
       p_endpoint: endpoint,
@@ -41,13 +41,15 @@ export async function POST(request) {
       p_games: typeof prefs.games === "boolean" ? prefs.games : null,
       p_schedule: typeof prefs.schedule === "boolean" ? prefs.schedule : null,
     });
+    if (lockedOut(error)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
     if (error) {
       const denied = /invalid|passcode/i.test(error.message || "");
       return NextResponse.json(
-        { error: denied ? "Your team access expired. Re-enter the passcode." : "Could not save preferences." },
+        { error: denied ? EXPIRED_MSG : "Could not save preferences." },
         { status: denied ? 401 : 500 }
       );
     }
+    if (passcodeDenied(saved)) return NextResponse.json({ error: EXPIRED_MSG }, { status: 401 });
   }
 
   const { data, error: readErr } = await supabase.rpc("get_push_prefs", {
@@ -55,6 +57,7 @@ export async function POST(request) {
     p_passcode: passcode,
     p_endpoint: endpoint,
   });
+  if (lockedOut(readErr)) return NextResponse.json({ error: LOCKOUT_MSG }, { status: 429 });
   if (readErr) return NextResponse.json({ error: "Could not load preferences." }, { status: 500 });
   return NextResponse.json({ ok: true, prefs: data || null });
 }
