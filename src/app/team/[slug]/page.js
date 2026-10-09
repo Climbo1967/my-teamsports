@@ -91,7 +91,7 @@ export default async function TeamPage({ params, searchParams }) {
   const players = site.players || [];
   const photos = site.photos || [];
   const values = [site.team.logo_url, ...players.map((p) => p.photo_url), ...photos.map((ph) => ph.url)];
-  const signed = await signMediaUrls(admin, values);
+  const signed = await signMediaUrls(admin, values, undefined, { teamId: site.team.id });
   site = {
     ...site,
     team: { ...site.team, logo_url: signed[0] },

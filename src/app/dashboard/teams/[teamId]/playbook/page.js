@@ -58,25 +58,37 @@ export default function PlaybookPage({ params, searchParams }) {
   }
 
   async function duplicate(p) {
-    await supabase.from("plays").insert({
+    setError(null);
+    const { error: err } = await supabase.from("plays").insert({
       team_id: teamId, name: `${p.name} (copy)`, category: p.category, formation: p.formation,
       sport: p.sport || sport, diagram: p.diagram, notes: p.notes, sort_order: (plays?.length || 0),
     });
+    if (err) setError(`Couldn't copy the play: ${err.message}`);
     load();
   }
 
+  // Each optimistic change is checked; a failed save used to leave the screen
+  // showing an order or a "public" badge the database never got.
   async function move(index, dir) {
     const arr = [...plays];
     const j = index + dir;
     if (j < 0 || j >= arr.length) return;
     [arr[index], arr[j]] = [arr[j], arr[index]];
+    setError(null);
     setPlays(arr.map((p, i) => ({ ...p, sort_order: i })));
-    await Promise.all(arr.map((p, i) => supabase.from("plays").update({ sort_order: i }).eq("id", p.id)));
+    const results = await Promise.all(arr.map((p, i) => supabase.from("plays").update({ sort_order: i }).eq("id", p.id)));
+    const failed = results.find((r) => r.error);
+    if (failed) { setError(`The new order didn't save: ${failed.error.message}`); load(); }
   }
 
   async function togglePublic(p) {
+    setError(null);
     setPlays((ps) => ps.map((x) => (x.id === p.id ? { ...x, is_public: !x.is_public } : x)));
-    await supabase.from("plays").update({ is_public: !p.is_public }).eq("id", p.id);
+    const { error: err } = await supabase.from("plays").update({ is_public: !p.is_public }).eq("id", p.id);
+    if (err) {
+      setPlays((ps) => ps.map((x) => (x.id === p.id ? { ...x, is_public: p.is_public } : x)));
+      setError(`Couldn't change who can see "${p.name}": ${err.message}`);
+    }
   }
 
   function openPrint(playId) {

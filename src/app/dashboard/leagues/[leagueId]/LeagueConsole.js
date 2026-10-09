@@ -252,11 +252,15 @@ function TeamsTab({ supabase, data, reload, can }) {
               <Button disabled={busy || !teamForm.name.trim()} onClick={() => run(async () => {
                 const { data: teamId, error: e } = await supabase.rpc("league_create_team", { p_league_id: data.league.id, p_school_id: teamForm.school_id || null, p_division_id: teamForm.division_id || null, p_name: teamForm.name, p_sport: teamForm.sport, p_coach_email: null });
                 if (e) throw new Error(e.message);
-                if (teamForm.coach_email.trim()) {
-                  const msg = await inviteCoach(teamId, teamForm.coach_email);
-                  if (msg) throw new Error(`Team created. ${msg}`);
-                }
+                // The team exists from here on: clear the form and show it in
+                // the list even if the invite fails, so a second ADD TEAM click
+                // can't create a duplicate.
+                const coachEmail = teamForm.coach_email.trim();
                 setTeamForm({ ...teamForm, name: "", coach_email: "" });
+                if (coachEmail) {
+                  const msg = await inviteCoach(teamId, coachEmail);
+                  if (msg) { await reload(); throw new Error(`Team created, but the coach invite didn't go: ${msg} Use "+ invite head coach" on the team row to retry.`); }
+                }
               })}>ADD TEAM</Button>
             </div>
           </Card>

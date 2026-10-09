@@ -65,12 +65,15 @@ export default function PhotosPage({ params }) {
 
   async function remove(photo) {
     if (!(await confirmDialog({ title: "Delete photo?", message: "This removes it from the team site too.", confirmLabel: "Delete", danger: true }))) return;
-    await supabase.from("photos").delete().eq("id", photo.id);
-    // Also remove the file from storage if it lives in our bucket
-    // (handles both stored paths and legacy public URLs)
+    setError(null);
+    // Row first, file second. The old order ignored a failed row delete and
+    // removed the file anyway, leaving a broken image on the public gallery.
+    const { error: err } = await supabase.from("photos").delete().eq("id", photo.id);
+    if (err) { setError(`Couldn't delete the photo: ${err.message}`); return; }
     const path = mediaPath(photo.url);
     if (path) {
-      await supabase.storage.from("team-media").remove([path]);
+      const { error: se } = await supabase.storage.from("team-media").remove([path]);
+      if (se) setError("The photo is off the team site, but its file couldn't be removed from storage yet.");
     }
     load();
   }

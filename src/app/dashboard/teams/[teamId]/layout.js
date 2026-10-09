@@ -30,7 +30,7 @@ export default async function TeamManageLayout({ children, params }) {
   }
 
   // logo_url stores a private-bucket path; sign it for this render.
-  const logoSrc = await signMediaUrl(createAdminClient(), team.logo_url);
+  const logoSrc = await signMediaUrl(createAdminClient(), team.logo_url, undefined, { teamId: team.id });
 
   const access = teamAccess(team, new Date(), league);
 

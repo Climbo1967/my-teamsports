@@ -39,3 +39,15 @@ h1, h2, h3, h4, h5, h6 {
 .animate-float { animation: float 5s ease-in-out infinite; }
 .animate-float-delay { animation: float-delay 6s ease-in-out infinite; }
 .animate-live { animation: live-pulse 2s ease-in-out infinite; }
+/* iOS Safari zooms the page when a focused field's font is under 16px and
+   does not zoom back out. Board reply, scorekeeper, confirm dialog, wizard,
+   league console and schedule import all had text-sm inputs. iOS only
+   (-webkit-touch-callout exists nowhere else), so desktop layouts keep
+   their sizes. */
+@supports (-webkit-touch-callout: none) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
+}

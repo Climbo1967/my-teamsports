@@ -20,7 +20,12 @@ export const fetchLeagueSite = cache(async (slug) => {
   const supabase = anonClient();
   if (!supabase) return null;
   const { data, error } = await supabase.rpc("get_league_site", { p_slug: String(slug).toLowerCase() });
-  if (error || !data) return null;
+  // A database hiccup must not become a 404: the pages call notFound() on
+  // null, and with revalidate = 60 that 404 would be cached and served to the
+  // whole league for a minute. Throwing instead keeps the last good page (ISR
+  // serves the stale copy when a revalidation fails) or shows the error page.
+  if (error) throw new Error(`get_league_site(${slug}): ${error.message}`);
+  if (!data) return null; // unknown slug or non-public league
   return indexSite(data);
 });
 

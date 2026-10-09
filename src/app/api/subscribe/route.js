@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
+import { isDeliverableEmail } from "@/lib/email";
 
 export async function POST(request) {
   if (await rateLimited(request, "subscribe", { limit: 10, windowMs: 600_000 })) {
@@ -20,6 +21,14 @@ export async function POST(request) {
   if (!normalizedSlug || !email) {
     return NextResponse.json({ error: "Please enter your email." }, { status: 400 });
   }
+  // Checked here, not only in the database: the RPC's regex let through
+  // "a@b.com," and overlong addresses, and one bad address made Resend reject
+  // the whole 49-recipient announcement chunk with nothing naming the culprit.
+  const cleanEmail = String(email).trim().toLowerCase();
+  if (!isDeliverableEmail(cleanEmail)) {
+    return NextResponse.json({ error: "That email doesn't look right — check it and try again." }, { status: 400 });
+  }
+  const cleanName = name ? String(name).trim().slice(0, 80) : "";
 
   const cookieStore = await cookies();
   const passcode = cookieStore.get(`team_access_${normalizedSlug}`)?.value;
@@ -31,8 +40,8 @@ export async function POST(request) {
   const { data, error } = await supabase.rpc("subscribe_team", {
     p_slug: normalizedSlug,
     p_passcode: passcode,
-    p_email: String(email),
-    p_name: name ? String(name) : null,
+    p_email: cleanEmail,
+    p_name: cleanName || null,
   });
 
   if (error) {

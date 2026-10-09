@@ -45,7 +45,17 @@ export default function RosterPage({ params }) {
   }, [fetchData, apply]);
 
   async function removePlayer(player) {
-    if (!(await confirmDialog({ title: "Remove player?", message: `Remove ${player.name} from the roster?`, confirmLabel: "Remove", danger: true }))) return;
+    // Say what goes with the player: stats, at-bats, lineup spots and RSVPs
+    // cascade with the row, and the old prompt only said "remove from roster".
+    const [{ count: statRows }, { count: abRows }] = await Promise.all([
+      supabase.from("stats").select("id", { count: "exact", head: true }).eq("player_id", player.id),
+      supabase.from("at_bats").select("id", { count: "exact", head: true }).eq("player_id", player.id),
+    ]);
+    const hasStats = (statRows || 0) + (abRows || 0) > 0;
+    const message = hasStats
+      ? `Remove ${player.name} from the roster? Their season stats (${(statRows || 0) + (abRows || 0)} recorded entries), lineup spots and RSVPs are deleted with them. This can't be undone.`
+      : `Remove ${player.name} from the roster? Any lineup spots and RSVPs go with them.`;
+    if (!(await confirmDialog({ title: "Remove player?", message, confirmLabel: "Remove player", danger: true }))) return;
     const { error: err } = await supabase.from("players").delete().eq("id", player.id);
     if (err) setError(err.message);
     load();
@@ -56,8 +66,13 @@ export default function RosterPage({ params }) {
     const j = index + dir;
     if (j < 0 || j >= arr.length) return;
     [arr[index], arr[j]] = [arr[j], arr[index]];
+    setError(null);
     setPlayers(arr.map((p, i) => ({ ...p, sort_order: i })));
-    await Promise.all(arr.map((p, i) => supabase.from("players").update({ sort_order: i }).eq("id", p.id)));
+    const results = await Promise.all(arr.map((p, i) => supabase.from("players").update({ sort_order: i }).eq("id", p.id)));
+    const failed = results.find((r) => r.error);
+    // A failed save used to leave the screen in the new order while the
+    // database (and the team site) kept the old one.
+    if (failed) { setError(`The new order didn't save: ${failed.error.message}`); load(); }
   }
 
   if (!players) return <Spinner />;

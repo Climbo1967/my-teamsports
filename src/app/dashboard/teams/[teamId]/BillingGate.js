@@ -10,9 +10,12 @@ import { usePathname } from "next/navigation";
  */
 export default function BillingGate({ teamId, expired, children }) {
   const pathname = usePathname();
-  const onBillingPage = pathname.includes(`/dashboard/teams/${teamId}/billing`);
+  // Billing stays open so the coach can pay; Support stays open so a locked
+  // coach can reach Ron about it (it used to be blurred with everything else).
+  const base = `/dashboard/teams/${teamId}`;
+  const reachable = pathname.startsWith(`${base}/billing`) || pathname.startsWith(`${base}/support`);
 
-  if (!expired || onBillingPage) return children;
+  if (!expired || reachable) return children;
 
   return (
     <div className="relative">

@@ -14,7 +14,7 @@ export async function POST(request) {
   } catch {
     return NextResponse.json({ error: "Bad request." }, { status: 400 });
   }
-  const { subject, message, teamId, teamName } = payload || {};
+  const { subject, message, teamId } = payload || {};
   const cleanSubject = String(subject || "").trim().slice(0, 150);
   const cleanMessage = String(message || "").trim().slice(0, 5000);
 
@@ -28,12 +28,21 @@ export async function POST(request) {
 
   const coachName = user.user_metadata?.full_name || null;
 
+  // The team is looked up, not trusted from the body: a ticket could name any
+  // team id and any team name. RLS returns the row only for this coach's teams.
+  let team = null;
+  if (teamId) {
+    const { data } = await supabase.from("teams").select("id, name").eq("id", String(teamId)).maybeSingle();
+    team = data || null;
+  }
+  const teamName = team?.name || null;
+
   const { error } = await supabase.from("support_requests").insert({
     coach_id: user.id,
     coach_email: user.email,
     coach_name: coachName,
-    team_id: teamId || null,
-    team_name: teamName || null,
+    team_id: team?.id || null,
+    team_name: teamName,
     subject: cleanSubject,
     message: cleanMessage,
   });

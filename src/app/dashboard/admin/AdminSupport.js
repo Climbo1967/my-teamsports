@@ -6,7 +6,12 @@ import { Card } from "@/components/ui";
 
 export default function AdminSupport({ initial }) {
   const supabase = createClient();
-  const [items, setItems] = useState(initial || []);
+  // Derived from the server prop each render: the console soft-refreshes its
+  // data every 30 s (AdminDirectory), and seeding useState(initial) once meant
+  // new tickets only showed after a hard reload. Status changes made here are
+  // kept as overrides until the next refresh brings them back from the server.
+  const [statusOverride, setStatusOverride] = useState({});
+  const items = (initial || []).map((i) => (statusOverride[i.id] ? { ...i, status: statusOverride[i.id] } : i));
   const [filter, setFilter] = useState("open");
   const [busyId, setBusyId] = useState(null);
 
@@ -16,7 +21,7 @@ export default function AdminSupport({ initial }) {
   async function setStatus(item, status) {
     setBusyId(item.id);
     const { error } = await supabase.from("support_requests").update({ status }).eq("id", item.id);
-    if (!error) setItems((arr) => arr.map((x) => (x.id === item.id ? { ...x, status } : x)));
+    if (!error) setStatusOverride((m) => ({ ...m, [item.id]: status }));
     setBusyId(null);
   }
 

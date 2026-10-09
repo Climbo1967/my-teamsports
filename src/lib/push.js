@@ -19,9 +19,35 @@ function ensureConfigured() {
   return true;
 }
 
+// Browser push services. Subscriptions whose endpoint is anywhere else are
+// refused at subscribe time: otherwise anyone with a team passcode could make
+// the server POST to an arbitrary https URL on every announcement, and a slow
+// one could hang the send.
+const PUSH_HOSTS = [
+  /(^|\.)fcm\.googleapis\.com$/,          // Chrome, Edge (new), Brave, Opera, Samsung
+  /(^|\.)push\.apple\.com$/,               // Safari (web.push.apple.com)
+  /(^|\.)push\.services\.mozilla\.com$/,  // Firefox (updates.push.services.mozilla.com)
+  /(^|\.)notify\.windows\.com$/,           // Edge (WNS)
+  /(^|\.)push\.samsungosp\.com$/,          // Samsung Internet
+];
+export function isPushEndpoint(url) {
+  try {
+    const u = new URL(String(url || ""));
+    return u.protocol === "https:" && PUSH_HOSTS.some((re) => re.test(u.hostname));
+  } catch {
+    return false;
+  }
+}
+
 // subs: [{ endpoint, p256dh, auth }]. payload: { title, body, url }.
 // Returns { ok, sent, stale: [endpoint...] }. Never throws.
-export async function sendPush(subs, payload) {
+//
+// timeout: a push service that never answers used to hold the whole request
+// (the announcement route then hit the platform limit and the coach resent
+// to everyone). TTL: the default was 4 weeks, so a "game starting" alert to a
+// phone that was off could arrive days later; an hour is plenty for anything
+// we send.
+export async function sendPush(subs, payload, { timeout = 8000, TTL = 3600 } = {}) {
   if (!ensureConfigured()) return { ok: false, error: "Push not configured.", sent: 0, stale: [] };
   const body = JSON.stringify(payload || {});
   let sent = 0;
@@ -29,9 +55,11 @@ export async function sendPush(subs, payload) {
   await Promise.allSettled(
     (subs || []).map(async (s) => {
       try {
+        if (!isPushEndpoint(s.endpoint)) { stale.push(s.endpoint); return; }
         await webpush.sendNotification(
           { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
-          body
+          body,
+          { timeout, TTL }
         );
         sent += 1;
       } catch (e) {

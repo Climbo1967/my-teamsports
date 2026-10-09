@@ -127,11 +127,13 @@ export default function SettingsPage({ params }) {
       requireText: team.name,
     });
     if (!ok) return;
-    // .select() so a delete the database refused (not the owner) comes back as
-    // zero rows instead of looking like success.
-    const { data: gone, error: err } = await supabase.from("teams").delete().eq("id", teamId).select("id");
-    if (err) { setError(err.message); return; }
-    if (!gone || gone.length === 0) { setError("Only the head coach can delete this team."); return; }
+    // Goes through the server so the team's files (logo, headshots, gallery,
+    // parents' uploads) leave storage with the row — /terms promises that, and
+    // a browser-side row delete left them all behind.
+    setError(null);
+    const res = await fetch("/api/team/delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ teamId }) });
+    const out = await res.json().catch(() => ({}));
+    if (!res.ok) { setError(out.error || "Could not delete the team."); return; }
     router.push("/dashboard");
     router.refresh();
   }
@@ -208,7 +210,8 @@ export default function SettingsPage({ params }) {
         <p className="text-sm text-slate-400 mb-4">
           Parents use this with your team link. Generate a random code or make your own — 8 letters/numbers.
         </p>
-        <PasscodeManager teamId={teamId} passcode={team.passcode} onChanged={load} />
+        {/* Only the passcode changes; reloading everything wiped unsaved Team Details edits. */}
+        <PasscodeManager teamId={teamId} passcode={team.passcode} onChanged={(next) => setTeam((t) => ({ ...t, passcode: next }))} />
       </Card>
 
       {isOwner && (

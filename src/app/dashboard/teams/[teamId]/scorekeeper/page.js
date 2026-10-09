@@ -12,6 +12,7 @@ import { notifyGame } from "@/lib/pushClient";
 import { confirmDialog } from "@/components/confirm";
 import QuickAddPlayer from "@/components/QuickAddPlayer";
 import { QuickGameCard, ShareTeamCard, formatGameWhen } from "../FirstSession";
+import { fetchAll } from "@/lib/supabase/fetchAll";
 
 async function fetchScorekeeper(supabase, teamId) {
   const [{ data: team }, { data: eventRows }, { data: playerRows }] = await Promise.all([
@@ -29,7 +30,7 @@ async function fetchGame(supabase, teamId, eventId) {
     // builder show up without waiting on the parent's players list.
     supabase.from("game_lineups").select("player_id, spot, players(id, name, jersey_number)").eq("event_id", eventId).order("spot"),
     supabase.from("pitching_lines").select("*").eq("event_id", eventId),
-    supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
+    fetchAll(() => supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId)),
   ]);
   return { g, lu, pl, ab };
 }
@@ -208,6 +209,17 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   // L2: a game that was already final (loaded final, or ended once) must not
   // push a second "final" alert when it is reopened and ended again.
   const finalAnnounced = useRef(false);
+  // Latest game row for handlers that run faster than React re-renders.
+  const gameRef = useRef(game);
+  useEffect(() => { gameRef.current = game; }, [game]);
+  // One scoring action at a time. A double-tap on the 4th ball / 3rd strike
+  // used to record the walk or strikeout twice (both taps saw the old count).
+  const busy = useRef(false);
+  async function guarded(fn) {
+    if (busy.current) return;
+    busy.current = true;
+    try { await fn(); } finally { busy.current = false; }
+  }
 
   const apply = useCallback(({ g, lu, pl, ab }) => {
     setGame(g || null);
@@ -231,10 +243,20 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   }, [teamId, event.id, apply]);
 
   async function patchGame(patch) {
-    const next = { ...game, ...patch, updated_at: new Date().toISOString() };
+    const base = gameRef.current;
+    const next = { ...base, ...patch, updated_at: new Date().toISOString() };
+    gameRef.current = next;
     setGame(next);
-    const { error: e } = await supabase.from("game_scores").update({ ...patch, updated_at: next.updated_at }).eq("id", game.id);
-    if (e) setError(e.message);
+    const { error: e } = await supabase.from("game_scores").update({ ...patch, updated_at: next.updated_at }).eq("id", base.id);
+    if (e) {
+      // Show what the database still has, not the half-applied screen; a
+      // stale "3 outs" here used to get finalized by End game as the result.
+      gameRef.current = base;
+      setGame(base);
+      setError(`Didn't save: ${e.message}. Check your connection and try again.`);
+      return false;
+    }
+    return true;
   }
 
   // Re-rolls season stats from this game's at-bats. Returns true on success;
@@ -261,17 +283,18 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   }
 
   // ---- pitches (our batter only) ----
-  async function pitch(kind) {
+  function pitch(kind) { return guarded(() => pitchNow(kind)); }
+  async function pitchNow(kind) {
     if (!weBat) return;
     let balls = game.balls, strikes = game.strikes;
     if (kind === "ball") {
       balls += 1;
-      if (balls >= 4) return commitResult({ key: "walk" }, { rbi: 0 });
+      if (balls >= 4) return commitResultNow({ key: "walk" }, { rbi: 0 });
       return patchGame({ balls });
     }
     if (kind === "strike") {
       strikes += 1;
-      if (strikes >= 3) return commitResult({ key: "strikeout" }, { rbi: 0 });
+      if (strikes >= 3) return commitResultNow({ key: "strikeout" }, { rbi: 0 });
       return patchGame({ strikes });
     }
     if (kind === "foul") {
@@ -289,8 +312,10 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   }
 
   // ---- commit a plate-appearance result for our batter ----
-  async function commitResult(result, { rbi = 0, hit_x = null, hit_y = null, hit_type = null }) {
+  function commitResult(result, opts = {}) { return guarded(() => commitResultNow(result, opts)); }
+  async function commitResultNow(result, { rbi = 0, hit_x = null, hit_y = null, hit_type = null }) {
     setPending(null);
+    setError(null);
     const prev = gameSnapshot();
     const row = {
       team_id: teamId, event_id: event.id, player_id: currentBatter?.player_id || null,
@@ -298,7 +323,7 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
       rbi, runs: rbi, hit_x, hit_y, hit_type, balls: game.balls, strikes: game.strikes,
     };
     const { data: inserted, error: e } = await supabase.from("at_bats").insert(row).select("id").single();
-    if (e) { setError(e.message); return; }
+    if (e) { setError(`Didn't save: ${e.message}. Check your connection and try again.`); return; }
     const def = AB_RESULTS.find((r) => r.key === result.key);
     const isOut = def?.out;
     const nextSpot = lineupLen ? (game.current_spot % lineupLen) + 1 : 1;
@@ -307,12 +332,15 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
       current_spot: nextSpot,
       ...applyOut(game.outs + (isOut ? 1 : 0)),
     };
-    await patchGame(patch);
-    await rollup();
+    // The at-bat is on record either way, so it is undoable even if the
+    // scoreboard patch or the rollup failed (the error says what to retry).
     setUndoStack((s) => [...s, { atBatId: inserted?.id, prev, label: def?.short || result.key }]);
+    if (!(await patchGame(patch))) return;
+    await rollup();
   }
 
-  async function stolenBase() {
+  function stolenBase() { return guarded(stolenBaseNow); }
+  async function stolenBaseNow() {
     if (!weBat || !currentBatter) return;
     const prev = gameSnapshot();
     const { data: inserted, error: e } = await supabase.from("at_bats").insert({
@@ -326,7 +354,8 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
 
   // Undo the most recent batting action this session: remove its at-bat row,
   // restore the exact scoreboard state, and re-roll season stats.
-  async function undoLast() {
+  function undoLast() { return guarded(undoLastNow); }
+  async function undoLastNow() {
     if (undoStack.length === 0) return;
     const entry = undoStack[undoStack.length - 1];
     setUndoStack((s) => s.slice(0, -1));
@@ -345,7 +374,8 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     await patchGame({ pitcher_id: playerId });
     if (!pitchMap[playerId]) {
       const base = { team_id: teamId, event_id: event.id, player_id: playerId, pitches: 0, strikes: 0, outs: 0, walks: 0, strikeouts: 0, hits: 0, runs: 0 };
-      const { data } = await supabase.from("pitching_lines").insert(base).select().single();
+      const { data, error: e } = await supabase.from("pitching_lines").insert(base).select().single();
+      if (e) setError(`Couldn't start the pitcher's line: ${e.message}`);
       if (data) { pitchRef.current = { ...pitchRef.current, [playerId]: data }; setPitchMap((m) => ({ ...m, [playerId]: data })); }
     }
   }
@@ -364,7 +394,7 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
         pitches: next.pitches, strikes: next.strikes, outs: next.outs, walks: next.walks,
         strikeouts: next.strikeouts, hits: next.hits, runs: next.runs, updated_at: new Date().toISOString() },
         { onConflict: "event_id,player_id" });
-    if (e) setError(e.message);
+    if (e) setError(`Pitch count didn't save: ${e.message}. Check your connection.`);
   }
 
   // Snapshot the pitcher line + game state before a defensive action, for Undo.
@@ -373,7 +403,8 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     return { pid, prevLine: pid && pitchMap[pid] ? { ...pitchMap[pid] } : null, prevGame: gameSnapshot() };
   }
 
-  async function undoDefense() {
+  function undoDefense() { return guarded(undoDefenseNow); }
+  async function undoDefenseNow() {
     if (defenseUndo.length === 0) return;
     const e = defenseUndo[defenseUndo.length - 1];
     setDefenseUndo((s) => s.slice(0, -1));
@@ -382,16 +413,18 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
       const restored = { team_id: teamId, event_id: event.id, player_id: e.pid, ...L };
       pitchRef.current = { ...pitchRef.current, [e.pid]: restored };
       setPitchMap((m) => ({ ...m, [e.pid]: restored }));
-      await supabase.from("pitching_lines").upsert({
+      const { error: ue } = await supabase.from("pitching_lines").upsert({
         team_id: teamId, event_id: event.id, player_id: e.pid,
         pitches: L.pitches || 0, strikes: L.strikes || 0, outs: L.outs || 0, walks: L.walks || 0,
         strikeouts: L.strikeouts || 0, hits: L.hits || 0, runs: L.runs || 0, updated_at: new Date().toISOString(),
       }, { onConflict: "event_id,player_id" });
+      if (ue) setError(`Undo didn't save the pitcher's line: ${ue.message}`);
     }
     if (e.prevGame) await patchGame(e.prevGame);
   }
 
-  async function defensePitch(kind) {
+  function defensePitch(kind) { return guarded(() => defensePitchNow(kind)); }
+  async function defensePitchNow(kind) {
     if (!game.pitcher_id) return;
     const snap = snapDefense();
     if (kind === "ball") {
@@ -409,21 +442,24 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     setDefenseUndo((s) => [...s, snap]);
   }
 
-  async function defenseHit() {
+  function defenseHit() { return guarded(defenseHitNow); }
+  async function defenseHitNow() {
     if (!game.pitcher_id) return;
     const snap = snapDefense();
     await bumpPitcher({ pitches: 1, strikes: 1, hits: 1 });
     await patchGame({ balls: 0, strikes: 0 });
     setDefenseUndo((s) => [...s, snap]);
   }
-  async function defenseInPlayOut() {
+  function defenseInPlayOut() { return guarded(defenseInPlayOutNow); }
+  async function defenseInPlayOutNow() {
     if (!game.pitcher_id) return;
     const snap = snapDefense();
     await bumpPitcher({ pitches: 1, strikes: 1, outs: 1 });
     await patchGame(applyOut(game.outs + 1));
     setDefenseUndo((s) => [...s, snap]);
   }
-  async function defenseRun() {
+  function defenseRun() { return guarded(defenseRunNow); }
+  async function defenseRunNow() {
     if (!game.pitcher_id) return;
     const snap = snapDefense();
     await patchGame({ opp_score: game.opp_score + 1 });
@@ -544,7 +580,7 @@ function LineupBuilder({ teamId, event, players, existing, onPlayerAdded, onDone
   const available = players.filter((p) => !order.includes(p.id));
 
   async function suggest() {
-    const { data } = await supabase.from("at_bats").select("player_id, result, rbi").eq("team_id", teamId);
+    const { data } = await fetchAll(() => supabase.from("at_bats").select("player_id, result, rbi").eq("team_id", teamId));
     const byPlayer = {};
     for (const a of data || []) { if (a.player_id) (byPlayer[a.player_id] = byPlayer[a.player_id] || []).push(a); }
     const ranked = recommendLineup(players, byPlayer);
@@ -761,8 +797,13 @@ function PitchBtn({ label, cls, onClick }) {
 }
 
 function PitchingPanel({ game, event, players, lineup, line, onSetPitcher, onPitch, onHit, onInPlayOut, onRun, canUndo, onUndo }) {
-  // Prefer roster order; fall back to anyone on the team.
-  const candidates = (lineup.length ? lineup.map((l) => ({ id: l.player_id, name: l.name, jersey_number: l.jersey_number })) : players);
+  // Lineup first, then the rest of the roster: the pitcher is often not in
+  // the batting order (DH, or a reliever who hasn't hit).
+  const inLineup = new Set(lineup.map((l) => l.player_id));
+  const candidates = [
+    ...lineup.map((l) => ({ id: l.player_id, name: l.name, jersey_number: l.jersey_number })),
+    ...players.filter((p) => !inLineup.has(p.id)),
+  ];
   const pitcher = players.find((p) => p.id === game.pitcher_id);
   const pitches = line?.pitches || 0;
   const ip = `${Math.floor((line?.outs || 0) / 3)}.${(line?.outs || 0) % 3}`;
@@ -854,7 +895,8 @@ function ResultOverlay({ result, onCancel, onConfirm }) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 flex items-end sm:items-center justify-center p-4" onClick={onCancel}>
-      <div className="w-full max-w-md bg-[#0f1d3a] border border-white/10 rounded-2xl p-5" onClick={(e) => e.stopPropagation()}>
+      {/* max-h + scroll: on a landscape phone the field pushed Confirm off-screen. */}
+      <div className="w-full max-w-md max-h-[92vh] overflow-y-auto bg-[#0f1d3a] border border-white/10 rounded-2xl p-5" onClick={(e) => e.stopPropagation()}>
         <h3 className="font-bold text-lg mb-3">{def.label}</h3>
 
         {def.field && (

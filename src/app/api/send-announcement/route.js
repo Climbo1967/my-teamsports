@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
-import { sendEmail, basicHtml, RESEND_MAX_RECIPIENTS } from "@/lib/email";
+import { sendEmail, basicHtml, isDeliverableEmail, RESEND_MAX_RECIPIENTS } from "@/lib/email";
 import { sendPush } from "@/lib/push";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 
@@ -35,7 +35,11 @@ export async function POST(request) {
     supabase.from("subscribers").select("email").eq("team_id", teamId),
     supabase.from("push_subscriptions").select("endpoint, p256dh, auth").eq("team_id", teamId).eq("want_announcements", true),
   ]);
-  const emails = [...new Set((subs || []).map((s) => s.email).filter(Boolean))];
+  // Addresses that would make Resend reject the whole chunk are left out
+  // (older rows predate the subscribe check); the reply counts them.
+  const allEmails = [...new Set((subs || []).map((s) => String(s.email || "").trim().toLowerCase()).filter(Boolean))];
+  const emails = allEmails.filter(isDeliverableEmail);
+  const emailSkipped = allEmails.length - emails.length;
   const pushSubs = devices || [];
 
   if (emails.length === 0 && pushSubs.length === 0) {
@@ -74,6 +78,15 @@ export async function POST(request) {
     }
   }
 
+  // Stamp the post as emailed as soon as the email went, before push: a slow
+  // push service used to time the function out after the emails were already
+  // delivered, the stamp never landed, and the coach resent to every parent.
+  // Only when at least one email actually went; a push-only success used to
+  // mark it emailed and hide the email failure.
+  if (announcementId && emailCount > 0) {
+    await supabase.from("announcements").update({ emailed_at: new Date().toISOString() }).eq("id", announcementId);
+  }
+
   // Push channel (devices that opted in on the team site).
   if (pushSubs.length > 0) {
     const r = await sendPush(pushSubs, {
@@ -91,12 +104,7 @@ export async function POST(request) {
     return NextResponse.json({ error: emailError || "Could not notify the team." }, { status: 502 });
   }
 
-  // Only stamp the post as emailed when at least one email actually went; a
-  // push-only success used to mark it emailed and hide the email failure.
-  if (announcementId && emailCount > 0) {
-    await supabase.from("announcements").update({ emailed_at: new Date().toISOString() }).eq("id", announcementId);
-  }
   // A partial failure is still ok: true (something went out), with the
   // numbers and the first error so the coach can see what did not.
-  return NextResponse.json({ ok: true, emailCount, emailFailed, pushCount, emailError });
+  return NextResponse.json({ ok: true, emailCount, emailFailed, emailSkipped, pushCount, emailError });
 }

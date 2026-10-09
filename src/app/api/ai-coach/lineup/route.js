@@ -7,6 +7,7 @@ import { askClaude } from "@/lib/ai";
 import { logAiUse } from "@/lib/aiUse";
 import { aiActiveFor } from "@/lib/pricing";
 import { aiMonthlyUse, aiCapMessage } from "@/lib/aiCap";
+import { fetchAll } from "@/lib/supabase/fetchAll";
 
 // A briefing or practice plan can take 20–40 s to generate; give the function
 // room so the platform doesn't cut it off with an HTML error page.
@@ -51,7 +52,7 @@ export async function POST(request) {
 
   const [{ data: players }, { data: atBats }] = await Promise.all([
     supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
-    supabase.from("at_bats").select("player_id, result, rbi").eq("team_id", teamId),
+    fetchAll(() => supabase.from("at_bats").select("player_id, result, rbi").eq("team_id", teamId)),
   ]);
 
   const roster = players || [];

@@ -7,6 +7,7 @@ import { computeTendencies, tendencySentence, ZONE_LABEL, DEPTH_LABEL, pctText }
 import { recommendLineup, fmtAvg, MIN_PA } from "@/lib/lineup";
 import { BaseballField } from "@/components/field";
 import { Card, EmptyState, Spinner } from "@/components/ui";
+import { fetchAll } from "@/lib/supabase/fetchAll";
 
 export default function ScoutingPage({ params }) {
   const { teamId } = use(params);
@@ -23,8 +24,8 @@ export default function ScoutingPage({ params }) {
     const [{ data: team }, { data: playerRows }, { data: abRows }, { data: plRows }] = await Promise.all([
       supabase.from("teams").select("sport").eq("id", teamId).single(),
       supabase.from("players").select("id, name, jersey_number").eq("team_id", teamId).order("sort_order").order("name"),
-      supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId),
-      supabase.from("pitching_lines").select("player_id, pitches, outs, strikeouts, walks, hits, runs").eq("team_id", teamId),
+      fetchAll(() => supabase.from("at_bats").select("player_id, result, hit_x, hit_y, hit_type").eq("team_id", teamId)),
+      fetchAll(() => supabase.from("pitching_lines").select("player_id, pitches, outs, strikeouts, walks, hits, runs").eq("team_id", teamId)),
     ]);
     return { team, playerRows, abRows, plRows };
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps

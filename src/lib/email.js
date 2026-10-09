@@ -10,6 +10,20 @@ const RESEND_TIMEOUT_MS = 15_000;
 // Resend accepts at most 50 recipients per message (to + cc + bcc combined).
 export const RESEND_MAX_RECIPIENTS = 50;
 
+// Stricter than the database's regex (which let "a@b.com," and any length
+// through). Resend rejects a whole message when one recipient is malformed,
+// so every address is checked here before it goes into a batch.
+export function isDeliverableEmail(value) {
+  const e = String(value || "").trim();
+  if (e.length < 6 || e.length > 254) return false;
+  if (!/^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/.test(e)) return false;
+  const [local, domain] = e.split("@");
+  if (local.length > 64) return false;
+  if (local.startsWith(".") || local.endsWith(".") || local.includes("..")) return false;
+  const tld = domain.split(".").pop();
+  return /^[A-Za-z]{2,}$/.test(tld);
+}
+
 export const MAIL_FROM = "My-Team Sports <noreply@my-teamsports.com>";
 export const SUPPORT_INBOX = "support@2bcreations.com";
 

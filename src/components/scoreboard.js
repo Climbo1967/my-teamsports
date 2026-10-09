@@ -23,6 +23,14 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   // L2: a game that was already final (loaded final, or ended once) must not
   // push a second "final" alert when it is reopened and ended again.
   const finalAnnounced = useRef(false);
+  // Latest game row for handlers that fire faster than React re-renders (two
+  // taps on a score button, undo right after a score). Reading `game` from the
+  // render closure made the second write start from the first one's stale row.
+  const gameRef = useRef(game);
+  useEffect(() => { gameRef.current = game; }, [game]);
+  // One scoring write at a time: a double-tap on "Who scored?" used to insert
+  // the play twice (player credited twice) while the score rose once.
+  const writing = useRef(false);
 
   // Initial fetch: state is set in the promise callback; a late response after
   // leaving this game is dropped.
@@ -57,10 +65,19 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   const playerMap = useMemo(() => Object.fromEntries(players.map((p) => [p.id, p])), [players]);
 
   async function patch(p) {
-    const next = { ...game, ...p, updated_at: new Date().toISOString() };
+    const base = gameRef.current;
+    const next = { ...base, ...p, updated_at: new Date().toISOString() };
+    gameRef.current = next;
     setGame(next);
-    const { error: e } = await supabase.from("game_scores").update({ ...p, updated_at: next.updated_at }).eq("id", game.id);
-    if (e) setError(e.message);
+    const { error: e } = await supabase.from("game_scores").update({ ...p, updated_at: next.updated_at }).eq("id", base.id);
+    if (e) {
+      // Put the screen back to what the database has; the coach sees why.
+      gameRef.current = base;
+      setGame(base);
+      setError(`Didn't save: ${e.message}. Check your connection and try again.`);
+      return false;
+    }
+    return true;
   }
 
   async function startGame(isHome) {
@@ -78,14 +95,23 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   }
 
   async function applyScore(side, points, playerId) {
-    const field = side === "us" ? "our_score" : "opp_score";
-    const { data: play } = await supabase.from("scoring_plays").insert({
-      team_id: teamId, event_id: event.id, player_id: playerId || null,
-      side, points, period: game.period,
-    }).select().single();
-    await patch({ [field]: (game[field] || 0) + points });
-    if (play) setPlays((ps) => [play, ...ps]);
+    if (writing.current) return;
+    writing.current = true;
     setPending(null);
+    setError(null);
+    try {
+      const field = side === "us" ? "our_score" : "opp_score";
+      const cur = gameRef.current;
+      const { data: play, error: e } = await supabase.from("scoring_plays").insert({
+        team_id: teamId, event_id: event.id, player_id: playerId || null,
+        side, points, period: cur.period,
+      }).select().single();
+      if (e) { setError(`Score didn't save: ${e.message}. Check your connection and try again.`); return; }
+      setPlays((ps) => [play, ...ps]);
+      await patch({ [field]: (cur[field] || 0) + points });
+    } finally {
+      writing.current = false;
+    }
   }
 
   // "us" score: attribute to a player only when this scoring play actually
@@ -104,16 +130,26 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
 
   async function undoLast() {
     const last = plays[0];
-    if (!last) return;
-    const field = last.side === "us" ? "our_score" : "opp_score";
-    await patch({ [field]: Math.max(0, (game[field] || 0) - last.points) });
-    await supabase.from("scoring_plays").delete().eq("id", last.id);
-    setPlays((ps) => ps.slice(1));
+    if (!last || writing.current) return;
+    writing.current = true;
+    setError(null);
+    try {
+      // Remove the play first; only then take the points off. The old order
+      // could leave the score lowered with the play (and the player's credit)
+      // still on record when the delete failed.
+      const { error: e } = await supabase.from("scoring_plays").delete().eq("id", last.id);
+      if (e) { setError(`Couldn't undo: ${e.message}. Check your connection and try again.`); return; }
+      setPlays((ps) => ps.filter((x) => x.id !== last.id));
+      const field = last.side === "us" ? "our_score" : "opp_score";
+      await patch({ [field]: Math.max(0, (gameRef.current[field] || 0) - last.points) });
+    } finally {
+      writing.current = false;
+    }
   }
 
   function adjust(side, delta) {
     const field = side === "us" ? "our_score" : "opp_score";
-    patch({ [field]: Math.max(0, (game[field] || 0) + delta) });
+    patch({ [field]: Math.max(0, (gameRef.current[field] || 0) + delta) });
   }
 
   function startClock() {
@@ -127,7 +163,7 @@ export function ScoreboardScorer({ teamId, sport, teamName, event, players, onPl
   }
 
   function changePeriod(delta) {
-    const next = Math.max(1, game.period + delta);
+    const next = Math.max(1, gameRef.current.period + delta);
     patch({ period: next, clock_running: false,
             clock_seconds: timed ? cfg.clockMinutes * 60 : null, clock_updated_at: new Date().toISOString() });
   }

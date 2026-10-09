@@ -23,11 +23,25 @@ export function mediaPath(value) {
   return null; // external URL — leave alone
 }
 
+/**
+ * Every object we store sits under its team: `<teamId>/logo/…`,
+ * `<teamId>/players/…`, `<teamId>/gallery/…`, `parent-uploads/<teamId>/…`.
+ * When a caller knows the team, only those paths are signed. Without this a
+ * path saved from another team's gallery (add_team_photo accepts any url)
+ * was signed with the service role and served from the wrong team's site.
+ */
+export function pathBelongsToTeam(path, teamId) {
+  if (!teamId) return true;
+  const id = String(teamId).toLowerCase();
+  const p = String(path || "").toLowerCase();
+  return p.startsWith(`${id}/`) || p.startsWith(`parent-uploads/${id}/`);
+}
+
 /** Sign one stored value. External URLs pass through; failures return null. */
-export async function signMediaUrl(supabase, value, ttl = TTL_SECONDS) {
+export async function signMediaUrl(supabase, value, ttl = TTL_SECONDS, { teamId } = {}) {
   const path = mediaPath(value);
   if (!path) return value || null;
-  if (!supabase) return null;
+  if (!supabase || !pathBelongsToTeam(path, teamId)) return null;
   const { data, error } = await supabase.storage.from(BUCKET).createSignedUrl(path, ttl);
   return error ? null : data.signedUrl;
 }
@@ -35,15 +49,15 @@ export async function signMediaUrl(supabase, value, ttl = TTL_SECONDS) {
 /**
  * Sign many stored values in one storage call. Returns a new array aligned
  * with the input: signed URL for bucket paths, the original value for
- * external URLs, null for empties/failures.
+ * external URLs, null for empties/failures (and for paths outside `teamId`).
  */
-export async function signMediaUrls(supabase, values, ttl = TTL_SECONDS) {
+export async function signMediaUrls(supabase, values, ttl = TTL_SECONDS, { teamId } = {}) {
   const out = (values || []).map((v) => (v && !mediaPath(v) ? v : null));
   const paths = [];
   const slots = [];
   (values || []).forEach((v, i) => {
     const p = mediaPath(v);
-    if (p) { paths.push(p); slots.push(i); }
+    if (p && pathBelongsToTeam(p, teamId)) { paths.push(p); slots.push(i); }
   });
   if (!paths.length || !supabase) return out;
   const { data, error } = await supabase.storage.from(BUCKET).createSignedUrls(paths, ttl);

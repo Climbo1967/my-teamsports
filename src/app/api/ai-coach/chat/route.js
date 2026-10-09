@@ -6,6 +6,7 @@ import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
 import { logAiUse } from "@/lib/aiUse";
 import { aiActiveFor } from "@/lib/pricing";
 import { aiMonthlyUse, aiCapMessage, monthStart } from "@/lib/aiCap";
+import { fetchAll } from "@/lib/supabase/fetchAll";
 
 // A briefing or practice plan can take 20–40 s to generate; give the function
 // room so the platform doesn't cut it off with an HTML error page.
@@ -97,7 +98,7 @@ export async function POST(request) {
   const [{ data: players }, { data: events }, { data: stats }, { data: history }] = await Promise.all([
     supabase.from("players").select("id, name, jersey_number, position").eq("team_id", teamId).order("sort_order").order("name"),
     supabase.from("events").select("event_type, opponent, starts_at, result, notes").eq("team_id", teamId).order("starts_at"),
-    supabase.from("stats").select("player_id, stat_key, value, event_id").eq("team_id", teamId),
+    fetchAll(() => supabase.from("stats").select("player_id, stat_key, value, event_id").eq("team_id", teamId)),
     supabase.from("ai_chat_messages").select("role, content").eq("team_id", teamId).eq("coach_id", user.id)
       .order("created_at", { ascending: false }).limit(HISTORY_TURNS),
   ]);
@@ -149,10 +150,15 @@ export async function POST(request) {
   const reply = result.text.slice(0, 4000);
 
   const nowIso = new Date().toISOString();
-  await supabase.from("ai_chat_messages").insert([
-    { team_id: teamId, coach_id: user.id, role: "user", content: message },
-    { team_id: teamId, coach_id: user.id, role: "assistant", content: reply },
+  // Two rows in one insert share created_at; the explicit stamps keep the
+  // user turn ordered before the reply when history is read back by time.
+  const { error: saveErr } = await supabase.from("ai_chat_messages").insert([
+    { team_id: teamId, coach_id: user.id, role: "user", content: message, created_at: nowIso },
+    { team_id: teamId, coach_id: user.id, role: "assistant", content: reply, created_at: new Date(Date.parse(nowIso) + 1).toISOString() },
   ]);
+  // The coach still gets the answer; it just won't be in the history next time.
+  const saved = !saveErr;
+  if (saveErr) console.error(`[ai-coach/chat] history insert failed: ${String(saveErr.message || saveErr).slice(0, 200)}`);
 
   // Use log: one row per answered message. Unlike ai_chat_messages, these
   // rows survive "clear chat", so chat use is no longer undercounted.

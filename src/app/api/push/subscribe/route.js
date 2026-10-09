@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { createPasscodeClient, clientIp, passcodeDenied, lockedOut, LOCKOUT_MSG, EXPIRED_MSG } from "@/lib/supabase/passcode";
 import { rateLimited, RATE_MSG } from "@/lib/ratelimit";
+import { isPushEndpoint } from "@/lib/push";
 
 // Anonymous parents (no account) subscribe/unsubscribe a device to a team's push
 // notifications. Access is gated by the team passcode cookie set by the passcode
@@ -22,8 +23,8 @@ export async function POST(request) {
   if (!slug || !subscription?.endpoint || !subscription?.keys?.p256dh || !subscription?.keys?.auth) {
     return NextResponse.json({ error: "Missing subscription." }, { status: 400 });
   }
-  if (!/^https:\/\//.test(subscription.endpoint)) {
-    return NextResponse.json({ error: "Invalid endpoint." }, { status: 400 });
+  if (!isPushEndpoint(subscription.endpoint)) {
+    return NextResponse.json({ error: "That browser's push service isn't supported." }, { status: 400 });
   }
 
   const cookieStore = await cookies();

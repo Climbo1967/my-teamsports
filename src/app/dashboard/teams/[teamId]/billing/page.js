@@ -1,7 +1,7 @@
 "use client";
 
-import { use, useCallback, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { use, useCallback, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button, Card, ErrorText, Spinner } from "@/components/ui";
 import {
@@ -15,6 +15,7 @@ export default function BillingPage({ params }) {
   const { teamId } = use(params);
   const supabase = createClient();
   const search = useSearchParams();
+  const router = useRouter();
   const justPaid = search.get("status") === "success";
   const canceled = search.get("status") === "canceled";
   const processing = search.get("status") === "processing";
@@ -24,6 +25,7 @@ export default function BillingPage({ params }) {
   const [payments, setPayments] = useState([]);
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(null); // 'season' | 'ai'
+  const lastDates = useRef(null);
 
   const load = useCallback(async () => {
     const [{ data: t, error: err }, { data: pays }] = await Promise.all([
@@ -37,6 +39,15 @@ export default function BillingPage({ params }) {
     if (err) setError(err.message);
     setTeam(t || null);
     setPayments(pays || []);
+    // The lock on the other tabs is decided by the server layout, which does
+    // not re-render on its own. When a payment lands (webhook a few seconds
+    // after Stripe sends the coach back), refresh so the tabs unlock without
+    // a hard reload.
+    if (t) {
+      const dates = `${t.paid_through}|${t.ai_paid_through}|${t.ai_enabled}`;
+      if (lastDates.current !== null && lastDates.current !== dates) router.refresh();
+      lastDates.current = dates;
+    }
     if (t?.league_id) {
       const { data: info } = await supabase.rpc("team_league_info", { p_team_id: teamId });
       setLeague(info || null);
@@ -46,6 +57,14 @@ export default function BillingPage({ params }) {
   }, [teamId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => { load(); }, [load]);
+
+  // Back from Stripe on iOS restores this page from the back-forward cache
+  // with "Opening checkout…" still showing and the buttons disabled.
+  useEffect(() => {
+    const onShow = (e) => { if (e.persisted) { setBusy(null); load(); } };
+    window.addEventListener("pageshow", onShow);
+    return () => window.removeEventListener("pageshow", onShow);
+  }, [load]);
 
   // After Stripe redirects back, the webhook may land a few seconds later.
   useEffect(() => {
