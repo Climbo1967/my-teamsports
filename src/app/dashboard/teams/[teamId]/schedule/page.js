@@ -114,6 +114,7 @@ export default function SchedulePage({ params }) {
 
       {statsFor && (
         <StatsEditor
+          key={statsFor.id}
           teamId={teamId}
           event={statsFor}
           players={players}

@@ -29,6 +29,9 @@ async function callAnthropic(body) {
         "content-type": "application/json",
       },
       body: JSON.stringify({ model: AI_MODEL, ...body }),
+      // A hung upstream used to run into the platform's function limit and
+      // show the generic error page; now it fails inside our own handler.
+      signal: AbortSignal.timeout(50_000),
     });
     if (!res.ok) {
       const detail = await res.text().catch(() => "");

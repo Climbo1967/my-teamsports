@@ -29,7 +29,7 @@ export async function POST(request) {
   }
   const teamId = body?.teamId;
   const product = body?.product;
-  if (!teamId || !UUID_RE.test(teamId) || !PRODUCT_NAMES[product]) {
+  if (!teamId || !UUID_RE.test(teamId) || !Object.hasOwn(PRODUCT_NAMES, product)) {
     return NextResponse.json({ error: "Bad request." }, { status: 400 });
   }
 

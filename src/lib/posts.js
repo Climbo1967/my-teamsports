@@ -2622,7 +2622,7 @@ export const posts = [
       },
       {
         "q": "How much does a team management site cost?",
-        "a": "My-Team Sports is $15 per team for the 2026 season. The AI assistant coach is an optional $20 add-on. Parents always free, unlimited."
+        "a": "One low season pass per team (this year's price is on the pricing page), and the AI assistant coach is an optional add-on. Parents always free, unlimited."
       }
     ]
   },
@@ -4148,7 +4148,7 @@ export const posts = [
     ],
     related: [
       { href: "/blog/game-day-alerts-team-notifications", label: "Game-Day Alerts", note: "How push notifications work" },
-      { href: "/blog/baseball-team-website", label: "Baseball Team Website", note: "Schedule, stats, and live scores" },
+      { href: "/sports/baseball-team-website", label: "Baseball Team Website", note: "Schedule, stats, and live scores" },
       { href: "/blog/share-team-schedule-and-photos-without-an-app", label: "Share Schedule & Photos", note: "Why one link beats the group text" },
     ],
     faqs: [

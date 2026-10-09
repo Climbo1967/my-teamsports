@@ -265,7 +265,8 @@ export default function NewTeamPage() {
       <form onSubmit={handleSubmit} className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-8 space-y-6">
         <div>
           <label className="block text-sm font-medium text-slate-400 mb-3">Sport</label>
-          <div className="grid grid-cols-4 gap-2">
+          {/* 3 across under 640 px: four cells left "Flag Football" and "Volleyball" spilling out at 320-375 px. */}
+          <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
             {SPORTS.map((s) => (
               <button
                 key={s.value}
@@ -278,7 +279,7 @@ export default function NewTeamPage() {
                 }`}
               >
                 <span className="text-2xl">{s.emoji}</span>
-                <span className="text-xs text-slate-300">{s.label}</span>
+                <span className="text-xs leading-tight text-center text-slate-300 break-words">{s.label}</span>
               </button>
             ))}
           </div>

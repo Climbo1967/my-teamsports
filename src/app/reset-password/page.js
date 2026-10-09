@@ -81,8 +81,9 @@ export default function ResetPasswordPage() {
               <h1 className="text-2xl font-bold text-center mb-6">SET A NEW PASSWORD</h1>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-1.5">New Password</label>
+                  <label htmlFor="reset-password" className="block text-sm font-medium text-slate-400 mb-1.5">New Password</label>
                   <input
+                    id="reset-password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -93,8 +94,9 @@ export default function ResetPasswordPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-400 mb-1.5">Confirm New Password</label>
+                  <label htmlFor="reset-confirm" className="block text-sm font-medium text-slate-400 mb-1.5">Confirm New Password</label>
                   <input
+                    id="reset-confirm"
                     type="password"
                     value={confirm}
                     onChange={(e) => setConfirm(e.target.value)}

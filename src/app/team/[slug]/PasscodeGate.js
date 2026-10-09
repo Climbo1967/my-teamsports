@@ -48,12 +48,14 @@ export default function PasscodeGate({ slug, notice = null }) {
             Enter the passcode your coach shared with you.
           </p>
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Trim + cap in the handler, not maxLength: the browser applied maxLength before
+                our trim, so a pasted " ABCD1234" lost its last letter. */}
             <input
               type="text"
+              aria-label="Team passcode"
               value={passcode}
-              onChange={(e) => setPasscode(e.target.value.toUpperCase())}
+              onChange={(e) => setPasscode(e.target.value.replace(/\s+/g, "").toUpperCase().slice(0, 8))}
               required
-              maxLength={8}
               placeholder="PASSCODE"
               autoComplete="off"
               className="w-full bg-white/[0.05] border border-white/[0.1] rounded-lg px-4 py-3.5 text-center text-2xl font-mono font-bold tracking-[0.4em] text-white placeholder:text-slate-700 placeholder:tracking-[0.4em] focus:outline-none focus:border-[var(--color-accent-blue)] transition-colors uppercase"

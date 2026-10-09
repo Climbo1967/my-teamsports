@@ -88,10 +88,10 @@ function TeamUnsubscribe({ params }) {
     const supabase = createClient();
     const { data, error } = await supabase.rpc("unsubscribe_email", { p_slug: slug, p_email: email.trim() });
     if (error || !data || !data.ok) {
-      setState({ status: "error", msg: "Couldn't process that just now. Please try again in a moment." });
+      setState({ status: "error", msg: data?.error === "rate_limited" ? "Too many tries from this address. Wait a few minutes and try again." : "Couldn't process that just now. Please try again in a moment." });
       return;
     }
-    setState({ status: "done", team: data.team_name, removed: data.removed });
+    setState({ status: "done", team: data.team_name });
   }
 
   return (
@@ -102,11 +102,8 @@ function TeamUnsubscribe({ params }) {
           <>
             <h1 className="text-2xl font-bold text-white mb-2">You&apos;re unsubscribed</h1>
             <p className="text-slate-400 text-sm">
-              {state.removed > 0 ? (
-                <>You won&apos;t receive any more email announcements{state.team ? <> from <span className="text-white">{state.team}</span></> : ""}.</>
-              ) : (
-                <>That email wasn&apos;t on {state.team ? <>{state.team}&apos;s</> : "the"} list — you&apos;re all set.</>
-              )}
+              {/* One message either way: saying "wasn't on the list" told anyone whether an address was subscribed. */}
+              If that address was on {state.team ? <><span className="text-white">{state.team}</span>&apos;s</> : "the"} list, it&apos;s off it now — you won&apos;t receive any more email announcements.
             </p>
             <p className="text-xs text-slate-600 mt-6">You can still open the team site anytime with your passcode.</p>
           </>

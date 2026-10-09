@@ -15,7 +15,7 @@ export const maxDuration = 60;
 // Each item is a log insert, a Resend call and a log update (about 1 to 1.5 s)
 // plus the spacing, so the cap is on elapsed time, not just count. Whatever is
 // left is reported as deferred and goes out on the next run.
-const MAX_PER_RUN = 60;
+const MAX_PER_RUN = 30;         // ~25 fit in the budget at 1-1.5 s each; 60 was never reachable
 const TIME_BUDGET_MS = 45_000;  // stop claiming new items after this; maxDuration is 60 s
 const SPACING_MS = 600;         // Resend allows 2 requests/second
 

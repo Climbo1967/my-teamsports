@@ -163,10 +163,13 @@ function AuthShell({ title, subtitle, children }) {
 }
 
 function Field({ label, type, value, onChange, placeholder, required, minLength }) {
+  // Label tied to the input (screen readers, tapping the label to focus).
+  const id = `signup-${label.toLowerCase().replace(/[^a-z]+/g, "-")}`;
   return (
     <div>
-      <label className="block text-sm font-medium text-slate-400 mb-1.5">{label}</label>
+      <label htmlFor={id} className="block text-sm font-medium text-slate-400 mb-1.5">{label}</label>
       <input
+        id={id}
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}

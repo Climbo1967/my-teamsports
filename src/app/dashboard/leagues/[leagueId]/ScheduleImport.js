@@ -228,7 +228,8 @@ function GameEditor({ g, act }) {
     <div className="mt-2 flex flex-wrap items-end gap-3 bg-white/[0.03] rounded-lg p-3">
       <div><Label>Date &amp; time (CT)</Label><Input type="datetime-local" value={when} onChange={(e) => setWhen(e.target.value)} /></div>
       <div className="min-w-[200px]"><Label>Location</Label><Input value={loc} onChange={(e) => setLoc(e.target.value)} /></div>
-      <Button onClick={() => act("league_update_game", { p_game_id: g.id, p_starts_local: when.replace("T", " "), p_location: loc, p_status: "scheduled" })}>SAVE</Button>
+      {/* A final keeps its status and score (null = unchanged); SAVE used to reset every edited game to "scheduled" and wipe the result. */}
+      <Button onClick={() => act("league_update_game", { p_game_id: g.id, p_starts_local: when.replace("T", " "), p_location: loc, p_status: g.status === "final" ? null : "scheduled" })}>SAVE</Button>
       {g.status !== "postponed" && <Button variant="ghost" onClick={() => act("league_update_game", { p_game_id: g.id, p_starts_local: null, p_location: null, p_status: "postponed" })}>POSTPONE</Button>}
       {g.status !== "cancelled" && <Button variant="ghost" onClick={() => act("league_update_game", { p_game_id: g.id, p_starts_local: null, p_location: null, p_status: "cancelled" })}>CANCEL GAME</Button>}
       <Button variant="danger" onClick={async () => {

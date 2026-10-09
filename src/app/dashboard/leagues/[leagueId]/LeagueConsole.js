@@ -480,7 +480,10 @@ function SettingsTab({ supabase, data, reload, can }) {
         <div className="flex items-center gap-3">
           <Button disabled={busy} onClick={async () => {
             setBusy(true); setError(null); setSaved(false);
-            const { error: e } = await supabase.rpc("league_update_settings", { p_league_id: l.id, p_name: form.name, p_short_name: form.short_name, p_primary_color: form.primary_color, p_website: form.website, p_contact_email: form.contact_email, p_is_public: form.is_public });
+            // The public league page links this; only http(s) belongs here.
+            const site = form.website.trim();
+            if (site && !/^https?:\/\/[^\s]+$/i.test(site)) { setError("League website must start with http:// or https://"); setBusy(false); return; }
+            const { error: e } = await supabase.rpc("league_update_settings", { p_league_id: l.id, p_name: form.name, p_short_name: form.short_name, p_primary_color: form.primary_color, p_website: site || null, p_contact_email: form.contact_email, p_is_public: form.is_public });
             if (e) setError(e.message); else { setSaved(true); await reload(); }
             setBusy(false);
           }}>SAVE</Button>

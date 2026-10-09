@@ -576,6 +576,7 @@ function SubscribeButton({ slug }) {
                 <form onSubmit={submit} className="space-y-4">
                   <input
                     type="text"
+                    aria-label="Your name (optional)"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     maxLength={80}
@@ -584,6 +585,7 @@ function SubscribeButton({ slug }) {
                   />
                   <input
                     type="email"
+                    aria-label="Email address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required

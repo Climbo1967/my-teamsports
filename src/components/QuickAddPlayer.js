@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { nextSortOrder } from "@/lib/rosterOrder";
 
 /**
  * Inline "type a name" add — the roster is built as a side effect of using a
@@ -27,9 +28,10 @@ export default function QuickAddPlayer({ teamId, onAdded, placeholder = "Player 
     setBusy(true);
     setError(null);
     const supabase = createClient();
+    const sort_order = await nextSortOrder(supabase, teamId);
     const { data, error: err } = await supabase
       .from("players")
-      .insert({ team_id: teamId, name, jersey_number: jersey })
+      .insert({ team_id: teamId, name, jersey_number: jersey, sort_order })
       .select("id, name, jersey_number")
       .single();
     setBusy(false);

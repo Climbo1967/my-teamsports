@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { parsePlayerLine } from "@/lib/rosterParse";
 import { uploadTeamImage } from "@/lib/upload";
 import { signMediaUrls } from "@/lib/media";
+import { nextSortOrder } from "@/lib/rosterOrder";
 import { POSITIONS } from "@/lib/constants";
 import { Input, Select, Label, Button, Card, EmptyState, ErrorText, Spinner, TextArea } from "@/components/ui";
 import { confirmDialog } from "@/components/confirm";
@@ -120,7 +121,7 @@ export default function RosterPage({ params }) {
                 <img src={p.photo_display} alt={p.name} className="w-16 h-16 rounded-full object-cover border border-white/10 shrink-0" />
               ) : (
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500/20 to-blue-700/20 border border-white/10 flex items-center justify-center text-xl font-bold text-slate-500 shrink-0">
-                  {p.jersey_number ? `#${p.jersey_number}` : p.name[0]}
+                  {p.jersey_number ? `#${p.jersey_number}` : Array.from(p.name || "?")[0]}
                 </div>
               )}
               <div className="flex-1 min-w-0">
@@ -188,7 +189,7 @@ function PlayerForm({ teamId, sport, player, onDone, onCancel }) {
     };
     const query = player
       ? supabase.from("players").update(row).eq("id", player.id)
-      : supabase.from("players").insert(row);
+      : supabase.from("players").insert({ ...row, sort_order: await nextSortOrder(supabase, teamId) });
     const { error: err } = await query;
     setBusy(false);
     if (err) { setError(err.message); return; }

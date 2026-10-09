@@ -29,7 +29,11 @@ export default function LiveScoreBanner({ slug, teamName }) {
   useEffect(() => {
     if (!live || !live.clock_running) return;
     const id = setInterval(() => setTick(Date.now()), 1000);
-    return () => clearInterval(id);
+    // Browsers pause timers in a background tab; on return the clock showed
+    // the stale value for up to a second and then jumped. Re-tick at once.
+    const onShow = () => { if (document.visibilityState === "visible") setTick(Date.now()); };
+    document.addEventListener("visibilitychange", onShow);
+    return () => { clearInterval(id); document.removeEventListener("visibilitychange", onShow); };
   }, [live?.clock_running]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!live) return null;
