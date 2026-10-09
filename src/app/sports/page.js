@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 import { getAllSports } from "@/lib/sports";
 import { pricingCopy } from "@/lib/pricingCopy";
+import { OG_IMAGES } from "@/lib/seo";
 
 const SITE_URL = "https://my-teamsports.com";
 
@@ -21,6 +22,7 @@ export const metadata = {
     description:
       "Free team websites built for your sport — roster, live scores, stats, schedule, and photos. Parents never download an app or pay.",
     url: `${SITE_URL}/sports`,
+    images: OG_IMAGES,
     type: "website",
   },
 };

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "How It Works — Live in 5 Minutes",
@@ -11,11 +12,12 @@ export const metadata = {
     description:
       "Three steps to a live team website: create your team, share a passcode, run your season. Parents need no app and no account.",
     url: "https://my-teamsports.com/how-it-works",
+    images: OG_IMAGES,
   },
 };
 
 const STEPS = [
-  { num: "01", icon: "🏟️", title: "Create Your Team", desc: "Pick your sport, name your team, and upload your logo. You instantly get a shareable team link and a private 6-character passcode — no setup wizard, no waiting." },
+  { num: "01", icon: "🏟️", title: "Create Your Team", desc: "Pick your sport, name your team, and upload your logo. You instantly get a shareable team link and a private passcode — no setup wizard, no waiting." },
   { num: "02", icon: "📱", title: "Share the Passcode", desc: "Text the link and passcode to your parents. They open it in any browser and type the passcode once. No app to download, no account to create, no password to forget." },
   { num: "03", icon: "🎉", title: "Run Your Season", desc: "Post the schedule, parents RSVP, you track stats and results, and everyone shares photos and game film. The site keeps your record, totals, and gallery up to date automatically." },
 ];

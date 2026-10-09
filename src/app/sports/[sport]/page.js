@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { SiteNav, SiteFooter, CTASection } from "@/components/marketing";
 import { getAllSports, getSport } from "@/lib/sports";
 import { pricingCopy } from "@/lib/pricingCopy";
+import { OG_IMAGES, TWITTER_IMAGES } from "@/lib/seo";
 
 const SITE_URL = "https://my-teamsports.com";
 
@@ -39,11 +40,13 @@ export async function generateMetadata({ params }) {
       description: data.metaDescription,
       url: `${SITE_URL}/sports/${data.slug}`,
       type: "website",
+      images: OG_IMAGES,
     },
     twitter: {
       card: "summary_large_image",
       title: data.titleTag,
       description: data.metaDescription,
+      images: TWITTER_IMAGES,
     },
   };
 }

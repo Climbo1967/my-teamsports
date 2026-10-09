@@ -2,8 +2,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteNav, SiteFooter, CTASection } from "@/components/marketing";
 import { getAllPosts, getPost } from "@/lib/posts";
+import { pricingCopy } from "@/lib/pricingCopy";
 import fs from "node:fs";
 import path from "node:path";
+import { OG_IMAGES, TWITTER_IMAGES } from "@/lib/seo";
 
 const SITE_URL = "https://my-teamsports.com";
 
@@ -50,9 +52,11 @@ export async function generateMetadata({ params }) {
   const post = getPost(slug);
   if (!post) return { title: "Post Not Found" };
   const preview = previewFor(post);
+  // Posts without a printable preview fall back to the site card; before, the
+  // root image was lost in the metadata merge and the card had no picture.
   const ogImages = preview
     ? [{ url: `${SITE_URL}${preview.src}`, width: preview.width, height: preview.height, alt: preview.alt }]
-    : undefined;
+    : OG_IMAGES;
   return {
     title: post.title,
     description: post.description,
@@ -71,7 +75,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: preview ? [`${SITE_URL}${preview.src}`] : undefined,
+      images: preview ? [`${SITE_URL}${preview.src}`] : TWITTER_IMAGES,
     },
   };
 }
@@ -144,17 +148,22 @@ function Block({ block }) {
   return null;
 }
 
-const SPORT_TAGS = new Set(["Soccer", "Basketball", "Flag Football", "Football", "Baseball", "Softball", "Volleyball"]);
+const SPORT_TAGS = new Set(["Soccer", "Basketball", "Flag Football", "Football", "Baseball", "Softball", "Volleyball", "Hockey"]);
 
 function ArticleCTA({ tag }) {
   const noun = SPORT_TAGS.has(tag) ? `a ${tag.toLowerCase()} team` : "a youth sports team";
+  // Price line from lib/pricing so the 65 posts stop saying "2026" on Jan 1.
+  const price = pricingCopy();
+  const priceLine = price.halfOff
+    ? `it's half off for the ${price.seasonLabel}`
+    : `it's ${price.season} per team for the ${price.seasonLabel}`;
   return (
     <aside className="mt-12 rounded-2xl border border-green-500/20 bg-gradient-to-br from-green-500/[0.08] to-blue-500/[0.06] p-6 md:p-8">
       <h2 className="text-xl md:text-2xl font-bold text-white mb-2">Coaching {noun} this season?</h2>
       <p className="text-slate-300 mb-5">
         Give it a real home — schedule, roster, live scoring, photo sharing, game-day alerts, and an AI
         assistant coach on one site parents open like an app. No app store, no group-text chaos. Setup
-        takes five minutes, and it&apos;s half off for the 2026 season.
+        takes five minutes, and {priceLine}.
       </p>
       <Link
         href="/signup?src=blog"

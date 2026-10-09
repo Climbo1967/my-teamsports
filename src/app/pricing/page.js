@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 import { pricingCopy } from "@/lib/pricingCopy";
+import { OG_IMAGES } from "@/lib/seo";
 
 // Prices and the season year come from lib/pricing.js; re-render hourly so
 // the page rolls over on January 1 without a deploy.
@@ -22,6 +23,7 @@ export function generateMetadata() {
         ? `Half-off launch pricing for the ${c.year} season — ${c.season} per team. Parents never pay. Rosters, schedules, stats, photos, and game film — all included.`
         : `${c.season} per team for the ${c.year} season. Parents never pay. Rosters, schedules, stats, photos, and game film — all included.`,
       url: "https://my-teamsports.com/pricing",
+      images: OG_IMAGES,
     },
   };
 }

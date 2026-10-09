@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { fetchLeagueSite } from "@/lib/league";
 import { divisionsForSeason, fmtGameDay, gameDayKey, splitRecentAndUpcoming } from "@/lib/leagueFormat";
 import { Empty, GameRow, SectionTitle, StandingsTable } from "./LeagueParts";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -19,6 +20,7 @@ export async function generateMetadata({ params }) {
       title: `${site.league.name} — Schedule, Results & Standings | My-Team Sports`,
       description: `${site.league.name}${seasons ? ` ${seasons}` : ""}: league schedule, scores and standings. No ads, no app, no login.`,
       url: `/leagues/${site.league.slug}`,
+      images: OG_IMAGES,
     },
   };
 }

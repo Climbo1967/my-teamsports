@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { fetchLeagueSite } from "@/lib/league";
 import { divisionsForSeason } from "@/lib/leagueFormat";
 import { Empty, SectionTitle, StandingsTable } from "../LeagueParts";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }) {
       title: `${site.league.name} Standings | My-Team Sports`,
       description: `Current standings for every division in ${site.league.name}. Updated as finals come in.`,
       url: `/leagues/${site.league.slug}/standings`,
+      images: OG_IMAGES,
     },
   };
 }

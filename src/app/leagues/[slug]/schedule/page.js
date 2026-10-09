@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { fetchLeagueSite } from "@/lib/league";
 import { fmtGameDay, gameDayKey, LEAGUE_TZ } from "@/lib/leagueFormat";
 import ScheduleList from "./ScheduleList";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -17,6 +18,7 @@ export async function generateMetadata({ params }) {
       title: `${site.league.name} Schedule & Results | My-Team Sports`,
       description: `Full ${site.league.name} game schedule with locations and final scores, by division and school.`,
       url: `/leagues/${site.league.slug}/schedule`,
+      images: OG_IMAGES,
     },
   };
 }

@@ -1,5 +1,6 @@
 import { SiteNav, SiteFooter, PageHero } from "@/components/marketing";
 import Link from "next/link";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "Terms of Service",
@@ -10,10 +11,11 @@ export const metadata = {
     title: "Terms of Service | My-Team Sports",
     description: "Coach responsibilities, acceptable use, and the rules of the road for My-Team Sports.",
     url: "https://my-teamsports.com/terms",
+    images: OG_IMAGES,
   },
 };
 
-const UPDATED = "July 9, 2026";
+const UPDATED = "October 9, 2026";
 
 const SECTIONS = [
   {
@@ -32,6 +34,13 @@ const SECTIONS = [
     h: "3. Pricing and billing",
     body: [
       "The Coach Plan is offered at half-off launch pricing for the 2026 season ($15 per team), with an optional AI Coach add-on ($20). Regular pricing of $30 per team (plus any add-ons) applies from the 2027 season. Each purchase is a one-time payment covering through December 31 of the year it is bought in; a Coach Plan or add-on bought from October 1 through December 31 also covers the whole of the following calendar year. Coach accounts begin with a 30-day free trial, and parents never pay. We may add, change, or discontinue features, and we will give reasonable notice of any pricing changes.",
+      "Payments are processed by Stripe; we never see or store card numbers. Purchases are final once the pass is active, except where the law requires otherwise — if something went wrong with a purchase, email support@2bcreations.com and we will sort it out.",
+    ],
+  },
+  {
+    h: "3a. AI assistant coach",
+    body: [
+      "The optional AI assistant coach produces suggestions (practice plans, lineups, answers to coaching questions) from your team's own roster, schedule, results and stats. To do that, the service sends that team data to Anthropic's API when you use the feature; under its API terms Anthropic does not use it to train its models, and nothing is sent for teams that do not use the AI features. Suggestions are a starting point, not professional advice — you remain responsible for every decision about your players, including their safety, playing time and medical needs. Monthly use is capped per team to keep the service affordable.",
     ],
   },
   {

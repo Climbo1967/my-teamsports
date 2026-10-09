@@ -1,4 +1,5 @@
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "About — Youth Sports Without the App",
@@ -10,6 +11,7 @@ export const metadata = {
     description:
       "Why we built a youth sports team website with no app, no accounts, and no paywall for parents.",
     url: "https://my-teamsports.com/about",
+    images: OG_IMAGES,
   },
 };
 

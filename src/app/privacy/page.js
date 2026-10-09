@@ -1,5 +1,6 @@
 import { SiteNav, SiteFooter, PageHero } from "@/components/marketing";
 import Link from "next/link";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "Privacy Policy",
@@ -10,10 +11,11 @@ export const metadata = {
     title: "Privacy Policy | My-Team Sports",
     description: "What we store, who can see it, and how to remove it — in plain language.",
     url: "https://my-teamsports.com/privacy",
+    images: OG_IMAGES,
   },
 };
 
-const UPDATED = "June 29, 2026";
+const UPDATED = "October 9, 2026";
 
 const SUMMARY = [
   "We store only what a coach or parent chooses to add, plus the basic technical data needed to run the site.",
@@ -40,7 +42,9 @@ const SECTIONS = [
       "Roster: for each player, only what the coach chooses to add — name, jersey number, position, an optional short bio, and an optional photo.",
       "Photos: images uploaded by the coach or by a parent who has the passcode, with an optional caption and the player a photo is tagged to.",
       "Game film: when a coach adds a video, we store the title, the date, and the link to YouTube or Vimeo. The video itself lives on YouTube or Vimeo — we do not host or store it.",
-      "Team activity: schedule, scores, announcements, coach's notes, and RSVPs that the coach or team add.",
+      "Team activity: schedule, scores, announcements, coach's notes, RSVPs, and team-board posts that the coach or team add.",
+      "Parent contact: an email address a parent chooses to give for team announcements, and, if a parent turns on game-day alerts, the browser's push subscription (an address your browser creates; it contains no personal details). Both can be removed at any time.",
+      "Payments: when a coach buys a Season Pass, Stripe processes the card. We never see or store card numbers — we keep only the record that a purchase was made, the amount, and the date.",
       "Technical data: basic log information (such as IP address and browser type) needed to operate and secure the site, a secure cookie that remembers a family entered the passcode, and aggregate analytics.",
     ],
     after: [
@@ -62,8 +66,8 @@ const SECTIONS = [
     h: "Who can see team content",
     body: [
       "A team's roster, photos, schedule, and game film are visible only to the coach and to people the coach gives the team link and passcode to. There are no public team profiles — without the passcode, a visitor sees only a locked screen.",
-      "Team pages are set to “no index,” so search engines such as Google do not list them, and our site instructions ask web crawlers to stay out of team areas.",
-      "An honest note about photos: images are stored as files at long, randomized web addresses. The team page is passcode-protected, but an individual photo's direct file link, if someone deliberately copies and shares it outside the team, could be opened without the passcode. Share team links and downloaded photos only with people you trust.",
+      "Team pages are set to “no index,” so search engines such as Google do not list them.",
+      "Photos are kept in private storage. The team page shows them through short-lived signed links that expire after about an hour, so a copied photo address stops working on its own. Anyone who downloads a photo can of course still share the file — share team links and downloaded photos only with people you trust.",
       "Game film is shown through YouTube or Vimeo. We recommend coaches set videos to “Unlisted” so they are not publicly listed.",
     ],
   },
@@ -71,8 +75,13 @@ const SECTIONS = [
     h: "Services we rely on",
     body: ["We use a small number of trusted providers to run the service, and share information with them only as needed to operate it:"],
     list: [
-      "Supabase — secure database, file storage, and coach login.",
-      "Vercel — website hosting.",
+      "Supabase — secure database, private file storage, and coach login.",
+      "Vercel — website hosting and aggregate, privacy-friendly page analytics.",
+      "Stripe — payment processing when a coach buys a Season Pass or the AI assistant coach. Card details go to Stripe directly and never touch our servers.",
+      "Resend — sends the emails the service produces: coach account emails, team announcements to parents who subscribed, and coach tips.",
+      "Anthropic — powers the optional AI assistant coach. When a coach uses it, the team's roster (player names, numbers, positions), schedule, results and stats are sent to Anthropic's API to produce the answer. Under its API terms, Anthropic does not use this data to train its models. Coaches who do not use the AI features send nothing.",
+      "Cloudflare Turnstile — a bot check on sign-up and login that does not use tracking cookies.",
+      "Web push (your browser's own push service — Google, Apple or Mozilla) — only when a parent turns on game-day alerts; we send the alert text to that service and it delivers it to the device.",
       "Google Analytics — aggregate, non-identifying usage statistics.",
       "YouTube and Vimeo — only when a coach chooses to embed a video link; viewing is governed by their own policies.",
     ],
@@ -100,7 +109,7 @@ const SECTIONS = [
     h: "How long we keep information, and deletion",
     body: [
       "We keep team information while the team is in use. We do not keep children's personal information longer than is reasonably needed to run the team site.",
-      "A coach can delete any photo, remove any player, or delete the entire team at any time from the dashboard. Deleting a team permanently removes its roster, schedule, posts, and photos.",
+      "A coach can delete any photo, remove any player, or delete the entire team at any time from the dashboard. Deleting a team permanently removes its roster, schedule, posts, and photos, including the photo files themselves from storage. Removing a player also removes that player's recorded stats.",
       "To delete a coach account, or to request removal of specific information, email support@2bcreations.com.",
     ],
   },

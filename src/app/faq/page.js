@@ -1,5 +1,6 @@
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 import { pricingCopy } from "@/lib/pricingCopy";
+import { OG_IMAGES } from "@/lib/seo";
 
 // The price answers come from lib/pricing.js; re-render hourly so they roll
 // over on January 1 without a deploy.
@@ -15,6 +16,7 @@ export const metadata = {
     description:
       "Do parents need an app? What does it cost? How do passcodes work? Answers to the most common questions.",
     url: "https://my-teamsports.com/faq",
+    images: OG_IMAGES,
   },
 };
 
@@ -35,11 +37,11 @@ const faqs = (c) => [
   },
   {
     q: "Do parents have to create an account?",
-    a: "No. Parents simply open your team link and enter a 6-character passcode once. The passcode is remembered on their device for about six months, so they don't have to type it every visit.",
+    a: "No. Parents simply open your team link and enter the team passcode once. The passcode is remembered on their device for about six months, so they don't have to type it every visit.",
   },
   {
     q: "How do the passcodes work?",
-    a: "When you create a team you get a private 6-character passcode. You share it with your parents along with the team link. Anyone with the passcode can view the team site; you can regenerate the passcode anytime from your settings if you need to.",
+    a: "When you create a team you get a private passcode (8 characters; league-issued teams get 6). You share it with your parents along with the team link. Anyone with the passcode can view the team site; you can regenerate the passcode anytime from your settings if you need to.",
   },
   {
     q: "Which sports are supported?",

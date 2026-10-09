@@ -1,5 +1,6 @@
 import { SiteNav, SiteFooter, PageHero } from "@/components/marketing";
 import Link from "next/link";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "Child Safety",
@@ -10,6 +11,7 @@ export const metadata = {
     title: "Child Safety | My-Team Sports",
     description: "Built for youth teams — here is exactly how a child's information and photos are protected, and how to remove anything.",
     url: "https://my-teamsports.com/child-safety",
+    images: OG_IMAGES,
   },
 };
 
@@ -133,7 +135,7 @@ export default function ChildSafetyPage() {
           <Block section={{
             h: "How passcodes work",
             body: [
-              "Every team has a 6-character passcode that the coach controls. The coach shares it with the team's families. A family enters it once, and the site remembers them for the season (about 180 days) with a secure cookie, so they don't retype it every visit.",
+              "Every team has a private passcode that the coach controls. The coach shares it with the team's families. A family enters it once, and the site remembers them for the season (about 180 days) with a secure cookie, so they don't retype it every visit.",
               "The passcode is checked on our servers and is not exposed in the page. The coach can generate a new passcode at any time — and the instant they do, the old one stops working everywhere. That is the fastest way to cut off access if a code was shared too widely or someone should no longer be able to view the team.",
             ],
           }} />

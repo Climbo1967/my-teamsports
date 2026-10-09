@@ -61,7 +61,7 @@ export default function ManualPage() {
         <article className="space-y-10 min-w-0">
           <Section id="getting-started" title="Getting started">
             <p>
-              My-Team Sports gives your team a clean public website that parents reach with a link and a 6-character passcode &mdash; no app to download, no accounts, no cost to families. You manage everything from this dashboard; parents only ever see the public team page.
+              My-Team Sports gives your team a clean public website that parents reach with a link and a private passcode &mdash; no app to download, no accounts, no cost to families. You manage everything from this dashboard; parents only ever see the public team page.
             </p>
             <p className="font-semibold text-white">The basics:</p>
             <ul className="list-disc pl-5 space-y-1.5">
@@ -233,7 +233,7 @@ export default function ManualPage() {
               Share this part with your families &mdash; it is everything a parent needs, and they never need an account or an app.
             </p>
             <ul className="list-disc pl-5 space-y-1.5">
-              <Step><strong>Getting in:</strong> open the team link your coach shares and enter the 6-character passcode once. Your device remembers it for about six months.</Step>
+              <Step><strong>Getting in:</strong> open the team link your coach shares and enter the team passcode once. Your device remembers it for about six months.</Step>
               <Step><strong>Following games live:</strong> when the coach is scoring a game, a &quot;LIVE NOW&quot; banner shows the current score right on the team page.</Step>
               <Step><strong>Game-day alerts:</strong> tap &quot;🔔 Get game alerts&quot; under the team name to get a push notification for announcements, live game starts and finals, and schedule changes. Use the checkboxes under &quot;Alerts on&quot; to pick which of those this device gets. On an iPhone, add the site to your Home Screen first, then turn alerts on from that icon.</Step>
               <Step><strong>RSVPs:</strong> pick your player and mark Going / Maybe / Not going for each game so the coach knows the numbers.</Step>

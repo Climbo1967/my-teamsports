@@ -2,6 +2,8 @@ import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { Oswald, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import { pricingCopy } from "@/lib/pricingCopy";
+import { priceFor } from "@/lib/pricing";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -108,13 +110,25 @@ const jsonLd = {
   ],
 };
 
+// The offer in the JSON-LD follows lib/pricing (year and price roll over on
+// Jan 1); the rest of the graph is static.
+function siteJsonLd() {
+  const c = pricingCopy();
+  const graph = jsonLd["@graph"].map((node) =>
+    node["@type"] === "SoftwareApplication"
+      ? { ...node, offers: { "@type": "Offer", price: String(priceFor("season", c.year) / 100), priceCurrency: "USD", priceValidUntil: `${c.year}-12-31` } }
+      : node
+  );
+  return { ...jsonLd, "@graph": graph };
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-NPD6LYL7RF" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">

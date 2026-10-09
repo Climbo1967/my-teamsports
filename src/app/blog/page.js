@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter, CTASection, PageHero } from "@/components/marketing";
 import { getAllPosts } from "@/lib/posts";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "Blog — Youth Sports Tips for Coaches & Parents",
@@ -12,6 +13,7 @@ export const metadata = {
     description:
       "Practical guides for youth sports coaches and parents — practice plans, scorekeeping, and team-management tips.",
     url: "https://my-teamsports.com/blog",
+    images: OG_IMAGES,
     type: "website",
   },
 };

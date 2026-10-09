@@ -14,7 +14,9 @@ import ViewPing from "@/components/ViewPing";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  return { title: `Team Site | My-Team Sports`, robots: { index: false } };
+  // `absolute` so the root template doesn't append the site name twice; no
+  // canonical (the root's "/" would otherwise be inherited onto every team).
+  return { title: { absolute: "Team Site | My-Team Sports" }, robots: { index: false, follow: false }, alternates: { canonical: null } };
 }
 
 export default async function TeamPage({ params, searchParams }) {

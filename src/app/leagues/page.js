@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { SiteNav, SiteFooter, PageHero } from "@/components/marketing";
+import { pricingCopy } from "@/lib/pricingCopy";
+import { OG_IMAGES } from "@/lib/seo";
 
 export const metadata = {
   title: "Youth Sports League Websites — Schedules, Standings, No Ads",
@@ -11,6 +13,7 @@ export const metadata = {
     description:
       "Central schedule and standings for the league office. A full team website for every coach. No ads, no app, parents never pay. Now onboarding leagues for winter 2026–27.",
     url: "https://my-teamsports.com/leagues",
+    images: OG_IMAGES,
   },
 };
 
@@ -34,7 +37,11 @@ const OFFICE = [
   { icon: "🧾", title: "One plan per school", desc: "Each school's athletic department covers all of its teams with one plan; the league pays one league fee. Teams that want to go it alone can, at regular team pricing." },
 ];
 
-const FAQS = [
+// Price comes from lib/pricing so this page does not go stale on Jan 1;
+// the page re-renders hourly (revalidate below) to pick it up.
+export const revalidate = 3600;
+
+const faqs = (price) => [
   {
     q: "When can my league start?",
     a: "We're onboarding our first leagues for the 2026–27 winter season, starting with basketball. If your season starts in November, talk to us now — we'll load your schedule and have you live before tip-off.",
@@ -49,7 +56,7 @@ const FAQS = [
   },
   {
     q: "What does it cost?",
-    a: "League pricing depends on how many teams and sports you run, and it's a lot less per team than our regular $15 season pass. Ask us — you'll get a number, not a sales call.",
+    a: `League pricing depends on how many teams and sports you run, and it's a lot less per team than the ${price.season} season pass. Ask us — you'll get a number, not a sales call.`,
   },
   {
     q: "Can a school use it without the league?",
@@ -66,6 +73,7 @@ const FAQS = [
 ];
 
 export default function LeaguesPage() {
+  const FAQS = faqs(pricingCopy());
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
