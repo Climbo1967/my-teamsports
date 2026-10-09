@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { STAT_KEYS, DERIVED_STATS, formatDerived } from "@/lib/constants";
 import { videoEmbedUrl } from "@/lib/video";
 import PlayField from "@/components/PlayField";
+import LocalDateTime from "@/components/LocalDateTime";
 import BoardSection from "./BoardSection";
 
 const NAV = [
@@ -150,7 +151,7 @@ function AnnouncementsSection({ announcements, slug }) {
                 {a.title && <h3 className="font-bold text-white text-lg">{a.title}</h3>}
               </div>
               <span className="text-xs text-slate-500 whitespace-nowrap">
-                {new Date(a.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                <LocalDateTime iso={a.created_at} time={false} dateOptions={{ month: "short", day: "numeric" }} />
               </span>
             </div>
             <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">{a.body}</p>
@@ -196,14 +197,20 @@ function ScheduleSection({ events, players, rsvps, slug }) {
   );
 }
 
+// Dates and times go through LocalDateTime: this component is server-rendered
+// in UTC, so formatting here directly showed a 7:30 PM Central game as
+// "12:30 AM" the next day and then hydrated wrong.
 function EventCard({ event, past, players, rsvps, slug }) {
-  const d = new Date(event.starts_at);
   return (
     <div className={`bg-white/[0.03] border border-white/[0.06] rounded-xl px-6 py-4 ${past ? "opacity-85" : ""}`}>
       <div className="flex flex-wrap items-center gap-4">
         <div className="text-center min-w-[64px]">
-          <p className="text-xs uppercase tracking-widest text-slate-500">{d.toLocaleDateString("en-US", { month: "short" })}</p>
-          <p className="text-2xl font-bold text-white">{d.getDate()}</p>
+          <p className="text-xs uppercase tracking-widest text-slate-500">
+            <LocalDateTime iso={event.starts_at} time={false} dateOptions={{ month: "short" }} />
+          </p>
+          <p className="text-2xl font-bold text-white">
+            <LocalDateTime iso={event.starts_at} time={false} dateOptions={{ day: "numeric" }} />
+          </p>
         </div>
         <div className="flex-1 min-w-[200px]">
           <p className="font-semibold text-white">
@@ -213,7 +220,7 @@ function EventCard({ event, past, players, rsvps, slug }) {
             {event.result && <span className="ml-2 text-[var(--color-accent-green)] font-bold">{event.result}</span>}
           </p>
           <p className="text-sm text-slate-400">
-            {d.toLocaleDateString("en-US", { weekday: "short" })} · {d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
+            <LocalDateTime iso={event.starts_at} dateOptions={{ weekday: "short" }} timeOptions={{ hour: "numeric", minute: "2-digit" }} />
             {event.location ? ` · ${event.location}` : ""}
           </p>
           {event.notes && <p className="text-xs text-slate-500 mt-1">{event.notes}</p>}
@@ -689,7 +696,7 @@ function NotesSection({ notes }) {
             <div className="flex items-start justify-between gap-3 mb-2">
               <h3 className="font-bold text-white">{n.title}</h3>
               <span className="text-xs text-slate-500 whitespace-nowrap">
-                {new Date(n.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                <LocalDateTime iso={n.created_at} time={false} dateOptions={{ month: "short", day: "numeric" }} />
               </span>
             </div>
             <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">{n.body}</p>

@@ -52,6 +52,7 @@ export default function NotesPage({ params }) {
 
       {editing && (
         <NoteForm
+          key={editing === "new" ? "new" : editing.id}
           teamId={teamId}
           note={editing === "new" ? null : editing}
           onDone={() => { setEditing(null); load(); }}

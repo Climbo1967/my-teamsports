@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { POSITIONS } from "@/lib/constants";
+import { parseRosterText } from "@/lib/rosterParse";
 import { Input, Select, Button, ErrorText } from "@/components/ui";
 
 const BLANK = { name: "", jersey: "", position: "" };
@@ -13,40 +14,14 @@ function playerNoun(sport) {
   return sport === "hockey" ? "skaters" : "players";
 }
 
-/**
- * Parse a pasted roster. Forgiving on purpose -- a coach pastes whatever their
- * league handed them. One player per line. Recognised shapes:
- *   John Smith
- *   12 John Smith
- *   #12 John Smith
- *   John Smith, 12, Pitcher
- *   John Smith - 12
- */
+// Same parser as the Roster page (lib/rosterParse): handles "Smith, John",
+// "#12 John Smith", "John Smith - 12", "John Smith, 12, Pitcher", tab columns.
 function parsePastedRoster(text) {
-  return text
-    .split(/\r?\n/)
-    .map((line) => line.trim())
-    .filter(Boolean)
-    .map((line) => {
-      // Comma or tab separated: name, jersey, position
-      if (/[,\t]/.test(line)) {
-        const [a = "", b = "", c = ""] = line.split(/[,\t]/).map((s) => s.trim());
-        return { name: a, jersey: b.replace(/^#/, ""), position: c };
-      }
-      // Leading jersey number: "12 John Smith" / "#12 John Smith"
-      const lead = line.match(/^#?(\d{1,3})\s+(.*)$/);
-      if (lead) return { ...BLANK, jersey: lead[1], name: lead[2].trim() };
-      // Trailing jersey after a dash: "John Smith - 12"
-      const trail = line.match(/^(.*?)\s*[-–]\s*#?(\d{1,3})$/);
-      if (trail) return { ...BLANK, name: trail[1].trim(), jersey: trail[2] };
-      return { ...BLANK, name: line };
-    })
-    .filter((p) => p.name)
-    .map((p) => ({
-      name: p.name.slice(0, 80),
-      jersey: (p.jersey || "").slice(0, 8),
-      position: p.position || "",
-    }));
+  return parseRosterText(text).map((p) => ({
+    name: p.name.slice(0, 80),
+    jersey: (p.jersey_number || "").slice(0, 8),
+    position: p.position || "",
+  }));
 }
 
 export function RosterQuickAdd({ teamId, teamName, sport }) {

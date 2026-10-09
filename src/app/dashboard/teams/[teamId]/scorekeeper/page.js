@@ -194,6 +194,11 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
   const [game, setGame] = useState(undefined); // undefined=loading, null=not started, row
   const [lineup, setLineup] = useState([]); // [{player_id, spot, name, jersey_number}]
   const [pitchMap, setPitchMap] = useState({}); // { player_id: pitching_line row }
+  // Latest lines regardless of render: bumpPitcher reads and writes this so
+  // two bumps inside one handler (a strikeout = pitch + K) don't overwrite
+  // each other with the stale render-time map.
+  const pitchRef = useRef({});
+  useEffect(() => { pitchRef.current = pitchMap; }, [pitchMap]);
   const [tendencyByPlayer, setTendencyByPlayer] = useState({}); // season tendencies
   const [editingLineup, setEditingLineup] = useState(false);
   const [pending, setPending] = useState(null); // result object awaiting field/RBI input
@@ -341,16 +346,17 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     if (!pitchMap[playerId]) {
       const base = { team_id: teamId, event_id: event.id, player_id: playerId, pitches: 0, strikes: 0, outs: 0, walks: 0, strikeouts: 0, hits: 0, runs: 0 };
       const { data } = await supabase.from("pitching_lines").insert(base).select().single();
-      if (data) setPitchMap((m) => ({ ...m, [playerId]: data }));
+      if (data) { pitchRef.current = { ...pitchRef.current, [playerId]: data }; setPitchMap((m) => ({ ...m, [playerId]: data })); }
     }
   }
 
   async function bumpPitcher(delta) {
     const pid = game.pitcher_id;
     if (!pid) return;
-    const cur = pitchMap[pid] || { team_id: teamId, event_id: event.id, player_id: pid };
+    const cur = pitchRef.current[pid] || pitchMap[pid] || { team_id: teamId, event_id: event.id, player_id: pid };
     const next = { ...cur };
     for (const f of PITCH_FIELDS) next[f] = (cur[f] || 0) + (delta[f] || 0);
+    pitchRef.current = { ...pitchRef.current, [pid]: next };
     setPitchMap((m) => ({ ...m, [pid]: next }));
     const { error: e } = await supabase
       .from("pitching_lines")
@@ -373,7 +379,9 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     setDefenseUndo((s) => s.slice(0, -1));
     if (e.pid) {
       const L = e.prevLine || {};
-      setPitchMap((m) => ({ ...m, [e.pid]: { team_id: teamId, event_id: event.id, player_id: e.pid, ...L } }));
+      const restored = { team_id: teamId, event_id: event.id, player_id: e.pid, ...L };
+      pitchRef.current = { ...pitchRef.current, [e.pid]: restored };
+      setPitchMap((m) => ({ ...m, [e.pid]: restored }));
       await supabase.from("pitching_lines").upsert({
         team_id: teamId, event_id: event.id, player_id: e.pid,
         pitches: L.pitches || 0, strikes: L.strikes || 0, outs: L.outs || 0, walks: L.walks || 0,
@@ -388,14 +396,12 @@ function GameScorer({ teamId, event, players, onPlayerAdded, onBack }) {
     const snap = snapDefense();
     if (kind === "ball") {
       const nb = game.balls + 1;
-      await bumpPitcher({ pitches: 1 });
-      if (nb >= 4) { await bumpPitcher({ walks: 1 }); await patchGame({ balls: 0, strikes: 0 }); }
-      else { await patchGame({ balls: nb }); }
+      if (nb >= 4) { await bumpPitcher({ pitches: 1, walks: 1 }); await patchGame({ balls: 0, strikes: 0 }); }
+      else { await bumpPitcher({ pitches: 1 }); await patchGame({ balls: nb }); }
     } else if (kind === "strike") {
       const ns = game.strikes + 1;
-      await bumpPitcher({ pitches: 1, strikes: 1 });
-      if (ns >= 3) { await bumpPitcher({ strikeouts: 1, outs: 1 }); await patchGame(applyOut(game.outs + 1)); }
-      else { await patchGame({ strikes: ns }); }
+      if (ns >= 3) { await bumpPitcher({ pitches: 1, strikes: 1, strikeouts: 1, outs: 1 }); await patchGame(applyOut(game.outs + 1)); }
+      else { await bumpPitcher({ pitches: 1, strikes: 1 }); await patchGame({ strikes: ns }); }
     } else if (kind === "foul") {
       await bumpPitcher({ pitches: 1, strikes: 1 });
       await patchGame({ strikes: Math.min(2, game.strikes + 1) });
