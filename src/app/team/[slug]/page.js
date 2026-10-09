@@ -1,7 +1,8 @@
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { createPasscodeClient, lockedOut, LOCKOUT_MSG } from "@/lib/supabase/passcode";
 import { signMediaUrls } from "@/lib/media";
 import { SPORT_EMOJI, sportLabel, computeRecord, formatRecord, hexToRgba, DEFAULT_TEAM_COLOR } from "@/lib/constants";
 import PasscodeGate from "./PasscodeGate";
@@ -26,13 +27,22 @@ export default async function TeamPage({ params, searchParams }) {
 
   const supabase = await createClient();
 
+  // Parent reads go through the passcode client so the database's wrong-guess
+  // throttle is keyed by the parent's own IP, not Vercel's (lib/supabase/passcode.js).
+  const hdrs = await headers();
+  const viewerIp = (hdrs.get("x-forwarded-for") || "").split(",")[0].trim() || hdrs.get("x-real-ip") || "unknown";
+  const passcodeClient = await createPasscodeClient(viewerIp);
+
   let site = null;
+  let gateNotice = null;
   if (passcode) {
-    const { data } = await supabase.rpc("get_team_site", {
+    const { data, error } = await passcodeClient.rpc("get_team_site", {
       p_slug: normalizedSlug,
       p_passcode: passcode,
     });
     site = data;
+    // Locked out: say so instead of silently showing the passcode form.
+    if (lockedOut(error)) gateNotice = LOCKOUT_MSG;
   }
 
   // Coach preview: a signed-in coach of this team (owner or assistant) sees
@@ -61,7 +71,7 @@ export default async function TeamPage({ params, searchParams }) {
         if (from !== "coach") {
           redirect(`/api/team-access/coach?slug=${encodeURIComponent(normalizedSlug)}`);
         }
-        const { data } = await supabase.rpc("get_team_site", {
+        const { data } = await passcodeClient.rpc("get_team_site", {
           p_slug: normalizedSlug,
           p_passcode: own.passcode,
         });
@@ -71,7 +81,7 @@ export default async function TeamPage({ params, searchParams }) {
   }
 
   if (!site) {
-    return <PasscodeGate slug={normalizedSlug} />;
+    return <PasscodeGate slug={normalizedSlug} notice={gateNotice} />;
   }
 
   // The bucket is private and the RPC returns stored object paths — turn the

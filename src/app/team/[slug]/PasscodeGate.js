@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function PasscodeGate({ slug }) {
+export default function PasscodeGate({ slug, notice = null }) {
   const router = useRouter();
   const [passcode, setPasscode] = useState("");
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(notice);
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
