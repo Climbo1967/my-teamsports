@@ -2628,14 +2628,14 @@ export const posts = [
   },
   {
     slug: "football-play-wristband-template",
-    title: "Football Play Wristband Template (Free Printable PDF)",
+    title: "Football Wristband Template: Free Play Cards (12-Play PDF)",
     description:
-      "Free printable football play wristband template — pre-sized wrist coach insert cards for youth tackle and flag football, with a 12-play numbering system.",
+      "Print-ready wrist coach cards for youth and standard wristbands. 12-play numbering for tackle and flag football, with cut lines. Free PDF download.",
     excerpt:
       "Pre-sized insert cards that actually fit the wristband, a 12-play numbering system, and how to call plays without a huddle.",
     tag: "Football",
     date: "2026-08-03",
-    updated: "2026-09-12",
+    updated: "2026-10-12",
     readingTime: "5 min read",
     keywords: ["football play wristband template", "qb wristband template", "printable football play wristband", "flag football wristband plays", "wrist coach insert template"],
     body: [
@@ -3453,14 +3453,14 @@ export const posts = [
   },
   {
     slug: "football-depth-chart-template",
-    title: "Football Depth Chart Template (Free Printable PDF)",
+    title: "Football Depth Chart Template: Offense, Defense & Special Teams",
     description:
-      "A free printable football depth chart template for offense, defense, and special teams, with first, second, and third string — editable and ready for game day.",
+      "Free editable football depth chart with first, second and third string for offense, defense and special teams. Download the PDF and fill it in for game day.",
     excerpt:
       "Your game-day map: who starts, who backs them up, and where players go when someone is out. Free printable for all three units.",
     tag: "Coaching",
     date: "2026-07-10",
-    updated: "2026-07-10",
+    updated: "2026-10-12",
     readingTime: "4 min read",
     keywords: ["football depth chart template", "football depth chart printable", "youth football depth chart", "football lineup template"],
     body: [
