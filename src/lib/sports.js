@@ -67,9 +67,9 @@ export const SPORTS = [
       },
     ],
     related: [
-      { slug: "youth-baseball-practice-plan", title: "A Youth Baseball Practice Plan That Actually Runs on Time" },
+      { slug: "youth-baseball-practice-plan", title: "Baseball Practice Plan Template (Free Printable PDF)" },
       { slug: "ai-baseball-practice-plan-generator", title: "An AI Baseball Practice Plan Generator" },
-      { slug: "how-to-keep-a-baseball-scorebook", title: "How to Keep a Baseball Scorebook" },
+      { slug: "baseball-score-sheet-template", title: "Baseball Score Sheet Template (Free Printable PDF)" },
       { slug: "baseball-scorekeeping-app", title: "The Baseball Scorekeeping App Parents Can Follow Live" },
       { slug: "baseball-rainout-notifications", title: "Baseball Rainout Notifications the Whole Team Gets" },
     ],

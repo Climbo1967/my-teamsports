@@ -10,6 +10,970 @@
 
 export const posts = [
   {
+    "slug": "baseball-score-sheet-template",
+    "title": "Baseball Score Sheet Template (Free Printable PDF)",
+    "description": "Free printable baseball score sheet, 2 pages: a real scorebook page with 12 batters, 7 innings, diamonds, box score and pitching line, plus a simple one-team sheet with the position numbers and symbols a first-time scorer needs.",
+    "excerpt": "A scorebook page for the person who keeps the book and a simple sheet for the parent who got handed the clipboard, with the position numbers and symbols printed right on it.",
+    "tag": "Baseball",
+    "date": "2026-10-17",
+    "readingTime": "6 min read",
+    "keywords": [
+      "baseball score sheet template",
+      "printable baseball score sheet",
+      "baseball scorebook sheet pdf",
+      "baseball scoresheet printable",
+      "youth baseball score sheet",
+      "baseball scorecard template",
+      "how to keep a baseball scorebook",
+      "baseball scorekeeping symbols"
+    ],
+    "body": [
+      {
+        "p": "Every youth baseball game needs someone keeping the book, and most of the time it is a parent who has never done it. The league's official scorebook stays with the league, the one your team bought is in somebody's trunk, and by the fourth inning nobody is sure who has how many outs. This printable fixes that with two pages: a proper scorebook page with a diamond for every at-bat, and a simple one-team sheet with the position numbers and symbols printed on it so a first-timer can score a game without a lesson. Print one of each per game."
+      },
+      {
+        "download": {
+          "href": "/downloads/baseball-score-sheet.pdf",
+          "label": "Baseball Score Sheet Template (printable PDF, 2 pages)",
+          "note": "Page 1: 12 batters, 7 innings with a diamond in every box, AB/R/H/RBI/BB/K totals, runs by inning, pitching line. Page 2: one-team simple sheet, runs by inning, position numbers 1–9 and the scoring symbols. Free, no email required."
+        }
+      },
+      {
+        "h2": "Which page do you need?"
+      },
+      {
+        "table": {
+          "headers": [
+            "Page",
+            "Best for",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "Scorebook page (page 1)",
+              "The official book: every at-bat on a diamond, outs, runs, hits, the pitching line the coach wants after the game",
+              "Whoever is keeping the book for the team — a parent who has done it a few times, or one who reads page 2 first"
+            ],
+            [
+              "Simple sheet (page 2)",
+              "Your own dugout: the batting order, what each kid did each inning, runs by inning for both teams",
+              "Any parent, with no instructions, from the bleachers"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "First, learn the position numbers"
+      },
+      {
+        "p": "Scorekeeping uses numbers instead of names for the fielders, and once you know them every symbol in the book makes sense. They are printed on page 2, but here they are: 1 pitcher, 2 catcher, 3 first base, 4 second base, 5 third base, 6 shortstop, 7 left field, 8 center field, 9 right field. A ground ball to the shortstop thrown to first is 6-3. A fly ball caught by the center fielder is F8. An error by the third baseman is E5. That is most of the book."
+      },
+      {
+        "h2": "How to score an at-bat on the diamond"
+      },
+      {
+        "p": "Each box on page 1 is one batter in one inning, and the little diamond inside it is the base paths. When the batter reaches base, draw the line from home to first and write how they got there under it (1B, BB, E6). As the runner advances, extend the line base by base. When they score, fill the diamond in — a filled diamond is a run, and the runs by inning row at the bottom is just a count of filled diamonds. When the batter makes an out, write the play in the box (K, 6-3, F8) and put the out number in the corner so you can see at a glance where you are in the inning."
+      },
+      {
+        "table": {
+          "headers": [
+            "What happened",
+            "What to write",
+            "Then"
+          ],
+          "rows": [
+            [
+              "Single / double / triple / home run",
+              "1B, 2B, 3B, HR under the line to the base reached",
+              "Extend the line as the runner moves; fill the diamond when they score"
+            ],
+            [
+              "Walk or hit by pitch",
+              "BB or HBP",
+              "Line to first"
+            ],
+            [
+              "Strikeout",
+              "K (swinging) or K-L (looking)",
+              "Mark the out number"
+            ],
+            [
+              "Fly out / ground out",
+              "F8, 6-3, 4-3, 5-3",
+              "Mark the out number; the first number is who fielded it"
+            ],
+            [
+              "Error",
+              "E5, E6 — the fielder who made it",
+              "Line to the base reached; it is not a hit"
+            ],
+            [
+              "Fielder's choice",
+              "FC",
+              "Batter is on, somebody else is out"
+            ],
+            [
+              "End of inning",
+              "A slash in the corner of the last box",
+              "Start the next inning on the next column"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The box score and the pitching line"
+      },
+      {
+        "p": "At the end of the game, count across each row: at-bats, runs, hits, RBI, walks and strikeouts per batter go in the right-hand columns, and the totals row at the bottom should match the runs by inning. The pitching line is the part coaches actually ask for on Monday: innings pitched, hits, runs, earned runs, walks, strikeouts and the pitch count. If your league has pitch-count rules — most youth leagues do — that last column is the one that matters, and the pitch count tracker linked below has a slash-as-you-go strip so the number is right."
+      },
+      {
+        "h2": "Common beginner mistakes"
+      },
+      {
+        "ul": [
+          "Forgetting to mark the out number. By the third out you will not remember whether the fly ball was the second or the third.",
+          "Scoring an error as a hit. If a fielder should have made the play, it is an E, and the batting averages are wrong all season if you get this backwards.",
+          "Losing the batting order after a substitution. Write the sub's name under the player they replaced in the same row — the row is the lineup spot, not the person.",
+          "Not reconciling at the end of the inning. Runs scored that half-inning should equal the filled diamonds. Fix it now, not in the car."
+        ]
+      },
+      {
+        "h2": "Score it live instead"
+      },
+      {
+        "p": "The sheet is for the book. My-Team Sports is for everyone who isn't at the field. The live Scorekeeper runs from your phone one at-bat at a time — single, walk, strikeout, groundout, with a tap on the field for where the ball went — and parents who open your team's site see the score, the inning and who is up as it happens. Every at-bat rolls into the Stats tab, so AB, R, H, HR, RBI and batting average add up over the season without anyone typing them in on Monday. Print the sheet for the official book, score it live for the grandparents."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/baseball-pitch-count-tracker-template",
+        "label": "Pitch Count Tracker",
+        "note": "Slash-as-you-go strip, season log with rest days"
+      },
+      {
+        "href": "/blog/baseball-lineup-card-template",
+        "label": "Baseball Lineup Card",
+        "note": "Batting order and positions by inning"
+      },
+      {
+        "href": "/blog/baseball-scorekeeping-app",
+        "label": "Baseball Scorekeeping App",
+        "note": "Score live from your phone"
+      },
+      {
+        "href": "/blog/softball-score-sheet-template",
+        "label": "Softball Score Sheet",
+        "note": "Same book, softball positions"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you fill out a baseball score sheet?",
+        "a": "Write the batting order down the left with positions. Each box is one batter in one inning. When the batter reaches base, draw the line to the base and write how (1B, BB, E6); extend the line as the runner advances and fill in the diamond when they score. When the batter makes an out, write the play (K, 6-3, F8) and the out number. At the end of each half-inning, write the runs in the runs-by-inning row."
+      },
+      {
+        "q": "What do the numbers mean in baseball scorekeeping?",
+        "a": "Each fielder has a number: 1 pitcher, 2 catcher, 3 first base, 4 second base, 5 third base, 6 shortstop, 7 left field, 8 center field, 9 right field. A play is written as the fielders who touched the ball, so 6-3 is shortstop to first base and F8 is a fly ball caught by the center fielder."
+      },
+      {
+        "q": "What is the difference between K and a backwards K?",
+        "a": "K is a strikeout swinging. A backwards K is a strikeout looking (called third strike). On this sheet, write K-L for looking so you don't have to draw the letter backwards."
+      },
+      {
+        "q": "How many innings are on the sheet?",
+        "a": "Seven, which covers Little League (6), most youth leagues (6 or 7) and high school (7). If a game goes to extras, use the simple sheet on page 2 as the overflow or print a second copy."
+      },
+      {
+        "q": "Can a parent who has never kept score use this?",
+        "a": "Yes — that is what page 2 is for. It has the position numbers and the common symbols printed on it, and the only instruction is to write what the batter did in the inning box and circle it if they scored."
+      }
+    ]
+  },
+  {
+    "slug": "softball-score-sheet-template",
+    "title": "Softball Score Sheet Template (Free Printable PDF)",
+    "description": "Free printable softball score sheet, 2 pages: a scorebook page with 12 batters, 7 innings, diamonds, box score and pitching line, plus a simple one-team sheet with position numbers (including the 10th fielder) and scoring symbols.",
+    "excerpt": "The scorebook page for whoever keeps the book and a simple sheet for the parent who didn't volunteer — with softball's ten position numbers and the symbols printed on it.",
+    "tag": "Softball",
+    "date": "2026-10-17",
+    "readingTime": "5 min read",
+    "keywords": [
+      "softball score sheet template",
+      "printable softball score sheet",
+      "softball scorebook sheet pdf",
+      "softball scoresheet printable",
+      "youth softball score sheet",
+      "fastpitch score sheet",
+      "slow pitch softball score sheet",
+      "softball scorekeeping symbols"
+    ],
+    "body": [
+      {
+        "p": "Softball games are seven innings, the lineup can carry a designated player and a flex, and in slow-pitch there is a tenth fielder — none of which the generic baseball sheet in the glove bag accounts for. This printable does. Page 1 is a real scorebook page with a diamond for every at-bat, seven innings, a box score and a pitching line. Page 2 is a simple one-team sheet with the position numbers and symbols printed on it, so the parent who got handed the clipboard can keep it without a lesson. Print one of each per game."
+      },
+      {
+        "download": {
+          "href": "/downloads/softball-score-sheet.pdf",
+          "label": "Softball Score Sheet Template (printable PDF, 2 pages)",
+          "note": "Page 1: 12 batters, 7 innings with a diamond in every box, AB/R/H/RBI/BB/K totals, runs by inning, pitching line. Page 2: one-team simple sheet, runs by inning, position numbers 1–10 and the scoring symbols. Free, no email required."
+        }
+      },
+      {
+        "h2": "Which page do you need?"
+      },
+      {
+        "table": {
+          "headers": [
+            "Page",
+            "Best for",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "Scorebook page (page 1)",
+              "The official book: every at-bat on a diamond, outs, runs, hits, the pitching line",
+              "The team's book-keeper, or any parent who reads page 2 first"
+            ],
+            [
+              "Simple sheet (page 2)",
+              "Your dugout: batting order, what each kid did each inning, runs by inning for both teams",
+              "Any parent, no instructions, from the bleachers"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Softball's position numbers"
+      },
+      {
+        "p": "Same as baseball for the first nine — 1 pitcher, 2 catcher, 3 first, 4 second, 5 third, 6 shortstop, 7 left, 8 center, 9 right — and in slow-pitch the fourth outfielder or short fielder is 10. A ground ball to the shortstop thrown to first is 6-3; a fly ball to the short fielder is F10. Fastpitch teams can ignore the 10 and the sheet still works."
+      },
+      {
+        "h2": "DP and FLEX on the score sheet"
+      },
+      {
+        "p": "If your lineup uses a designated player, the DP bats and the FLEX plays defense in the same lineup spot. On page 1, write both names in that row — DP on top, FLEX underneath — and score the DP's at-bats in the row. If the FLEX comes in to bat, draw a line across the row at that inning and keep scoring in the same row: the row is the lineup spot, not the person. That one habit prevents the most common softball scorebook mess, which is losing track of who is legally in the game after a re-entry."
+      },
+      {
+        "h2": "How to score an at-bat"
+      },
+      {
+        "table": {
+          "headers": [
+            "What happened",
+            "What to write",
+            "Then"
+          ],
+          "rows": [
+            [
+              "Single / double / triple / home run",
+              "1B, 2B, 3B, HR under the line to the base reached",
+              "Extend the line as the runner moves; fill the diamond on a run"
+            ],
+            [
+              "Walk or hit by pitch",
+              "BB or HBP",
+              "Line to first"
+            ],
+            [
+              "Strikeout",
+              "K (swinging) or K-L (looking)",
+              "Mark the out number"
+            ],
+            [
+              "Fly out / ground out",
+              "F8, 6-3, 4-3, 5-3",
+              "Mark the out number"
+            ],
+            [
+              "Error",
+              "E5, E6",
+              "Line to the base reached; not a hit"
+            ],
+            [
+              "Sacrifice bunt / sacrifice fly",
+              "SAC / SF",
+              "Out number; no at-bat charged"
+            ],
+            [
+              "End of inning",
+              "A slash in the corner of the last box",
+              "Next inning, next column"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The pitching line"
+      },
+      {
+        "p": "Softball pitchers throw more innings than baseball pitchers and most youth softball leagues limit innings rather than pitches, so the IP column is the one to keep carefully: a third of an inning per out, written as 3.1 or 3.2. Walks and strikeouts tell you how the pitcher's day actually went when the score doesn't."
+      },
+      {
+        "h2": "Score it live instead"
+      },
+      {
+        "p": "The sheet is for the book. My-Team Sports is for everyone who isn't at the field. The live Scorekeeper runs from your phone one at-bat at a time — single, walk, strikeout, groundout, with a tap on the field for where the ball went — and parents who open your team's site see the score, the inning and who is up as it happens. Every at-bat rolls into the Stats tab, so AB, R, H, HR, RBI and batting average add up over the season by themselves."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/softball-lineup-card-template",
+        "label": "Softball Lineup Card",
+        "note": "Batting order with DP/FLEX rows"
+      },
+      {
+        "href": "/blog/baseball-score-sheet-template",
+        "label": "Baseball Score Sheet",
+        "note": "Same book, nine positions"
+      },
+      {
+        "href": "/blog/softball-scorekeeping-app",
+        "label": "Softball Scorekeeping App",
+        "note": "Score live from your phone"
+      },
+      {
+        "href": "/blog/baseball-depth-chart-template",
+        "label": "Baseball & Softball Depth Chart",
+        "note": "Who covers when a kid is out"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you keep score in softball?",
+        "a": "The same way as baseball: each box is one batter in one inning, draw the line to the base reached and write how (1B, BB, E6), extend the line as the runner advances, fill the diamond on a run, and write the play and out number on an out (K, 6-3, F8). Softball adds a tenth fielder in slow-pitch and the DP/FLEX lineup rule."
+      },
+      {
+        "q": "What is position 10 in softball?",
+        "a": "The short fielder or fourth outfielder in slow-pitch softball. A fly ball caught there is F10. Fastpitch plays nine fielders, so the 10 is simply unused."
+      },
+      {
+        "q": "How do you score the DP and FLEX?",
+        "a": "They share one lineup spot. Write both names in that row, score the DP's at-bats there, and if the FLEX comes in to bat keep scoring in the same row from that inning on. The row belongs to the lineup spot, not the player."
+      },
+      {
+        "q": "How many innings does the sheet have?",
+        "a": "Seven, the standard for fastpitch, slow-pitch and high school. For extra innings use page 2 as an overflow or print a second copy."
+      },
+      {
+        "q": "Is this different from the baseball score sheet?",
+        "a": "The grid is the same. The softball version adds the tenth position, the DP/FLEX note, and the innings-pitched emphasis on the pitching line. Use whichever matches the game you are scoring."
+      }
+    ]
+  },
+  {
+    "slug": "baseball-pitch-count-tracker-template",
+    "title": "Baseball Pitch Count Tracker Template (Free Printable PDF)",
+    "description": "Free printable pitch count tracker, 2 pages: a game pitching chart with a slash-as-you-go strip to 110 for four pitchers, and a season pitch log with your league's limits and rest days so no kid pitches before he's eligible.",
+    "excerpt": "A game chart where you slash one number per pitch so the count is never a guess, and a season log that answers the only question that matters: who can pitch Saturday.",
+    "tag": "Baseball",
+    "date": "2026-10-17",
+    "readingTime": "6 min read",
+    "keywords": [
+      "pitch count tracker template",
+      "printable pitch count sheet",
+      "baseball pitch count chart pdf",
+      "youth baseball pitch count log",
+      "pitching chart template",
+      "little league pitch count tracker",
+      "pitch count rest days chart",
+      "baseball pitching log printable"
+    ],
+    "body": [
+      {
+        "p": "Every youth league now has pitch-count rules, and every coach has been asked mid-game how many pitches his kid has thrown and had to guess. This printable ends the guessing. Page 1 is a game pitching chart for up to four pitchers, each with a strip of numbers from 1 to 110: slash one per pitch, and the last slashed number is the count, the same trick a basketball running score uses. Page 2 is a season log — one row per outing with the limit, the rest days required and the date the pitcher is eligible again — plus a table to copy your league's limits into, because Little League, PONY, Cal Ripken, USSSA and high school all differ."
+      },
+      {
+        "download": {
+          "href": "/downloads/baseball-pitch-count-tracker.pdf",
+          "label": "Pitch Count Tracker (printable PDF, 2 pages)",
+          "note": "Page 1: four pitchers, pitches by inning, total, batters faced, K/BB/H/R, strikes, and a 1–110 slash strip each, plus an after-the-game box for rest days. Page 2: your league's limits table and a 26-row season pitch log with eligible-again dates. Free, no email required."
+        }
+      },
+      {
+        "h2": "How to use the game chart"
+      },
+      {
+        "p": "Before the first pitch, write the league limit for each pitcher's age in the Max today box. During the game, slash the next number on that pitcher's strip on every pitch — balls, strikes, foul balls, everything except warm-ups. At the end of each inning, write that inning's pitches in the inning box and the running total in the Total box. When the strip gets within ten of the limit, the coach knows before the umpire does, and the pitcher is pulled between batters instead of mid-count."
+      },
+      {
+        "table": {
+          "headers": [
+            "Box",
+            "What goes in it",
+            "Why"
+          ],
+          "rows": [
+            [
+              "Max today",
+              "The league limit for this pitcher's age",
+              "The number the whole chart exists to protect"
+            ],
+            [
+              "Pitches by inning",
+              "Count from the strip at the end of each inning",
+              "Shows the inning that got away — 28 pitches in the 3rd is the story of the game"
+            ],
+            [
+              "BF / K / BB / H / R",
+              "Batters faced and the results",
+              "Walks per inning tells you more than runs"
+            ],
+            [
+              "Strikes %",
+              "Strikes ÷ total pitches",
+              "Under 55% and the pitcher is working too hard for every out"
+            ],
+            [
+              "After the game",
+              "Pitches today, rest days required, eligible date",
+              "Copies straight to the season log"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Why the league-limits table is blank"
+      },
+      {
+        "p": "Because the numbers are not the same anywhere. Little League's daily maximums and rest-day thresholds are different from PONY's, USSSA sets its own, high school rules vary by state, and most leagues change something every year or two. A sheet with last season's Little League numbers printed on it is wrong for most teams reading it, and a wrong rest-day number is worse than none. So page 2 has a table with the right columns — age group, daily max, the pitch thresholds for 0 through 4 days of rest, weekly max — and you copy your league's rules into it once at the start of the season. Five minutes, and then every coach on the staff is working from the same card."
+      },
+      {
+        "h2": "The season log is the part that keeps you out of trouble"
+      },
+      {
+        "p": "One row per outing: date, opponent, pitcher, pitches, limit, rest days, eligible again on. Fill in the eligible date the night of the game, and the Saturday question — who can pitch — becomes a glance at the right-hand column. The log also makes the pattern visible: the kid who has thrown 85, 80 and 90 in three consecutive weeks is not hurt yet, but the log is how you notice before he is."
+      },
+      {
+        "ul": [
+          "Count every pitch, including the ones that come after a time-out or a mound visit. Warm-up pitches between innings do not count.",
+          "A pitcher who reaches the limit mid-batter may finish that batter under most rulebooks. Check yours; then write the final count, not the limit.",
+          "Catching after pitching has its own rules in many leagues (a pitcher over a certain count may not catch the rest of the day). Note it on the chart before moving a kid behind the plate.",
+          "Keep the charts. If a parent, a league official or an opposing coach asks, the slashed strip is the record."
+        ]
+      },
+      {
+        "h2": "Track the rest of the game live"
+      },
+      {
+        "p": "The pitch count stays on paper — it has to be in the dugout, in a hand, every pitch. Everything else can go on your team's site. My-Team Sports scores the game live from a phone one at-bat at a time, parents follow along without an app, and the hitting stats add up over the season on their own. The lineup card and depth chart below are built to sit next to this one on the clipboard."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/baseball-score-sheet-template",
+        "label": "Baseball Score Sheet",
+        "note": "The scorebook page with a pitching line"
+      },
+      {
+        "href": "/blog/baseball-depth-chart-template",
+        "label": "Baseball & Softball Depth Chart",
+        "note": "Pitching staff box with rest days"
+      },
+      {
+        "href": "/blog/baseball-lineup-card-template",
+        "label": "Baseball Lineup Card",
+        "note": "Batting order, positions by inning"
+      },
+      {
+        "href": "/blog/youth-baseball-practice-plan",
+        "label": "Baseball Practice Plan",
+        "note": "90 minutes, three stations"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you keep track of pitch counts?",
+        "a": "Slash one number on the pitcher's strip for every pitch thrown — balls, strikes and fouls, but not warm-ups. The last slashed number is the count. Write the per-inning pitches at the end of each inning and the total after the game, then copy the total, rest days and eligible date to the season log."
+      },
+      {
+        "q": "Why doesn't the sheet have the Little League pitch count limits printed on it?",
+        "a": "Because leagues differ and change their rules. Little League, PONY, Cal Ripken, USSSA and state high-school associations all set different daily limits and rest-day thresholds. The sheet has a table with the right columns for you to copy your league's current rules into, so the numbers your coaches use are the ones that apply to your team."
+      },
+      {
+        "q": "Do warm-up pitches count toward the pitch count?",
+        "a": "No. Pitches between innings and before entering the game are not counted under the common rulebooks. Every pitch to a batter counts, including foul balls and pitches thrown after a mound visit."
+      },
+      {
+        "q": "Can a pitcher finish the batter after reaching the limit?",
+        "a": "Under most youth rulebooks, yes — a pitcher who reaches the daily maximum mid-at-bat may finish that batter. Record the actual number of pitches thrown, not the limit, and apply the rest days to that number."
+      },
+      {
+        "q": "How many pitchers fit on the game chart?",
+        "a": "Four per page, each with their own 1–110 strip. If you use five pitchers in a game, print a second copy for the extra arms."
+      }
+    ]
+  },
+  {
+    "slug": "volleyball-score-sheet-template",
+    "title": "Volleyball Score Sheet Template (Free Printable PDF)",
+    "description": "Free printable volleyball score sheet, 2 pages: five sets with running score to 25 (15 in set 5) for both teams, timeouts, substitutions and starting rotations, plus a simple one-team sheet with serving tallies for the parent in the bleachers.",
+    "excerpt": "Five sets, both teams, running score, timeouts and subs on one page for the table — and a simple one-team page with serving tallies for whoever is keeping it from the stands.",
+    "tag": "Volleyball",
+    "date": "2026-10-17",
+    "readingTime": "5 min read",
+    "keywords": [
+      "volleyball score sheet template",
+      "printable volleyball score sheet",
+      "volleyball scoresheet pdf",
+      "volleyball scoring sheet",
+      "youth volleyball score sheet",
+      "club volleyball score sheet printable",
+      "volleyball running score sheet",
+      "simple volleyball score sheet"
+    ],
+    "body": [
+      {
+        "p": "The official volleyball scoresheet is a dense form built for certified scorers, and the flip-chart on the table is one bumped elbow from being wrong. Youth and club matches need something in between: a sheet a parent can keep that still settles arguments. This printable has two pages. Page 1 is for the table: five sets, both teams, a running score to 25 for each (15 for the fifth), two timeout boxes and six substitution boxes per team per set, the starting rotation for every set, and a set-score summary. Page 2 is the simple version for your own bench, with a serving tally per player."
+      },
+      {
+        "download": {
+          "href": "/downloads/volleyball-score-sheet.pdf",
+          "label": "Volleyball Score Sheet Template (printable PDF, 2 pages)",
+          "note": "Page 1: 5 sets × both teams, running score 1–25 (set 5 to 15), 2 timeouts and 6 subs per team per set, starting rotation I–VI plus libero by set, set-score summary. Page 2: one-team sheet, running score to 30 per set, serving tally with aces and errors by player. Free, no email required."
+        }
+      },
+      {
+        "h2": "Which page do you need?"
+      },
+      {
+        "table": {
+          "headers": [
+            "Page",
+            "Best for",
+            "Who keeps it"
+          ],
+          "rows": [
+            [
+              "Table sheet (page 1)",
+              "Both teams: the running score that settles disputes, timeouts and subs for the ref, rotations for the coach",
+              "Whoever is at the table — a parent with a one-minute explanation"
+            ],
+            [
+              "Simple sheet (page 2)",
+              "Your bench: the score of every set, who served, aces and errors",
+              "An assistant, an injured player, a parent in the bleachers"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "How to keep the running score"
+      },
+      {
+        "p": "Every rally ends in a point under rally scoring, so every rally gets a slash: when a team wins the rally, cross out the next number in that team's row. The last crossed-out number is the score, and nobody adds anything during the set. Sets go to 25 and must be won by two, which is why the strip has room past 25 on page 2; if a set runs long on page 1, keep slashing in the margin and write the final in the summary. The fifth set goes to 15."
+      },
+      {
+        "h2": "Timeouts, substitutions and the rotation"
+      },
+      {
+        "p": "Each team gets two timeouts per set — tick a TO box when one is called, and the coach who knows the other team has none left plays the last three points differently. Substitutions are limited per set in most leagues (twelve under high-school rules, six under USAV for many age groups, so check yours); tick a SUBS box per substitution and say the count out loud when a team gets close. The starting rotation grid is for the coach, not the ref: write the six starters by position (I is right back, the server, around to VI) and the libero for each set, and the question of whether the rotation was right at the start of set three has an answer."
+      },
+      {
+        "table": {
+          "headers": [
+            "Situation",
+            "What to mark",
+            "Why it matters"
+          ],
+          "rows": [
+            [
+              "Rally won",
+              "Slash the next number for that team",
+              "Score is always the last slashed number"
+            ],
+            [
+              "Timeout",
+              "Tick a TO box for that team",
+              "Two per set; knowing they are gone changes the end of the set"
+            ],
+            [
+              "Substitution",
+              "Tick a SUBS box for that team",
+              "Limits are per set; the sixth or twelfth is the last one"
+            ],
+            [
+              "Set over",
+              "Write both scores and tick W for the winner",
+              "The summary row shows the match at a glance"
+            ],
+            [
+              "New set",
+              "Fill the starting rotation grid for both teams",
+              "Rotation errors are caught before the first serve, not after"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "The simple sheet, for the bench"
+      },
+      {
+        "p": "Page 2 keeps only what your own team needs: a running score to 30 for us and them in every set, and a serving table with a box per player per set. Write an A in the box for an ace and an E for a service error when it happens and leave a tally mark for every other serve. At the end of the match the serving table is the honest version of the game: a team that gave away eight points on serve errors did not lose to a better team."
+      },
+      {
+        "h2": "Score it live instead"
+      },
+      {
+        "p": "The sheet is for the table. My-Team Sports is for everyone who isn't in the gym. The live scoreboard runs from your phone a point at a time, set by set, and parents who open your team's site see the score as it happens without an app. Kills, assists, digs, blocks and aces go in the Stats tab after the match and add up over the season. Print the sheet for the table, score it live for the family that couldn't make the drive."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/volleyball-lineup-sheet-template",
+        "label": "Volleyball Lineup Sheet",
+        "note": "Rotations and serving order by set"
+      },
+      {
+        "href": "/blog/volleyball-stat-sheet-template",
+        "label": "Volleyball Stat Sheet",
+        "note": "Kills, digs, aces, blocks by player"
+      },
+      {
+        "href": "/blog/volleyball-rotation-explained",
+        "label": "Volleyball Rotation Explained",
+        "note": "Positions I–VI and who moves where"
+      },
+      {
+        "href": "/blog/volleyball-tryout-evaluation-form",
+        "label": "Volleyball Tryout Evaluation Form",
+        "note": "Eight skills, same scale for everyone"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "How do you fill out a volleyball score sheet?",
+        "a": "Write the starting rotation for both teams before the set. When a team wins a rally, slash the next number in that team's running score. Tick a TO box per timeout and a SUBS box per substitution. When the set ends, write both scores in the summary and tick the winner. Start the next set on the next block."
+      },
+      {
+        "q": "What is a running score in volleyball?",
+        "a": "A row of numbers 1 to 25 for each team. Every rally won crosses out the next number, so the last crossed-out number is always the score. It means nobody has to add during the set and the sheet beats the flip-chart when they disagree."
+      },
+      {
+        "q": "How many points is a volleyball set?",
+        "a": "Sets one through four go to 25, win by two. A deciding fifth set goes to 15, win by two. Some youth leagues play best-of-three with a 15-point third set; the sheet works the same way."
+      },
+      {
+        "q": "How many substitutions are allowed per set?",
+        "a": "It depends on the rulebook: twelve per set under NFHS high-school rules, and six per set under USAV rules for many age groups (some divisions allow more). Check your league and use the SUBS boxes to count."
+      },
+      {
+        "q": "Can a parent keep this score sheet?",
+        "a": "Yes. Page 2 needs one instruction: slash a number when we win the rally. Page 1 takes about a minute to explain and is the one to use at the table."
+      }
+    ]
+  },
+  {
+    "slug": "volleyball-tryout-evaluation-form",
+    "title": "Volleyball Tryout Evaluation Form (Free Printable PDF)",
+    "description": "Free printable volleyball tryout evaluation form: one player, eight skills on a 1–5 scale — serving, serve receive, setting, attacking, blocking, defense, athleticism, coachability — with a roster/bubble/develop recommendation and a summary grid for the whole tryout.",
+    "excerpt": "One form per player, eight skills, the same scale for everyone, and a summary grid so the roster decision is a sort instead of an argument.",
+    "tag": "Volleyball",
+    "date": "2026-10-17",
+    "readingTime": "5 min read",
+    "keywords": [
+      "volleyball tryout evaluation form",
+      "volleyball tryout sheet printable",
+      "volleyball tryout score sheet pdf",
+      "volleyball tryout rubric",
+      "club volleyball tryout evaluation",
+      "volleyball player evaluation form",
+      "youth volleyball tryout form",
+      "volleyball skills assessment sheet"
+    ],
+    "body": [
+      {
+        "p": "The hardest conversation in club volleyball isn't with a player — it's with a parent who wants to know why her daughter made the second team. If the answer is a form with eight numbers on it that every evaluator used the same way, the conversation is short. If the answer is a feeling, it isn't. This printable is that form: one player per page, eight skills rated 1 to 5 with a note on what to watch for, a total out of 40, a roster/bubble/develop recommendation, and a second page with a summary grid for the whole tryout so the decision is a sort, not a debate."
+      },
+      {
+        "download": {
+          "href": "/downloads/volleyball-tryout-evaluation.pdf",
+          "label": "Volleyball Tryout Evaluation Form (printable PDF, 2 pages)",
+          "note": "Page 1: one player, eight skills with 1–5 boxes and a watch-for cue, notes column, total /40, roster/bubble/develop boxes, notes and scrimmage lines. Page 2: 26-row summary grid with every skill, total and decision. Free, no email required."
+        }
+      },
+      {
+        "h2": "The eight things to rate"
+      },
+      {
+        "table": {
+          "headers": [
+            "Skill",
+            "Watch for",
+            "Not this"
+          ],
+          "rows": [
+            [
+              "Serving",
+              "Consistent, in, hits a zone when asked",
+              "One ace in warm-ups"
+            ],
+            [
+              "Serve receive / passing",
+              "Platform early, feet move first, ball to target",
+              "Whether the one ball she shanked landed"
+            ],
+            [
+              "Setting",
+              "Quiet hands, location, decision speed",
+              "Height alone"
+            ],
+            [
+              "Attacking",
+              "Approach timing, full arm swing, sees the block",
+              "Kill count in a drill with no block"
+            ],
+            [
+              "Blocking",
+              "Footwork along the net, hands pressed over, closes with the partner",
+              "Vertical alone"
+            ],
+            [
+              "Defense / digging",
+              "Reads the hitter, stays low, plays the ball up",
+              "Diving for show"
+            ],
+            [
+              "Athleticism",
+              "Vertical, lateral speed, recovers after the play",
+              "Size"
+            ],
+            [
+              "Coachability / effort",
+              "Listens, chases balls nobody else does, resets after errors",
+              "Being loud"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Run the tryout so the numbers mean something"
+      },
+      {
+        "p": "The form is only as fair as the tryout underneath it. Number every player with tape or pinnies so evaluators write numbers, not names they half-remember. Run the same stations in the same order for every group — serving to zones, serve receive off a coach, setting off a toss, hitting against a block, a defense drill, then scrimmage — and have two evaluators rate every player independently before comparing. The kids the two sheets disagree on are the ones to watch in the scrimmage; the ones both sheets agree on are already decided."
+      },
+      {
+        "ul": [
+          "Rate the skill, not the result. A clean platform that sends one ball long is a 4. A lucky shank that lands is a 2.",
+          "Use the whole scale. If every player is a 3 or a 4, the grid can't sort anything.",
+          "Write one line in the notes column for every player. Three weeks from now, the number alone will not remind you why.",
+          "Rate coachability last, after the scrimmage, when you have seen a player make an error and watched what happened next."
+        ]
+      },
+      {
+        "h2": "After the last whistle"
+      },
+      {
+        "p": "Copy each player's eight numbers and total onto the summary grid on page 2, sort by total, and make the easy calls first — the top group and the clear cuts. The middle is where the notes column and the second evaluator's grid earn their keep. Write the decision in the last column (R roster, B bubble, D develop) and keep every form: the parent call goes better when you can say what you saw, in order, with numbers."
+      },
+      {
+        "h2": "Roster picked — now put it somewhere"
+      },
+      {
+        "p": "The day after tryouts, the real season admin starts. With My-Team Sports you paste the roster in, the schedule and gym addresses go on one page parents actually open, the live scoreboard runs from your phone set by set, and kills, digs, aces and blocks add up over the season. No app for parents to install, no account for them to create. The lineup and rotation sheets below are built for the first practice."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/volleyball-practice-plan-template",
+        "label": "Volleyball Practice Plan",
+        "note": "The first week after tryouts"
+      },
+      {
+        "href": "/blog/volleyball-lineup-sheet-template",
+        "label": "Volleyball Lineup Sheet",
+        "note": "Rotations and serving order"
+      },
+      {
+        "href": "/blog/volleyball-score-sheet-template",
+        "label": "Volleyball Score Sheet",
+        "note": "Five sets, both teams, one page"
+      },
+      {
+        "href": "/blog/basketball-tryout-evaluation-form",
+        "label": "Basketball Tryout Evaluation Form",
+        "note": "Same form, different sport"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What should a volleyball tryout evaluation include?",
+        "a": "The core skills — serving, serve receive, setting, attacking, blocking and defense — plus athleticism and coachability, each on the same numeric scale with a short cue for what to watch. A total, a recommendation and a notes line make the form useful after the tryout, not just during it."
+      },
+      {
+        "q": "How do you score a volleyball tryout fairly?",
+        "a": "Same stations in the same order for every group, players numbered not named, two evaluators rating independently, the skill rated rather than the result, and the whole 1–5 scale used. Then sort the summary grid and discuss only the middle."
+      },
+      {
+        "q": "What is the 1–5 scale?",
+        "a": "1 is not yet able to perform the skill in a drill, 3 is performs it in a drill but not reliably under pressure, 5 is performs it in a scrimmage against resistance. Define it out loud for the evaluators before the first station so a 3 means the same thing on every sheet."
+      },
+      {
+        "q": "How many players fit on the summary grid?",
+        "a": "Twenty-six rows per page. For a larger tryout, print one grid per age group or per court."
+      },
+      {
+        "q": "Can I use this for school tryouts as well as club?",
+        "a": "Yes. The skills are the same; only the recommendation labels change. Cross out roster/bubble/develop and write varsity/JV/cut if that is the decision you are making."
+      }
+    ]
+  },
+  {
+    "slug": "baseball-tryout-evaluation-form",
+    "title": "Baseball Tryout Evaluation Form (Free Printable PDF)",
+    "description": "Free printable baseball and softball tryout evaluation form: one player, eight skills on a 1–5 scale — hitting, bat speed, fielding, throwing, speed, pitching, catching, coachability — with a roster recommendation and a summary grid for the whole tryout.",
+    "excerpt": "One form per player, eight skills, the same scale for every evaluator, and a summary grid so the roster is a sort instead of a meeting. Works for baseball and softball.",
+    "tag": "Baseball",
+    "date": "2026-10-17",
+    "readingTime": "5 min read",
+    "keywords": [
+      "baseball tryout evaluation form",
+      "baseball tryout sheet printable",
+      "youth baseball tryout evaluation pdf",
+      "softball tryout evaluation form",
+      "baseball player evaluation form",
+      "little league tryout evaluation sheet",
+      "baseball tryout rubric",
+      "baseball skills assessment form"
+    ],
+    "body": [
+      {
+        "p": "Baseball tryouts are the one day a year when a coach has to compare forty kids he has mostly never seen, in an hour, in cold weather, and then explain the result to their parents. The form is what makes that defensible. One player per page, eight skills rated 1 to 5 with a cue for what to watch, a line for the speed times, a total out of 40, a roster/bubble/develop recommendation, and a second page with a summary grid for the whole tryout. It works for baseball and softball — the skills are the same, only the arc of the pitch changes."
+      },
+      {
+        "download": {
+          "href": "/downloads/baseball-tryout-evaluation.pdf",
+          "label": "Baseball & Softball Tryout Evaluation Form (printable PDF, 2 pages)",
+          "note": "Page 1: one player, eight skills with 1–5 boxes and a watch-for cue, home-to-first and 60-yard time lines, notes, total /40, roster/bubble/develop boxes, scrimmage lines. Page 2: 26-row summary grid with every skill, total and decision. Free, no email required."
+        }
+      },
+      {
+        "h2": "The eight things to rate"
+      },
+      {
+        "table": {
+          "headers": [
+            "Skill",
+            "Watch for",
+            "Not this"
+          ],
+          "rows": [
+            [
+              "Hitting",
+              "Balance, contact, swings at strikes and takes balls",
+              "Home runs off a 40 mph machine"
+            ],
+            [
+              "Bat speed / power",
+              "Barrel speed, drives the ball, hits it hard the other way",
+              "Size"
+            ],
+            [
+              "Fielding",
+              "Glove out front, feet move to the ball, clean exchange",
+              "One diving play"
+            ],
+            [
+              "Throwing",
+              "Accuracy first, then arm strength; crow-hop on long throws",
+              "Velocity on a cold arm"
+            ],
+            [
+              "Speed",
+              "Home-to-first time, 60-yard time — write both on the form",
+              "Looking fast"
+            ],
+            [
+              "Pitching (if tried)",
+              "Throws strikes, repeats the delivery, keeps composure after a walk",
+              "Radar gun readings at twelve"
+            ],
+            [
+              "Catching (if tried)",
+              "Receives quietly, blocks, pop time, wants to be back there",
+              "Only the arm"
+            ],
+            [
+              "Coachability / effort",
+              "Listens, hustles between stations, resets after an error",
+              "Volume"
+            ]
+          ]
+        }
+      },
+      {
+        "h2": "Run the tryout so the numbers mean something"
+      },
+      {
+        "p": "Number every player with tape and have evaluators write numbers, not names. Run the same stations in the same order for every group: a timed run (home to first, then 60 yards), infield ground balls with throws to first, outfield fly balls with throws to a cutoff, batting practice off a machine or a coach at a consistent speed, then pitchers and catchers who want to try it. Finish with a short scrimmage if there is time, because the scrimmage is where coachability and game sense show up. Two evaluators rate every player independently before comparing; the ones they disagree on are the ones to talk about."
+      },
+      {
+        "ul": [
+          "Rate throwing on mechanics and accuracy, not velocity. Arms grow; bad habits stay.",
+          "Write the speed times on the form. A time is a number nobody argues with.",
+          "Use the whole scale. A tryout where every kid is a 3 has sorted nothing.",
+          "Rate pitching and catching only for kids who tried out for them; leave the box blank otherwise and total out of 30."
+        ]
+      },
+      {
+        "h2": "After the last whistle"
+      },
+      {
+        "p": "Copy each player's numbers to the summary grid on page 2, sort by total, and make the easy calls first. The middle of the grid is where the notes column, the second evaluator's sheet and the scrimmage decide it. Write R, B or D in the decision column and keep every form — when a parent asks why, you will have eight numbers, two times and a sentence you wrote while watching."
+      },
+      {
+        "h2": "Roster picked — now put it somewhere"
+      },
+      {
+        "p": "The day after tryouts the season admin starts: the roster, the schedule, the field addresses, the rainout messages. With My-Team Sports you paste the roster in, the schedule goes on one page parents actually open, the game is scored live from a phone one at-bat at a time, and AB, hits, RBI and batting average add up over the season without a spreadsheet. No app for parents to install. The lineup card, depth chart and practice plan below are built for the first week."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/youth-baseball-practice-plan",
+        "label": "Baseball Practice Plan",
+        "note": "90 minutes, three stations, printable"
+      },
+      {
+        "href": "/blog/baseball-lineup-card-template",
+        "label": "Baseball Lineup Card",
+        "note": "Batting order and positions by inning"
+      },
+      {
+        "href": "/blog/baseball-depth-chart-template",
+        "label": "Baseball & Softball Depth Chart",
+        "note": "Three deep at every position"
+      },
+      {
+        "href": "/blog/basketball-tryout-evaluation-form",
+        "label": "Basketball Tryout Evaluation Form",
+        "note": "Same form, different sport"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What should a baseball tryout evaluation form include?",
+        "a": "Hitting, bat speed, fielding, throwing, speed, pitching and catching (for the kids who try them), and coachability, each on the same 1–5 scale with a cue for what to watch. Add the home-to-first and 60-yard times, a total, a recommendation and a notes line."
+      },
+      {
+        "q": "How do you run a fair youth baseball tryout?",
+        "a": "Same stations in the same order for every group, players numbered, two evaluators rating independently, times written down, and the skill rated rather than one lucky result. Then sort the summary grid and spend the discussion on the middle."
+      },
+      {
+        "q": "Does this work for softball tryouts?",
+        "a": "Yes. The eight skills are the same for softball; use the same form and the same scale. The only difference is what pitching looks like at the station."
+      },
+      {
+        "q": "What is a good home-to-first time for youth baseball?",
+        "a": "It depends on age, and the point of writing the time on the form is to compare players in the same tryout, not to a chart. Within an age group, the fastest third and slowest third will be obvious once the times are on the grid."
+      },
+      {
+        "q": "How many players fit on the summary grid?",
+        "a": "Twenty-six rows per page. For a larger tryout, print one grid per age group or per field."
+      }
+    ]
+  },
+  {
     "slug": "basketball-score-sheet-template",
     "title": "Basketball Score Sheet Template (Free Printable PDF)",
     "description": "Free printable basketball score sheet, 2 pages: both teams on one page with running score to 100, player fouls, team fouls, timeouts and quarter scores, plus a simple one-team sheet a parent can keep.",
@@ -1940,7 +2904,7 @@ export const posts = [
       { p: "Paper is perfect for the dugout fence, but it can't tell you whether Saturday's lineup keeps everyone inside your league's playing-time rules. If you run your team on My-Team Sports, you can build the lineup online, keep score play by play from your phone, and let the AI lineup advisor suggest a batting order and defensive rotation from your roster — then print this card as the dugout copy." },
     ],
     related: [
-      { href: "/blog/how-to-keep-a-baseball-scorebook", label: "How to Keep a Baseball Scorebook", note: "Score the game your lineup plays" },
+      { href: "/blog/baseball-score-sheet-template", label: "Baseball Score Sheet", note: "Scorebook page plus a simple sheet" },
       { href: "/blog/youth-baseball-practice-plan", label: "90-Minute Baseball Practice Plan", note: "Free reusable template" },
       { href: "/blog/baseball-scorekeeping-app", label: "Baseball Scorekeeping App", note: "Play-by-play scoring from your phone" },
     ],
@@ -3699,88 +4663,107 @@ export const posts = [
     ],
   },
   {
-    slug: "youth-baseball-practice-plan",
-    title: "A 90-Minute Youth Baseball Practice Plan (Free Template)",
-    description:
-      "A ready-to-run 90-minute youth baseball practice plan for coaches — warm-up, fundamental stations, and a game-speed finish you can reuse every week.",
-    excerpt:
-      "Steal our 90-minute template — warm-up, stations, and a game-speed finish that keeps a dozen kids moving and nobody standing in line.",
-    tag: "Coaching",
-    date: "2026-07-06",
-    updated: "2026-07-06",
-    readingTime: "6 min read",
-    keywords: ["youth baseball practice plan", "baseball practice schedule", "youth baseball drills", "little league practice plan"],
-    body: [
-      { p: "The difference between a practice that develops players and one that just burns 90 minutes is structure. When kids rotate through short, focused stations, they get more reps, stay engaged, and spend less time standing in line waiting for a turn. Here is a simple, repeatable plan you can run every week." },
-      { h2: "Before you start" },
-      { p: "Show up with a plan written on an index card or your phone, and recruit one or two parent helpers to run stations. With helpers you can split the team into small groups and triple the number of reps each kid gets." },
-      { h2: "The 90-minute plan" },
-      { ol: [
-        "Warm-up and dynamic stretch (10 min): light jog, arm circles, high knees, and a few short sprints. Loose bodies throw harder and get hurt less.",
-        "Throwing progression (10 min): partners start close and step back after every five clean throws. Emphasize footwork and hitting a target, not raw velocity.",
-        "Fundamental stations (30 min): split into three groups and rotate every 10 minutes — fielding ground balls, catching fly balls, and hitting off a tee or soft toss.",
-        "Team defense (20 min): walk through situations at game speed — who covers which base, where the throw goes, and who backs up the play.",
-        "Situational scrimmage (15 min): runners on base, live at-bats, real decisions. This is where practice starts to look like a game.",
-        "Wrap-up (5 min): one thing the team did well, one thing to work on, and a reminder of the next game or practice time.",
-      ]},
-      { h2: "Coaching tips that make it stick" },
-      { ul: [
-        "Give one cue at a time. Kids can fix one thing, not five.",
-        "Reps beat lectures. If a group is standing and listening for more than a minute, shorten it.",
-        "End on something fun and competitive — a relay, a home-run derby, or a fielding challenge.",
-        "Jot down who struggled with what, so next week's plan targets it.",
-      ]},
-      { h2: "Track it so it compounds" },
-      { p: "Practice pays off fastest when you can see progress. Logging simple stats and notes across a season shows which players are trending up and where the team keeps breaking down. If you run your team on My-Team Sports, the roster, schedule, and stats live in one place — and the AI practice planner can generate a fresh plan for any sport in seconds." },
+    "slug": "youth-baseball-practice-plan",
+    "title": "Baseball Practice Plan Template (Free Printable PDF)",
+    "description": "Free printable 90-minute youth baseball practice plan: warm-up, throwing progression, three rotating stations, team defense, situational scrimmage and wrap-up, with a station rotation grid and a blank version for your own drills.",
+    "excerpt": "A 90-minute practice that keeps kids moving: three stations, a rotation grid, and a blank page so next week's plan is written before you leave the house.",
+    "tag": "Baseball",
+    "date": "2026-10-17",
+    "updated": "2026-07-06",
+    "readingTime": "6 min read",
+    "keywords": [
+      "baseball practice plan template",
+      "youth baseball practice plan pdf",
+      "printable baseball practice plan",
+      "90 minute baseball practice plan",
+      "little league practice plan template",
+      "baseball practice schedule template",
+      "baseball practice stations",
+      "softball practice plan template"
     ],
-  },
-  {
-    slug: "how-to-keep-a-baseball-scorebook",
-    title: "How to Keep a Baseball Scorebook: A Beginner's Guide for Team Parents",
-    description:
-      "Learn how to keep a baseball scorebook step by step — position numbers, the basic symbols, and tracking hits and outs — so any parent can score a youth game with confidence.",
-    excerpt:
-      "Position numbers, the basic symbols, and how to track a half-inning — everything a first-time scorekeeper needs, minus the jargon.",
-    tag: "Scorekeeping",
-    date: "2026-07-02",
-    updated: "2026-07-02",
-    readingTime: "7 min read",
-    keywords: ["how to keep a baseball scorebook", "how to score a baseball game", "baseball scorekeeping for beginners", "youth baseball scorekeeping"],
-    body: [
-      { p: "Keeping the book looks intimidating from the stands, but the basics come down to a handful of numbers and symbols. Once you learn them, you can score any youth game and give your coach a reliable record of what happened. Here is everything a first-time scorekeeper needs." },
-      { h2: "First, learn the position numbers" },
-      { p: "Every defensive position has a number. Scorekeeping uses these numbers instead of names, so a ground out to the shortstop is written the same way every time." },
-      { ul: [
-        "1 — Pitcher", "2 — Catcher", "3 — First base", "4 — Second base", "5 — Third base",
-        "6 — Shortstop", "7 — Left field", "8 — Center field", "9 — Right field",
-      ]},
-      { h2: "The scorebook grid" },
-      { p: "Each row is a batter and each column is an inning. The small diamond in every box represents the bases. As a runner advances, you trace their path around the diamond, filling it in completely when they score." },
-      { h2: "The symbols you will use most" },
-      { ul: [
-        "K — strikeout swinging; a backwards K means a called strike three.",
-        "BB — base on balls (a walk).",
-        "1B, 2B, 3B, HR — single, double, triple, home run.",
-        "F8 — fly out to center field (position 8).",
-        "6-3 — ground out, shortstop to first base.",
-      ]},
-      { h2: "Scoring a half-inning, step by step" },
-      { ol: [
-        "Write each batter in order as they come up.",
-        "In their box, record the result — a hit, a walk, or how they made an out.",
-        "Trace base runners around the diamond as later batters move them along.",
-        "Fill in the diamond when a runner scores, and note who drove them in.",
-        "Mark three outs, then draw a line — that half-inning is done.",
-      ]},
-      { h2: "Common beginner mistakes" },
-      { ul: [
-        "Forgetting to advance existing runners when a new batter gets a hit.",
-        "Mixing up who gets credit for a run batted in.",
-        "Not marking outs clearly, so you lose track of the inning.",
-      ]},
-      { h2: "Or skip the pencil entirely" },
-      { p: "Paper scorebooks work, but they smudge, get lost, and are easy to fall behind on. A digital scorekeeper tracks the game tap by tap, rolls up stats automatically, and lets parents who could not make it follow along live. My-Team Sports includes live scorekeeping for baseball and softball, plus a universal scoreboard for other sports, so the book, the stats, and the live game all update in one place." },
+    "body": [
+      {
+        "p": "The difference between a practice that develops players and one that just burns 90 minutes is structure. When kids rotate through short, focused stations they get more reps, stay engaged, and spend less time standing in line. This printable is that structure on one page: the filled-in 90-minute plan with a station rotation grid on page 1, and the same frame blank on page 2 so next week's plan is written before you leave the house. Print it, fold it, put it in your back pocket."
+      },
+      {
+        "download": {
+          "href": "/downloads/baseball-practice-plan.pdf",
+          "label": "Baseball Practice Plan Template (printable PDF, 2 pages)",
+          "note": "Page 1: the filled-in 90-minute plan with a station rotation grid, group boxes and an equipment/absent/notes box. Page 2: the same frame blank, with a who-struggled-with-what section for next week. Works for softball too. Free, no email required."
+        }
+      },
+      {
+        "h2": "Before you start"
+      },
+      {
+        "p": "Show up with a plan written on an index card or your phone, and recruit one or two parent helpers to run stations. With helpers you can split the team into small groups and triple the number of reps each kid gets."
+      },
+      {
+        "h2": "The 90-minute plan"
+      },
+      {
+        "ol": [
+          "Warm-up and dynamic stretch (10 min): light jog, arm circles, high knees, and a few short sprints. Loose bodies throw harder and get hurt less.",
+          "Throwing progression (10 min): partners start close and step back after every five clean throws. Emphasize footwork and hitting a target, not raw velocity.",
+          "Fundamental stations (30 min): split into three groups and rotate every 10 minutes — fielding ground balls, catching fly balls, and hitting off a tee or soft toss.",
+          "Team defense (20 min): walk through situations at game speed — who covers which base, where the throw goes, and who backs up the play.",
+          "Situational scrimmage (15 min): runners on base, live at-bats, real decisions. This is where practice starts to look like a game.",
+          "Wrap-up (5 min): one thing the team did well, one thing to work on, and a reminder of the next game or practice time."
+        ]
+      },
+      {
+        "h2": "Coaching tips that make it stick"
+      },
+      {
+        "ul": [
+          "Give one cue at a time. Kids can fix one thing, not five.",
+          "Reps beat lectures. If a group is standing and listening for more than a minute, shorten it.",
+          "End on something fun and competitive — a relay, a home-run derby, or a fielding challenge.",
+          "Jot down who struggled with what, so next week's plan targets it."
+        ]
+      },
+      {
+        "h2": "Track it so it compounds"
+      },
+      {
+        "p": "Practice pays off fastest when you can see progress. Logging simple stats and notes across a season shows which players are trending up and where the team keeps breaking down. If you run your team on My-Team Sports, the roster, schedule, and stats live in one place — and the AI practice planner can generate a fresh plan for any sport in seconds."
+      }
     ],
+    "faqs": [
+      {
+        "q": "How long should a youth baseball practice be?",
+        "a": "Ninety minutes is the sweet spot for 8–12 year olds: long enough for three ten-minute station rotations plus team defense and a scrimmage, short enough that nobody is standing around by the end. Younger teams can run the same plan in 60 minutes by cutting the stations to one rotation."
+      },
+      {
+        "q": "What are the stations in the practice plan?",
+        "a": "Three ten-minute stations run at the same time with the team split into groups: ground balls, fly balls, and hitting off a tee or soft toss. Groups rotate every ten minutes, so every kid gets all three and three times the reps of a single-line drill."
+      },
+      {
+        "q": "Can I use this for softball practice?",
+        "a": "Yes. The structure — warm-up, throwing progression, stations, team defense, situational scrimmage, wrap-up — is the same for softball. Swap the drills inside the stations for your age group."
+      },
+      {
+        "q": "How many coaches do I need to run it?",
+        "a": "One per station, so three, and parent helpers count. If you have two, run two stations and make the third a self-run tee station with a bucket of balls."
+      }
+    ],
+    "related": [
+      {
+        "href": "/blog/baseball-tryout-evaluation-form",
+        "label": "Baseball Tryout Evaluation Form",
+        "note": "Pick the roster that runs this practice"
+      },
+      {
+        "href": "/blog/baseball-pitch-count-tracker-template",
+        "label": "Pitch Count Tracker",
+        "note": "Game-day arm care"
+      },
+      {
+        "href": "/blog/baseball-lineup-card-template",
+        "label": "Baseball Lineup Card",
+        "note": "Batting order and positions by inning"
+      }
+    ]
   },
   {
     slug: "share-team-schedule-and-photos-without-an-app",
@@ -3850,7 +4833,7 @@ export const posts = [
       { p: "Live scorekeeping is built into every team on My-Team Sports, right next to the schedule, roster, and photos — and parents never pay to watch their own kid. Set your team up in about five minutes, then hand the phone to your scorekeeper at the next game." },
     ],
     related: [
-      { href: "/blog/how-to-keep-a-baseball-scorebook", label: "How to Keep a Baseball Scorebook", note: "The classic paper method, explained" },
+      { href: "/blog/baseball-score-sheet-template", label: "Baseball Score Sheet", note: "Scorebook page plus a simple sheet" },
       { href: "/blog/youth-baseball-practice-plan", label: "Youth Baseball Practice Plan", note: "A practice that keeps kids moving" },
       { href: "/blog/live-scorekeeping-every-sport", label: "Live Scorekeeping for Every Sport", note: "How it works across sports" },
     ],

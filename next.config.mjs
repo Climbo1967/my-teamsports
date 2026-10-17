@@ -47,6 +47,8 @@ const nextConfig = {
       { source: "/blog/soccer-team-website", destination: "/sports/soccer-team-website", permanent: true },
       { source: "/blog/baseball-team-website", destination: "/sports/baseball-team-website", permanent: true },
       { source: "/blog/basketball-team-website", destination: "/sports/basketball-team-website", permanent: true },
+      // 2026-10-17: the scorebook how-to was folded into the printable score sheet post.
+      { source: "/blog/how-to-keep-a-baseball-scorebook", destination: "/blog/baseball-score-sheet-template", permanent: true },
     ];
   },
 };
