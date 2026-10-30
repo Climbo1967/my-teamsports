@@ -4,7 +4,8 @@ import { planLifecycle } from "@/lib/coachEmailPlan";
 import { deliverCoachEmail, loadCoachSnapshot } from "@/lib/coachEmail";
 
 // Daily job (Vercel Cron, see vercel.json): sends the automatic coach emails —
-// the welcome safety net, "your trial is ending" and "your trial has ended".
+// the welcome safety net, "your trial is ending", "your trial has ended" and
+// the two nudges for new coaches (team site is live, what your parents see).
 //
 // Vercel calls this with `Authorization: Bearer <CRON_SECRET>`. Until that
 // environment variable is set this route refuses every call, so nothing can be
@@ -28,7 +29,7 @@ export async function GET(request) {
   }
 
   const admin = createAdminClient();
-  const snap = await loadCoachSnapshot(admin);
+  const snap = await loadCoachSnapshot(admin, { teamLinks: true });
   if (!snap.ok) return NextResponse.json({ ok: false, error: snap.error }, { status: 503 });
 
   const plan = planLifecycle(snap.snapshot, { now: new Date() });
@@ -55,7 +56,7 @@ export async function GET(request) {
       subject: item.subject,
       heading: item.heading,
       body: item.body,
-      teamId: teamIds.length === 1 ? teamIds[0] : null,
+      teamId: item.teamId || (teamIds.length === 1 ? teamIds[0] : null),
       meta: { source: "cron" },
     });
     counts[result.status] += 1;
