@@ -6,7 +6,7 @@ import { SPORTS, SPORT_EMOJI, sportLabel } from "@/lib/constants";
 import { Card, Select, Label } from "@/components/ui";
 import { FILL_INS, fillTemplate, tokensUsed } from "@/lib/coachEmailPlan";
 
-const KIND_LABELS = { welcome: "Welcome", trial_ending: "Trial ending", trial_ended: "Trial ended", admin: "From you" };
+const KIND_LABELS = { welcome: "Welcome", trial_ending: "Trial ending", trial_ended: "Trial ended", nudge_site_live: "Team site live", nudge_parents_see: "What parents see", admin: "From you" };
 
 // Open/closed state for the two long lists (Coaches, Teams). Both start
 // collapsed. The choice is remembered in this browser; if storage is blocked
