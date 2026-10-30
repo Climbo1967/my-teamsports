@@ -15,6 +15,15 @@ export const BUNDLE_DAYS = 7;          // ...and mention anything else ending wi
 export const ENDED_LOOKBACK_DAYS = 3;  // "trial ended" covers the last 3 days (survives a missed run)
 export const WELCOME_LOOKBACK_DAYS = 7; // safety-net welcome for confirms the sign-up hook missed
 
+// Nudge emails for new coaches (Ron's go, 2026-10-30). Only teams created on or
+// after NUDGE_START (a Central-time date) are eligible, so coaches who signed up
+// earlier are never sent these. Ages are time since the team was created.
+export const NUDGE_START = "2026-10-31";
+export const NUDGE_SITE_LIVE_MIN_HOURS = 24;   // "your team site is live": from 24 h after creation...
+export const NUDGE_SITE_LIVE_MAX_DAYS = 4;     // ...until 4 calendar days (survives missed runs)
+export const NUDGE_PARENTS_SEE_MIN_HOURS = 72; // "what your parents see": from day 3...
+export const NUDGE_PARENTS_SEE_MAX_DAYS = 7;   // ...until day 7
+
 const DAY_MS = 86_400_000;
 const DISPLAY_TZ = "America/Chicago";
 
@@ -157,6 +166,74 @@ export function welcomeEmail(coach) {
     SIGNATURE,
   ].join("\n\n");
   return { subject, heading: "Welcome to My-Team Sports", body };
+}
+
+// ---------- the two nudges for new coaches ----------
+
+const possessive = (name) => (/s$/i.test(name) ? `${name}'` : `${name}'s`);
+
+// team needs { name, slug, passcode }.
+export function nudgeSiteLiveEmail(coach, team) {
+  const name = coachGreetingName(coach?.full_name);
+  const link = `${SITE_URL}/team/${team.slug}`;
+  const body = [
+    `Hi ${name},`,
+    `Your team site for ${team.name} is live. This is the page parents open:\n${link}\nPasscode: ${team.passcode}`,
+    `One thing for today: text it to your parents. Something like "Here's our team page for the season: ${link}, passcode ${team.passcode}. Schedule and game updates will be posted there."`,
+    "If anything doesn't work the way you expect, reply to this email. It comes straight to me.",
+    SIGNATURE,
+  ].join("\n\n");
+  return { subject: `${possessive(team.name)} site is live`, heading: "Your team site is live", body };
+}
+
+// team needs { id, name }.
+export function nudgeParentsSeeEmail(coach, team) {
+  const name = coachGreetingName(coach?.full_name);
+  const body = [
+    `Hi ${name},`,
+    `When a parent opens ${possessive(team.name)} site, they see your schedule and any game that's live. Right now there's no game on yours, so there's nothing to bring them back.`,
+    `Add your next game. It takes about a minute:\n${SITE_URL}/dashboard/teams/${team.id}/schedule`,
+    "Reply to this email if you get stuck.",
+    SIGNATURE,
+  ].join("\n\n");
+  return { subject: "What your parents see", heading: "What your parents see", body };
+}
+
+// The nudge due for one coach right now, or null. At most one per coach per run;
+// "site is live" goes first, "what your parents see" on a later run.
+function planNudge(coach, teams, has, now) {
+  const nowMs = now.getTime();
+  const today = now.toISOString().slice(0, 10);
+  const todayCt = centralDay(now);
+  const eligible = (teams || [])
+    .filter((t) => !t.league_id && !(t.paid_through && t.paid_through >= today))
+    .filter((t) => t.created_at && formatDateKey(t.created_at) >= NUDGE_START)
+    .sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  for (const t of eligible) {
+    const ageMs = nowMs - new Date(t.created_at).getTime();
+    const ageDays = todayCt - centralDay(t.created_at);
+    const untouched = Number(t.players) === 0 && Number(t.events) === 0 && Number(t.plays) === 0;
+    if (
+      untouched && t.slug && t.passcode &&
+      ageMs >= NUDGE_SITE_LIVE_MIN_HOURS * 3_600_000 && ageDays <= NUDGE_SITE_LIVE_MAX_DAYS &&
+      !has(`nudge_site_live:${t.id}`)
+    ) {
+      return { kind: "nudge_site_live", coach, keys: [`nudge_site_live:${t.id}`], events: [], teamId: t.id, ...nudgeSiteLiveEmail(coach, t) };
+    }
+    if (
+      Number(t.games) === 0 &&
+      ageMs >= NUDGE_PARENTS_SEE_MIN_HOURS * 3_600_000 && ageDays <= NUDGE_PARENTS_SEE_MAX_DAYS &&
+      !has(`nudge_parents_see:${t.id}`)
+    ) {
+      return { kind: "nudge_parents_see", coach, keys: [`nudge_parents_see:${t.id}`], events: [], teamId: t.id, ...nudgeParentsSeeEmail(coach, t) };
+    }
+  }
+  return null;
+}
+
+// Central-time calendar date (YYYY-MM-DD) of a timestamp.
+function formatDateKey(value) {
+  return CT_PARTS.format(value instanceof Date ? value : new Date(value));
 }
 
 function billingLink(events) {
@@ -328,6 +405,17 @@ export function planLifecycle(snapshot, { now = new Date() } = {}) {
     if (ended.length > 0) {
       plan.push({ kind: "trial_ended", coach, keys: ended.map((e) => `trial_ended:${e.key}`), events: ended, ...trialEndedEmail(coach, ended, now) });
     }
+  }
+
+  // Nudges for new coaches: at most one email per coach per run, so a coach who
+  // already has a welcome or trial email in this run waits for the next one.
+  const planned = new Set(plan.map((p) => p.coach.id));
+  for (const coach of snapshot?.coaches || []) {
+    if (!coach.email || !coach.confirmed || coach.excluded || coach.opt_out || !coach.unsub_token) continue;
+    if (planned.has(coach.id)) continue;
+    const has = (key) => sent.has(`${coach.id}|${key}`);
+    const nudge = planNudge(coach, teamsByCoach.get(coach.id), has, now);
+    if (nudge) plan.push(nudge);
   }
   return plan;
 }
